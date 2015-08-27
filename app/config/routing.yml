@@ -1,3 +1,8 @@
+li_hotel:
+    resource: "@LIHotelBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

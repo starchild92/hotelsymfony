@@ -1,3 +1,8 @@
-e71bea,127.0.0.1,GET,http://localhost:8000/app/example,1440519265,562d06
-562d06,127.0.0.1,GET,http://localhost:8000/app/example,1440519265,
-fabbcc,127.0.0.1,GET,http://localhost:8000/,1440519271,
+c32fe2,127.0.0.1,GET,http://hotel.symfony/app_dev.php/,1440709093,
+15681e,127.0.0.1,GET,http://hotel.symfony/app_dev.php/,1440709223,
+f98d03,127.0.0.1,GET,http://hotel.symfony/app_dev.php/,1440709847,
+9b8c9c,127.0.0.1,GET,http://hotel.symfony/app_dev.php/,1440709991,
+310434,127.0.0.1,GET,http://hotel.symfony/app_dev.php/,1440710100,
+1330d6,127.0.0.1,GET,http://hotel.symfony/app_dev.php/,1440710102,
+e900cc,127.0.0.1,GET,http://hotel.symfony/app_dev.php/,1440710371,
+ee39fb,127.0.0.1,GET,http://hotel.symfony/app_dev.php/,1440710457,
