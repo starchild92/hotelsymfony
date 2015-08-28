@@ -15,6 +15,7 @@ class appProdUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerat
     private static $declaredRoutes = array(
         'LIHotelBundle_homepage' => array (  0 =>   array (  ),  1 =>   array (    '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::indexAction',  ),  2 =>   array (    '_method' => 'GET',  ),  3 =>   array (    0 =>     array (      0 => 'text',      1 => '/',    ),  ),  4 =>   array (  ),  5 =>   array (  ),),
         'LIHotelBundle_consultar' => array (  0 =>   array (  ),  1 =>   array (    '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::consultarAction',  ),  2 =>   array (    '_method' => 'GET',  ),  3 =>   array (    0 =>     array (      0 => 'text',      1 => '/consultar',    ),  ),  4 =>   array (  ),  5 =>   array (  ),),
+        'LIHotelBundle_registro' => array (  0 =>   array (  ),  1 =>   array (    '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::registroAction',  ),  2 =>   array (    '_method' => 'GET|POST',  ),  3 =>   array (    0 =>     array (      0 => 'text',      1 => '/registro',    ),  ),  4 =>   array (  ),  5 =>   array (  ),),
     );
 
     /**

@@ -153,6 +153,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         }
         not_LIHotelBundle_consultar:
 
+        // LIHotelBundle_registro
+        if ($pathinfo === '/registro') {
+            if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
+                $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
+                goto not_LIHotelBundle_registro;
+            }
+
+            return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::registroAction',  '_route' => 'LIHotelBundle_registro',);
+        }
+        not_LIHotelBundle_registro:
+
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
     }
 }

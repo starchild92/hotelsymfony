@@ -1,6 +1,6 @@
 {% extends 'LIHotelBundle::base.html.twig' %}
 
-{% block title %}Consultar{% endblock%}
+{% block title %}Hotel Symfony - Consultar{% endblock%}
 
 {% block body %}
     <div class="navbar-wrapper">
@@ -22,30 +22,47 @@
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="{{ path('LIHotelBundle_homepage') }}">Inicio</a></li>
-                            <li><a href="{{ path('LIHotelBundle_consultar') }}">Consultar</a></li>
-                            <li><a href="#">Registar</a></li>
-                            <button type="button" class="btn btn-success navbar-btn" style="margin-right:10px;">Iniciar Sesión</button>
+                            <li class="active"><a href="{{ path('LIHotelBundle_consultar') }}">Consultar</a></li>
+                            <li><a href="{{ path('LIHotelBundle_registro') }}">Registro</a></li>
+                            <button type="button" class="btn btn-success navbar-btn" style="margin-right:10px; margin-left:10px">Iniciar Sesión</button>
                         </ul>
                     </div>
                 </div>
             </nav>
         </div>
     </div>
-    
-    <div class="container" style="margin-bottom: 20px; padding-top: 60px;">
+
+    <div class="container" style="padding-top: 60px;">
         <div class="page-header">
             <h1>Consultar <small>las habitaciones disponibles</small></h1>
         </div>
-        <article>
-            <p>Donec imperdiet ante sed diam consequat et dictum erat faucibus. Aliquam sit
-            amet vehicula leo. Morbi urna dui, tempor ac posuere et, rutrum at dui.
-            Curabitur neque quam, ultricies ut imperdiet id, ornare varius arcu. Ut congue
-            urna sit amet tellus malesuada nec elementum risus molestie. Donec gravida
-            tellus sed tortor adipiscing fringilla. Donec nulla mauris, mollis egestas
-            condimentum laoreet, lacinia vel lorem. Morbi vitae justo sit amet felis
-            vehicula commodo a placerat lacus. Mauris at est elit, nec vehicula urna. Duis a
-            lacus nisl. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-            posuere cubilia Curae.</p>
-        </article>
+        <div class="row">
+            <div class="col-md-8 col-xs-8">
+                <article>
+                <p>Donec imperdiet ante sed diam consequat et dictum erat faucibus. Aliquam sit
+                amet vehicula leo. Morbi urna dui, tempor ac posuere et, rutrum at dui.
+                Curabitur neque quam, ultricies ut imperdiet id, ornare varius arcu. Ut congue
+                urna sit amet tellus malesuada nec elementum risus molestie. Donec gravida
+                tellus sed tortor adipiscing fringilla. Donec nulla mauris, mollis egestas
+                condimentum laoreet, lacinia vel lorem. Morbi vitae justo sit amet felis
+                vehicula commodo a placerat lacus. Mauris at est elit, nec vehicula urna. Duis a
+                lacus nisl. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+                posuere cubilia Curae.</p>
+            </article>
+            </div>
+            <div class="col-md-4 col-xs-4">
+                <article>
+                <p>Donec imperdiet ante sed diam consequat et dictum erat faucibus. Aliquam sit
+                amet vehicula leo. Morbi urna dui, tempor ac posuere et, rutrum at dui.
+                Curabitur neque quam, ultricies ut imperdiet id, ornare varius arcu. Ut congue
+                urna sit amet tellus malesuada nec elementum risus molestie. Donec gravida
+                tellus sed tortor adipiscing fringilla. Donec nulla mauris, mollis egestas
+                condimentum laoreet, lacinia vel lorem. Morbi vitae justo sit amet felis
+                vehicula commodo a placerat lacus. Mauris at est elit, nec vehicula urna. Duis a
+                lacus nisl. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+                posuere cubilia Curae.</p>
+            </article>
+            </div>
+        </div>
     </div>
 {% endblock %}

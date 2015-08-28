@@ -2,11 +2,10 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Hotel Symfony{% endblock %}</title>
         
         <link rel="icon" type="image/x-icon" href="{{ asset('bundles/lihotel/images/icon.ico') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/carousel.css') }}">
         {% block stylesheets %}{% endblock %}
 
         <script src="{{ asset('bundles/lihotel/js/jquery.min.js') }}"></script>
@@ -17,19 +16,19 @@
 
     {% block body %}{% endblock %}
 
-    <div class="container" style="margin-bottom: 20px">
+    <div class="container" style="margin-bottom: 20px; margin-top: 20px;">
             <div id="london"></div>
             <div class="row">
                 <div class="col-md-4">
                     <center>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-xs-6">
                         <img src="{{ asset('bundles/lihotel/images/LOGO UC.png') }}" alt="rude" width="70" height="85">
                             <h5>Universidad de Carabobo</h5>
-                        </div><!-- /.col-md-4 -->
-                        <div class="col-md-6">
+                        </div><!-- /.col-md-6 -->
+                        <div class="col-md-6 col-xs-6">
                         <img src="{{ asset('bundles/lihotel/images/LOGO FACYT.png') }}" alt="rude" width="80" height="85">
                             <h5>Facultad Experimental de Ciencias y Tecnología</h5>
-                        </div><!-- /.col-md-4 -->
+                        </div><!-- /.col-md-6 -->
                     </center>
                 </div>
                 <div class="col-md-4" id="lado">
@@ -41,11 +40,11 @@
                 </div>
                 <div class="col-md-4" id="lado">
                     <center>
-                        <div class="col-md-5">
+                        <div class="col-md-6 col-xs-6">
                         <img data-toggle="tooltip" title="Break a leg!" class="img-circle" src="{{ asset('bundles/lihotel/images/luis.jpg') }}" alt="rude" width="85" height="85">
                             <h5>Luis Pérez</h5>
                         </div><!-- /.col-md-4 -->
-                        <div class="col-md-5">
+                        <div class="col-md-6 col-xs-6">
                         <img data-toggle="tooltip" title="Some people want to set the world on fire." class="img-circle" src="{{ asset('bundles/lihotel/images/ivo.jpg') }}" alt="rude" width="85" height="85">
                             <h5>Ivonne Ortega</h5>
                         </div><!-- /.col-md-4 -->

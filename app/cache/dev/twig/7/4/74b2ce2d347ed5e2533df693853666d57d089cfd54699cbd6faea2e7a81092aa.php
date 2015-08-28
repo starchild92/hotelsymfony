@@ -11,6 +11,7 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
         $this->parent = $this->loadTemplate("LIHotelBundle::base.html.twig", "LIHotelBundle:Inicio:index.html.twig", 1);
         $this->blocks = array(
             'body' => array($this, 'block_body'),
+            'stylesheets' => array($this, 'block_stylesheets'),
         );
     }
 
@@ -49,7 +50,7 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
                     </div>
                     <div id=\"navbar\" class=\"navbar-collapse collapse\">
                         <ul class=\"nav navbar-nav navbar-right\">
-                            <li><a href=\"";
+                            <li class=\"active\"><a href=\"";
         // line 22
         echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
         echo "\">Inicio</a></li>
@@ -57,15 +58,18 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
         // line 23
         echo $this->env->getExtension('routing')->getPath("LIHotelBundle_consultar");
         echo "\">Consultar</a></li>
-                            <li><a href=\"#\">Registar</a></li>
-                            <button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px;\">Iniciar Sesión</button>
+                            <li><a href=\"";
+        // line 24
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
+        echo "\">Registro</a></li>
+                            <button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px; margin-left:10px\">Iniciar Sesión</button>
                         </ul>
                     </div>
                 </div>
             </nav>
         </div>
     </div>
-    
+
 \t<!-- =================== Carousel =================== -->
 \t<div id=\"myCarousel\" class=\"carousel slide\" data-ride=\"carousel\">
 \t\t<!-- Indicators -->
@@ -85,7 +89,7 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
 \t\t\t\t\t<div class=\"carousel-caption\">
 \t\t\t\t\t\t<h1>Example headline.</h1>
 \t\t\t\t\t\t<p>Note: If you're viewing this page via a <code>file://</code> URL, the \"next\" and \"previous\" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-\t\t\t\t\t\t<p><a class=\"btn btn-lg btn-primary\" href=\"#\" role=\"button\">Sign up today</a></p>
+\t\t\t\t\t\t<p><a class=\"btn btn-lg btn-default\" href=\"#\" role=\"button\">Sign up today</a></p>
 \t\t\t\t\t</div>
 \t\t\t\t</div>
 \t\t\t</div>
@@ -145,7 +149,7 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
 \t\t<hr class=\"featurette-divider-little\">
 \t\t<div class=\"row featurette\">
 \t\t\t<div class=\"col-md-7\">
-\t\t\t\t<h2 class=\"featurette-heading\">El lugar más remoto para su descanso <span class=\"text-muted\">o ¡ocultar un cadaver!</span></h2>
+\t\t\t\t<h2 class=\"featurette-heading\">El lugar más remoto para su descanso <span class=\"text-muted\">o ¡Ocultar un cadáver!</span></h2>
 \t\t\t\t<p class=\"lead\">Rodeado de un valle de montañas rocosas y con la civilización más cercana a 700k, nuestro hotel es el más inóspito después del 'Overlook' de 'The Shinning', además somos visitados cada 6 meses por un grupo del ISIS.</p>
 \t\t\t</div>
 \t\t\t<div class=\"col-md-5\">
@@ -157,6 +161,16 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
 \t\t</div>
 \t\t<!-- /END THE FEATURETTES -->
 \t</div>
+";
+    }
+
+    // line 110
+    public function block_stylesheets($context, array $blocks = array())
+    {
+        // line 111
+        echo "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"";
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/css/carousel.css"), "html", null, true);
+        echo "\">
 ";
     }
 
@@ -172,6 +186,6 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
 
     public function getDebugInfo()
     {
-        return array (  154 => 104,  121 => 74,  108 => 64,  95 => 54,  82 => 44,  58 => 23,  54 => 22,  39 => 10,  31 => 4,  28 => 3,  11 => 1,);
+        return array (  171 => 111,  168 => 110,  158 => 104,  125 => 74,  112 => 64,  99 => 54,  86 => 44,  63 => 24,  59 => 23,  55 => 22,  40 => 10,  32 => 4,  29 => 3,  11 => 1,);
     }
 }

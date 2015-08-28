@@ -19,17 +19,17 @@
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="{{ path('LIHotelBundle_homepage') }}">Inicio</a></li>
+                            <li class="active"><a href="{{ path('LIHotelBundle_homepage') }}">Inicio</a></li>
                             <li><a href="{{ path('LIHotelBundle_consultar') }}">Consultar</a></li>
-                            <li><a href="#">Registar</a></li>
-                            <button type="button" class="btn btn-success navbar-btn" style="margin-right:10px;">Iniciar Sesión</button>
+                            <li><a href="{{ path('LIHotelBundle_registro') }}">Registro</a></li>
+                            <button type="button" class="btn btn-success navbar-btn" style="margin-right:10px; margin-left:10px">Iniciar Sesión</button>
                         </ul>
                     </div>
                 </div>
             </nav>
         </div>
     </div>
-    
+
 	<!-- =================== Carousel =================== -->
 	<div id="myCarousel" class="carousel slide" data-ride="carousel">
 		<!-- Indicators -->
@@ -46,7 +46,7 @@
 					<div class="carousel-caption">
 						<h1>Example headline.</h1>
 						<p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-						<p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+						<p><a class="btn btn-lg btn-default" href="#" role="button">Sign up today</a></p>
 					</div>
 				</div>
 			</div>
@@ -97,7 +97,7 @@
 		<hr class="featurette-divider-little">
 		<div class="row featurette">
 			<div class="col-md-7">
-				<h2 class="featurette-heading">El lugar más remoto para su descanso <span class="text-muted">o ¡ocultar un cadaver!</span></h2>
+				<h2 class="featurette-heading">El lugar más remoto para su descanso <span class="text-muted">o ¡Ocultar un cadáver!</span></h2>
 				<p class="lead">Rodeado de un valle de montañas rocosas y con la civilización más cercana a 700k, nuestro hotel es el más inóspito después del 'Overlook' de 'The Shinning', además somos visitados cada 6 meses por un grupo del ISIS.</p>
 			</div>
 			<div class="col-md-5">
@@ -106,4 +106,7 @@
 		</div>
 		<!-- /END THE FEATURETTES -->
 	</div>
+{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/carousel.css') }}">
 {% endblock %}

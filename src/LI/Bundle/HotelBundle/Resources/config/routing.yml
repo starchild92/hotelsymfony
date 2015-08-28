@@ -9,3 +9,9 @@ LIHotelBundle_consultar:
     defaults: { _controller: LIHotelBundle:Inicio:consultar }
     requirements:
         _method:  GET
+
+LIHotelBundle_registro:
+    pattern:  /registro
+    defaults: { _controller: LIHotelBundle:Inicio:registro }
+    requirements:
+        _method:  GET|POST
