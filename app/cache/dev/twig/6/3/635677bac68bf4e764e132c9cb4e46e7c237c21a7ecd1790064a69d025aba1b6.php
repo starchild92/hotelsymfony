@@ -32,40 +32,33 @@ class __TwigTemplate_635677bac68bf4e764e132c9cb4e46e7c237c21a7ecd1790064a69d025a
         // line 4
         echo "\t<div class=\"navbar-wrapper\">
 \t\t<div class=\"container\">
-
 \t\t<nav class=\"navbar navbar-inverse navbar-static-top\">
 \t\t\t<div class=\"container\">
 \t\t\t\t<div class=\"navbar-header\">
+\t\t\t\t\t<a class=\"navbar-brand\" href=\"#\">
+\t\t\t\t        <img width=\"20\" height=\"20\" alt=\"Brand\" src=\"";
+        // line 10
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/icon.ico"), "html", null, true);
+        echo "\">
+\t\t\t\t      </a>
 \t\t\t\t\t<button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">
 \t\t\t\t\t\t<span class=\"sr-only\">Toggle navigation</span>
 \t\t\t\t\t\t<span class=\"icon-bar\"></span>
 \t\t\t\t\t\t<span class=\"icon-bar\"></span>
 \t\t\t\t\t\t<span class=\"icon-bar\"></span>
 \t\t\t\t\t</button>
-\t\t\t\t\t<a class=\"navbar-brand\" href=\"#\">Project name</a>
+\t\t\t\t\t<a class=\"navbar-brand brandname\" href=\"#\">Hotel Symfony</a>
 \t\t\t\t</div>
 \t\t\t\t<div id=\"navbar\" class=\"navbar-collapse collapse\">
-\t\t\t\t\t<ul class=\"nav navbar-nav\">
-\t\t\t\t\t\t<li class=\"active\"><a href=\"#\">Home</a></li>
-\t\t\t\t\t\t<li><a href=\"#about\">About</a></li>
-\t\t\t\t\t\t<li><a href=\"#contact\">Contact</a></li>
-\t\t\t\t\t\t<li class=\"dropdown\">
-\t\t\t\t\t\t\t<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Dropdown <span class=\"caret\"></span></a>
-\t\t\t\t\t\t\t<ul class=\"dropdown-menu\">
-\t\t\t\t\t\t\t\t<li><a href=\"#\">Action</a></li>
-\t\t\t\t\t\t\t\t<li><a href=\"#\">Another action</a></li>
-\t\t\t\t\t\t\t\t<li><a href=\"#\">Something else here</a></li>
-\t\t\t\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>
-\t\t\t\t\t\t\t\t<li class=\"dropdown-header\">Nav header</li>
-\t\t\t\t\t\t\t\t<li><a href=\"#\">Separated link</a></li>
-\t\t\t\t\t\t\t\t<li><a href=\"#\">One more separated link</a></li>
-\t\t\t\t\t\t\t</ul>
-\t\t\t\t\t\t</li>
+\t\t\t\t\t<ul class=\"nav navbar-nav navbar-right\">
+\t\t\t\t\t\t<li class=\"active\"><a href=\"#\">Inicio</a></li>
+\t\t\t\t\t\t<li><a href=\"#\">Consultar</a></li>
+\t\t\t\t\t\t<li><a href=\"#\">Registro</a></li>
+\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px;\">Iniciar Sesión</button>
 \t\t\t\t\t</ul>
 \t\t\t\t</div>
 \t\t\t</div>
 \t\t</nav>
-
 \t\t</div>
 \t</div>
 
@@ -82,7 +75,7 @@ class __TwigTemplate_635677bac68bf4e764e132c9cb4e46e7c237c21a7ecd1790064a69d025a
 \t\t<div class=\"carousel-inner\" role=\"listbox\">
 \t\t\t<div class=\"item active\">
 \t\t\t\t<img class=\"first-slide\" src=\"";
-        // line 55
+        // line 45
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/big_4.jpg"), "html", null, true);
         echo "\" alt=\"First slide\">
 \t\t\t\t<div class=\"container\">
@@ -95,7 +88,7 @@ class __TwigTemplate_635677bac68bf4e764e132c9cb4e46e7c237c21a7ecd1790064a69d025a
 \t\t\t</div>
 \t\t\t<div class=\"item\">
 \t\t\t\t<img class=\"second-slide\" src=\"";
-        // line 65
+        // line 55
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/big_1.jpg"), "html", null, true);
         echo "\" alt=\"Second slide\">
 \t\t\t\t<div class=\"container\">
@@ -108,7 +101,7 @@ class __TwigTemplate_635677bac68bf4e764e132c9cb4e46e7c237c21a7ecd1790064a69d025a
 \t\t\t</div>
 \t\t\t<div class=\"item\">
 \t\t\t\t<img class=\"third-slide\" src=\"";
-        // line 75
+        // line 65
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/big_2.jpg"), "html", null, true);
         echo "\" alt=\"Third slide\">
 \t\t\t\t<div class=\"container\">
@@ -121,7 +114,7 @@ class __TwigTemplate_635677bac68bf4e764e132c9cb4e46e7c237c21a7ecd1790064a69d025a
 \t\t\t</div>
 \t\t\t<div class=\"item\">
 \t\t\t\t<img class=\"third-slide\" src=\"";
-        // line 85
+        // line 75
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/big_3.jpg"), "html", null, true);
         echo "\" alt=\"Fourth slide\">
 \t\t\t\t<div class=\"container\">
@@ -143,78 +136,49 @@ class __TwigTemplate_635677bac68bf4e764e132c9cb4e46e7c237c21a7ecd1790064a69d025a
 \t\t</a>
 \t</div><!-- /.carousel -->
 
-\t<div class=\"container marketing\">
-
+\t<div class=\"container marketing\" style=\"margin-bottom: 20px\">
 \t\t<!-- START THE FEATURETTES -->
-
 \t\t<hr class=\"featurette-divider-little\">
-
 \t\t<div class=\"row featurette\">
 \t\t\t<div class=\"col-md-7\">
-\t\t\t\t<h2 class=\"featurette-heading\">First featurette heading. <span class=\"text-muted\">It'll blow your mind.</span></h2>
-\t\t\t\t<p class=\"lead\">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+\t\t\t\t<h2 class=\"featurette-heading\">El lugar más remoto para su descanso <span class=\"text-muted\">o ¡ocultar un cadaver!</span></h2>
+\t\t\t\t<p class=\"lead\">Rodeado de un valle de montañas rocosas y con la civilización más cercana a 700k, nuestro hotel es el más inóspito después del 'Overlook' de 'The Shinning', además somos visitados cada 6 meses por un grupo del ISIS.</p>
 \t\t\t</div>
 \t\t\t<div class=\"col-md-5\">
 \t\t\t\t<img class=\"featurette-image img-responsive center-block\" data-src=\"holder.js/500x500/auto\" alt=\"Generic placeholder image\" src=\"";
-        // line 117
+        // line 104
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/image_1.jpeg"), "html", null, true);
         echo "\">
 \t\t\t</div>
 \t\t</div>
-
-\t\t<hr class=\"featurette-divider\">
-
-\t\t<div class=\"row featurette\">
-\t\t\t<div class=\"col-md-7 col-md-push-5\">
-\t\t\t\t<h2 class=\"featurette-heading\">Oh yeah, it's that good. <span class=\"text-muted\">See for yourself.</span></h2>
-\t\t\t\t<p class=\"lead\">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-\t\t\t</div>
-\t\t\t<div class=\"col-md-5 col-md-pull-7\">
-\t\t\t\t<img class=\"featurette-image img-responsive center-block\" data-src=\"holder.js/500x500/auto\" alt=\"Generic placeholder image\">
-\t\t\t</div>
-\t\t</div>
-
-\t\t<hr class=\"featurette-divider\">
-
-\t\t<div class=\"row featurette\">
-\t\t\t<div class=\"col-md-7\">
-\t\t\t\t<h2 class=\"featurette-heading\">And lastly, this one. <span class=\"text-muted\">Checkmate.</span></h2>
-\t\t\t\t<p class=\"lead\">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-\t\t\t</div>
-\t\t\t<div class=\"col-md-5\">
-\t\t\t\t<img class=\"featurette-image img-responsive center-block\" data-src=\"holder.js/500x500/auto\" alt=\"Generic placeholder image\">
-\t\t\t</div>
-\t\t</div>
-
-\t\t<hr class=\"featurette-divider\">
 \t\t<!-- /END THE FEATURETTES -->
 \t</div>
 ";
     }
 
-    // line 150
+    // line 111
     public function block_stylesheets($context, array $blocks = array())
     {
-        // line 151
+        // line 112
         echo "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"";
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/css/bootstrap.css"), "html", null, true);
         echo "\">
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"";
-        // line 152
+        // line 113
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/css/carousel.css"), "html", null, true);
         echo "\">
 ";
     }
 
-    // line 154
+    // line 115
     public function block_javascripts($context, array $blocks = array())
     {
-        // line 155
+        // line 116
         echo "\t<script src=\"";
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/js/jquery.min.js"), "html", null, true);
         echo "\"></script>
 \t<script src=\"";
-        // line 156
+        // line 117
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/js/bootstrap.min.js"), "html", null, true);
         echo "\"></script>
 ";
@@ -232,6 +196,6 @@ class __TwigTemplate_635677bac68bf4e764e132c9cb4e46e7c237c21a7ecd1790064a69d025a
 
     public function getDebugInfo()
     {
-        return array (  218 => 156,  213 => 155,  210 => 154,  204 => 152,  199 => 151,  196 => 150,  160 => 117,  125 => 85,  112 => 75,  99 => 65,  86 => 55,  33 => 4,  30 => 3,  11 => 1,);
+        return array (  182 => 117,  177 => 116,  174 => 115,  168 => 113,  163 => 112,  160 => 111,  150 => 104,  118 => 75,  105 => 65,  92 => 55,  79 => 45,  41 => 10,  33 => 4,  30 => 3,  11 => 1,);
     }
 }

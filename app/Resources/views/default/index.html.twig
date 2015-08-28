@@ -3,40 +3,30 @@
 {% block body %}
 	<div class="navbar-wrapper">
 		<div class="container">
-
 		<nav class="navbar navbar-inverse navbar-static-top">
 			<div class="container">
 				<div class="navbar-header">
+					<a class="navbar-brand" href="#">
+				        <img width="20" height="20" alt="Brand" src="{{ asset('bundles/lihotel/images/icon.ico') }}">
+				      </a>
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">Project name</a>
+					<a class="navbar-brand brandname" href="#">Hotel Symfony</a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Home</a></li>
-						<li><a href="#about">About</a></li>
-						<li><a href="#contact">Contact</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Action</a></li>
-								<li><a href="#">Another action</a></li>
-								<li><a href="#">Something else here</a></li>
-								<li role="separator" class="divider"></li>
-								<li class="dropdown-header">Nav header</li>
-								<li><a href="#">Separated link</a></li>
-								<li><a href="#">One more separated link</a></li>
-							</ul>
-						</li>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="active"><a href="#">Inicio</a></li>
+						<li><a href="#">Consultar</a></li>
+						<li><a href="#">Registro</a></li>
+						<button type="button" class="btn btn-success navbar-btn" style="margin-right:10px;">Iniciar Sesión</button>
 					</ul>
 				</div>
 			</div>
 		</nav>
-
 		</div>
 	</div>
 
@@ -102,47 +92,18 @@
 		</a>
 	</div><!-- /.carousel -->
 
-	<div class="container marketing">
-
+	<div class="container marketing" style="margin-bottom: 20px">
 		<!-- START THE FEATURETTES -->
-
 		<hr class="featurette-divider-little">
-
 		<div class="row featurette">
 			<div class="col-md-7">
-				<h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-				<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+				<h2 class="featurette-heading">El lugar más remoto para su descanso <span class="text-muted">o ¡ocultar un cadaver!</span></h2>
+				<p class="lead">Rodeado de un valle de montañas rocosas y con la civilización más cercana a 700k, nuestro hotel es el más inóspito después del 'Overlook' de 'The Shinning', además somos visitados cada 6 meses por un grupo del ISIS.</p>
 			</div>
 			<div class="col-md-5">
 				<img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image" src="{{ asset('bundles/lihotel/images/image_1.jpeg') }}">
 			</div>
 		</div>
-
-		<hr class="featurette-divider">
-
-		<div class="row featurette">
-			<div class="col-md-7 col-md-push-5">
-				<h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-				<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-			</div>
-			<div class="col-md-5 col-md-pull-7">
-				<img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-			</div>
-		</div>
-
-		<hr class="featurette-divider">
-
-		<div class="row featurette">
-			<div class="col-md-7">
-				<h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-				<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-			</div>
-			<div class="col-md-5">
-				<img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-			</div>
-		</div>
-
-		<hr class="featurette-divider">
 		<!-- /END THE FEATURETTES -->
 	</div>
 {% endblock %}
