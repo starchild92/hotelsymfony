@@ -3,13 +3,21 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        
         <link rel="icon" type="image/x-icon" href="{{ asset('bundles/lihotel/images/icon.ico') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/carousel.css') }}">
+        {% block stylesheets %}{% endblock %}
+
+        <script src="{{ asset('bundles/lihotel/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('bundles/lihotel/js/bootstrap.min.js') }}"></script>
+        {% block javascripts %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
 
-        <div class="container" style="margin-bottom: 20px">
+    {% block body %}{% endblock %}
+
+    <div class="container" style="margin-bottom: 20px">
             <div id="london"></div>
             <div class="row">
                 <div class="col-md-4">
@@ -27,7 +35,7 @@
                 <div class="col-md-4" id="lado">
                     <center>
                         <div class="col-md-12">
-                        <img class="img-circle" src="{{ asset('bundles/lihotel/images/symfony2.png') }}" alt="rude" width="90" height="90">
+                        <img data-toggle="tooltip" title="Jajaja, Necesitas tiempo, tutoriales y mucha lectura para dominarme!" class="img-circle" src="{{ asset('bundles/lihotel/images/symfony2.png') }}" alt="rude" width="90" height="90">
                         </div><!-- /.col-md-4 --><br>Int. al uso de Frameworks <br>para el Desarrollo de Apps Web<br>Prof. Luis León<br>
                     </center>
                 </div>
@@ -45,7 +53,6 @@
                 </div>
             </div>
         </div>
-        {% block javascripts %}{% endblock %}
     </body>
 </html>
 

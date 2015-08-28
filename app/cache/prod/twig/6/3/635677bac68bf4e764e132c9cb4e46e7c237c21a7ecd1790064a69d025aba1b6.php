@@ -38,7 +38,7 @@ class __TwigTemplate_635677bac68bf4e764e132c9cb4e46e7c237c21a7ecd1790064a69d025a
 \t\t\t\t\t<a class=\"navbar-brand\" href=\"#\">
 \t\t\t\t        <img width=\"20\" height=\"20\" alt=\"Brand\" src=\"";
         // line 10
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/image_1.jpeg"), "html", null, true);
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/icon.ico"), "html", null, true);
         echo "\">
 \t\t\t\t      </a>
 \t\t\t\t\t<button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">
@@ -47,14 +47,14 @@ class __TwigTemplate_635677bac68bf4e764e132c9cb4e46e7c237c21a7ecd1790064a69d025a
 \t\t\t\t\t\t<span class=\"icon-bar\"></span>
 \t\t\t\t\t\t<span class=\"icon-bar\"></span>
 \t\t\t\t\t</button>
-\t\t\t\t\t<a class=\"navbar-brand\" href=\"#\">Hotel Symfony</a>
+\t\t\t\t\t<a class=\"navbar-brand brandname\" href=\"#\">Hotel Symfony</a>
 \t\t\t\t</div>
 \t\t\t\t<div id=\"navbar\" class=\"navbar-collapse collapse\">
 \t\t\t\t\t<ul class=\"nav navbar-nav navbar-right\">
 \t\t\t\t\t\t<li class=\"active\"><a href=\"#\">Inicio</a></li>
 \t\t\t\t\t\t<li><a href=\"#\">Consultar</a></li>
 \t\t\t\t\t\t<li><a href=\"#\">Registro</a></li>
-\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary navbar-btn\" style=\"margin-right:10px;\">Iniciar Sesión</button>
+\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px;\">Iniciar Sesión</button>
 \t\t\t\t\t</ul>
 \t\t\t\t</div>
 \t\t\t</div>

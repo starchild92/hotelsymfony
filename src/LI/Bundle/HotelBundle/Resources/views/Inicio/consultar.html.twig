@@ -1,0 +1,51 @@
+{% extends 'LIHotelBundle::base.html.twig' %}
+
+{% block title %}Consultar{% endblock%}
+
+{% block body %}
+    <div class="navbar-wrapper">
+        <div class="container">
+            <nav class="navbar navbar-inverse navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">
+                            <img width="20" height="20" alt="Brand" src="{{ asset('bundles/lihotel/images/icon.ico') }}">
+                        </a>
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand brandname" href="#">Hotel Symfony</a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="{{ path('LIHotelBundle_homepage') }}">Inicio</a></li>
+                            <li><a href="{{ path('LIHotelBundle_consultar') }}">Consultar</a></li>
+                            <li><a href="#">Registar</a></li>
+                            <button type="button" class="btn btn-success navbar-btn" style="margin-right:10px;">Iniciar Sesión</button>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    
+    <div class="container" style="margin-bottom: 20px; padding-top: 60px;">
+        <div class="page-header">
+            <h1>Consultar <small>las habitaciones disponibles</small></h1>
+        </div>
+        <article>
+            <p>Donec imperdiet ante sed diam consequat et dictum erat faucibus. Aliquam sit
+            amet vehicula leo. Morbi urna dui, tempor ac posuere et, rutrum at dui.
+            Curabitur neque quam, ultricies ut imperdiet id, ornare varius arcu. Ut congue
+            urna sit amet tellus malesuada nec elementum risus molestie. Donec gravida
+            tellus sed tortor adipiscing fringilla. Donec nulla mauris, mollis egestas
+            condimentum laoreet, lacinia vel lorem. Morbi vitae justo sit amet felis
+            vehicula commodo a placerat lacus. Mauris at est elit, nec vehicula urna. Duis a
+            lacus nisl. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+            posuere cubilia Curae.</p>
+        </article>
+    </div>
+{% endblock %}

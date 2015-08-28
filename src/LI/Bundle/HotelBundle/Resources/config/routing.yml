@@ -1,0 +1,11 @@
+LIHotelBundle_homepage:
+    pattern:  /
+    defaults: { _controller: LIHotelBundle:Inicio:index }
+    requirements:
+        _method:  GET
+
+LIHotelBundle_consultar:
+    pattern:  /consultar
+    defaults: { _controller: LIHotelBundle:Inicio:consultar }
+    requirements:
+        _method:  GET
