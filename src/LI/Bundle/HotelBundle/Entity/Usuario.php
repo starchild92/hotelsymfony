@@ -74,6 +74,10 @@ class Usuario
      * @var integer
      *
      * @ORM\Column(name="edad", type="integer")
+     * @Assert\Range(
+     *      min = 18,
+     *      minMessage = "Debes tener {{ limit }} años o más para registrarte",
+     * )
      */
     private $edad;
 

@@ -15,3 +15,9 @@ LIHotelBundle_registro:
     defaults: { _controller: LIHotelBundle:Inicio:registro }
     requirements:
         _method:  GET|POST
+
+LIHotelBundle_sesion:
+    pattern:  /sesion
+    defaults: { _controller: LIHotelBundle:Inicio:sesion }
+    requirements:
+        _method:  GET|POST

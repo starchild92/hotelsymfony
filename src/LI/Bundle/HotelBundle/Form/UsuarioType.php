@@ -19,7 +19,7 @@ class UsuarioType extends AbstractType
             ->add('apellido')
             ->add('mail', null, array('label' => false))
             ->add('clave', 'password')
-            ->add('edad')
+            ->add('edad', null, array('label' => false))
         ;
     }
     
