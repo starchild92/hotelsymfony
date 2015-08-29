@@ -12,6 +12,7 @@ class __TwigTemplate_a14eb93653c055ecfae22397914c5f8ec3f10a9a2962bf73be1dd10e0a8
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'body' => array($this, 'block_body'),
+            'stylesheets' => array($this, 'block_stylesheets'),
         );
     }
 
@@ -40,7 +41,10 @@ class __TwigTemplate_a14eb93653c055ecfae22397914c5f8ec3f10a9a2962bf73be1dd10e0a8
             <nav class=\"navbar navbar-inverse navbar-static-top\">
                 <div class=\"container\">
                     <div class=\"navbar-header\">
-                        <a class=\"navbar-brand\" href=\"#\">
+                        <a class=\"navbar-brand\" href=\"";
+        // line 11
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
+        echo "\">
                             <img width=\"20\" height=\"20\" alt=\"Brand\" src=\"";
         // line 12
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/icon.ico"), "html", null, true);
@@ -52,7 +56,10 @@ class __TwigTemplate_a14eb93653c055ecfae22397914c5f8ec3f10a9a2962bf73be1dd10e0a8
                             <span class=\"icon-bar\"></span>
                             <span class=\"icon-bar\"></span>
                         </button>
-                        <a class=\"navbar-brand brandname\" href=\"#\">Hotel Symfony</a>
+                        <a class=\"navbar-brand brandname\" href=\"";
+        // line 20
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
+        echo "\">Hotel Symfony</a>
                     </div>
                     <div id=\"navbar\" class=\"navbar-collapse collapse\">
                         <ul class=\"nav navbar-nav navbar-right\">
@@ -82,11 +89,11 @@ class __TwigTemplate_a14eb93653c055ecfae22397914c5f8ec3f10a9a2962bf73be1dd10e0a8
             <small>y forme parte de la cadena de hoteles más increible!</small></h1>
         </div>
         <div class=\"row\">
-            <div class=\"col-md-8 col-xs-8\">
+            <div class=\"col-lg-8 col-md-6 col-xs-6\">
                 ";
         // line 42
         $context['_parent'] = (array) $context;
-        $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "session", array()), "flashbag", array()), "get", array(0 => "error"), "method"));
+        $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : null), "session", array()), "flashbag", array()), "get", array(0 => "error"), "method"));
         foreach ($context['_seq'] as $context["_key"] => $context["flashMessage"]) {
             // line 43
             echo "                    <div class=\"alert alert-success alert-dismissible\" role=\"alert\">
@@ -105,52 +112,67 @@ class __TwigTemplate_a14eb93653c055ecfae22397914c5f8ec3f10a9a2962bf73be1dd10e0a8
         echo "                <form action=\"";
         echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
         echo "\" method=\"post\" ";
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'enctype');
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : null), 'enctype');
         echo " class=\"usuario\">
                     ";
         // line 49
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'errors');
+        $this->env->getExtension('form')->renderer->setTheme((isset($context["form"]) ? $context["form"] : null), array(0 => "bootstrap_3_layout.html.twig"));
+        // line 50
+        echo "                    ";
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : null), 'errors');
         echo "
 
                     ";
-        // line 51
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), "nombre", array()), 'row');
-        echo "
-                    ";
         // line 52
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), "apellido", array()), 'row');
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : null), "nombre", array()), 'widget', array("attr" => array("placeholder" => "Nombre", "autocomplete" => "off")));
         echo "
                     ";
         // line 53
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), "mail", array()), 'row');
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : null), "apellido", array()), 'widget', array("attr" => array("placeholder" => "Apellido", "autocomplete" => "off")));
         echo "
                     ";
         // line 54
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), "clave", array()), 'row');
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : null), "mail", array()), 'row', array("attr" => array("type" => "text", "placeholder" => "Correo Electronico", "autocomplete" => "off")));
         echo "
                     ";
         // line 55
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), "edad", array()), 'row');
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : null), "clave", array()), 'widget', array("attr" => array("placeholder" => "Password", "autocomplete" => "off")));
+        echo "
+                    ";
+        // line 56
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : null), "edad", array()), 'widget', array("attr" => array("placeholder" => "Edad", "autocomplete" => "off")));
         echo "
 
                     ";
-        // line 57
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'rest');
+        // line 58
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : null), 'rest');
         echo "
 
-                    <button type=\"button submit\" class=\"btn btn-default btn-lg\">
-                      <span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span> Registrarse
+                    <button type=\"button submit\" class=\"btn btn-success col-md-6 pull-right\">
+                        <span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span> Registrarse
                     </button>
                 </form>
             </div>
-            <div class=\"col-md-4 col-xs-4\">
+            <div class=\"col-md-4 col-md-6 col-xs-6\">
                 <center><img src=\"";
-        // line 65
+        // line 66
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/signup-icon.png"), "html", null, true);
         echo "\" width=\"200px\" height=\"200px\"></center>
             </div>
         </div>
     </div>
+";
+    }
+
+    // line 72
+    public function block_stylesheets($context, array $blocks = array())
+    {
+        // line 73
+        echo "    <style type=\"text/css\">
+        .usuario > input{
+            margin-bottom: 10px;
+        }
+    </style>
 ";
     }
 
@@ -166,6 +188,6 @@ class __TwigTemplate_a14eb93653c055ecfae22397914c5f8ec3f10a9a2962bf73be1dd10e0a8
 
     public function getDebugInfo()
     {
-        return array (  149 => 65,  138 => 57,  133 => 55,  129 => 54,  125 => 53,  121 => 52,  117 => 51,  112 => 49,  105 => 48,  96 => 45,  92 => 43,  88 => 42,  69 => 26,  65 => 25,  61 => 24,  46 => 12,  38 => 6,  35 => 5,  29 => 3,  11 => 1,);
+        return array (  171 => 73,  168 => 72,  159 => 66,  148 => 58,  143 => 56,  139 => 55,  135 => 54,  131 => 53,  127 => 52,  121 => 50,  119 => 49,  112 => 48,  103 => 45,  99 => 43,  95 => 42,  76 => 26,  72 => 25,  68 => 24,  61 => 20,  50 => 12,  46 => 11,  39 => 6,  36 => 5,  30 => 3,  11 => 1,);
     }
 }

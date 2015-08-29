@@ -8,7 +8,7 @@
             <nav class="navbar navbar-inverse navbar-static-top">
                 <div class="container">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">
+                        <a class="navbar-brand" href="{{ path('LIHotelBundle_homepage') }}">
                             <img width="20" height="20" alt="Brand" src="{{ asset('bundles/lihotel/images/icon.ico') }}">
                         </a>
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -17,7 +17,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand brandname" href="#">Hotel Symfony</a>
+                        <a class="navbar-brand brandname" href="{{ path('LIHotelBundle_homepage') }}">Hotel Symfony</a>
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav navbar-right">
@@ -38,7 +38,7 @@
             <small>y forme parte de la cadena de hoteles más increible!</small></h1>
         </div>
         <div class="row">
-            <div class="col-md-8 col-xs-8">
+            <div class="col-lg-8 col-md-6 col-xs-6">
                 {% for flashMessage in app.session.flashbag.get('error') %}
                     <div class="alert alert-success alert-dismissible" role="alert">
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -46,24 +46,33 @@
                   </div>
                 {% endfor %}
                 <form action="{{ path('LIHotelBundle_registro') }}" method="post" {{ form_enctype(form) }} class="usuario">
+                    {% form_theme form 'bootstrap_3_layout.html.twig'  %}
                     {{ form_errors(form) }}
 
-                    {{ form_row(form.nombre) }}
-                    {{ form_row(form.apellido) }}
-                    {{ form_row(form.mail) }}
-                    {{ form_row(form.clave) }}
-                    {{ form_row(form.edad) }}
+                    {{ form_widget(form.nombre, {'attr':{'placeholder':'Nombre', 'autocomplete':'off'}}) }}
+                    {{ form_widget(form.apellido, {'attr':{'placeholder':'Apellido', 'autocomplete':'off'}}) }}
+                    {{ form_row(form.mail, {'attr': {'type':'text', 'placeholder':'Correo Electronico', 'autocomplete':'off'}}) }}
+                    {{ form_widget(form.clave, {'attr':{'placeholder':'Password', 'autocomplete':'off'}}) }}
+                    {{ form_widget(form.edad, {'attr':{'placeholder':'Edad', 'autocomplete':'off'}}) }}
 
                     {{ form_rest(form) }}
 
-                    <button type="button submit" class="btn btn-default btn-lg">
-                      <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Registrarse
+                    <button type="button submit" class="btn btn-success col-md-6 pull-right">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Registrarse
                     </button>
                 </form>
             </div>
-            <div class="col-md-4 col-xs-4">
+            <div class="col-md-4 col-md-6 col-xs-6">
                 <center><img src="{{ asset('bundles/lihotel/images/signup-icon.png') }}" width="200px" height="200px"></center>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style type="text/css">
+        .usuario > input{
+            margin-bottom: 10px;
+        }
+    </style>
 {% endblock %}

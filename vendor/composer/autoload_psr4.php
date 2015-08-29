@@ -12,5 +12,7 @@ return array(
     'Sensio\\Bundle\\FrameworkExtraBundle\\' => array($vendorDir . '/sensio/framework-extra-bundle'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Incenteev\\ParameterHandler\\' => array($vendorDir . '/incenteev/composer-parameter-handler'),
+    'Doctrine\\Bundle\\MigrationsBundle\\' => array($vendorDir . '/doctrine/doctrine-migrations-bundle'),
+    'Doctrine\\Bundle\\FixturesBundle\\' => array($vendorDir . '/doctrine/doctrine-fixtures-bundle'),
     'Doctrine\\Bundle\\DoctrineBundle\\' => array($vendorDir . '/doctrine/doctrine-bundle'),
 );

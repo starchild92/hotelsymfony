@@ -1,6 +1,6 @@
 <?php
 
-/* @WebProfiler/Profiler/admin.html.twig */
+/* WebProfilerBundle:Profiler:admin.html.twig */
 class __TwigTemplate_e361742746dd5a320e419945c817c59669408c6620175bc318b32dd8a7726da9 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
@@ -35,7 +35,7 @@ class __TwigTemplate_e361742746dd5a320e419945c817c59669408c6620175bc318b32dd8a77
 
     public function getTemplateName()
     {
-        return "@WebProfiler/Profiler/admin.html.twig";
+        return "WebProfilerBundle:Profiler:admin.html.twig";
     }
 
     public function isTraitable()

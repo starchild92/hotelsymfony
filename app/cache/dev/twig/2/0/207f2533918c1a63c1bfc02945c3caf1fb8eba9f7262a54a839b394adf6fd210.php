@@ -36,6 +36,8 @@ class __TwigTemplate_207f2533918c1a63c1bfc02945c3caf1fb8eba9f7262a54a839b394adf6
         <link rel=\"stylesheet\" type=\"text/css\" href=\"";
         // line 8
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/css/bootstrap.css"), "html", null, true);
+        echo "\"><link rel=\"stylesheet\" type=\"text/css\" href=\"";
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/css/carousel.css"), "html", null, true);
         echo "\">
         ";
         // line 9
@@ -178,6 +180,6 @@ class __TwigTemplate_207f2533918c1a63c1bfc02945c3caf1fb8eba9f7262a54a839b394adf6
 
     public function getDebugInfo()
     {
-        return array (  165 => 17,  160 => 13,  155 => 9,  149 => 5,  134 => 68,  127 => 64,  108 => 48,  101 => 44,  91 => 37,  80 => 29,  73 => 25,  64 => 18,  62 => 17,  57 => 14,  55 => 13,  51 => 12,  47 => 11,  44 => 10,  42 => 9,  38 => 8,  34 => 7,  29 => 5,  23 => 1,);
+        return array (  167 => 17,  162 => 13,  157 => 9,  151 => 5,  136 => 68,  129 => 64,  110 => 48,  103 => 44,  93 => 37,  82 => 29,  75 => 25,  66 => 18,  64 => 17,  59 => 14,  57 => 13,  53 => 12,  49 => 11,  46 => 10,  44 => 9,  38 => 8,  34 => 7,  29 => 5,  23 => 1,);
     }
 }

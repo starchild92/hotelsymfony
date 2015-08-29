@@ -17,8 +17,8 @@ class UsuarioType extends AbstractType
         $builder
             ->add('nombre')
             ->add('apellido')
-            ->add('mail')
-            ->add('clave')
+            ->add('mail', null, array('label' => false))
+            ->add('clave', 'password')
             ->add('edad')
         ;
     }

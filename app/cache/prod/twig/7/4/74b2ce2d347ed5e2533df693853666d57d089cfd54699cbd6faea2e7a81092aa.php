@@ -34,7 +34,10 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
             <nav class=\"navbar navbar-inverse navbar-static-top\">
                 <div class=\"container\">
                     <div class=\"navbar-header\">
-                        <a class=\"navbar-brand\" href=\"#\">
+                        <a class=\"navbar-brand\" href=\"";
+        // line 9
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
+        echo "\">
                             <img width=\"20\" height=\"20\" alt=\"Brand\" src=\"";
         // line 10
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/icon.ico"), "html", null, true);
@@ -46,7 +49,10 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
                             <span class=\"icon-bar\"></span>
                             <span class=\"icon-bar\"></span>
                         </button>
-                        <a class=\"navbar-brand brandname\" href=\"#\">Hotel Symfony</a>
+                        <a class=\"navbar-brand brandname\" href=\"";
+        // line 18
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
+        echo "\">Hotel Symfony</a>
                     </div>
                     <div id=\"navbar\" class=\"navbar-collapse collapse\">
                         <ul class=\"nav navbar-nav navbar-right\">
@@ -186,6 +192,6 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
 
     public function getDebugInfo()
     {
-        return array (  171 => 111,  168 => 110,  158 => 104,  125 => 74,  112 => 64,  99 => 54,  86 => 44,  63 => 24,  59 => 23,  55 => 22,  40 => 10,  32 => 4,  29 => 3,  11 => 1,);
+        return array (  177 => 111,  174 => 110,  164 => 104,  131 => 74,  118 => 64,  105 => 54,  92 => 44,  69 => 24,  65 => 23,  61 => 22,  54 => 18,  43 => 10,  39 => 9,  32 => 4,  29 => 3,  11 => 1,);
     }
 }

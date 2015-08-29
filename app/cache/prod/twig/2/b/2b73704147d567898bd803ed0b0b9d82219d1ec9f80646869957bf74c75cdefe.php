@@ -47,7 +47,10 @@ class __TwigTemplate_2b73704147d567898bd803ed0b0b9d82219d1ec9f80646869957bf74c75
                         <span class=\"icon-bar\"></span>
                         <span class=\"icon-bar\"></span>
                     </button>
-                    <a class=\"navbar-brand brandname\" href=\"#\">Hotel Symfony</a>
+                    <a class=\"navbar-brand brandname\" href=\"";
+        // line 18
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
+        echo "\">Hotel Symfony</a>
                 </div>
                 <div id=\"navbar\" class=\"navbar-collapse collapse\">
                     <ul class=\"nav navbar-nav navbar-right\">
@@ -205,6 +208,6 @@ class __TwigTemplate_2b73704147d567898bd803ed0b0b9d82219d1ec9f80646869957bf74c75
 
     public function getDebugInfo()
     {
-        return array (  191 => 117,  186 => 116,  183 => 115,  177 => 113,  172 => 112,  169 => 111,  159 => 104,  127 => 75,  114 => 65,  101 => 55,  88 => 45,  64 => 24,  60 => 23,  56 => 22,  41 => 10,  33 => 4,  30 => 3,  11 => 1,);
+        return array (  194 => 117,  189 => 116,  186 => 115,  180 => 113,  175 => 112,  172 => 111,  162 => 104,  130 => 75,  117 => 65,  104 => 55,  91 => 45,  67 => 24,  63 => 23,  59 => 22,  52 => 18,  41 => 10,  33 => 4,  30 => 3,  11 => 1,);
     }
 }

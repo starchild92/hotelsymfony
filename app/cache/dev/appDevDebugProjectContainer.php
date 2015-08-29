@@ -618,7 +618,7 @@ class appDevDebugProjectContainer extends Container
         $b = new \Doctrine\DBAL\Configuration();
         $b->setSQLLogger($a);
 
-        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('driver' => 'pdo_mysql', 'host' => '127.0.0.1', 'port' => NULL, 'dbname' => 'hotel_symfony', 'user' => 'root', 'password' => 'charmed', 'charset' => 'UTF8', 'driverOptions' => array()), $b, new \Symfony\Bridge\Doctrine\ContainerAwareEventManager($this), array());
+        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('driver' => 'pdo_mysql', 'host' => '127.0.0.1', 'port' => 3306, 'dbname' => 'hotel_symfony', 'user' => 'root', 'password' => 'charmed', 'charset' => 'UTF8', 'driverOptions' => array()), $b, new \Symfony\Bridge\Doctrine\ContainerAwareEventManager($this), array());
     }
 
     /**
@@ -2017,7 +2017,7 @@ class appDevDebugProjectContainer extends Container
 
         $e = new \Symfony\Component\Security\Http\AccessMap();
 
-        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($e, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => new \Symfony\Component\Security\Core\User\InMemoryUserProvider()), 'main', $a, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE)), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '55e0d90de9ba05.70270033', $a, $c), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $e, $c)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), new \Symfony\Component\Security\Http\HttpUtils($d, $d), 'main', NULL, NULL, NULL, $a));
+        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($e, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => new \Symfony\Component\Security\Core\User\InMemoryUserProvider()), 'main', $a, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE)), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '55e1221ec12e72.17145337', $a, $c), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $e, $c)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), new \Symfony\Component\Security\Http\HttpUtils($d, $d), 'main', NULL, NULL, NULL, $a));
     }
 
     /**
@@ -3484,7 +3484,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_Authentication_ManagerService()
     {
-        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('55e0d90de9ba05.70270033')), true);
+        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('55e1221ec12e72.17145337')), true);
 
         $instance->setEventDispatcher($this->get('debug.event_dispatcher'));
 
@@ -3648,7 +3648,7 @@ class appDevDebugProjectContainer extends Container
             'kernel.root_dir' => $this->targetDirs[2],
             'kernel.environment' => 'dev',
             'kernel.debug' => true,
-            'kernel.name' => 'app',
+            'kernel.name' => 'ap_',
             'kernel.cache_dir' => __DIR__,
             'kernel.logs_dir' => ($this->targetDirs[2].'/logs'),
             'kernel.bundles' => array(
@@ -3659,8 +3659,9 @@ class appDevDebugProjectContainer extends Container
                 'SwiftmailerBundle' => 'Symfony\\Bundle\\SwiftmailerBundle\\SwiftmailerBundle',
                 'AsseticBundle' => 'Symfony\\Bundle\\AsseticBundle\\AsseticBundle',
                 'DoctrineBundle' => 'Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle',
+                'DoctrineFixturesBundle' => 'Doctrine\\Bundle\\FixturesBundle\\DoctrineFixturesBundle',
+                'DoctrineMigrationsBundle' => 'Doctrine\\Bundle\\MigrationsBundle\\DoctrineMigrationsBundle',
                 'SensioFrameworkExtraBundle' => 'Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle',
-                'AppBundle' => 'AppBundle\\AppBundle',
                 'LIHotelBundle' => 'LI\\Bundle\\HotelBundle\\LIHotelBundle',
                 'DebugBundle' => 'Symfony\\Bundle\\DebugBundle\\DebugBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
@@ -3671,7 +3672,7 @@ class appDevDebugProjectContainer extends Container
             'kernel.container_class' => 'appDevDebugProjectContainer',
             'database_driver' => 'pdo_mysql',
             'database_host' => '127.0.0.1',
-            'database_port' => NULL,
+            'database_port' => 3306,
             'database_name' => 'hotel_symfony',
             'database_user' => 'root',
             'database_password' => 'charmed',
@@ -4226,6 +4227,10 @@ class appDevDebugProjectContainer extends Container
             'doctrine.orm.auto_generate_proxy_classes' => true,
             'doctrine.orm.proxy_dir' => (__DIR__.'/doctrine/orm/Proxies'),
             'doctrine.orm.proxy_namespace' => 'Proxies',
+            'doctrine_migrations.dir_name' => ($this->targetDirs[2].'/DoctrineMigrations'),
+            'doctrine_migrations.namespace' => 'Application\\Migrations',
+            'doctrine_migrations.table_name' => 'migration_versions',
+            'doctrine_migrations.name' => 'Application Migrations',
             'sensio_framework_extra.view.guesser.class' => 'Sensio\\Bundle\\FrameworkExtraBundle\\Templating\\TemplateGuesser',
             'sensio_framework_extra.controller.listener.class' => 'Sensio\\Bundle\\FrameworkExtraBundle\\EventListener\\ControllerListener',
             'sensio_framework_extra.routing.loader.annot_dir.class' => 'Symfony\\Component\\Routing\\Loader\\AnnotationDirectoryLoader',
