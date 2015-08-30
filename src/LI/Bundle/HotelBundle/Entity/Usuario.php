@@ -48,6 +48,12 @@ class Usuario
      * @var string
      *
      * @ORM\Column(name="apellido", type="string", length=50)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Su apellido debe tener al menos {{ limit }} letras",
+     *      maxMessage = "Su apellido no puede tener {{ limit }} letras"
+     * )
      */
     private $apellido;
 
@@ -73,13 +79,9 @@ class Usuario
     /**
      * @var integer
      *
-     * @ORM\Column(name="edad", type="integer")
-     * @Assert\Range(
-     *      min = 18,
-     *      minMessage = "Debes tener {{ limit }} años o más para registrarte",
-     * )
+     * @ORM\Column(name="fecha_nac", type="date")
      */
-    private $edad;
+    private $fecha_nac;
 
     /**
      * Get id
@@ -184,29 +186,6 @@ class Usuario
     }
 
     /**
-     * Set edad
-     *
-     * @param integer $edad
-     * @return Usuario
-     */
-    public function setEdad($edad)
-    {
-        $this->edad = $edad;
-
-        return $this;
-    }
-
-    /**
-     * Get edad
-     *
-     * @return integer 
-     */
-    public function getEdad()
-    {
-        return $this->edad;
-    }
-
-    /**
      * Set cuenta
      *
      * @param string $cuenta
@@ -227,5 +206,28 @@ class Usuario
     public function getCuenta()
     {
         return $this->cuenta;
+    }
+
+    /**
+     * Set fecha_nac
+     *
+     * @param \DateTime $fechaNac
+     * @return Usuario
+     */
+    public function setFechaNac($fechaNac)
+    {
+        $this->fecha_nac = $fechaNac;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha_nac
+     *
+     * @return \DateTime 
+     */
+    public function getFechaNac()
+    {
+        return $this->fecha_nac;
     }
 }

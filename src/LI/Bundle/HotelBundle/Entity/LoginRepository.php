@@ -13,16 +13,6 @@ use Doctrine\ORM\EntityRepository;
 class LoginRepository extends EntityRepository
 {
 	public function validarCuenta($m, $p){
-        /*$qb = $this->getEntityManager()
-           ->createQuery('
-                SELECT b
-                FROM LIHotelBundle:Usuario b
-                WHERE b.mail = :mail AND b.clave = :pass
-            ')
-            ->setParameter("mail", $m)
-            ->setParameter("pass", $p)
-            ->getResult();*/
-
 		$query = $this->getEntityManager()
 				->createQuery('SELECT u 
 				FROM LIHotelBundle:Usuario u 

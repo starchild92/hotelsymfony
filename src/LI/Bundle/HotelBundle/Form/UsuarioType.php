@@ -19,7 +19,10 @@ class UsuarioType extends AbstractType
             ->add('apellido')
             ->add('mail', null, array('label' => false))
             ->add('clave', 'password')
-            ->add('edad', null, array('label' => false))
+            ->add('fecha_nac', 'date', array(
+                'label' => 'Fecha de Nacimiento',
+                'years' => range(date('Y') -18, date('Y') -115)
+            ))
         ;
     }
     

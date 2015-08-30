@@ -81,6 +81,7 @@ class InicioController extends Controller
                     $this->get('session')->getFlashBag()->set('errorsesion', 'Lo sentimos, usted no está registrado');
                     return $this->redirect($this->generateUrl('LIHotelBundle_registro'));
                 }else{
+                    //discriminarlos por el tipo de usuario
                     return new Response('<html><body>'.$user[0]->getMail().' '.$user[0]->getCuenta().'</body></html>');
                 }
             }

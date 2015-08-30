@@ -48,6 +48,12 @@ class Usuario
      * @var string
      *
      * @ORM\Column(name="apellido", type="string", length=50)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Su apellido debe tener al menos {{ limit }} letras",
+     *      maxMessage = "Su apellido no puede tener {{ limit }} letras"
+     * )
      */
     private $apellido;
 
@@ -73,9 +79,9 @@ class Usuario
     /**
      * @var integer
      *
-     * @ORM\Column(name="edad", type="integer")
+     * @ORM\Column(name="edad", type="date")
      */
-    private $edad;
+    private $fecha_nac;
 
     /**
      * Get id

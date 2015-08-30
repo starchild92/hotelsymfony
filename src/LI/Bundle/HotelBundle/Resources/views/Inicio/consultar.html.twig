@@ -24,7 +24,7 @@
                             <li><a href="{{ path('LIHotelBundle_homepage') }}">Inicio</a></li>
                             <li class="active"><a href="{{ path('LIHotelBundle_consultar') }}">Consultar</a></li>
                             <li><a href="{{ path('LIHotelBundle_registro') }}">Registro</a></li>
-                            <button type="button" class="btn btn-success navbar-btn" style="margin-right:10px; margin-left:10px">Iniciar Sesión</button>
+                            <a href="{{ path('LIHotelBundle_registro') }}"><button type="button" class="btn btn-success navbar-btn" style="margin-right:10px; margin-left:10px">Iniciar Sesión</button></a>
                         </ul>
                     </div>
                 </div>
@@ -37,7 +37,10 @@
             <h1>Consultar <small>las habitaciones disponibles</small></h1>
         </div>
         <div class="row">
-            <div class="col-md-8 col-xs-8">
+            <div class="col-md-4 col-xs-4">
+                <div class="page-header" style="margin-top:0px;">
+                    <h3 style="margin-top:0px;"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>  Fecha</h3>
+                </div>
                 <article>
                 <p>Donec imperdiet ante sed diam consequat et dictum erat faucibus. Aliquam sit
                 amet vehicula leo. Morbi urna dui, tempor ac posuere et, rutrum at dui.
@@ -50,7 +53,7 @@
                 posuere cubilia Curae.</p>
             </article>
             </div>
-            <div class="col-md-4 col-xs-4">
+            <div class="col-md-8 col-xs-8">
                 <article>
                 <p>Donec imperdiet ante sed diam consequat et dictum erat faucibus. Aliquam sit
                 amet vehicula leo. Morbi urna dui, tempor ac posuere et, rutrum at dui.

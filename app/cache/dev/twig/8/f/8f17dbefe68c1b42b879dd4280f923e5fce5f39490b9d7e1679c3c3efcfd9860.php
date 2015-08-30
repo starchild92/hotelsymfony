@@ -74,7 +74,10 @@ class __TwigTemplate_8f17dbefe68c1b42b879dd4280f923e5fce5f39490b9d7e1679c3c3efcf
         // line 26
         echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
         echo "\">Registro</a></li>
-                            <button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px; margin-left:10px\">Iniciar Sesión</button>
+                            <a href=\"";
+        // line 27
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
+        echo "\"><button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px; margin-left:10px\">Iniciar Sesión</button></a>
                         </ul>
                     </div>
                 </div>
@@ -87,7 +90,10 @@ class __TwigTemplate_8f17dbefe68c1b42b879dd4280f923e5fce5f39490b9d7e1679c3c3efcf
             <h1>Consultar <small>las habitaciones disponibles</small></h1>
         </div>
         <div class=\"row\">
-            <div class=\"col-md-8 col-xs-8\">
+            <div class=\"col-md-4 col-xs-4\">
+                <div class=\"page-header\" style=\"margin-top:0px;\">
+                    <h3 style=\"margin-top:0px;\"><span class=\"glyphicon glyphicon-calendar\" aria-hidden=\"true\"></span>  Fecha</h3>
+                </div>
                 <article>
                 <p>Donec imperdiet ante sed diam consequat et dictum erat faucibus. Aliquam sit
                 amet vehicula leo. Morbi urna dui, tempor ac posuere et, rutrum at dui.
@@ -100,7 +106,7 @@ class __TwigTemplate_8f17dbefe68c1b42b879dd4280f923e5fce5f39490b9d7e1679c3c3efcf
                 posuere cubilia Curae.</p>
             </article>
             </div>
-            <div class=\"col-md-4 col-xs-4\">
+            <div class=\"col-md-8 col-xs-8\">
                 <article>
                 <p>Donec imperdiet ante sed diam consequat et dictum erat faucibus. Aliquam sit
                 amet vehicula leo. Morbi urna dui, tempor ac posuere et, rutrum at dui.
@@ -130,6 +136,6 @@ class __TwigTemplate_8f17dbefe68c1b42b879dd4280f923e5fce5f39490b9d7e1679c3c3efcf
 
     public function getDebugInfo()
     {
-        return array (  75 => 26,  71 => 25,  67 => 24,  60 => 20,  49 => 12,  45 => 11,  38 => 6,  35 => 5,  29 => 3,  11 => 1,);
+        return array (  79 => 27,  75 => 26,  71 => 25,  67 => 24,  60 => 20,  49 => 12,  45 => 11,  38 => 6,  35 => 5,  29 => 3,  11 => 1,);
     }
 }

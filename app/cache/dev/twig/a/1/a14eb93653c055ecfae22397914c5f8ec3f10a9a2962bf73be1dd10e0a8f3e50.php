@@ -71,11 +71,8 @@ class __TwigTemplate_a14eb93653c055ecfae22397914c5f8ec3f10a9a2962bf73be1dd10e0a8
         // line 25
         echo $this->env->getExtension('routing')->getPath("LIHotelBundle_consultar");
         echo "\">Consultar</a></li>
-                            <li class=\"active\"><a href=\"";
-        // line 26
-        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
-        echo "\">Registro</a></li>
-                            <button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px; margin-left:10px\">Iniciar Sesión</button>
+                            <li class=\"active\"><a href=\"#\">Registro</a></li>
+                            <a href=\"#\"><button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px; margin-left:10px\">Iniciar Sesión</button></a>
                         </ul>
                     </div>
                 </div>
@@ -116,52 +113,39 @@ class __TwigTemplate_a14eb93653c055ecfae22397914c5f8ec3f10a9a2962bf73be1dd10e0a8
         echo "\" width=\"100px\" height=\"100px\"></center></div>
                         <div class=\"col-md-6 col-md-6\"><p>Consulte todo lo referente a sus reservas, verifique sus consumos y descubra nuestros descuentos como miembro del hotel.</p></div>
                     </div>
-                    <!--<form action=\"";
-        // line 52
-        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_sesion");
-        echo "\" method=\"POST\" name=\"sesion\" class=\"usuario\">
-                        <div class=\"input-group\">
-                          <span class=\"glyphicon glyphicon-envelope input-group-addon\" id=\"basic-addon1\" aria-hidden=\"true\"></span>
-                          <input type=\"text\" name=\"mail\" class=\"form-control\" placeholder=\"Correo Electronico\" aria-describedby=\"basic-addon1\">
-                        </div>
-                        <div class=\"input-group\" style=\"margin-top: 10px; margin-bottom:10px;\">
-                          <span class=\"glyphicon glyphicon-asterisk input-group-addon\" id=\"basic-addon1\" aria-hidden=\"true\"></span>
-                          <input type=\"password\" name=\"pass\" class=\"form-control\" placeholder=\"Contraseña\" aria-describedby=\"basic-addon1\">
-                        </div>
-                    </form>-->
                     <form action=\"";
-        // line 62
+        // line 52
         echo $this->env->getExtension('routing')->getPath("LIHotelBundle_sesion");
         echo "\" method=\"post\" ";
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form2"]) ? $context["form2"] : $this->getContext($context, "form2")), 'enctype');
         echo " class=\"usuario\">
                         ";
-        // line 63
+        // line 53
         $this->env->getExtension('form')->renderer->setTheme((isset($context["form2"]) ? $context["form2"] : $this->getContext($context, "form2")), array(0 => "bootstrap_3_layout.html.twig"));
-        // line 64
+        // line 54
         echo "                        ";
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form2"]) ? $context["form2"] : $this->getContext($context, "form2")), 'errors');
         echo "
                         ";
-        // line 65
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form2"]) ? $context["form2"] : $this->getContext($context, "form2")), "_token", array()), 'row');
+        // line 55
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form2"]) ? $context["form2"] : $this->getContext($context, "form2")), "_token", array()), 'widget');
         echo "
 
                         ";
-        // line 67
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form2"]) ? $context["form2"] : $this->getContext($context, "form2")), "mail", array()), 'widget', array("attr" => array("placeholder" => "Correo Electronico", "autocomplete" => "off")));
+        // line 57
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form2"]) ? $context["form2"] : $this->getContext($context, "form2")), "mail", array()), 'row', array("attr" => array("autocomplete" => "off")));
         echo "
                         ";
-        // line 68
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form2"]) ? $context["form2"] : $this->getContext($context, "form2")), "password", array()), 'widget', array("attr" => array("placeholder" => "Contraseña", "autocomplete" => "off")));
+        // line 58
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form2"]) ? $context["form2"] : $this->getContext($context, "form2")), "password", array()), 'row', array("attr" => array("autocomplete" => "off")));
         echo "
                         ";
-        // line 69
+        // line 59
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form2"]) ? $context["form2"] : $this->getContext($context, "form2")), 'rest');
         echo "
 
                         <button type=\"button submit\" class=\"btn btn-primary col-md-6 pull-right\">
-                            <span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span> Iniciar Sesión
+                            <span class=\"glyphicon glyphicon-user pull-left\" aria-hidden=\"true\"></span> Iniciar Sesión
                         </button>
                     </form>
                 </div>
@@ -171,15 +155,15 @@ class __TwigTemplate_a14eb93653c055ecfae22397914c5f8ec3f10a9a2962bf73be1dd10e0a8
                     <h1>Regístrese</h1>
                 </div>
                 ";
-        // line 81
+        // line 71
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "session", array()), "flashbag", array()), "get", array(0 => "error"), "method"));
         foreach ($context['_seq'] as $context["_key"] => $context["flashMessage"]) {
-            // line 82
+            // line 72
             echo "                    <div class=\"alert alert-success alert-dismissible\" role=\"alert\">
                       <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
                       <strong> ";
-            // line 84
+            // line 74
             echo twig_escape_filter($this->env, $context["flashMessage"], "html", null, true);
             echo "</strong>
                   </div>
@@ -188,62 +172,62 @@ class __TwigTemplate_a14eb93653c055ecfae22397914c5f8ec3f10a9a2962bf73be1dd10e0a8
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['flashMessage'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 87
+        // line 77
         echo "                <div class=\"col-md-8 col-md-8\">
                     <form action=\"";
-        // line 88
+        // line 78
         echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
         echo "\" method=\"post\" ";
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'enctype');
         echo " class=\"usuario\">
                         ";
-        // line 89
+        // line 79
         $this->env->getExtension('form')->renderer->setTheme((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), array(0 => "bootstrap_3_layout.html.twig"));
-        // line 90
+        // line 80
         echo "                        ";
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'errors');
         echo "
                         ";
-        // line 91
+        // line 81
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), "_token", array()), 'row');
         echo "
 
                         ";
-        // line 93
+        // line 83
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), "nombre", array()), 'widget', array("attr" => array("placeholder" => "Nombre", "autocomplete" => "off")));
         echo "
                         ";
-        // line 94
+        // line 84
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), "apellido", array()), 'widget', array("attr" => array("placeholder" => "Apellido", "autocomplete" => "off")));
         echo "
                         ";
-        // line 95
+        // line 85
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), "mail", array()), 'row', array("attr" => array("type" => "text", "placeholder" => "Correo Electronico", "autocomplete" => "off")));
         echo "
                         ";
-        // line 96
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), "clave", array()), 'widget', array("attr" => array("placeholder" => "Password", "autocomplete" => "off")));
+        // line 86
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), "clave", array()), 'widget', array("attr" => array("placeholder" => "Contraseña", "autocomplete" => "off")));
         echo "
                         ";
-        // line 97
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), "edad", array()), 'row', array("attr" => array("placeholder" => "Edad", "autocomplete" => "off")));
+        // line 87
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), "fecha_nac", array()), 'row', array("attr" => array("placeholder" => "Edad", "autocomplete" => "off")));
         echo "
 
                         ";
-        // line 99
+        // line 89
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'rest');
         echo "
 
-                        <button type=\"button submit\" class=\"btn btn-success col-md-6 pull-right\">
-                            <span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span> Enviar Registro
+                        <button type=\"button submit\" class=\"btn btn-success col-md-8 pull-right\">
+                            <span class=\"glyphicon glyphicon-hand-right pull-left\" aria-hidden=\"true\"></span> Enviar Registro
                         </button>
                     </form>
                 </div>
                 <div class=\"col-md-4 col-md-4\">
                     <center><img src=\"";
-        // line 107
+        // line 97
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/signup-icon.png"), "html", null, true);
-        echo "\" width=\"120px\" height=\"120px\"></center>
+        echo "\" width=\"100px\" height=\"100px\"></center>
                     <p>No sea un gran tonto y regístrese, descubra todos los beneficios de formar parte de nuestra exclusiva y singular cadena.</p>
                 </div>
             </div>
@@ -252,10 +236,10 @@ class __TwigTemplate_a14eb93653c055ecfae22397914c5f8ec3f10a9a2962bf73be1dd10e0a8
 ";
     }
 
-    // line 115
+    // line 105
     public function block_stylesheets($context, array $blocks = array())
     {
-        // line 116
+        // line 106
         echo "    <style type=\"text/css\">
         .usuario > input{
             margin-bottom: 10px;
@@ -276,6 +260,6 @@ class __TwigTemplate_a14eb93653c055ecfae22397914c5f8ec3f10a9a2962bf73be1dd10e0a8
 
     public function getDebugInfo()
     {
-        return array (  259 => 116,  256 => 115,  245 => 107,  234 => 99,  229 => 97,  225 => 96,  221 => 95,  217 => 94,  213 => 93,  208 => 91,  203 => 90,  201 => 89,  195 => 88,  192 => 87,  183 => 84,  179 => 82,  175 => 81,  160 => 69,  156 => 68,  152 => 67,  147 => 65,  142 => 64,  140 => 63,  134 => 62,  121 => 52,  115 => 49,  112 => 48,  103 => 45,  99 => 43,  95 => 42,  76 => 26,  72 => 25,  68 => 24,  61 => 20,  50 => 12,  46 => 11,  39 => 6,  36 => 5,  30 => 3,  11 => 1,);
+        return array (  243 => 106,  240 => 105,  229 => 97,  218 => 89,  213 => 87,  209 => 86,  205 => 85,  201 => 84,  197 => 83,  192 => 81,  187 => 80,  185 => 79,  179 => 78,  176 => 77,  167 => 74,  163 => 72,  159 => 71,  144 => 59,  140 => 58,  136 => 57,  131 => 55,  126 => 54,  124 => 53,  118 => 52,  112 => 49,  109 => 48,  100 => 45,  96 => 43,  92 => 42,  72 => 25,  68 => 24,  61 => 20,  50 => 12,  46 => 11,  39 => 6,  36 => 5,  30 => 3,  11 => 1,);
     }
 }

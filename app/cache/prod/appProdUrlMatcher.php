@@ -64,6 +64,17 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
         }
         not_LIHotelBundle_registro:
 
+        // LIHotelBundle_sesion
+        if ($pathinfo === '/sesion') {
+            if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
+                $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
+                goto not_LIHotelBundle_sesion;
+            }
+
+            return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::sesionAction',  '_route' => 'LIHotelBundle_sesion',);
+        }
+        not_LIHotelBundle_sesion:
+
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
     }
 }

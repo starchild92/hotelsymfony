@@ -68,7 +68,10 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
         // line 24
         echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
         echo "\">Registro</a></li>
-                            <button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px; margin-left:10px\">Iniciar Sesión</button>
+                            <a href=\"";
+        // line 25
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
+        echo "\"><button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px; margin-left:10px\">Iniciar Sesión</button></a>
                         </ul>
                     </div>
                 </div>
@@ -192,6 +195,6 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
 
     public function getDebugInfo()
     {
-        return array (  177 => 111,  174 => 110,  164 => 104,  131 => 74,  118 => 64,  105 => 54,  92 => 44,  69 => 24,  65 => 23,  61 => 22,  54 => 18,  43 => 10,  39 => 9,  32 => 4,  29 => 3,  11 => 1,);
+        return array (  180 => 111,  177 => 110,  167 => 104,  134 => 74,  121 => 64,  108 => 54,  95 => 44,  73 => 25,  69 => 24,  65 => 23,  61 => 22,  54 => 18,  43 => 10,  39 => 9,  32 => 4,  29 => 3,  11 => 1,);
     }
 }
