@@ -59,10 +59,60 @@ class __TwigTemplate_207f2533918c1a63c1bfc02945c3caf1fb8eba9f7262a54a839b394adf6
         echo "    </head>
     <body>
 
+    <div class=\"navbar-wrapper\">
+        <div class=\"container\">
+            <nav class=\"navbar navbar-inverse navbar-static-top\">
+                <div class=\"container\">
+                    <div class=\"navbar-header\">
+                        <a class=\"navbar-brand\" href=\"";
+        // line 22
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
+        echo "\">
+                            <img width=\"20\" height=\"20\" alt=\"Brand\" src=\"";
+        // line 23
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/icon.ico"), "html", null, true);
+        echo "\">
+                        </a>
+                        <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">
+                            <span class=\"sr-only\">Toggle navigation</span>
+                            <span class=\"icon-bar\"></span>
+                            <span class=\"icon-bar\"></span>
+                            <span class=\"icon-bar\"></span>
+                        </button>
+                        <a class=\"navbar-brand brandname\" href=\"";
+        // line 31
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
+        echo "\">Hotel Symfony</a>
+                    </div>
+                    <div id=\"navbar\" class=\"navbar-collapse collapse\">
+                        <ul class=\"nav navbar-nav navbar-right\">
+                            <li><a href=\"";
+        // line 35
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
+        echo "\">Inicio</a></li>
+                            <li class=\"active\"><a href=\"";
+        // line 36
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_consultar");
+        echo "\">Consultar</a></li>
+                            <li><a href=\"";
+        // line 37
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
+        echo "\">Registro</a></li>
+                            <a href=\"";
+        // line 38
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
+        echo "\"><button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px; margin-left:10px\">Iniciar Sesión</button></a>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    
     ";
-        // line 17
+        // line 46
         $this->displayBlock('body', $context, $blocks);
-        // line 18
+        // line 47
         echo "
     <div class=\"container\" style=\"margin-bottom: 20px; margin-top: 20px;\">
             <div id=\"london\"></div>
@@ -71,14 +121,14 @@ class __TwigTemplate_207f2533918c1a63c1bfc02945c3caf1fb8eba9f7262a54a839b394adf6
                     <center>
                         <div class=\"col-md-6 col-xs-6\">
                         <img src=\"";
-        // line 25
+        // line 54
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/LOGO UC.png"), "html", null, true);
         echo "\" alt=\"rude\" width=\"70\" height=\"85\">
                             <h5>Universidad de Carabobo</h5>
                         </div><!-- /.col-md-6 -->
                         <div class=\"col-md-6 col-xs-6\">
                         <img src=\"";
-        // line 29
+        // line 58
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/LOGO FACYT.png"), "html", null, true);
         echo "\" alt=\"rude\" width=\"80\" height=\"85\">
                             <h5>Facultad Experimental de Ciencias y Tecnología</h5>
@@ -89,7 +139,7 @@ class __TwigTemplate_207f2533918c1a63c1bfc02945c3caf1fb8eba9f7262a54a839b394adf6
                     <center>
                         <div class=\"col-md-12\">
                         <img data-toggle=\"tooltip\" title=\"Jajaja, Necesitas tiempo, tutoriales y mucha lectura para dominarme!\" class=\"img-circle\" src=\"";
-        // line 37
+        // line 66
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/symfony2.png"), "html", null, true);
         echo "\" alt=\"rude\" width=\"90\" height=\"90\">
                         </div><!-- /.col-md-4 --><br>Int. al uso de Frameworks <br>para el Desarrollo de Apps Web<br>Prof. Luis León<br>
@@ -99,14 +149,14 @@ class __TwigTemplate_207f2533918c1a63c1bfc02945c3caf1fb8eba9f7262a54a839b394adf6
                     <center>
                         <div class=\"col-md-6 col-xs-6\">
                         <img data-toggle=\"tooltip\" title=\"Break a leg!\" class=\"img-circle\" src=\"";
-        // line 44
+        // line 73
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/luis.jpg"), "html", null, true);
         echo "\" alt=\"rude\" width=\"85\" height=\"85\">
                             <h5>Luis Pérez</h5>
                         </div><!-- /.col-md-4 -->
                         <div class=\"col-md-6 col-xs-6\">
                         <img data-toggle=\"tooltip\" title=\"Some people want to set the world on fire.\" class=\"img-circle\" src=\"";
-        // line 48
+        // line 77
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/ivo.jpg"), "html", null, true);
         echo "\" alt=\"rude\" width=\"85\" height=\"85\">
                             <h5>Ivonne Ortega</h5>
@@ -125,14 +175,14 @@ class __TwigTemplate_207f2533918c1a63c1bfc02945c3caf1fb8eba9f7262a54a839b394adf6
         @font-face{
           font-family: \"Raleway-Regular\";
           src: url('";
-        // line 64
+        // line 93
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/fonts/Raleway-Medium.ttf"), "html", null, true);
         echo "') format('truetype');
         }
         @font-face{
           font-family: \"Arya-Regular\";
           src: url('";
-        // line 68
+        // line 97
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/fonts/Arya-Regular.ttf"), "html", null, true);
         echo "') format('truetype');
         }
@@ -163,7 +213,7 @@ class __TwigTemplate_207f2533918c1a63c1bfc02945c3caf1fb8eba9f7262a54a839b394adf6
     {
     }
 
-    // line 17
+    // line 46
     public function block_body($context, array $blocks = array())
     {
     }
@@ -180,6 +230,6 @@ class __TwigTemplate_207f2533918c1a63c1bfc02945c3caf1fb8eba9f7262a54a839b394adf6
 
     public function getDebugInfo()
     {
-        return array (  167 => 17,  162 => 13,  157 => 9,  151 => 5,  136 => 68,  129 => 64,  110 => 48,  103 => 44,  93 => 37,  82 => 29,  75 => 25,  66 => 18,  64 => 17,  59 => 14,  57 => 13,  53 => 12,  49 => 11,  46 => 10,  44 => 9,  38 => 8,  34 => 7,  29 => 5,  23 => 1,);
+        return array (  217 => 46,  212 => 13,  207 => 9,  201 => 5,  186 => 97,  179 => 93,  160 => 77,  153 => 73,  143 => 66,  132 => 58,  125 => 54,  116 => 47,  114 => 46,  103 => 38,  99 => 37,  95 => 36,  91 => 35,  84 => 31,  73 => 23,  69 => 22,  59 => 14,  57 => 13,  53 => 12,  49 => 11,  46 => 10,  44 => 9,  38 => 8,  34 => 7,  29 => 5,  23 => 1,);
     }
 }

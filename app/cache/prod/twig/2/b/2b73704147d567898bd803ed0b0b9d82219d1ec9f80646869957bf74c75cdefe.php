@@ -7,193 +7,215 @@ class __TwigTemplate_2b73704147d567898bd803ed0b0b9d82219d1ec9f80646869957bf74c75
     {
         parent::__construct($env);
 
-        // line 1
-        $this->parent = $this->loadTemplate("base.html.twig", "LIHotelBundle::base.html.twig", 1);
+        $this->parent = false;
+
         $this->blocks = array(
-            'body' => array($this, 'block_body'),
+            'title' => array($this, 'block_title'),
             'stylesheets' => array($this, 'block_stylesheets'),
             'javascripts' => array($this, 'block_javascripts'),
+            'body' => array($this, 'block_body'),
         );
-    }
-
-    protected function doGetParent(array $context)
-    {
-        return "base.html.twig";
     }
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        $this->parent->display($context, array_merge($this->blocks, $blocks));
-    }
-
-    // line 3
-    public function block_body($context, array $blocks = array())
-    {
-        // line 4
-        echo "    <div class=\"navbar-wrapper\">
-        <div class=\"container\">
-        <nav class=\"navbar navbar-inverse navbar-static-top\">
-            <div class=\"container\">
-                <div class=\"navbar-header\">
-                    <a class=\"navbar-brand\" href=\"#\">
-                        <img width=\"20\" height=\"20\" alt=\"Brand\" src=\"";
-        // line 10
+        // line 1
+        echo "<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=\"UTF-8\" />
+        <title>";
+        // line 5
+        $this->displayBlock('title', $context, $blocks);
+        echo "</title>
+        
+        <link rel=\"icon\" type=\"image/x-icon\" href=\"";
+        // line 7
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/icon.ico"), "html", null, true);
-        echo "\">
-                      </a>
-                    <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">
-                        <span class=\"sr-only\">Toggle navigation</span>
-                        <span class=\"icon-bar\"></span>
-                        <span class=\"icon-bar\"></span>
-                        <span class=\"icon-bar\"></span>
-                    </button>
-                    <a class=\"navbar-brand brandname\" href=\"";
-        // line 18
-        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
-        echo "\">Hotel Symfony</a>
-                </div>
-                <div id=\"navbar\" class=\"navbar-collapse collapse\">
-                    <ul class=\"nav navbar-nav navbar-right\">
-                        <li><a href=\"";
-        // line 22
-        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_inicio");
-        echo "\">Inicio</a></li>
-                        <li><a href=\"";
-        // line 23
-        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_consultar");
-        echo "\">Consultar</a></li>
-                        <li><a href=\"";
-        // line 24
-        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
-        echo "\">Registro</a></li>
-                        <button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px;\">Iniciar Sesión</button>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        </div>
-    </div>
-
-    <!-- Carousel
-    ================================================== -->
-    <div id=\"myCarousel\" class=\"carousel slide\" data-ride=\"carousel\">
-        <!-- Indicators -->
-        <ol class=\"carousel-indicators\">
-            <li data-target=\"#myCarousel\" data-slide-to=\"0\" class=\"active\"></li>
-            <li data-target=\"#myCarousel\" data-slide-to=\"1\"></li>
-            <li data-target=\"#myCarousel\" data-slide-to=\"2\"></li>
-            <li data-target=\"#myCarousel\" data-slide-to=\"3\"></li>
-        </ol>
-        <div class=\"carousel-inner\" role=\"listbox\">
-            <div class=\"item active\">
-                <img class=\"first-slide\" src=\"";
-        // line 45
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/big_4.jpg"), "html", null, true);
-        echo "\" alt=\"First slide\">
-                <div class=\"container\">
-                    <div class=\"carousel-caption\">
-                        <h1>Example headline.</h1>
-                        <p>Note: If you're viewing this page via a <code>file://</code> URL, the \"next\" and \"previous\" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-                        <p><a class=\"btn btn-lg btn-primary\" href=\"#\" role=\"button\">Sign up today</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class=\"item\">
-                <img class=\"second-slide\" src=\"";
-        // line 55
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/big_1.jpg"), "html", null, true);
-        echo "\" alt=\"Second slide\">
-                <div class=\"container\">
-                    <div class=\"carousel-caption\">
-                        <h1>Another example headline.</h1>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a class=\"btn btn-lg btn-primary\" href=\"#\" role=\"button\">Learn more</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class=\"item\">
-                <img class=\"third-slide\" src=\"";
-        // line 65
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/big_2.jpg"), "html", null, true);
-        echo "\" alt=\"Third slide\">
-                <div class=\"container\">
-                    <div class=\"carousel-caption\">
-                        <h1>One more for good measure.</h1>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a class=\"btn btn-lg btn-primary\" href=\"#\" role=\"button\">Browse gallery</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class=\"item\">
-                <img class=\"third-slide\" src=\"";
-        // line 75
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/big_3.jpg"), "html", null, true);
-        echo "\" alt=\"Fourth slide\">
-                <div class=\"container\">
-                    <div class=\"carousel-caption\">
-                        <h1>One more for good measure.</h1>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a class=\"btn btn-lg btn-primary\" href=\"#\" role=\"button\">Browse gallery</a></p>
-                    </div>
-                </div>
-            </div
-        </div>
-        <a class=\"left carousel-control\" href=\"#myCarousel\" role=\"button\" data-slide=\"prev\">
-            <span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\"></span>
-            <span class=\"sr-only\">Previous</span>
-        </a>
-        <a class=\"right carousel-control\" href=\"#myCarousel\" role=\"button\" data-slide=\"next\">
-            <span class=\"glyphicon glyphicon-chevron-right\" aria-hidden=\"true\"></span>
-            <span class=\"sr-only\">Next</span>
-        </a>
-    </div><!-- /.carousel -->
-
-    <div class=\"container marketing\" style=\"margin-bottom: 20px\">
-        <!-- START THE FEATURETTES -->
-        <hr class=\"featurette-divider-little\">
-        <div class=\"row featurette\">
-            <div class=\"col-md-7\">
-                <h2 class=\"featurette-heading\">El lugar más remoto para su descanso <span class=\"text-muted\">o ¡ocultar un cadaver!</span></h2>
-                <p class=\"lead\">Rodeado de un valle de montañas rocosas y con la civilización más cercana a 700k, nuestro hotel es el más inóspito después del 'Overlook' de 'The Shinning', además somos visitados cada 6 meses por un grupo del ISIS.</p>
-            </div>
-            <div class=\"col-md-5\">
-                <img class=\"featurette-image img-responsive center-block\" data-src=\"holder.js/500x500/auto\" alt=\"Generic placeholder image\" src=\"";
-        // line 104
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/image_1.jpeg"), "html", null, true);
-        echo "\">
-            </div>
-        </div>
-        <!-- /END THE FEATURETTES -->
-    </div>
-";
-    }
-
-    // line 111
-    public function block_stylesheets($context, array $blocks = array())
-    {
-        // line 112
-        echo "    <link rel=\"stylesheet\" type=\"text/css\" href=\"";
+        echo "\" />
+        <link rel=\"stylesheet\" type=\"text/css\" href=\"";
+        // line 8
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/css/bootstrap.css"), "html", null, true);
-        echo "\">
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"";
-        // line 113
+        echo "\"><link rel=\"stylesheet\" type=\"text/css\" href=\"";
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/css/carousel.css"), "html", null, true);
         echo "\">
-";
-    }
-
-    // line 115
-    public function block_javascripts($context, array $blocks = array())
-    {
-        // line 116
-        echo "    <script src=\"";
+        ";
+        // line 9
+        $this->displayBlock('stylesheets', $context, $blocks);
+        // line 10
+        echo "
+        <script src=\"";
+        // line 11
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/js/jquery.min.js"), "html", null, true);
         echo "\"></script>
-    <script src=\"";
-        // line 117
+        <script src=\"";
+        // line 12
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/js/bootstrap.min.js"), "html", null, true);
         echo "\"></script>
-";
+        ";
+        // line 13
+        $this->displayBlock('javascripts', $context, $blocks);
+        // line 14
+        echo "    </head>
+    <body>
+
+    <div class=\"navbar-wrapper\">
+        <div class=\"container\">
+            <nav class=\"navbar navbar-default navbar-static-top\">
+                <div class=\"container\">
+                    <div class=\"navbar-header\">
+                        <a class=\"navbar-brand\" href=\"";
+        // line 22
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
+        echo "\">
+                            <img width=\"20\" height=\"20\" alt=\"Brand\" src=\"";
+        // line 23
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/icon.ico"), "html", null, true);
+        echo "\">
+                        </a>
+                        <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">
+                            <span class=\"sr-only\">Toggle navigation</span>
+                            <span class=\"icon-bar\"></span>
+                            <span class=\"icon-bar\"></span>
+                            <span class=\"icon-bar\"></span>
+                        </button>
+                        <a class=\"navbar-brand brandname\" href=\"";
+        // line 31
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
+        echo "\">Hotel Symfony</a>
+                    </div>
+                    <div id=\"navbar\" class=\"navbar-collapse collapse\">
+                        <ul class=\"nav navbar-nav navbar-right\">
+                            <li><a href=\"";
+        // line 35
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
+        echo "\">Inicio</a></li>
+                            <li class=\"active\"><a href=\"";
+        // line 36
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_consultar");
+        echo "\">Consultar</a></li>
+                            <li><a href=\"";
+        // line 37
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
+        echo "\">Registro</a></li>
+                            <a href=\"";
+        // line 38
+        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
+        echo "\"><button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px; margin-left:10px\">Iniciar Sesión</button></a>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    
+    ";
+        // line 46
+        $this->displayBlock('body', $context, $blocks);
+        // line 47
+        echo "
+    <div class=\"container\" style=\"margin-bottom: 20px; margin-top: 20px;\">
+            <div id=\"london\"></div>
+            <div class=\"row\">
+                <div class=\"col-md-4\">
+                    <center>
+                        <div class=\"col-md-6 col-xs-6\">
+                        <img src=\"";
+        // line 54
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/LOGO UC.png"), "html", null, true);
+        echo "\" alt=\"rude\" width=\"70\" height=\"85\">
+                            <h5>Universidad de Carabobo</h5>
+                        </div><!-- /.col-md-6 -->
+                        <div class=\"col-md-6 col-xs-6\">
+                        <img src=\"";
+        // line 58
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/LOGO FACYT.png"), "html", null, true);
+        echo "\" alt=\"rude\" width=\"80\" height=\"85\">
+                            <h5>Facultad Experimental de Ciencias y Tecnología</h5>
+                        </div><!-- /.col-md-6 -->
+                    </center>
+                </div>
+                <div class=\"col-md-4\" id=\"lado\">
+                    <center>
+                        <div class=\"col-md-12\">
+                        <img data-toggle=\"tooltip\" title=\"Jajaja, Necesitas tiempo, tutoriales y mucha lectura para dominarme!\" class=\"img-circle\" src=\"";
+        // line 66
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/symfony2.png"), "html", null, true);
+        echo "\" alt=\"rude\" width=\"90\" height=\"90\">
+                        </div><!-- /.col-md-4 --><br>Int. al uso de Frameworks <br>para el Desarrollo de Apps Web<br>Prof. Luis León<br>
+                    </center>
+                </div>
+                <div class=\"col-md-4\" id=\"lado\">
+                    <center>
+                        <div class=\"col-md-6 col-xs-6\">
+                        <img data-toggle=\"tooltip\" title=\"Break a leg!\" class=\"img-circle\" src=\"";
+        // line 73
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/luis.jpg"), "html", null, true);
+        echo "\" alt=\"rude\" width=\"85\" height=\"85\">
+                            <h5>Luis Pérez</h5>
+                        </div><!-- /.col-md-4 -->
+                        <div class=\"col-md-6 col-xs-6\">
+                        <img data-toggle=\"tooltip\" title=\"Some people want to set the world on fire.\" class=\"img-circle\" src=\"";
+        // line 77
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/ivo.jpg"), "html", null, true);
+        echo "\" alt=\"rude\" width=\"85\" height=\"85\">
+                            <h5>Ivonne Ortega</h5>
+                        </div><!-- /.col-md-4 -->
+                    </center>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+    <style type=\"text/css\">
+        h5{ text-align: center; }
+        #london{ border-top: 1px solid #eeeeee; margin-bottom: 15px; }
+        #lado{ border-left: 1px solid #eeeeee; }
+        @font-face{
+          font-family: \"Raleway-Regular\";
+          src: url('";
+        // line 93
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/fonts/Raleway-Medium.ttf"), "html", null, true);
+        echo "') format('truetype');
+        }
+        @font-face{
+          font-family: \"Arya-Regular\";
+          src: url('";
+        // line 97
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/fonts/Arya-Regular.ttf"), "html", null, true);
+        echo "') format('truetype');
+        }
+        body{
+            font-family: Raleway-Regular;
+        }
+    </style>
+    <script>
+    \$(document).ready(function(){
+        \$('[data-toggle=\"tooltip\"]').tooltip();   
+    });
+    </script>";
+    }
+
+    // line 5
+    public function block_title($context, array $blocks = array())
+    {
+        echo "Hotel Symfony";
+    }
+
+    // line 9
+    public function block_stylesheets($context, array $blocks = array())
+    {
+    }
+
+    // line 13
+    public function block_javascripts($context, array $blocks = array())
+    {
+    }
+
+    // line 46
+    public function block_body($context, array $blocks = array())
+    {
     }
 
     public function getTemplateName()
@@ -208,6 +230,6 @@ class __TwigTemplate_2b73704147d567898bd803ed0b0b9d82219d1ec9f80646869957bf74c75
 
     public function getDebugInfo()
     {
-        return array (  194 => 117,  189 => 116,  186 => 115,  180 => 113,  175 => 112,  172 => 111,  162 => 104,  130 => 75,  117 => 65,  104 => 55,  91 => 45,  67 => 24,  63 => 23,  59 => 22,  52 => 18,  41 => 10,  33 => 4,  30 => 3,  11 => 1,);
+        return array (  217 => 46,  212 => 13,  207 => 9,  201 => 5,  186 => 97,  179 => 93,  160 => 77,  153 => 73,  143 => 66,  132 => 58,  125 => 54,  116 => 47,  114 => 46,  103 => 38,  99 => 37,  95 => 36,  91 => 35,  84 => 31,  73 => 23,  69 => 22,  59 => 14,  57 => 13,  53 => 12,  49 => 11,  46 => 10,  44 => 9,  38 => 8,  34 => 7,  29 => 5,  23 => 1,);
     }
 }

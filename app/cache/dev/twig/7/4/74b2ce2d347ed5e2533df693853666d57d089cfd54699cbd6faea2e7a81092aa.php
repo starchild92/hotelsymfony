@@ -29,57 +29,7 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
     public function block_body($context, array $blocks = array())
     {
         // line 4
-        echo "\t<div class=\"navbar-wrapper\">
-        <div class=\"container\">
-            <nav class=\"navbar navbar-inverse navbar-static-top\">
-                <div class=\"container\">
-                    <div class=\"navbar-header\">
-                        <a class=\"navbar-brand\" href=\"";
-        // line 9
-        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
-        echo "\">
-                            <img width=\"20\" height=\"20\" alt=\"Brand\" src=\"";
-        // line 10
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/icon.ico"), "html", null, true);
-        echo "\">
-                        </a>
-                        <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">
-                            <span class=\"sr-only\">Toggle navigation</span>
-                            <span class=\"icon-bar\"></span>
-                            <span class=\"icon-bar\"></span>
-                            <span class=\"icon-bar\"></span>
-                        </button>
-                        <a class=\"navbar-brand brandname\" href=\"";
-        // line 18
-        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
-        echo "\">Hotel Symfony</a>
-                    </div>
-                    <div id=\"navbar\" class=\"navbar-collapse collapse\">
-                        <ul class=\"nav navbar-nav navbar-right\">
-                            <li class=\"active\"><a href=\"";
-        // line 22
-        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
-        echo "\">Inicio</a></li>
-                            <li><a href=\"";
-        // line 23
-        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_consultar");
-        echo "\">Consultar</a></li>
-                            <li><a href=\"";
-        // line 24
-        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
-        echo "\">Registro</a></li>
-                            <a href=\"";
-        // line 25
-        echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
-        echo "\"><button type=\"button\" class=\"btn btn-success navbar-btn\" style=\"margin-right:10px; margin-left:10px\">Iniciar Sesión</button></a>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
-
-\t<!-- =================== Carousel =================== -->
+        echo "\t<!-- =================== Carousel =================== -->
 \t<div id=\"myCarousel\" class=\"carousel slide\" data-ride=\"carousel\">
 \t\t<!-- Indicators -->
 \t\t<ol class=\"carousel-indicators\">
@@ -91,7 +41,7 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
 \t\t<div class=\"carousel-inner\" role=\"listbox\">
 \t\t\t<div class=\"item active\">
 \t\t\t\t<img class=\"first-slide\" src=\"";
-        // line 44
+        // line 15
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/big_4.jpg"), "html", null, true);
         echo "\" alt=\"First slide\">
 \t\t\t\t<div class=\"container\">
@@ -104,7 +54,7 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
 \t\t\t</div>
 \t\t\t<div class=\"item\">
 \t\t\t\t<img class=\"second-slide\" src=\"";
-        // line 54
+        // line 25
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/big_1.jpg"), "html", null, true);
         echo "\" alt=\"Second slide\">
 \t\t\t\t<div class=\"container\">
@@ -117,7 +67,7 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
 \t\t\t</div>
 \t\t\t<div class=\"item\">
 \t\t\t\t<img class=\"third-slide\" src=\"";
-        // line 64
+        // line 35
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/big_2.jpg"), "html", null, true);
         echo "\" alt=\"Third slide\">
 \t\t\t\t<div class=\"container\">
@@ -130,7 +80,7 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
 \t\t\t</div>
 \t\t\t<div class=\"item\">
 \t\t\t\t<img class=\"third-slide\" src=\"";
-        // line 74
+        // line 45
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/big_3.jpg"), "html", null, true);
         echo "\" alt=\"Fourth slide\">
 \t\t\t\t<div class=\"container\">
@@ -163,7 +113,7 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
 \t\t\t</div>
 \t\t\t<div class=\"col-md-5\">
 \t\t\t\t<img class=\"featurette-image img-responsive center-block\" data-src=\"holder.js/500x500/auto\" alt=\"Generic placeholder image\" src=\"";
-        // line 104
+        // line 75
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/images/image_1.jpeg"), "html", null, true);
         echo "\">
 \t\t\t</div>
@@ -173,10 +123,10 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
 ";
     }
 
-    // line 110
+    // line 81
     public function block_stylesheets($context, array $blocks = array())
     {
-        // line 111
+        // line 82
         echo "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"";
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/lihotel/css/carousel.css"), "html", null, true);
         echo "\">
@@ -195,6 +145,6 @@ class __TwigTemplate_74b2ce2d347ed5e2533df693853666d57d089cfd54699cbd6faea2e7a81
 
     public function getDebugInfo()
     {
-        return array (  180 => 111,  177 => 110,  167 => 104,  134 => 74,  121 => 64,  108 => 54,  95 => 44,  73 => 25,  69 => 24,  65 => 23,  61 => 22,  54 => 18,  43 => 10,  39 => 9,  32 => 4,  29 => 3,  11 => 1,);
+        return array (  130 => 82,  127 => 81,  117 => 75,  84 => 45,  71 => 35,  58 => 25,  45 => 15,  32 => 4,  29 => 3,  11 => 1,);
     }
 }
