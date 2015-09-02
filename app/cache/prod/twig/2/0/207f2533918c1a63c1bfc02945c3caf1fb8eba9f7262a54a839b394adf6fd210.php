@@ -86,16 +86,28 @@ class __TwigTemplate_207f2533918c1a63c1bfc02945c3caf1fb8eba9f7262a54a839b394adf6
                     </div>
                     <div id=\"navbar\" class=\"navbar-collapse collapse\">
                         <ul class=\"nav navbar-nav navbar-right\">
-                            <li><a href=\"";
+                            <li class=\"";
         // line 35
+        if (($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request", array()), "attributes", array()), "get", array(0 => "_route"), "method") == "LIHotelBundle_homepage")) {
+            echo "active";
+        }
+        echo "\"><a href=\"";
         echo $this->env->getExtension('routing')->getPath("LIHotelBundle_homepage");
         echo "\">Inicio</a></li>
-                            <li class=\"active\"><a href=\"";
+                            <li class=\"";
         // line 36
+        if (($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request", array()), "attributes", array()), "get", array(0 => "_route"), "method") == "LIHotelBundle_consultar")) {
+            echo "active";
+        }
+        echo "\"><a href=\"";
         echo $this->env->getExtension('routing')->getPath("LIHotelBundle_consultar");
         echo "\">Consultar</a></li>
-                            <li><a href=\"";
+                            <li class=\"";
         // line 37
+        if (($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request", array()), "attributes", array()), "get", array(0 => "_route"), "method") == "LIHotelBundle_registro")) {
+            echo "active";
+        }
+        echo "\"><a href=\"";
         echo $this->env->getExtension('routing')->getPath("LIHotelBundle_registro");
         echo "\">Registro</a></li>
                             <a href=\"";
@@ -230,6 +242,6 @@ class __TwigTemplate_207f2533918c1a63c1bfc02945c3caf1fb8eba9f7262a54a839b394adf6
 
     public function getDebugInfo()
     {
-        return array (  217 => 46,  212 => 13,  207 => 9,  201 => 5,  186 => 97,  179 => 93,  160 => 77,  153 => 73,  143 => 66,  132 => 58,  125 => 54,  116 => 47,  114 => 46,  103 => 38,  99 => 37,  95 => 36,  91 => 35,  84 => 31,  73 => 23,  69 => 22,  59 => 14,  57 => 13,  53 => 12,  49 => 11,  46 => 10,  44 => 9,  38 => 8,  34 => 7,  29 => 5,  23 => 1,);
+        return array (  229 => 46,  224 => 13,  219 => 9,  213 => 5,  198 => 97,  191 => 93,  172 => 77,  165 => 73,  155 => 66,  144 => 58,  137 => 54,  128 => 47,  126 => 46,  115 => 38,  107 => 37,  99 => 36,  91 => 35,  84 => 31,  73 => 23,  69 => 22,  59 => 14,  57 => 13,  53 => 12,  49 => 11,  46 => 10,  44 => 9,  38 => 8,  34 => 7,  29 => 5,  23 => 1,);
     }
 }
