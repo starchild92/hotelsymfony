@@ -25,7 +25,7 @@ class appProdDebugProjectContainer extends Container
     public function __construct()
     {
         $dir = __DIR__;
-        for ($i = 1; $i <= 5; ++$i) {
+        for ($i = 1; $i <= 4; ++$i) {
             $this->targetDirs[$i] = $dir = dirname($dir);
         }
         $this->parameters = $this->getDefaultParameters();
@@ -511,7 +511,7 @@ class appProdDebugProjectContainer extends Container
     protected function getDoctrine_Orm_DefaultEntityManagerService()
     {
         $a = new \Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain();
-        $a->addDriver(new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($this->get('annotation_reader'), array(0 => ($this->targetDirs[3].'/src/LI/Bundle/HotelBundle/Entity'))), 'LI\\Bundle\\HotelBundle\\Entity');
+        $a->addDriver(new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($this->get('annotation_reader'), array(0 => ($this->targetDirs[3].'\\src\\LI\\Bundle\\HotelBundle\\Entity'))), 'LI\\Bundle\\HotelBundle\\Entity');
 
         $b = new \Doctrine\ORM\Configuration();
         $b->setEntityNamespaces(array('LIHotelBundle' => 'LI\\Bundle\\HotelBundle\\Entity'));
@@ -586,7 +586,7 @@ class appProdDebugProjectContainer extends Container
     {
         $this->services['doctrine_cache.providers.doctrine.orm.default_metadata_cache'] = $instance = new \Doctrine\Common\Cache\ArrayCache();
 
-        $instance->setNamespace('sf2orm_default_84d22850fe7574e60afd2dd326c4b011c72d4eb2e084e792d3958c44d7371b97');
+        $instance->setNamespace('sf2orm_default_b4cf7d706aafe41961cd1da3bd5ecdfc1794fed85184860bfedb7105baf1fea2');
 
         return $instance;
     }
@@ -603,7 +603,7 @@ class appProdDebugProjectContainer extends Container
     {
         $this->services['doctrine_cache.providers.doctrine.orm.default_query_cache'] = $instance = new \Doctrine\Common\Cache\ArrayCache();
 
-        $instance->setNamespace('sf2orm_default_84d22850fe7574e60afd2dd326c4b011c72d4eb2e084e792d3958c44d7371b97');
+        $instance->setNamespace('sf2orm_default_b4cf7d706aafe41961cd1da3bd5ecdfc1794fed85184860bfedb7105baf1fea2');
 
         return $instance;
     }
@@ -620,7 +620,7 @@ class appProdDebugProjectContainer extends Container
     {
         $this->services['doctrine_cache.providers.doctrine.orm.default_result_cache'] = $instance = new \Doctrine\Common\Cache\ArrayCache();
 
-        $instance->setNamespace('sf2orm_default_84d22850fe7574e60afd2dd326c4b011c72d4eb2e084e792d3958c44d7371b97');
+        $instance->setNamespace('sf2orm_default_b4cf7d706aafe41961cd1da3bd5ecdfc1794fed85184860bfedb7105baf1fea2');
 
         return $instance;
     }
@@ -1391,7 +1391,7 @@ class appProdDebugProjectContainer extends Container
      */
     protected function getMonolog_Handler_NestedService()
     {
-        return $this->services['monolog.handler.nested'] = new \Monolog\Handler\StreamHandler(($this->targetDirs[2].'/logs/prod.log'), 100, true, NULL);
+        return $this->services['monolog.handler.nested'] = new \Monolog\Handler\StreamHandler(($this->targetDirs[2].'\\logs/prod.log'), 100, true, NULL);
     }
 
     /**
@@ -1773,7 +1773,7 @@ class appProdDebugProjectContainer extends Container
 
         $e = new \Symfony\Component\Security\Http\AccessMap();
 
-        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($e, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => new \Symfony\Component\Security\Core\User\InMemoryUserProvider()), 'main', $a, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE)), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '55e2163a640cf9.36627699', $a, $c), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $e, $c)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), new \Symfony\Component\Security\Http\HttpUtils($d, $d), 'main', NULL, NULL, NULL, $a));
+        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($e, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => new \Symfony\Component\Security\Core\User\InMemoryUserProvider()), 'main', $a, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE)), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '55f4e32d876f56.79586179', $a, $c), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $e, $c)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), new \Symfony\Component\Security\Http\HttpUtils($d, $d), 'main', NULL, NULL, NULL, $a));
     }
 
     /**
@@ -2884,14 +2884,14 @@ class appProdDebugProjectContainer extends Container
     {
         $this->services['twig.loader'] = $instance = new \Symfony\Bundle\TwigBundle\Loader\FilesystemLoader($this->get('templating.locator'), $this->get('templating.name_parser'));
 
-        $instance->addPath(($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/views'), 'Framework');
-        $instance->addPath(($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/SecurityBundle/Resources/views'), 'Security');
-        $instance->addPath(($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views'), 'Twig');
-        $instance->addPath(($this->targetDirs[3].'/vendor/symfony/swiftmailer-bundle/Resources/views'), 'Swiftmailer');
-        $instance->addPath(($this->targetDirs[3].'/vendor/doctrine/doctrine-bundle/Resources/views'), 'Doctrine');
-        $instance->addPath(($this->targetDirs[3].'/src/LI/Bundle/HotelBundle/Resources/views'), 'LIHotel');
+        $instance->addPath(($this->targetDirs[3].'\\vendor\\symfony\\symfony\\src\\Symfony\\Bundle\\FrameworkBundle/Resources/views'), 'Framework');
+        $instance->addPath(($this->targetDirs[3].'\\vendor\\symfony\\symfony\\src\\Symfony\\Bundle\\SecurityBundle/Resources/views'), 'Security');
+        $instance->addPath(($this->targetDirs[3].'\\vendor\\symfony\\symfony\\src\\Symfony\\Bundle\\TwigBundle/Resources/views'), 'Twig');
+        $instance->addPath(($this->targetDirs[3].'\\vendor\\symfony\\swiftmailer-bundle/Resources/views'), 'Swiftmailer');
+        $instance->addPath(($this->targetDirs[3].'\\vendor\\doctrine\\doctrine-bundle/Resources/views'), 'Doctrine');
+        $instance->addPath(($this->targetDirs[3].'\\src\\LI\\Bundle\\HotelBundle/Resources/views'), 'LIHotel');
         $instance->addPath(($this->targetDirs[2].'/Resources/views'));
-        $instance->addPath(($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bridge/Twig/Resources/views/Form'));
+        $instance->addPath(($this->targetDirs[3].'\\vendor\\symfony\\symfony\\src\\Symfony\\Bridge\\Twig/Resources/views/Form'));
 
         return $instance;
     }
@@ -2950,8 +2950,8 @@ class appProdDebugProjectContainer extends Container
         $instance->setConstraintValidatorFactory(new \Symfony\Bundle\FrameworkBundle\Validator\ConstraintValidatorFactory($this, array('validator.expression' => 'validator.expression', 'Symfony\\Component\\Validator\\Constraints\\EmailValidator' => 'validator.email', 'security.validator.user_password' => 'security.validator.user_password', 'doctrine.orm.validator.unique' => 'doctrine.orm.validator.unique')));
         $instance->setTranslator($this->get('translator'));
         $instance->setTranslationDomain('validators');
-        $instance->addXmlMappings(array(0 => ($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/config/validation.xml')));
-        $instance->addYamlMappings(array(0 => ($this->targetDirs[3].'/src/LI/Bundle/HotelBundle/Resources/config/validation.yml')));
+        $instance->addXmlMappings(array(0 => ($this->targetDirs[3].'\\vendor\\symfony\\symfony\\src\\Symfony\\Component\\Form/Resources/config/validation.xml')));
+        $instance->addYamlMappings(array(0 => ($this->targetDirs[3].'\\src\\LI\\Bundle\\HotelBundle\\Resources\\config\\validation.yml')));
         $instance->enableAnnotationMapping($this->get('annotation_reader'));
         $instance->addMethodMapping('loadValidatorMetadata');
         $instance->setApiVersion(3);
@@ -3071,7 +3071,7 @@ class appProdDebugProjectContainer extends Container
      */
     protected function getSecurity_Authentication_ManagerService()
     {
-        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('55e2163a640cf9.36627699')), true);
+        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('55f4e32d876f56.79586179')), true);
 
         $instance->setEventDispatcher($this->get('debug.event_dispatcher'));
 
@@ -3237,7 +3237,7 @@ class appProdDebugProjectContainer extends Container
             'kernel.debug' => true,
             'kernel.name' => 'app',
             'kernel.cache_dir' => __DIR__,
-            'kernel.logs_dir' => ($this->targetDirs[2].'/logs'),
+            'kernel.logs_dir' => ($this->targetDirs[2].'\\logs'),
             'kernel.bundles' => array(
                 'FrameworkBundle' => 'Symfony\\Bundle\\FrameworkBundle\\FrameworkBundle',
                 'SecurityBundle' => 'Symfony\\Bundle\\SecurityBundle\\SecurityBundle',
