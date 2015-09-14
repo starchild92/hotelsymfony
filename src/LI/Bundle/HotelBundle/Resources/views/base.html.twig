@@ -10,7 +10,7 @@
 
         <script src="{{ asset('bundles/lihotel/js/jquery.min.js') }}"></script>
         <script src="{{ asset('bundles/lihotel/js/bootstrap.min.js') }}"></script>
-        {% block javascripts %}{% endblock %}
+        <script src="{{ asset('bundles/lihotel/js/modalSesion.js') }}"></script>
     </head>
     <body>
 
@@ -32,11 +32,11 @@
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <form class="navbar-form navbar-right" role="search">
-                            <a href="{{ path('LIHotelBundle_registro') }}" class="btn btn-success">Iniciar Sesión</a>
+                            <a class="btn btn-success" data-toggle="modal" id="Modal" data-target="#ModalSesion">Iniciar Sesión</a>
                         </form>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="{{ path('LIHotelBundle_homepage') }}">Inicio</a></li>
-                            <li class="active"><a href="{{ path('LIHotelBundle_consultar') }}">Consultar</a></li>
+                            <li><a href="{{ path('LIHotelBundle_consultar') }}">Consultar</a></li>
                             <li><a href="{{ path('LIHotelBundle_registro') }}">Registro</a></li>
                             <li></li>
                         </ul>
@@ -47,6 +47,34 @@
         </div>
     </div>
     
+    <!-- Modal del Inicio de Sesion -->
+    <div class="modal fade" id="ModalSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog modal-sm" style="width: 400px;">
+            <div class="modal-content" style="padding:10px 10px 10px 10px;">
+                <div class="row">
+                    <div class="col-sm-12">
+                    <h3 class="text-center">Iniciar Sesión</h3>
+                    <form action="{{ path('LIHotelBundle_sesion') }}" method="post" {{ form_enctype(form2) }} class="usuario">
+                        {% form_theme form2 'bootstrap_3_layout.html.twig'  %}
+                        {{ form_errors(form2) }}
+                        {{ form_widget(form2._token) }}
+
+                        {{ form_row(form2.mail, {'attr':{'autocomplete':'off'}}) }}
+                        {{ form_row(form2.password, {'attr':{'autocomplete':'off'}}) }}
+                        {{ form_rest(form2) }}
+
+                        <button type="button submit" class="btn btn-primary btn-block pull-right">
+                            <span class="glyphicon glyphicon-user pull-left" aria-hidden="true"></span> Continuar ... 
+                        </button>
+                        <p class="text-right"><small>¿No puede entrar en su cuenta?</small></p>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal del Inicio de Sesion -->
+
     {% block body %}{% endblock %}
 
     <div class="container" style="margin-bottom: 20px; margin-top: 20px;">

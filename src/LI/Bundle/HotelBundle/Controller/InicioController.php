@@ -23,13 +23,41 @@ class InicioController extends Controller
      */
     public function indexAction()
     {
-        return array(
-                // ...
-            );
+        $usuario = new Usuario();
+        $form = $this->createForm(new UsuarioType(), $usuario);
+
+        $login = new Login();
+        $form2 = $this->createForm(new LoginType(), $login);
+
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()
+                       ->getEntityManager();
+                $em->persist($usuario);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->set('error', 'Gracias por registrarte, ya puedes hacer reservas!');
+                return $this->redirect($this->generateUrl('LIHotelBundle_registro'));
+            }
+        }
+
+        return $this->render('LIHotelBundle:Inicio:index.html.twig', array(
+            'form' => $form->createView(),
+            'form2' => $form2->createView()
+        ));
     }
 
     public function consultarAction(){
-    	return $this->render('LIHotelBundle:Inicio:consultar.html.twig');
+
+        $login = new Login();
+        $form2 = $this->createForm(new LoginType(), $login);
+
+        return $this->render('LIHotelBundle:Inicio:consultar.html.twig', array(
+            'form2' => $form2->createView()
+        ));
     }
 
     public function registroAction(){
