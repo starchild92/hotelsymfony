@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Bebida list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tipobebida</th>
+                <th>Categoriahabitacion</th>
+                <th>Precio</th>
+                <th>Marca</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('bebida_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.tipoBebida }}</td>
+                <td>{{ entity.categoriaHabitacion }}</td>
+                <td>{{ entity.precio }}</td>
+                <td>{{ entity.marca }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('bebida_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('bebida_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('bebida_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

@@ -1,0 +1,30 @@
+tipohabitacion:
+    path:     /
+    defaults: { _controller: "LIHotelBundle:TipoHabitacion:index" }
+
+tipohabitacion_show:
+    path:     /{id}/show
+    defaults: { _controller: "LIHotelBundle:TipoHabitacion:show" }
+
+tipohabitacion_new:
+    path:     /new
+    defaults: { _controller: "LIHotelBundle:TipoHabitacion:new" }
+
+tipohabitacion_create:
+    path:     /create
+    defaults: { _controller: "LIHotelBundle:TipoHabitacion:create" }
+    methods:  POST
+
+tipohabitacion_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LIHotelBundle:TipoHabitacion:edit" }
+
+tipohabitacion_update:
+    path:     /{id}/update
+    defaults: { _controller: "LIHotelBundle:TipoHabitacion:update" }
+    methods:  [POST, PUT]
+
+tipohabitacion_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LIHotelBundle:TipoHabitacion:delete" }
+    methods:  [POST, DELETE]
