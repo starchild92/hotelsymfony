@@ -3,6 +3,8 @@
 namespace LI\Bundle\HotelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Factura
@@ -25,6 +27,11 @@ class Factura
      * @var integer
      *
      * @ORM\Column(name="dias_reserva", type="integer")
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Debe ser positivo superior a cero."
+     * )
+     * @Assert\NotBlank()
      */
     private $diasReserva;
 
@@ -32,6 +39,15 @@ class Factura
      * @var float
      *
      * @ORM\Column(name="costo_total", type="float")
+     * @Assert\Type(
+     *     type="float",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Debe ser positivo superior a cero."
+     * )
+     * @Assert\NotBlank()
      */
     private $costoTotal;
 
@@ -39,6 +55,7 @@ class Factura
      * @var string
      *
      * @ORM\Column(name="cliente", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $cliente;
 
@@ -46,9 +63,15 @@ class Factura
      * @var \DateTime
      *
      * @ORM\Column(name="fecha", type="datetime")
+     * @Assert\NotBlank()
      */
     private $fecha;
 
+
+    public function __construct()
+    {
+        $this->fecha = new \DateTime();
+    }
 
     /**
      * Get id

@@ -5,7 +5,9 @@
         <title>{% block title %}Hotel Symfony{% endblock %}</title>
         
         <link rel="icon" type="image/x-icon" href="{{ asset('bundles/lihotel/images/icon.ico') }}" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap.css') }}"><link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/carousel.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap-theme.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/carousel.css') }}">
         {% block stylesheets %}{% endblock %}
 
         <script src="{{ asset('bundles/lihotel/js/jquery.min.js') }}"></script>
@@ -124,10 +126,6 @@
         @font-face{
           font-family: "Raleway-Regular";
           src: url('{{ asset('bundles/lihotel/fonts/Raleway-Medium.ttf') }}') format('truetype');
-        }
-        @font-face{
-          font-family: "Arya-Regular";
-          src: url('{{ asset('bundles/lihotel/fonts/Arya-Regular.ttf') }}') format('truetype');
         }
         body{
             font-family: Raleway-Regular;

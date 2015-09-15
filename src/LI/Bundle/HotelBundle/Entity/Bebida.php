@@ -3,6 +3,8 @@
 namespace LI\Bundle\HotelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Bebida
@@ -25,6 +27,9 @@ class Bebida
      * @var string
      *
      * @ORM\Column(name="tipo_bebida", type="string", length=255)
+     * @Assert\Choice(
+     *     choices = {"Cerveza", "Vino", "Refresco", "Alcohol"},
+     *     message = "Escoga un tipo de bebida válido.")
      */
     private $tipoBebida;
 
@@ -32,6 +37,7 @@ class Bebida
      * @var string
      *
      * @ORM\Column(name="categoria_habitacion", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $categoriaHabitacion;
 
@@ -39,6 +45,14 @@ class Bebida
      * @var float
      *
      * @ORM\Column(name="precio", type="float")
+     * @Assert\Type(
+     *     type="float",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Debe ser positivo superior a cero."
+     * )
      */
     private $precio;
 
@@ -46,6 +60,7 @@ class Bebida
      * @var string
      *
      * @ORM\Column(name="marca", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $marca;
 

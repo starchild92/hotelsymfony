@@ -39,6 +39,15 @@ class Habitacion
      * @var integer
      *
      * @ORM\Column(name="numero", type="integer")
+     * @Assert\Type(
+     *     type="integer",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\GreaterThan(
+     *     value = -1,
+     *     message = "Debe ser positivo o igual a cero."
+     * )
+     * @Assert\NotBlank()
      */
     private $numero;
 
@@ -46,6 +55,7 @@ class Habitacion
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $nombre;
 

@@ -1,9 +1,12 @@
-{% extends '::base.html.twig' %}
+{% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
-    <h1>Habitacion list</h1>
+<div class="col-lg-12 col-sm-12 col-xs-12">
+    <div class="page-header">
+        <h1>Habitacion list</h1>
+    </div>
 
-    <table class="records_list">
+    <table class="table table-striped records_list">
         <thead>
             <tr>
                 <th>Id</th>
@@ -44,4 +47,5 @@
             </a>
         </li>
     </ul>
-    {% endblock %}
+</div>
+{% endblock %}

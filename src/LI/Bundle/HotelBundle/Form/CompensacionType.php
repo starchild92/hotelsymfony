@@ -16,10 +16,10 @@ class CompensacionType extends AbstractType
     {
         $builder
             ->add('porcentaje')
-            ->add('deDias')
-            ->add('aDias')
-            ->add('deHoras')
-            ->add('aHoras')
+            ->add('deDias', 'text', array('label' => 'Dias Despúes al Cobro de la Compensación'))
+            ->add('aDias', 'text', array('label' => 'Dias Anteriores al Cobro de la Compensación'))
+            ->add('deHoras', 'text', array('label' => 'Horas Despúes al Cobro de la Compensación'))
+            ->add('aHoras', 'text', array('label' => 'Horas Anteriores al Cobro de la Compensación'))
         ;
     }
     

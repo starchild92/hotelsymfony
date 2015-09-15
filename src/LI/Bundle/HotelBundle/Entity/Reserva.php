@@ -25,6 +25,7 @@ class Reserva
      * @var string
      *
      * @ORM\Column(name="estado_reserva", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $estadoReserva;
 
@@ -32,6 +33,7 @@ class Reserva
      * @var string
      *
      * @ORM\Column(name="habitacion", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $habitacion;
 
@@ -39,6 +41,7 @@ class Reserva
      * @var string
      *
      * @ORM\Column(name="cliente", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $cliente;
 
@@ -46,6 +49,14 @@ class Reserva
      * @var integer
      *
      * @ORM\Column(name="cantidad_personas", type="integer")
+     * @Assert\Type(
+     *     type="integer",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Debe ser positivo superior a cero."
+     * )
      */
     private $cantidadPersonas;
 
@@ -53,6 +64,14 @@ class Reserva
      * @var integer
      *
      * @ORM\Column(name="dias_reserva", type="integer")
+     * @Assert\Type(
+     *     type="integer",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Debe reservar por al menos 1 día, valores inferiores no son admitidos."
+     * )
      */
     private $diasReserva;
 

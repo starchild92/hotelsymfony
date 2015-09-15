@@ -39,6 +39,14 @@ class Tipo
      * @var float
      *
      * @ORM\Column(name="precio", type="float")
+     * @Assert\Type(
+     *     type="float",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Debe ser positivo superior a cero."
+     * )
      */
     private $precio;
 
@@ -46,6 +54,7 @@ class Tipo
      * @var string
      *
      * @ORM\Column(name="espacio_interno", type="text")
+     * @Assert\NotBlank()
      */
     private $espacioInterno;
 

@@ -1,8 +1,9 @@
-{% extends '::base.html.twig' %}
+{% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
     <h1>Factura edit</h1>
-
+    
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
     {{ form(edit_form) }}
 
         <ul class="record_actions">

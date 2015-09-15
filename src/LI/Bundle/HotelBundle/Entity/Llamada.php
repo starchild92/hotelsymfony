@@ -25,6 +25,7 @@ class Llamada
      * @var string
      *
      * @ORM\Column(name="tipo", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $tipo;
 
@@ -32,6 +33,14 @@ class Llamada
      * @var float
      *
      * @ORM\Column(name="costo", type="float")
+     * @Assert\Type(
+     *     type="float",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Debe ser positivo superior a cero."
+     * )
      */
     private $costo;
 

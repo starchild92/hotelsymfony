@@ -1,17 +1,19 @@
-{% extends '::base.html.twig' %}
+{% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
-    <h1>Compensacion list</h1>
-
-    <table class="records_list">
+<div class="col-lg-12 col-sm-12 col-xs-12">
+    <div class="page-header">
+        <h1>Compensacion list</h1>
+    </div>
+    <table class="table table-striped records_list">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Porcentaje</th>
-                <th>Dedias</th>
-                <th>Adias</th>
-                <th>Dehoras</th>
-                <th>Ahoras</th>
+                <th>ID</th>
+                <th>Cobro Porcentual</th>
+                <th>(.. de</th>
+                <th>.. hasta]</th>
+                <th>(.. de</th>
+                <th>.. hasta]</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -19,11 +21,11 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('compensacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.porcentaje }}</td>
-                <td>{{ entity.deDias }}</td>
-                <td>{{ entity.aDias }}</td>
-                <td>{{ entity.deHoras }}</td>
-                <td>{{ entity.aHoras }}</td>
+                <td>{{ entity.porcentaje }}%</td>
+                <td>{{ entity.deDias }} días</td>
+                <td>{{ entity.aDias }} días</td>
+                <td>{{ entity.deHoras }} hrs</td>
+                <td>{{ entity.aHoras }} hrs</td>
                 <td>
                 <ul>
                     <li>
@@ -46,4 +48,5 @@
             </a>
         </li>
     </ul>
-    {% endblock %}
+</div>
+{% endblock %}

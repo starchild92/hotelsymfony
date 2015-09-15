@@ -1,14 +1,17 @@
-{% extends '::base.html.twig' %}
+{% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
-    <h1>Factura list</h1>
+<div class="col-lg-12 col-sm-12 col-xs-12">
+    <div class="page-header">
+        <h1>Factura list</h1>
+    </div>
 
-    <table class="records_list">
+    <table class="table table-striped records_list">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Diasreserva</th>
-                <th>Costototal</th>
+                <th>ID</th>
+                <th>Dias de Reserva</th>
+                <th>Costo Total</th>
                 <th>Cliente</th>
                 <th>Fecha</th>
                 <th>Actions</th>
@@ -44,4 +47,5 @@
             </a>
         </li>
     </ul>
-    {% endblock %}
+</div>  
+{% endblock %}

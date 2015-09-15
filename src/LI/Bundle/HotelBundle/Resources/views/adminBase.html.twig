@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>{% block title %}Hotel Symfony - Administrativo{% endblock %}</title>
+		
+		<link rel="icon" type="image/x-icon" href="{{ asset('bundles/lihotel/images/icon.ico') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap-theme.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/carousel.css') }}">
+		<style type="text/css"> body { padding-top: 70px; font-family: Raleway-Regular; } </style>
+		{% block stylesheets %}{% endblock %}
+
+		<script src="{{ asset('bundles/lihotel/js/jquery.min.js') }}"></script>
+		<script src="{{ asset('bundles/lihotel/js/bootstrap.min.js') }}"></script>
+		<script src="{{ asset('bundles/lihotel/js/modalSesion.js') }}"></script>
+	</head>
+	<body>
+
+	<div class="navbar-wrapper">
+		<div class="container">
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+			  <div class="container-fluid">
+				<div class="navbar-header">
+						<a class="navbar-brand" href="{{ path('LIHotelBundle_homepage') }}">
+							<img width="20" height="20" alt="Brand" src="{{ asset('bundles/lihotel/images/icon.ico') }}">
+						</a>
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand brandname" href="{{ path('LIHotelBundle_homepage') }}">Hotel Symfony</a>
+					</div>
+					<div id="navbar" class="navbar-collapse collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="{{ path('factura') }}">Facturas</a></li>
+							<li><a href="{{ path('compensacion') }}">Compensaciones</a></li>
+							<li><a href="{{ path('reserva') }}">Reservas</a></li>
+							<li><a href="{{ path('bebida') }}">Bebidas</a></li>
+							<li><a href="{{ path('llamada') }}">Llamadas</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Habitaciones <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li class="dropdown-header">Operaciones de Consulta</li>
+									<li><a href="{{ path('habitacion') }}">Est. Habitaciones</a></li>
+									<li role="separator" class="divider"></li>
+									<li class="dropdown-header">Tareas Administrativas</li>
+									<li><a href="{{ path('tipo') }}">Crear Nuevo Tipo Habitación</a></li>
+									<li><a href="{{ path('tipohabitacion') }}">Tipos de Habitación</a></li>
+									<li><a href="{{ path('categoriahabitacion') }}">Categorias de Habitación</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+			  </div>
+			</nav>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+        <div class="row">
+			{% block body %}{% endblock %}
+		</div>
+	</div>
+
+	<div class="container-fluid" style="margin-bottom: 20px; margin-top: 20px;">
+			<div id="london"></div>
+			<div class="row">
+				<div class="col-md-4">
+					<center>
+						<div class="col-md-6 col-xs-6">
+						<img src="{{ asset('bundles/lihotel/images/LOGO UC.png') }}" alt="rude" width="70" height="85">
+							<h5>Universidad de Carabobo</h5>
+						</div><!-- /.col-md-6 -->
+						<div class="col-md-6 col-xs-6">
+						<img src="{{ asset('bundles/lihotel/images/LOGO FACYT.png') }}" alt="rude" width="80" height="85">
+							<h5>Facultad Experimental de Ciencias y Tecnología</h5>
+						</div><!-- /.col-md-6 -->
+					</center>
+				</div>
+				<div class="col-md-4" id="lado">
+					<center>
+						<div class="col-md-12">
+						<img data-toggle="tooltip" title="Jajaja, Necesitas tiempo, tutoriales y mucha lectura para dominarme!" class="img-circle" src="{{ asset('bundles/lihotel/images/symfony2.png') }}" alt="rude" width="90" height="90">
+						</div><!-- /.col-md-4 --><br>Int. al uso de Frameworks <br>para el Desarrollo de Apps Web<br>Prof. Luis León<br>
+					</center>
+				</div>
+				<div class="col-md-4" id="lado">
+					<center>
+						<div class="col-md-6 col-xs-6">
+						<img data-toggle="tooltip" title="Break a leg!" class="img-circle" src="{{ asset('bundles/lihotel/images/luis.jpg') }}" alt="rude" width="85" height="85">
+							<h5>Luis Pérez</h5>
+						</div><!-- /.col-md-4 -->
+						<div class="col-md-6 col-xs-6">
+						<img data-toggle="tooltip" title="Some people want to set the world on fire." class="img-circle" src="{{ asset('bundles/lihotel/images/ivo.jpg') }}" alt="rude" width="85" height="85">
+							<h5>Ivonne Ortega</h5>
+						</div><!-- /.col-md-4 -->
+					</center>
+				</div>
+			</div>
+	</div>
+	</body>
+</html>
+<style type="text/css">
+	@font-face{
+	  font-family: "Raleway-Regular";
+	  src: url('{{ asset('bundles/lihotel/fonts/Raleway-Medium.ttf') }}') format('truetype');
+	}
+	h5{ text-align: center; }
+	#london{ border-top: 1px solid #eeeeee; margin-bottom: 15px; }
+	#lado{ border-left: 1px solid #eeeeee; }
+</style>
+<script>
+$(document).ready(function(){
+	$('[data-toggle="tooltip"]').tooltip();   
+});
+</script>

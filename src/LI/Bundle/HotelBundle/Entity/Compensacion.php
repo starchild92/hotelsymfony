@@ -3,6 +3,8 @@
 namespace LI\Bundle\HotelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Compensacion
@@ -25,6 +27,11 @@ class Compensacion
      * @var float
      *
      * @ORM\Column(name="porcentaje", type="float")
+     * @Assert\GreaterThan(
+     *     value = -1,
+     *     message = "Debe ser positivo positivo mayor igual a cero."
+     * )
+     * @Assert\NotBlank()
      */
     private $porcentaje;
 
@@ -32,6 +39,11 @@ class Compensacion
      * @var integer
      *
      * @ORM\Column(name="de_dias", type="integer")
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Debe ser positivo positivo mayor que cero."
+     * )
+     * @Assert\NotBlank()
      */
     private $deDias;
 
@@ -39,6 +51,11 @@ class Compensacion
      * @var integer
      *
      * @ORM\Column(name="a_dias", type="integer")
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Debe ser positivo positivo mayor que cero."
+     * )
+     * @Assert\NotBlank()
      */
     private $aDias;
 
@@ -46,6 +63,11 @@ class Compensacion
      * @var integer
      *
      * @ORM\Column(name="de_horas", type="integer")
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Debe ser positivo positivo mayor que cero."
+     * )
+     * @Assert\NotBlank()
      */
     private $deHoras;
 
@@ -53,6 +75,11 @@ class Compensacion
      * @var integer
      *
      * @ORM\Column(name="a_horas", type="integer")
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Debe ser positivo positivo mayor que cero."
+     * )
+     * @Assert\NotBlank()
      */
     private $aHoras;
 

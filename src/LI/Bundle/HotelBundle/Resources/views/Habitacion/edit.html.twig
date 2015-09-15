@@ -1,8 +1,12 @@
-{% extends '::base.html.twig' %}
+{% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
-    <h1>Habitacion edit</h1>
+<div class="col-lg-12 col-sm-12 col-xs-12">
+    <div class="page-header">
+    	<h1>Habitacion edit</h1>
+    </div>
 
+    {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
     {{ form(edit_form) }}
 
         <ul class="record_actions">
@@ -13,4 +17,5 @@
     </li>
     <li>{{ form(delete_form) }}</li>
 </ul>
+</div>
 {% endblock %}

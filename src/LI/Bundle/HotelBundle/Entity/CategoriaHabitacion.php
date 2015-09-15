@@ -25,6 +25,7 @@ class CategoriaHabitacion
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $nombre;
 
@@ -32,6 +33,15 @@ class CategoriaHabitacion
      * @var float
      *
      * @ORM\Column(name="precio", type="float")
+     * @Assert\Type(
+     *     type="float",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Debe ser positivo superior a cero."
+     * )
+     * @Assert\NotBlank()
      */
     private $precio;
 

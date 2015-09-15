@@ -1,9 +1,11 @@
-{% extends '::base.html.twig' %}
+{% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
-    <h1>Compensacion</h1>
-
-    <table class="record_properties">
+<div class="col-lg-12 col-sm-12 col-xs-12">
+    <div class="page-header">
+        <h1>Compensacion</h1>
+    </div>
+    <table class="table table-striped record_properties">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -43,6 +45,7 @@
             Edit
         </a>
     </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <li>{% form_theme delete_form 'bootstrap_3_layout.html.twig' %}{{ form(delete_form) }}</li>
+    </ul>
+</div>
 {% endblock %}

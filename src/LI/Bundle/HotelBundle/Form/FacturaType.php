@@ -15,7 +15,7 @@ class FacturaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('diasReserva')
+            ->add('diasReserva', 'text', array('label' => 'Cantidad de Días Reservados'))
             ->add('costoTotal')
             ->add('cliente')
             ->add('fecha')

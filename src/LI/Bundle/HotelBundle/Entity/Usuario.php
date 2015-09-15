@@ -73,6 +73,12 @@ class Usuario
      * @var string
      *
      * @ORM\Column(name="clave", type="string", length=18)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 18,
+     *      minMessage = "Escriba una clave con 5 o más letras y menos o {{ limit }} letras",
+     *      maxMessage = "La clave que ha escrito supera el límite de {{ limit }} letras"
+     * )
      */
     private $clave;
 
