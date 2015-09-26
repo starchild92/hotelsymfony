@@ -11,7 +11,6 @@
             <tr>
                 <th>ID</th>
                 <th>Tipo Bebida</th>
-                <th>Categoria Habitación</th>
                 <th>Precio Bebida</th>
                 <th>Marca Bebida</th>
                 <th>Actions</th>
@@ -22,7 +21,6 @@
             <tr>
                 <td><a href="{{ path('bebida_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.tipoBebida }}</td>
-                <td>{{ entity.categoriaHabitacion }}</td>
                 <td>{{ entity.precio }} Bs</td>
                 <td>{{ entity.marca }}</td>
                 <td>

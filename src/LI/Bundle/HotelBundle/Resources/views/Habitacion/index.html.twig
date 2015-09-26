@@ -11,7 +11,7 @@
             <tr>
                 <th>Id</th>
                 <th>Estado</th>
-                <th>Tipo</th>
+                <th>Caracteristicas de la Habitación</th>
                 <th>Numero</th>
                 <th>Nombre</th>
                 <th>Actions</th>
@@ -22,7 +22,27 @@
             <tr>
                 <td><a href="{{ path('habitacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.estado }}</td>
-                <td>{{ entity.tipo }}</td>
+                <td>
+                    <table class="table">
+                        <tr>
+                            <td>Categoria</td>
+                            <td>Tipo</td>
+                        </tr>
+                        <tr>
+                            <td>{{ entity.tipo.categoriaHabitacion }}</td>
+                            <td>{{ entity.tipo.tipoHabitacion }}</td>
+                        </tr>
+                        <tr>
+                            <td>Descripción</td>
+                            <td>Servicios</td>
+                            <td>Cant. Bebidas</td>
+                        </tr>
+                        <tr>
+                        <td>{{ entity.tipo.espacioInterno }}</td>
+                        <td>{{ entity.tipo.servicios }}</td>
+                        <td>{{ entity.tipo.bebidasMinibar|length }}</td></tr>
+                    </table>
+                </td>
                 <td>{{ entity.numero }}</td>
                 <td>{{ entity.nombre }}</td>
                 <td>

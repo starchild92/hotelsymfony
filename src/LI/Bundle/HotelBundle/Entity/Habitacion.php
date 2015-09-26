@@ -3,6 +3,8 @@
 namespace LI\Bundle\HotelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Habitacion
@@ -29,10 +31,9 @@ class Habitacion
     private $estado;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="tipo", type="string", length=255)
-     */
+     * @ORM\OneToOne(targetEntity="Tipo", cascade={"persist"})
+     * @ORM\JoinColumn(name="tipo_id", referencedColumnName="id")
+     **/
     private $tipo;
 
     /**

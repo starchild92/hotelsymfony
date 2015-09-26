@@ -1,5 +1,8 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
-
+{% block javascripts %}
+	<script src="{{ asset('bundles/lihotel/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('bundles/lihotel/js/TipoFormularioEdit.js') }}"></script>
+{% endblock %}
 {% block body -%}
     <h1>Tipo edit</h1>
 

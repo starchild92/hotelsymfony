@@ -1,9 +1,9 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
-    <h1>Tipo list</h1>
+    <h1>Tipo Habitación <small>como está compuesta cada habitación, máximo 30 habitaciones</small></h1>
 
-    <table class="records_list">
+    <table class=" table records_list">
         <thead>
             <tr>
                 <th>Id</th>
@@ -12,7 +12,6 @@
                 <th>Precio</th>
                 <th>Espaciointerno</th>
                 <th>Servicios</th>
-                <th>Bebidasminibar</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -25,7 +24,6 @@
                 <td>{{ entity.precio }}</td>
                 <td>{{ entity.espacioInterno }}</td>
                 <td>{{ entity.servicios }}</td>
-                <td>{{ entity.bebidasMinibar }}</td>
                 <td>
                 <ul>
                     <li>

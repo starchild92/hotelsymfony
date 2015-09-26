@@ -3,6 +3,7 @@
 namespace LI\Bundle\HotelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TipoHabitacion
@@ -43,6 +44,10 @@ class TipoHabitacion
      */
     private $precio;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Tipo", mappedBy="tipoHabitacion",cascade={"persist","remove"})
+     */
+    private $tipo;
 
     /**
      * Get id
@@ -98,5 +103,9 @@ class TipoHabitacion
     public function getPrecio()
     {
         return $this->precio;
+    }
+
+    public function __toString() {
+        return $this->nombre;
     }
 }

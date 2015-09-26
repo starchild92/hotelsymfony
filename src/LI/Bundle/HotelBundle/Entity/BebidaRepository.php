@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class BebidaRepository extends EntityRepository
 {
+	public function portipo_id($id){
+		$query = $this->getEntityManager()
+				->createQuery('SELECT u 
+				FROM LIHotelBundle:Bebida u 
+				WHERE u.tipoHabitacion = :tipo_id');
+		$query->setParameter('tipo_id', $id);
+		$result = $query->getResult();
+        
+        return $result;
+	}
 }

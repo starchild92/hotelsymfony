@@ -14,13 +14,14 @@
 		<script src="{{ asset('bundles/lihotel/js/jquery.min.js') }}"></script>
 		<script src="{{ asset('bundles/lihotel/js/bootstrap.min.js') }}"></script>
 		<script src="{{ asset('bundles/lihotel/js/modalSesion.js') }}"></script>
+		{% block javascripts %}{% endblock %}
 	</head>
 	<body>
 
 	<div class="navbar-wrapper">
 		<div class="container">
 			<nav class="navbar navbar-inverse navbar-fixed-top">
-			  <div class="container-fluid">
+			  <div class="container">
 				<div class="navbar-header">
 						<a class="navbar-brand" href="{{ path('LIHotelBundle_homepage') }}">
 							<img width="20" height="20" alt="Brand" src="{{ asset('bundles/lihotel/images/icon.ico') }}">
@@ -59,7 +60,7 @@
 		</div>
 	</div>
 
-	<div class="container-fluid">
+	<div class="container">
         <div class="row">
 			{% block body %}{% endblock %}
 		</div>

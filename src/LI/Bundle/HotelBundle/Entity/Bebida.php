@@ -5,7 +5,6 @@ namespace LI\Bundle\HotelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * Bebida
  *
@@ -34,12 +33,10 @@ class Bebida
     private $tipoBebida;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="categoria_habitacion", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="Tipo", inversedBy="bebidasMinibar")
+     * @ORM\JoinColumn(name="tipo_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    private $categoriaHabitacion;
+    private $tipoHabitacion;
 
     /**
      * @var float
@@ -55,6 +52,21 @@ class Bebida
      * )
      */
     private $precio;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cantidad", type="integer")
+     * @Assert\Type(
+     *     type="integer",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\GreaterThan(
+     *     value = 0,
+     *     message = "Debe ser positivo superior a cero."
+     * )
+     */
+    private $cantidad;
 
     /**
      * @var string
@@ -99,29 +111,6 @@ class Bebida
     }
 
     /**
-     * Set categoriaHabitacion
-     *
-     * @param string $categoriaHabitacion
-     * @return Bebida
-     */
-    public function setCategoriaHabitacion($categoriaHabitacion)
-    {
-        $this->categoriaHabitacion = $categoriaHabitacion;
-
-        return $this;
-    }
-
-    /**
-     * Get categoriaHabitacion
-     *
-     * @return string 
-     */
-    public function getCategoriaHabitacion()
-    {
-        return $this->categoriaHabitacion;
-    }
-
-    /**
      * Set precio
      *
      * @param float $precio
@@ -145,6 +134,29 @@ class Bebida
     }
 
     /**
+     * Set cantidad
+     *
+     * @param float $cantidad
+     * @return Bebida
+     */
+    public function setCantidad($cantidad)
+    {
+        $this->cantidad = $cantidad;
+
+        return $this;
+    }
+
+    /**
+     * Get cantidad
+     *
+     * @return float 
+     */
+    public function getCantidad()
+    {
+        return $this->cantidad;
+    }
+
+    /**
      * Set marca
      *
      * @param string $marca
@@ -165,5 +177,10 @@ class Bebida
     public function getMarca()
     {
         return $this->marca;
+    }
+
+    public function __toString()
+    {
+        return $this->tipoBebida;
     }
 }

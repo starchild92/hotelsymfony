@@ -3,6 +3,8 @@
 namespace LI\Bundle\HotelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Tipo
@@ -22,16 +24,14 @@ class Tipo
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="tipo_habitacion", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="TipoHabitacion", inversedBy="tipo", cascade={"persist"})
+     * @ORM\JoinColumn(name="tipohabitacion_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $tipoHabitacion;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="categoria_habitacion", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="CategoriaHabitacion", inversedBy="categoria", cascade={"persist"})
+     * @ORM\JoinColumn(name="categoriahabitacion_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $categoriaHabitacion;
 
@@ -59,18 +59,23 @@ class Tipo
     private $espacioInterno;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(name="servicios", type="array")
+     * @ORM\Column(name="servicios", type="text")
+     * @Assert\NotBlank()
      */
     private $servicios;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="bebidas_minibar", type="string", length=255)
-     */
+     * @ORM\OneToMany(targetEntity="Bebida", mappedBy="tipoHabitacion", cascade={"persist","remove"})
+     * @Assert\Valid
+     **/
     private $bebidasMinibar;
+
+    public function __construct()
+    {
+        $this->bebidasMinibar = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     /**
@@ -220,4 +225,29 @@ class Tipo
     {
         return $this->bebidasMinibar;
     }
+
+    /**
+     * Add bebidasMinibar
+     *
+     * @param \LI\Bundle\HotelBundle\Entity\Bebida $bebidasMinibar
+     * @return Tipo
+     */
+    public function addBebidasMinibar(\LI\Bundle\HotelBundle\Entity\Bebida $bebidasMinibar)
+    {
+        $this->bebidasMinibar[] = $bebidasMinibar;
+
+        return $this;
+    }
+
+    /**
+     * Remove bebidasMinibar
+     *
+     * @param \LI\Bundle\HotelBundle\Entity\Bebida $bebidasMinibar
+     */
+    public function removeBebidasMinibar(\LI\Bundle\HotelBundle\Entity\Bebida $bebidasMinibar)
+    {
+        $this->bebidasMinibar->removeElement($bebidasMinibar);
+    }
+
+
 }

@@ -3,7 +3,7 @@
 {% block body -%}
     <h1>Reserva list</h1>
 
-    <table class="records_list">
+    <table class="table records_list">
         <thead>
             <tr>
                 <th>Id</th>
@@ -12,6 +12,7 @@
                 <th>Cliente</th>
                 <th>Cantidadpersonas</th>
                 <th>Diasreserva</th>
+                <th>fecha</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -24,6 +25,7 @@
                 <td>{{ entity.cliente }}</td>
                 <td>{{ entity.cantidadPersonas }}</td>
                 <td>{{ entity.diasReserva }}</td>
+                <td>{{ entity.fecha }}</td>
                 <td>
                 <ul>
                     <li>

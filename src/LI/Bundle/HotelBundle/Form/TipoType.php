@@ -20,8 +20,18 @@ class TipoType extends AbstractType
             ->add('precio')
             ->add('espacioInterno')
             ->add('servicios')
-            ->add('bebidasMinibar')
-        ;
+            ->add('bebidasMinibar',
+                    'collection',array(
+                        'type'=> new BebidaType(),
+                        'cascade_validation' => true,
+                        'attr' => array('class' => 'tags'),
+                        'allow_add'=>'true',
+                        'by_reference'=>'false',
+                        'allow_delete' =>'true',
+                        'data_class' => null,
+                        'label' => 'Bebidas del Minibar'
+                        )
+            );
     }
     
     /**

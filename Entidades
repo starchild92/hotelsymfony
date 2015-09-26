@@ -5,10 +5,10 @@ Entidades
 	. nombre / número_habitacion
 
 - Tipo
-	. tipo_habitacion -> relacionado con "Tipo_habitacion"
-	. categoria_habitacion -> relacionado con "Categoria_habitacion"
-	. precio
-	. espacio_interno
+	. tipo_habitacion -> relacionado con "Tipo_habitacion" hecho
+	. categoria_habitacion -> relacionado con "Categoria_habitacion" hecho
+	. precio 			¿Para que quiero este precio --- ?
+	. espacio_interno [descripción de la habitación en terminos de habitaciones y camas blah blah]
 	. servicios {TV, Ducha, Etc.. }
 	. bebidas_minibar -> relacionado con "Bebidas"
 
@@ -26,7 +26,7 @@ Entidades
 
 - Bebida
 	. tipo_bebida {Cerveza, Vino, Refresco, Alcoholicas}
-	. categoria_habitacion -> relacionado con "Categoria_habitacion"
+	. categoria_habitacion -> relacionado con "Categoria_habitacion" hecho
 	. precio
 	. marca (segun la categoria)
 
@@ -59,7 +59,7 @@ DEJAR DE ÚLTIMO
 - Bitacora
 	. cliente
 	. accion {realiza reserva, cancela reserva, liberar reserva}
-	. fecha
+	. fecha y hora
 ==================================================================
 
 CONSIDERACIONES DEL MODELO DE NEGOCIO DEL SISTEMA

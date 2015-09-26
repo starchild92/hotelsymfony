@@ -16,10 +16,12 @@ class ReservaType extends AbstractType
     {
         $builder
             ->add('estadoReserva')
+            ->add('codigoReserva')
             ->add('habitacion')
             ->add('cliente')
             ->add('cantidadPersonas')
             ->add('diasReserva')
+            ->add('fecha')
         ;
     }
     

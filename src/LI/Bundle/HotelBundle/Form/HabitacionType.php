@@ -16,9 +16,9 @@ class HabitacionType extends AbstractType
     {
         $builder
             ->add('estado')
-            ->add('tipo')
             ->add('numero')
             ->add('nombre')
+            ->add('tipo', new TipoType())
         ;
     }
     

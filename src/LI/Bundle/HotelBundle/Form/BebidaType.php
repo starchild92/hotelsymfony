@@ -15,9 +15,16 @@ class BebidaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('tipoBebida')
-            ->add('categoriaHabitacion')
+            ->add('tipoBebida','choice', array(
+                   'choices'  => array(
+                    'Selecciona'=>'Selecciona un tipo',
+                    'Cerveza' => 'Cerveza',
+                    'Vino' => 'Vino',
+                    'Refresco' => 'Refresco',
+                    'Alcohol' => 'Alcohol',
+            ), 'label'=>'Tipo de Bebida'))
             ->add('precio')
+            ->add('cantidad')
             ->add('marca')
         ;
     }

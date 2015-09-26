@@ -3,6 +3,7 @@
 namespace LI\Bundle\HotelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Reserva
@@ -28,6 +29,14 @@ class Reserva
      * @Assert\NotBlank()
      */
     private $estadoReserva;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codigo_reserva", type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $codigoReserva;
 
     /**
      * @var string
@@ -74,6 +83,20 @@ class Reserva
      * )
      */
     private $diasReserva;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha", type="datetime")
+     * @Assert\NotBlank()
+     */
+    private $fecha;
+
+
+    public function __construct()
+    {
+        $this->fecha = new \DateTime();
+    }
 
 
     /**
@@ -199,5 +222,51 @@ class Reserva
     public function getDiasReserva()
     {
         return $this->diasReserva;
+    }
+
+    /**
+     * Set fecha
+     *
+     * @param \DateTime $fecha
+     * @return Factura
+     */
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return \DateTime 
+     */
+    public function getFecha()
+    {
+        return $this->fecha;
+    }
+
+    /**
+     * Set codigoReserva
+     *
+     * @param string $codigoReserva
+     * @return Reserva
+     */
+    public function setCodigoReserva($codigoReserva)
+    {
+        $this->codigoReserva = $codigoReserva;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoReserva
+     *
+     * @return string 
+     */
+    public function getCodigoReserva()
+    {
+        return $this->codigoReserva;
     }
 }

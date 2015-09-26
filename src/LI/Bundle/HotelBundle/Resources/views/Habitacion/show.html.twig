@@ -17,8 +17,33 @@
                 <td>{{ entity.estado }}</td>
             </tr>
             <tr>
-                <th>Tipo</th>
-                <td>{{ entity.tipo }}</td>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Categoria</th>
+                            <th>Tipo</th>
+                            <th>Espacio Interno</th>
+                            <th>Servicios</th>
+                            <th>Bebidas del Minibar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ entity.tipo.categoriaHabitacion }}</td>
+                            <td>{{ entity.tipo.tipoHabitacion }}</td>
+                            <td>{{ entity.tipo.espacioInterno }}</td>
+                            <td>{{ entity.tipo.servicios }}</td>
+                            <td>{% for bebida in entity.tipo.bebidasMinibar %}
+                                <tr>
+                                <td>{{ bebida.marca }}</td>
+                                <td>{{ bebida.cantidad }} unidades</td>
+                                <td>{{ bebida.precio }} Bs</td>
+                                <td>{{ bebida.tipoBebida }} unidades</td>
+                            </tr>
+                            {% endfor %}</td>
+                        </tr>
+                    </tbody>
+                </table>   
             </tr>
             <tr>
                 <th>Numero</th>
