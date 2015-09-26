@@ -1,0 +1,20 @@
+{% extends 'LIHotelBundle::adminBase.html.twig' %}
+
+{% block body -%}
+<div class="col-lg-12 col-sm-12 col-xs-12">
+    <div class="page-header">
+		<h1>Compensacion creation</h1>
+	</div>
+
+	{% form_theme form 'bootstrap_3_layout.html.twig' %}
+	{{ form(form) }}
+
+	<ul class="record_actions">
+	    <li>
+	        <a href="{{ path('compensacion') }}">
+	            Back to the list
+	        </a>
+	    </li>
+	</ul>
+</div>
+{% endblock %}

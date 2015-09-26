@@ -1,0 +1,30 @@
+bebida:
+    path:     /
+    defaults: { _controller: "LIHotelBundle:Bebida:index" }
+
+bebida_show:
+    path:     /{id}/show
+    defaults: { _controller: "LIHotelBundle:Bebida:show" }
+
+bebida_new:
+    path:     /new
+    defaults: { _controller: "LIHotelBundle:Bebida:new" }
+
+bebida_create:
+    path:     /create
+    defaults: { _controller: "LIHotelBundle:Bebida:create" }
+    methods:  POST
+
+bebida_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LIHotelBundle:Bebida:edit" }
+
+bebida_update:
+    path:     /{id}/update
+    defaults: { _controller: "LIHotelBundle:Bebida:update" }
+    methods:  [POST, PUT]
+
+bebida_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LIHotelBundle:Bebida:delete" }
+    methods:  [POST, DELETE]

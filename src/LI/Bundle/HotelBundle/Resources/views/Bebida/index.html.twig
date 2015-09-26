@@ -1,0 +1,51 @@
+{% extends 'LIHotelBundle::adminBase.html.twig' %}
+
+{% block body -%}
+<div class="col-lg-12 col-sm-12 col-xs-12">
+    <div class="page-header">
+        <h1>Bebida list</h1>
+    </div>
+
+    <table class="table table-striped records_list">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tipo Bebida</th>
+                <th>Categoria Habitación</th>
+                <th>Precio Bebida</th>
+                <th>Marca Bebida</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('bebida_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.tipoBebida }}</td>
+                <td>{{ entity.categoriaHabitacion }}</td>
+                <td>{{ entity.precio }} Bs</td>
+                <td>{{ entity.marca }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('bebida_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('bebida_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('bebida_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+factura:
+    path:     /
+    defaults: { _controller: "LIHotelBundle:Factura:index" }
+
+factura_show:
+    path:     /{id}/show
+    defaults: { _controller: "LIHotelBundle:Factura:show" }
+
+factura_new:
+    path:     /new
+    defaults: { _controller: "LIHotelBundle:Factura:new" }
+
+factura_create:
+    path:     /create
+    defaults: { _controller: "LIHotelBundle:Factura:create" }
+    methods:  POST
+
+factura_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LIHotelBundle:Factura:edit" }
+
+factura_update:
+    path:     /{id}/update
+    defaults: { _controller: "LIHotelBundle:Factura:update" }
+    methods:  [POST, PUT]
+
+factura_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LIHotelBundle:Factura:delete" }
+    methods:  [POST, DELETE]

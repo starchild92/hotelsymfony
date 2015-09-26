@@ -1,0 +1,30 @@
+reserva:
+    path:     /
+    defaults: { _controller: "LIHotelBundle:Reserva:index" }
+
+reserva_show:
+    path:     /{id}/show
+    defaults: { _controller: "LIHotelBundle:Reserva:show" }
+
+reserva_new:
+    path:     /new
+    defaults: { _controller: "LIHotelBundle:Reserva:new" }
+
+reserva_create:
+    path:     /create
+    defaults: { _controller: "LIHotelBundle:Reserva:create" }
+    methods:  POST
+
+reserva_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LIHotelBundle:Reserva:edit" }
+
+reserva_update:
+    path:     /{id}/update
+    defaults: { _controller: "LIHotelBundle:Reserva:update" }
+    methods:  [POST, PUT]
+
+reserva_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LIHotelBundle:Reserva:delete" }
+    methods:  [POST, DELETE]

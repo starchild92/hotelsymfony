@@ -1,3 +1,39 @@
+li_hotel_factura:
+    resource: "@LIHotelBundle/Resources/config/routing/factura.yml"
+    prefix:   /factura
+
+li_hotel_compensacion:
+    resource: "@LIHotelBundle/Resources/config/routing/compensacion.yml"
+    prefix:   /compensacion
+
+li_hotel_reserva:
+    resource: "@LIHotelBundle/Resources/config/routing/reserva.yml"
+    prefix:   /reserva
+
+li_hotel_bebida:
+    resource: "@LIHotelBundle/Resources/config/routing/bebida.yml"
+    prefix:   /bebida
+
+li_hotel_llamada:
+    resource: "@LIHotelBundle/Resources/config/routing/llamada.yml"
+    prefix:   /llamada
+
+li_hotel_categoriahabitacion:
+    resource: "@LIHotelBundle/Resources/config/routing/categoriahabitacion.yml"
+    prefix:   /categoriahabitacion
+
+li_hotel_tipohabitacion:
+    resource: "@LIHotelBundle/Resources/config/routing/tipohabitacion.yml"
+    prefix:   /tipohabitacion
+
+li_hotel_tipo:
+    resource: "@LIHotelBundle/Resources/config/routing/tipo.yml"
+    prefix:   /tipo
+
+li_hotel_habitacion:
+    resource: "@LIHotelBundle/Resources/config/routing/habitacion.yml"
+    prefix:   /habitacion
+
 LIHotelBundle_homepage:
     pattern:  /
     defaults: { _controller: LIHotelBundle:Inicio:index }

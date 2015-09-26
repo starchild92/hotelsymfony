@@ -2,106 +2,12 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Hotel Symfony{% endblock %}</title>
-        
-        <link rel="icon" type="image/x-icon" href="{{ asset('bundles/lihotel/images/icon.ico') }}" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap.css') }}"><link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/carousel.css') }}">
+        <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
-
-        <script src="{{ asset('bundles/lihotel/js/jquery.min.js') }}"></script>
-        <script src="{{ asset('bundles/lihotel/js/bootstrap.min.js') }}"></script>
-        {% block javascripts %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-
-    <div class="navbar-wrapper">
-        <div class="container">
-            <nav class="navbar navbar-inverse navbar-static-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="{{ path('LIHotelBundle_homepage') }}">
-                            <img width="20" height="20" alt="Brand" src="{{ asset('bundles/lihotel/images/icon.ico') }}">
-                        </a>
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand brandname" href="{{ path('LIHotelBundle_homepage') }}">Hotel Symfony</a>
-                    </div>
-                    <div id="navbar" class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="{% if app.request.attributes.get('_route') == 'LIHotelBundle_homepage' %}active{% endif %}"><a href="{{ path('LIHotelBundle_homepage') }}">Inicio</a></li>
-                            <li class="{% if app.request.attributes.get('_route') == 'LIHotelBundle_consultar' %}active{% endif %}"><a href="{{ path('LIHotelBundle_consultar') }}">Consultar</a></li>
-                            <li class="{% if app.request.attributes.get('_route') == 'LIHotelBundle_registro' %}active{% endif %}"><a href="{{ path('LIHotelBundle_registro') }}">Registro</a></li>
-                            <a href="{{ path('LIHotelBundle_registro') }}"><button type="button" class="btn btn-success navbar-btn" style="margin-right:10px; margin-left:10px">Infsdfsdficiar Sesión</button></a>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
-    
-    {% block body %}{% endblock %}
-
-    <div class="container" style="margin-bottom: 20px; margin-top: 20px;">
-            <div id="london"></div>
-            <div class="row">
-                <div class="col-md-4">
-                    <center>
-                        <div class="col-md-6 col-xs-6">
-                        <img src="{{ asset('bundles/lihotel/images/LOGO UC.png') }}" alt="rude" width="70" height="85">
-                            <h5>Universidad de Carabobo</h5>
-                        </div><!-- /.col-md-6 -->
-                        <div class="col-md-6 col-xs-6">
-                        <img src="{{ asset('bundles/lihotel/images/LOGO FACYT.png') }}" alt="rude" width="80" height="85">
-                            <h5>Facultad Experimental de Ciencias y Tecnología</h5>
-                        </div><!-- /.col-md-6 -->
-                    </center>
-                </div>
-                <div class="col-md-4" id="lado">
-                    <center>
-                        <div class="col-md-12">
-                        <img data-toggle="tooltip" title="Jajaja, Necesitas tiempo, tutoriales y mucha lectura para dominarme!" class="img-circle" src="{{ asset('bundles/lihotel/images/symfony2.png') }}" alt="rude" width="90" height="90">
-                        </div><!-- /.col-md-4 --><br>Int. al uso de Frameworks <br>para el Desarrollo de Apps Web<br>Prof. Luis León<br>
-                    </center>
-                </div>
-                <div class="col-md-4" id="lado">
-                    <center>
-                        <div class="col-md-6 col-xs-6">
-                        <img data-toggle="tooltip" title="Break a leg!" class="img-circle" src="{{ asset('bundles/lihotel/images/luis.jpg') }}" alt="rude" width="85" height="85">
-                            <h5>Luis Pérez</h5>
-                        </div><!-- /.col-md-4 -->
-                        <div class="col-md-6 col-xs-6">
-                        <img data-toggle="tooltip" title="Some people want to set the world on fire." class="img-circle" src="{{ asset('bundles/lihotel/images/ivo.jpg') }}" alt="rude" width="85" height="85">
-                            <h5>Ivonne Ortega</h5>
-                        </div><!-- /.col-md-4 -->
-                    </center>
-                </div>
-            </div>
-        </div>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
     </body>
 </html>
-
-    <style type="text/css">
-        h5{ text-align: center; }
-        #london{ border-top: 1px solid #eeeeee; margin-bottom: 15px; }
-        #lado{ border-left: 1px solid #eeeeee; }
-        @font-face{
-          font-family: "Raleway-Regular";
-          src: url('{{ asset('bundles/lihotel/fonts/Raleway-Medium.ttf') }}') format('truetype');
-        }
-        @font-face{
-          font-family: "Arya-Regular";
-          src: url('{{ asset('bundles/lihotel/fonts/Arya-Regular.ttf') }}') format('truetype');
-        }
-        body{
-            font-family: Raleway-Regular;
-        }
-    </style>
-    <script>
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
-    });
-    </script>

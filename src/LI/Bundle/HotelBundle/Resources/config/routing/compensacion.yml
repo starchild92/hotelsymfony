@@ -1,0 +1,30 @@
+compensacion:
+    path:     /
+    defaults: { _controller: "LIHotelBundle:Compensacion:index" }
+
+compensacion_show:
+    path:     /{id}/show
+    defaults: { _controller: "LIHotelBundle:Compensacion:show" }
+
+compensacion_new:
+    path:     /new
+    defaults: { _controller: "LIHotelBundle:Compensacion:new" }
+
+compensacion_create:
+    path:     /create
+    defaults: { _controller: "LIHotelBundle:Compensacion:create" }
+    methods:  POST
+
+compensacion_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LIHotelBundle:Compensacion:edit" }
+
+compensacion_update:
+    path:     /{id}/update
+    defaults: { _controller: "LIHotelBundle:Compensacion:update" }
+    methods:  [POST, PUT]
+
+compensacion_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LIHotelBundle:Compensacion:delete" }
+    methods:  [POST, DELETE]

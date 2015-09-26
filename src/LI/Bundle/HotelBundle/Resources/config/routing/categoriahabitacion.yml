@@ -1,0 +1,30 @@
+categoriahabitacion:
+    path:     /
+    defaults: { _controller: "LIHotelBundle:CategoriaHabitacion:index" }
+
+categoriahabitacion_show:
+    path:     /{id}/show
+    defaults: { _controller: "LIHotelBundle:CategoriaHabitacion:show" }
+
+categoriahabitacion_new:
+    path:     /new
+    defaults: { _controller: "LIHotelBundle:CategoriaHabitacion:new" }
+
+categoriahabitacion_create:
+    path:     /create
+    defaults: { _controller: "LIHotelBundle:CategoriaHabitacion:create" }
+    methods:  POST
+
+categoriahabitacion_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LIHotelBundle:CategoriaHabitacion:edit" }
+
+categoriahabitacion_update:
+    path:     /{id}/update
+    defaults: { _controller: "LIHotelBundle:CategoriaHabitacion:update" }
+    methods:  [POST, PUT]
+
+categoriahabitacion_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LIHotelBundle:CategoriaHabitacion:delete" }
+    methods:  [POST, DELETE]

@@ -1,0 +1,48 @@
+{% extends 'LIHotelBundle::adminBase.html.twig' %}
+
+{% block body -%}
+    <h1>Reserva</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Estadoreserva</th>
+                <td>{{ entity.estadoReserva }}</td>
+            </tr>
+            <tr>
+                <th>Habitacion</th>
+                <td>{{ entity.habitacion }}</td>
+            </tr>
+            <tr>
+                <th>Cliente</th>
+                <td>{{ entity.cliente }}</td>
+            </tr>
+            <tr>
+                <th>Cantidadpersonas</th>
+                <td>{{ entity.cantidadPersonas }}</td>
+            </tr>
+            <tr>
+                <th>Diasreserva</th>
+                <td>{{ entity.diasReserva }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('reserva') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('reserva_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
