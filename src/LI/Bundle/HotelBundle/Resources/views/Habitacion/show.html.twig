@@ -3,10 +3,10 @@
 {% block body -%}
 <div class="col-lg-12 col-sm-12 col-xs-12">
     <div class="page-header">
-        <h1>Habitacion</h1>
+        <h1>Habitacion {{ entity.nombre }} (#{{ entity.numero }})</h1>
     </div>
 
-    <table class="table table-striped record_properties">
+    <table class="table table-bordered record_properties">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -17,41 +17,34 @@
                 <td>{{ entity.estado }}</td>
             </tr>
             <tr>
+                <th>Nombre</th>
+                <td>{{ entity.numero }} - {{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Categoria</th>
+                <td>{{ entity.tipo.categoriaHabitacion }}</td>
+            </tr>
+            <tr><th>Tipo</th><td>{{ entity.tipo.tipoHabitacion }}</td></tr>
+            <tr><th>Espacio Interno</th><td>{{ entity.tipo.espacioInterno }}</td></tr>
+            <tr><th>Servicios</th><td>{{ entity.tipo.servicios }}</td></tr>
+            <tr>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Categoria</th>
-                            <th>Tipo</th>
-                            <th>Espacio Interno</th>
-                            <th>Servicios</th>
                             <th>Bebidas del Minibar</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>{{ entity.tipo.categoriaHabitacion }}</td>
-                            <td>{{ entity.tipo.tipoHabitacion }}</td>
-                            <td>{{ entity.tipo.espacioInterno }}</td>
-                            <td>{{ entity.tipo.servicios }}</td>
-                            <td>{% for bebida in entity.tipo.bebidasMinibar %}
-                                <tr>
+                        {% for bebida in entity.tipo.bebidasMinibar %}
+                            <tr>
                                 <td>{{ bebida.marca }}</td>
                                 <td>{{ bebida.cantidad }} unidades</td>
                                 <td>{{ bebida.precio }} Bs</td>
                                 <td>{{ bebida.tipoBebida }} unidades</td>
                             </tr>
-                            {% endfor %}</td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>   
-            </tr>
-            <tr>
-                <th>Numero</th>
-                <td>{{ entity.numero }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ entity.nombre }}</td>
             </tr>
         </tbody>
     </table>

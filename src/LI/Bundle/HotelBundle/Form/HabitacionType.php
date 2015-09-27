@@ -15,7 +15,12 @@ class HabitacionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('estado')
+            ->add('estado','choice', array(
+                   'choices'  => array(
+                    'Libre' => 'Libre',
+                    'Ocupada' => 'Ocupada',
+                    'Reservada' => 'Reservada',
+            )))
             ->add('numero')
             ->add('nombre')
             ->add('tipo', new TipoType())
