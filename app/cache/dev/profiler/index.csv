@@ -63,3 +63,13 @@ bd1ee2,127.0.0.1,GET,http://hotel.local/app_dev.php/habitacion/2/show,1443370403
 74f9d6,127.0.0.1,GET,http://hotel.local/app_dev.php/habitacion/2/show,1443370501,,200
 09c3dc,127.0.0.1,GET,http://hotel.local/app_dev.php/habitacion/2/show,1443370515,,200
 547996,127.0.0.1,GET,http://hotel.local/app_dev.php/habitacion/2/show,1443370665,,200
+bb718d,127.0.0.1,GET,http://hotel.local/app_dev.php/,1443661717,,200
+e927d5,127.0.0.1,GET,http://hotel.local/app_dev.php/tipo,1443661740,,301
+f6d7ab,127.0.0.1,GET,http://hotel.local/app_dev.php/tipo/,1443661772,,200
+bff185,127.0.0.1,GET,http://hotel.local/app_dev.php/compensacion/,1443661824,,200
+89e7a1,127.0.0.1,GET,http://hotel.local/app_dev.php/categoriahabitacion/,1443661860,,200
+a9609c,127.0.0.1,GET,http://hotel.local/app_dev.php/llamada/,1443662081,,200
+181271,127.0.0.1,GET,http://hotel.local/app_dev.php/factura/,1443662083,,200
+3cd881,127.0.0.1,GET,http://hotel.local/app_dev.php/compensacion/,1443662085,,200
+39c0ab,127.0.0.1,GET,http://hotel.local/app_dev.php/reserva/,1443662088,,200
+0ff0f7,127.0.0.1,GET,http://hotel.local/app_dev.php/,1443662098,,200
