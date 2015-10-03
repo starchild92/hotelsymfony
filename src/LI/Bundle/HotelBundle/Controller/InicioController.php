@@ -23,49 +23,43 @@ class InicioController extends Controller
      */
     public function indexAction()
     {
-        $usuario = new Usuario();
-        $form = $this->createForm(new UsuarioType(), $usuario);
-
-        $login = new Login();
-        $form2 = $this->createForm(new LoginType(), $login);
-
-        $request = $this->getRequest();
-        if ($request->getMethod() == 'POST') {
-            $form->bind($request);
-
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()
-                       ->getEntityManager();
-                $em->persist($usuario);
-                $em->flush();
-
-                $this->get('session')->getFlashBag()->set('error', 'Gracias por registrarte, ya puedes hacer reservas!');
-                return $this->redirect($this->generateUrl('LIHotelBundle_registro'));
+        $user = $this->getUser();
+        if ($user != null) {
+            $roles = $user->getRoles();
+            if (in_array('ROLE_ADMIN', $roles)) {
+                return $this->redirect($this->generateUrl('_admin', array(
+                'user' => $user)));
+            }else{
+                return $this->render('LIHotelBundle:Inicio:index.html.twig', array(
+                'user' => $user));
             }
         }
 
-        return $this->render('LIHotelBundle:Inicio:index.html.twig', array(
-            'form' => $form->createView(),
-            'form2' => $form2->createView()
-        ));
+        return $this->render('LIHotelBundle:Inicio:index.html.twig');
+    }
+
+    public function adminAction(){
+        $user = $this->getUser();
+        if ($user != null) {
+            $roles = $user->getRoles();
+            if (in_array('ROLE_ADMIN', $roles)) {
+                return $this->render('LIHotelBundle:Inicio:inicioAdmin.html.twig', array(
+                'user' => $user));
+            }else{
+                return $this->redirect($this->generateUrl('LIHotelBundle_homepage'));
+            }
+        }
+        return $this->redirect($this->generateUrl('fos_user_security_login'));
     }
 
     public function consultarAction(){
-
-        $login = new Login();
-        $form2 = $this->createForm(new LoginType(), $login);
-
-        return $this->render('LIHotelBundle:Inicio:consultar.html.twig', array(
-            'form2' => $form2->createView()
-        ));
+        return $this->render('LIHotelBundle:Inicio:consultar.html.twig');
     }
 
     public function registroAction(){
     	$usuario = new Usuario();
 	    $form = $this->createForm(new UsuarioType(), $usuario);
 
-        $login = new Login();
-        $form2 = $this->createForm(new LoginType(), $login);
 
 	    $request = $this->getRequest();
 	    if ($request->getMethod() == 'POST') {
@@ -84,36 +78,7 @@ class InicioController extends Controller
 
 	    return $this->render('LIHotelBundle:Inicio:registro.html.twig', array(
 	        'form' => $form->createView(),
-            'form2' => $form2->createView()
 	    ));
-    }
-
-    public function sesionAction(){
-        $login = new Login();
-        $form2 = $this->createForm(new LoginType(), $login);
-        $request = $this->getRequest();
-        if ($request->getMethod() == 'POST') {
-            $form2->bind($request);
-
-            if ($form2->isValid()) {
-                $mail = $form2->get('mail')->getData();
-                $password = $form2->get('password')->getData();
-
-                 $em = $this->getDoctrine()
-                   ->getEntityManager();
-
-                $user = $em->getRepository('LIHotelBundle:Login')
-                            ->validarCuenta($mail, $password);
-
-               if ($user == null) {
-                    $this->get('session')->getFlashBag()->set('errorsesion', 'Lo sentimos, usted no está registrado');
-                    return $this->redirect($this->generateUrl('LIHotelBundle_registro'));
-                }else{
-                    //discriminarlos por el tipo de usuario
-                    return new Response('<html><body>'.$user[0]->getMail().' '.$user[0]->getCuenta().'</body></html>');
-                }
-            }
-        }
     }
 
 }

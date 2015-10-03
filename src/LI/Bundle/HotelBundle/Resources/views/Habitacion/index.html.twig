@@ -6,14 +6,14 @@
         <h1>Habitacion list <small>como están conformadas las habitaciones del hotel</small></h1>
     </div>
 
-    <table class="table table-striped records_list">
+    <table class="table table-striped table-bordered records_list">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Estado</th>
-                <th>Caracteristicas de la Habitación</th>
                 <th>Numero</th>
                 <th>Nombre</th>
+                <th>Caracteristicas de la Habitación</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -22,29 +22,30 @@
             <tr>
                 <td><a href="{{ path('habitacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.estado }}</td>
+                <td>{{ entity.numero }}</td>
+                <td>{{ entity.nombre }}</td>
                 <td>
-                    <table class="table">
+                    <table class="table table-condensed table-bordered">
                         <tr>
-                            <td>Categoria</td>
-                            <td>Tipo</td>
+                            <th>Categoria</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
                         </tr>
                         <tr>
                             <td>{{ entity.tipo.categoriaHabitacion }}</td>
                             <td>{{ entity.tipo.tipoHabitacion }}</td>
+                            <td>{{ entity.tipo.espacioInterno }}</td>
                         </tr>
                         <tr>
-                            <td>Descripción</td>
-                            <td>Servicios</td>
-                            <td>Cant. Bebidas</td>
+                            <th>Servicios</th>
+                            <th colspan="2">Cant. Bebidas</th>
                         </tr>
                         <tr>
-                        <td>{{ entity.tipo.espacioInterno }}</td>
-                        <td>{{ entity.tipo.servicios }}</td>
-                        <td>{{ entity.tipo.bebidasMinibar|length }}</td></tr>
+                            <td>{{ entity.tipo.servicios }}</td>
+                            <td colspan="2">{{ entity.tipo.bebidasMinibar|length }}</td>
+                        </tr>
                     </table>
                 </td>
-                    <td>{{ entity.numero }}</td>
-                    <td>{{ entity.nombre }}</td>
                 <td>
                 <ul>
                     <li>

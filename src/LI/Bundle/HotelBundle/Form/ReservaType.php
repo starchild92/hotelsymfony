@@ -20,6 +20,7 @@ class ReservaType extends AbstractType
             ->add('habitacion')
             ->add('cliente')
             ->add('cantidadPersonas')
+            ->add('cantidadNinos')
             ->add('diasReserva')
             ->add('fecha')
         ;

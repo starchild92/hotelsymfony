@@ -20,6 +20,7 @@
 namespace Doctrine\DBAL\Migrations\Configuration;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Migrations\Finder\MigrationDeepFinderInterface;
 use Doctrine\DBAL\Migrations\MigrationException;
 use Doctrine\DBAL\Migrations\OutputWriter;
 use Doctrine\DBAL\Migrations\Version;
@@ -41,6 +42,18 @@ use Doctrine\DBAL\Types\Type;
  */
 class Configuration
 {
+    /**
+     * Configure versions to be organized by year.
+     */
+    const VERSIONS_ORGANIZATION_BY_YEAR = 'year';
+
+    /**
+     * Configure versions to be organized by year and month.
+     *
+     * @var string
+     */
+    const VERSIONS_ORGANIZATION_BY_YEAR_AND_MONTH = 'year_and_month';
+
     /**
      * Name of this set of migrations
      *
@@ -103,7 +116,21 @@ class Configuration
      *
      * @var Version[]
      */
-    private $migrations = array();
+    private $migrations = [];
+
+    /**
+     * Versions are organized by year.
+     *
+     * @var boolean
+     */
+    private $migrationsAreOrganizedByYear = false;
+
+    /**
+     * Versions are organized by year and month.
+     *
+     * @var boolean
+     */
+    private $migrationsAreOrganizedByYearAndMonth = false;
 
     /**
      * Construct a migration configuration object.
@@ -119,7 +146,26 @@ class Configuration
             $outputWriter = new OutputWriter();
         }
         $this->outputWriter = $outputWriter;
+        if ($finder === null) {
+            $finder = new RecursiveRegexFinder();
+        }
         $this->migrationFinder = $finder;
+    }
+
+    /**
+     * @return bool
+     */
+    public function areMigrationsOrganizedByYear()
+    {
+        return $this->migrationsAreOrganizedByYear;
+    }
+
+    /**
+     * @return bool
+     */
+    public function areMigrationsOrganizedByYearAndMonth()
+    {
+        return $this->migrationsAreOrganizedByYearAndMonth;
     }
 
     /**
@@ -129,10 +175,10 @@ class Configuration
      */
     public function validate()
     {
-        if (! $this->migrationsNamespace) {
+        if (!$this->migrationsNamespace) {
             throw MigrationException::migrationsNamespaceRequired();
         }
-        if (! $this->migrationsDirectory) {
+        if (!$this->migrationsDirectory) {
             throw MigrationException::migrationsDirectoryRequired();
         }
     }
@@ -155,6 +201,16 @@ class Configuration
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Sets the output writer.
+     *
+     * @param OutputWriter $outputWriter
+     */
+    public function setOutputWriter(OutputWriter $outputWriter)
+    {
+        $this->outputWriter = $outputWriter;
     }
 
     /**
@@ -191,7 +247,7 @@ class Configuration
         $datetime = str_replace('Version', '', $version);
         $datetime = \DateTime::createFromFormat('YmdHis', $datetime);
 
-        if ($datetime === false){
+        if ($datetime === false) {
             return '';
         }
 
@@ -269,13 +325,22 @@ class Configuration
     }
 
     /**
-     * set the implementation of the migration finder.
+     * Set the implementation of the migration finder.
      *
-     * @param   $finder The new migration finder
-     * @return  void
+     * @param MigrationFinderInterface $finder The new migration finder
+     * @throws MigrationException
      */
-    public function setMigrationFinder(MigrationFinderInterface $finder)
+    public function setMigrationsFinder(MigrationFinderInterface $finder)
     {
+        if (($this->migrationsAreOrganizedByYear || $this->migrationsAreOrganizedByYearAndMonth) &&
+            !($finder instanceof MigrationDeepFinderInterface)) {
+
+            throw MigrationException::configurationIncompatibleWithFinder(
+                'organize-migrations',
+                $finder
+            );
+        }
+
         $this->migrationFinder = $finder;
     }
 
@@ -329,7 +394,7 @@ class Configuration
      */
     public function registerMigrations(array $migrations)
     {
-        $versions = array();
+        $versions = [];
         foreach ($migrations as $version => $class) {
             $versions[] = $this->registerMigration($version, $class);
         }
@@ -358,7 +423,7 @@ class Configuration
      */
     public function getVersion($version)
     {
-        if ( ! isset($this->migrations[$version])) {
+        if (!isset($this->migrations[$version])) {
             throw MigrationException::unknownMigrationVersion($version);
         }
 
@@ -390,7 +455,7 @@ class Configuration
 
         $version = $this->connection->fetchColumn(
             "SELECT version FROM " . $this->migrationsTableName . " WHERE version = ?",
-            array($version->getVersion())
+            [$version->getVersion()]
         );
 
         return $version !== false;
@@ -406,7 +471,7 @@ class Configuration
         $this->createMigrationTable();
 
         $ret = $this->connection->fetchAll("SELECT version FROM " . $this->migrationsTableName);
-        $versions = array();
+        $versions = [];
         foreach ($ret as $version) {
             $versions[] = current($version);
         }
@@ -421,7 +486,7 @@ class Configuration
      */
     public function getAvailableVersions()
     {
-        $availableVersions = array();
+        $availableVersions = [];
         foreach ($this->migrations as $migration) {
             $availableVersions[] = $migration->getVersion();
         }
@@ -440,7 +505,7 @@ class Configuration
 
         $where = null;
         if (!empty($this->migrations)) {
-            $migratedVersions = array();
+            $migratedVersions = [];
             foreach ($this->migrations as $migration) {
                 $migratedVersions[] = sprintf("'%s'", $migration->getVersion());
             }
@@ -587,12 +652,12 @@ class Configuration
             return false;
         }
 
-        if ( ! $this->connection->getSchemaManager()->tablesExist(array($this->migrationsTableName))) {
-            $columns = array(
-                'version' => new Column('version', Type::getType('string'), array('length' => 255)),
-            );
+        if (!$this->connection->getSchemaManager()->tablesExist([$this->migrationsTableName])) {
+            $columns = [
+                'version' => new Column('version', Type::getType('string'), ['length' => 255]),
+            ];
             $table = new Table($this->migrationsTableName, $columns);
-            $table->setPrimaryKey(array('version'));
+            $table->setPrimaryKey(['version']);
             $this->connection->getSchemaManager()->createTable($table);
 
             $this->migrationTableCreated = true;
@@ -616,18 +681,18 @@ class Configuration
      */
     public function getMigrationsToExecute($direction, $to)
     {
-        if ($direction === 'down') {
+        if ($direction === Version::DIRECTION_DOWN) {
             if (count($this->migrations)) {
                 $allVersions = array_reverse(array_keys($this->migrations));
                 $classes = array_reverse(array_values($this->migrations));
                 $allVersions = array_combine($allVersions, $classes);
             } else {
-                $allVersions = array();
+                $allVersions = [];
             }
         } else {
             $allVersions = $this->migrations;
         }
-        $versions = array();
+        $versions = [];
         $migrated = $this->getMigratedVersions();
         foreach ($allVersions as $version) {
             if ($this->shouldExecuteMigration($direction, $version, $to, $migrated)) {
@@ -646,21 +711,43 @@ class Configuration
      */
     protected function findMigrations($path)
     {
-        return $this->getMigrationFinder()->findMigrations($path, $this->getMigrationsNamespace());
+        return $this->migrationFinder->findMigrations($path, $this->getMigrationsNamespace());
     }
 
     /**
-     * Get the migration finder, creating one if it's not present.
-     *
-     * @return   MigrationFinderInterface
+     * @param bool $migrationsAreOrganizedByYear
+     * @throws MigrationException
      */
-    protected function getMigrationFinder()
+    public function setMigrationsAreOrganizedByYear($migrationsAreOrganizedByYear = true)
     {
-        if (!$this->migrationFinder) {
-            $this->migrationFinder = new RecursiveRegexFinder();
-        }
+        $this->ensureOrganizeMigrationsIsCompatibleWithFinder();
 
-        return $this->migrationFinder;
+        $this->migrationsAreOrganizedByYear = $migrationsAreOrganizedByYear;
+    }
+
+    /**
+     * @param bool $migrationsAreOrganizedByYearAndMonth
+     * @throws MigrationException
+     */
+    public function setMigrationsAreOrganizedByYearAndMonth($migrationsAreOrganizedByYearAndMonth = true)
+    {
+        $this->ensureOrganizeMigrationsIsCompatibleWithFinder();
+
+        $this->migrationsAreOrganizedByYear = $migrationsAreOrganizedByYearAndMonth;
+        $this->migrationsAreOrganizedByYearAndMonth = $migrationsAreOrganizedByYearAndMonth;
+    }
+
+    /**
+     * @throws MigrationException
+     */
+    private function ensureOrganizeMigrationsIsCompatibleWithFinder()
+    {
+        if (!($this->migrationFinder instanceof MigrationDeepFinderInterface)) {
+            throw MigrationException::configurationIncompatibleWithFinder(
+                'organize-migrations',
+                $this->migrationFinder
+            );
+        }
     }
 
     /**
@@ -676,15 +763,15 @@ class Configuration
      */
     private function shouldExecuteMigration($direction, Version $version, $to, $migrated)
     {
-        if ($direction === 'down') {
-            if ( ! in_array($version->getVersion(), $migrated)) {
+        if ($direction === Version::DIRECTION_DOWN) {
+            if (!in_array($version->getVersion(), $migrated)) {
                 return false;
             }
 
             return $version->getVersion() > $to;
         }
 
-        if ($direction === 'up') {
+        if ($direction === Version::DIRECTION_UP) {
             if (in_array($version->getVersion(), $migrated)) {
                 return false;
             }

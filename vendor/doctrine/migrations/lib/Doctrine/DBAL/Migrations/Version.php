@@ -37,6 +37,9 @@ class Version
     const STATE_EXEC = 2;
     const STATE_POST = 3;
 
+    const DIRECTION_UP = 'up';
+    const DIRECTION_DOWN = 'down';
+
     /**
      * The Migrations Configuration instance for this migration
      *
@@ -86,13 +89,13 @@ class Version
     private $class;
 
     /** The array of collected SQL statements for this version */
-    private $sql = array();
+    private $sql = [];
 
     /** The array of collected parameters for SQL statements for this version */
-    private $params = array();
+    private $params = [];
 
     /** The array of collected types for SQL statements for this version */
-    private $types = array();
+    private $types = [];
 
     /** The time in seconds that this migration version took to execute */
     private $time;
@@ -149,7 +152,7 @@ class Version
         $this->configuration->createMigrationTable();
         $this->connection->insert(
             $this->configuration->getMigrationsTableName(),
-            array('version' => $this->version)
+            ['version' => $this->version]
         );
     }
 
@@ -158,7 +161,7 @@ class Version
         $this->configuration->createMigrationTable();
         $this->connection->delete(
             $this->configuration->getMigrationsTableName(),
-            array('version' => $this->version)
+            ['version' => $this->version]
         );
     }
 
@@ -169,14 +172,14 @@ class Version
      * @param array        $params
      * @param array        $types
      */
-    public function addSql($sql, array $params = array(), array $types = array())
+    public function addSql($sql, array $params = [], array $types = [])
     {
         if (is_array($sql)) {
             foreach ($sql as $key => $query) {
                 $this->sql[] = $query;
                 if (isset($params[$key])) {
                     $this->params[count($this->sql) - 1] = $params[$key];
-                    $this->types[count($this->sql) - 1] = isset($types[$key]) ? $types[$key] : array();
+                    $this->types[count($this->sql) - 1] = isset($types[$key]) ? $types[$key] : [];
                 }
             }
         } else {
@@ -197,7 +200,7 @@ class Version
      *
      * @return boolean $written
      */
-    public function writeSqlFile($path, $direction = 'up')
+    public function writeSqlFile($path, $direction = self::DIRECTION_UP)
     {
         $queries = $this->execute($direction, true);
 
@@ -234,7 +237,7 @@ class Version
      */
     public function execute($direction, $dryRun = false, $timeAllQueries = false)
     {
-        $this->sql = array();
+        $this->sql = [];
 
         $transaction = $this->migration->isTransactional();
         if ($transaction) {
@@ -249,7 +252,7 @@ class Version
             $fromSchema = $this->sm->createSchema();
             $this->migration->{'pre' . ucfirst($direction)}($fromSchema);
 
-            if ($direction === 'up') {
+            if ($direction === self::DIRECTION_UP) {
                 $this->outputWriter->write("\n" . sprintf('  <info>++</info> migrating <comment>%s</comment>', $this->version) . "\n");
             } else {
                 $this->outputWriter->write("\n" . sprintf('  <info>--</info> reverting <comment>%s</comment>', $this->version) . "\n");
@@ -283,7 +286,7 @@ class Version
                     ));
                 }
 
-                if ($direction === 'up') {
+                if ($direction === self::DIRECTION_UP) {
                     $this->markMigrated();
                 } else {
                     $this->markNotMigrated();
@@ -300,7 +303,7 @@ class Version
 
             $migrationEnd = microtime(true);
             $this->time = round($migrationEnd - $migrationStart, 2);
-            if ($direction === 'up') {
+            if ($direction === self::DIRECTION_UP) {
                 $this->outputWriter->write(sprintf("\n  <info>++</info> migrated (%ss)", $this->time));
             } else {
                 $this->outputWriter->write(sprintf("\n  <info>--</info> reverted (%ss)", $this->time));
@@ -322,7 +325,7 @@ class Version
 
             if ($dryRun === false) {
                 // now mark it as migrated
-                if ($direction === 'up') {
+                if ($direction === self::DIRECTION_UP) {
                     $this->markMigrated();
                 } else {
                     $this->markNotMigrated();
@@ -333,7 +336,7 @@ class Version
 
             $this->state = self::STATE_NONE;
 
-            return array();
+            return [];
         } catch (\Exception $e) {
 
             $this->outputWriter->write(sprintf(

@@ -72,6 +72,21 @@ class Reserva
     /**
      * @var integer
      *
+     * @ORM\Column(name="cantidad_ninos", type="integer")
+     * @Assert\Type(
+     *     type="integer",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\GreaterThan(
+     *     value = -1,
+     *     message = "Debe ser positivo mayor o igual a cero."
+     * )
+     */
+    private $cantidadNinos;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="dias_reserva", type="integer")
      * @Assert\Type(
      *     type="integer",
@@ -199,6 +214,29 @@ class Reserva
     public function getCantidadPersonas()
     {
         return $this->cantidadPersonas;
+    }
+
+    /**
+     * Set cantidadNinos
+     *
+     * @param integer $cantidadNinos
+     * @return Reserva
+     */
+    public function setCantidadNinos($cantidadNinos)
+    {
+        $this->cantidadNinos = $cantidadNinos;
+
+        return $this;
+    }
+
+    /**
+     * Get cantidadNinos
+     *
+     * @return integer 
+     */
+    public function getCantidadNinos()
+    {
+        return $this->cantidadNinos;
     }
 
     /**

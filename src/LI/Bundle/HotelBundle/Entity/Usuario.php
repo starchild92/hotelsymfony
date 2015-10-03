@@ -5,15 +5,15 @@ namespace LI\Bundle\HotelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * Usuario
  *
- * @ORM\Table()
+ * @ORM\Table(name="fos_user")
  * @ORM\Entity
- * @UniqueEntity("mail", message="Esta dirección de correo ya está en uso")
  */
-class Usuario
+class Usuario extends BaseUser
 {
     /**
      * @var integer
@@ -22,7 +22,7 @@ class Usuario
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -40,13 +40,6 @@ class Usuario
     /**
      * @var string
      *
-     * @ORM\Column(name="cuenta", type="string", length=50)
-     */
-    private $cuenta = 'Usuario';
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="apellido", type="string", length=50)
      * @Assert\Length(
      *      min = 2,
@@ -57,7 +50,7 @@ class Usuario
      */
     private $apellido;
 
-    /**
+    /***
      * @var string $mail
      *
      * @ORM\Column(name="mail", type="string", length=255, unique=true)
@@ -67,9 +60,9 @@ class Usuario
      *     checkHost = true
      * )
      */
-    private $mail;
+    //private $mail;
 
-    /**
+    /***
      * @var string
      *
      * @ORM\Column(name="clave", type="string", length=18)
@@ -80,7 +73,7 @@ class Usuario
      *      maxMessage = "La clave que ha escrito supera el límite de {{ limit }} letras"
      * )
      */
-    private $clave;
+    //private $clave;
 
     /**
      * @var integer
@@ -145,74 +138,51 @@ class Usuario
         return $this->apellido;
     }
 
-    /**
+    /***
      * Set mail
      *
      * @param string $mail
      * @return Usuario
-     */
+     
     public function setMail($mail)
     {
         $this->mail = $mail;
 
         return $this;
-    }
+    }*/
 
-    /**
+    /***
      * Get mail
      *
      * @return string 
-     */
+     
     public function getMail()
     {
         return $this->mail;
-    }
+    }*/
 
-    /**
+    /***
      * Set clave
      *
      * @param string $clave
      * @return Usuario
-     */
+     
     public function setClave($clave)
     {
         $this->clave = $clave;
 
         return $this;
-    }
+    }*/
 
-    /**
+    /***
      * Get clave
      *
      * @return string 
-     */
+     
     public function getClave()
     {
         return $this->clave;
-    }
-
-    /**
-     * Set cuenta
-     *
-     * @param string $cuenta
-     * @return Usuario
-     */
-    public function setCuenta($cuenta)
-    {
-        $this->cuenta = $cuenta;
-
-        return $this;
-    }
-
-    /**
-     * Get cuenta
-     *
-     * @return string 
-     */
-    public function getCuenta()
-    {
-        return $this->cuenta;
-    }
+    }*/
 
     /**
      * Set fecha_nac
@@ -235,5 +205,11 @@ class Usuario
     public function getFechaNac()
     {
         return $this->fecha_nac;
+    }
+
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
     }
 }

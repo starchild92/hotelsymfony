@@ -1,4 +1,4 @@
-{% extends 'LIHotelBundle::base.html.twig' %}
+{% extends 'LIHotelBundle::loginBase.html.twig' %}
 
 {% block title %}Hotel Symfony - Registro{% endblock%}
 
@@ -21,13 +21,19 @@
                             {% form_theme form 'bootstrap_3_layout.html.twig'  %}
                             {{ form_errors(form) }}
                             {{ form_row(form._token) }}
-
-                            {{ form_widget(form.nombre, {'attr':{'placeholder':'Nombre', 'autocomplete':'off'}}) }}
-                            {{ form_widget(form.apellido, {'attr':{'placeholder':'Apellido', 'autocomplete':'off'}}) }}
-                            {{ form_row(form.mail, {'attr': {'type':'text', 'placeholder':'Correo Electronico', 'autocomplete':'off'}}) }}
-                            {{ form_widget(form.clave, {'attr':{'placeholder':'Contraseña', 'autocomplete':'off'}}) }}
-                            {{ form_row(form.fecha_nac, {'attr':{'placeholder':'Edad', 'autocomplete':'off'}}) }}
-
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.nombre, {'attr':{'autocomplete':'off'}}) }}</div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.apellido, {'attr':{'autocomplete':'off'}}) }}</div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.username, {'attr':{'autocomplete':'off'}}) }}</div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.fecha_nac, {'attr':{'autocomplete':'off'}}) }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.email, {'attr':{'autocomplete':'off'}}) }}</div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.plainPassword, {'attr':{'autocomplete':'off'}}) }}</div>
+                            </div>
                             {{ form_rest(form) }}
 
                             <button type="button submit" class="btn btn-success btn-block pull-right">

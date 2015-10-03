@@ -70,7 +70,7 @@ class SqlFileWriter
 
     private function buildMigrationFile(array $queriesByVersion, $direction)
     {
-        $string  = sprintf("# Doctrine Migration File Generated on %s\n", date('Y-m-d H:i:s'));
+        $string = sprintf("# Doctrine Migration File Generated on %s\n", date('Y-m-d H:i:s'));
 
         foreach ($queriesByVersion as $version => $queries) {
             $string .= "\n# Version " . $version . "\n";
@@ -87,7 +87,7 @@ class SqlFileWriter
 
     private function getVersionUpdateQuery($version, $direction)
     {
-        if ($direction == 'down') {
+        if ($direction == Version::DIRECTION_DOWN) {
             $query = "DELETE FROM %s WHERE version = '%s';\n";
         } else {
             $query = "INSERT INTO %s (version) VALUES ('%s');\n";

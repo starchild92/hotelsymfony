@@ -25,13 +25,13 @@ namespace Doctrine\DBAL\Migrations\Finder;
  *
  * @since   1.0.0-alpha3
  */
-final class RecursiveRegexFinder extends AbstractFinder
+final class RecursiveRegexFinder extends AbstractFinder implements MigrationDeepFinderInterface
 {
 
     /**
      * {@inheritdoc}
      */
-    public function findMigrations($directory, $namespace=null)
+    public function findMigrations($directory, $namespace = null)
     {
         $dir = $this->getRealPath($directory);
 
@@ -68,7 +68,7 @@ final class RecursiveRegexFinder extends AbstractFinder
     private function getMatches($iteratorFilesMatch)
     {
         $files = [];
-        foreach($iteratorFilesMatch as $file) {
+        foreach ($iteratorFilesMatch as $file) {
             $files[] = $file[0];
         }
 

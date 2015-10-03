@@ -37,10 +37,11 @@
                     <tbody>
                         {% for bebida in entity.tipo.bebidasMinibar %}
                             <tr>
+                                <td></td>
                                 <td>{{ bebida.marca }}</td>
                                 <td>{{ bebida.cantidad }} unidades</td>
                                 <td>{{ bebida.precio }} Bs</td>
-                                <td>{{ bebida.tipoBebida }} unidades</td>
+                                <td>{{ bebida.tipoBebida }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

@@ -32,7 +32,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <form class="navbar-form navbar-right" role="search">
-                    <a class="btn btn-success" data-toggle="modal" id="Modal" data-target="#ModalSesion">Iniciar Sesión</a>
+                    <a class="btn btn-success" href="{{ path('fos_user_security_login') }}">Iniciar Sesión</a>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ path('LIHotelBundle_homepage') }}">Inicio</a></li>
@@ -44,35 +44,6 @@
             </div>
         </div>
     </nav>
-    
-    <!-- Modal del Inicio de Sesion -->
-    <div class="modal fade" id="ModalSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-        <div class="modal-dialog modal-sm" style="width: 400px;">
-            <div class="modal-content" style="padding:10px 10px 10px 10px;">
-                <div class="row">
-                    <div class="col-sm-12 text-center">
-                    <img src="{{ asset('bundles/lihotel/images/brandimage.png') }}">
-                    <h3 class="text-center">Iniciar Sesión</h3>
-                    <form action="{{ path('LIHotelBundle_sesion') }}" method="post" {{ form_enctype(form2) }} class="usuario">
-                        {% form_theme form2 'bootstrap_3_layout.html.twig'  %}
-                        {{ form_errors(form2) }}
-                        {{ form_widget(form2._token) }}
-
-                        {{ form_row(form2.mail, {'attr':{'autocomplete':'off'}}) }}
-                        {{ form_row(form2.password, {'attr':{'autocomplete':'off'}}) }}
-                        {{ form_rest(form2) }}
-
-                        <button type="button submit" class="btn btn-primary btn-block pull-right">
-                            <span class="glyphicon glyphicon-user pull-left" aria-hidden="true"></span> Continuar ... 
-                        </button>
-                        <p class="text-right"><small>¿No puede entrar en su cuenta?</small></p>
-                    </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal del Inicio de Sesion -->
 
     {% block body %}{% endblock %}
 

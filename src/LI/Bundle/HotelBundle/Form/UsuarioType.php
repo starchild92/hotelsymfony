@@ -15,10 +15,10 @@ class UsuarioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre')
-            ->add('apellido')
-            ->add('mail', null, array('label' => false))
-            ->add('clave', 'password')
+            ->add('nombre', 'text', array(
+                'label' => 'Nombre'))
+            ->add('apellido', 'text', array(
+                'label' => 'Apellido'))
             ->add('fecha_nac', 'date', array(
                 'label' => 'Fecha de Nacimiento',
                 'years' => range(date('Y') -18, date('Y') -115)
@@ -42,5 +42,10 @@ class UsuarioType extends AbstractType
     public function getName()
     {
         return 'li_bundle_hotelbundle_usuario';
+    }
+
+    public function getParent()
+    {
+        return 'fos_user_registration';
     }
 }

@@ -20,7 +20,7 @@ li_hotel_llamada:
 
 li_hotel_categoriahabitacion:
     resource: "@LIHotelBundle/Resources/config/routing/categoriahabitacion.yml"
-    prefix:   /categoriahabitacion
+    prefix:   /admin/categoriahabitacion
 
 li_hotel_tipohabitacion:
     resource: "@LIHotelBundle/Resources/config/routing/tipohabitacion.yml"
@@ -52,8 +52,8 @@ LIHotelBundle_registro:
     requirements:
         _method:  GET|POST
 
-LIHotelBundle_sesion:
-    pattern:  /sesion
-    defaults: { _controller: LIHotelBundle:Inicio:sesion }
+_admin:
+    pattern:  /admin
+    defaults: { _controller: LIHotelBundle:Inicio:admin }
     requirements:
-        _method:  GET|POST
+        _method:  GET

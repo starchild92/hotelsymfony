@@ -36,20 +36,30 @@
 					<li><a href="{{ path('factura') }}">Facturas</a></li>
 					<li><a href="{{ path('compensacion') }}">Compensaciones</a></li>
 					<li><a href="{{ path('reserva') }}">Reservas</a></li>
-					<li><a href="{{ path('bebida') }}">Bebidas</a></li>
+					<!--<li><a href="{{ path('bebida') }}">Bebidas</a></li>-->
 					<li><a href="{{ path('llamada') }}">Llamadas</a></li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Habitaciones <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Operaciones de Consulta</li>
-							<li><a href="{{ path('habitacion') }}">Est. Habitaciones</a></li>
+							<li><a href="{{ path('habitacion') }}">Listado Habitaciones</a></li>
+							<li><a href="{{ path('habitacion_new') }}">Crear Habitación</a></li>
 							<li role="separator" class="divider"></li>
 							<li class="dropdown-header">Tareas Administrativas</li>
-							<li><a href="{{ path('tipo') }}">Crear Nuevo Tipo Habitación</a></li>
+							<!--<li><a href="{{ path('tipo') }}">Crear Nuevo Tipo Habitación</a></li>-->
 							<li><a href="{{ path('tipohabitacion') }}">Tipos de Habitación</a></li>
 							<li><a href="{{ path('categoriahabitacion') }}">Categorias de Habitación</a></li>
 						</ul>
 					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cuenta <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Operaciones sobre su cuenta</li>
+							<li><a href="{{ path('fos_user_profile_show') }}">Datos de la Cuenta</a></li>
+							<li><a href="{{ path('fos_user_profile_edit') }}">Modificar Cuenta</a></li>
+						</ul>
+					</li>
+					<li><a href="{{ path('fos_user_security_logout') }}">Salir</a></li>
 				</ul>
 			</div>
 		</div>

@@ -2407,18 +2407,22 @@ class Logger extends BaseLogger implements LoggerInterface, DebugLoggerInterface
 {
 public function emerg($message, array $context = array())
 {
+@trigger_error('The '.__METHOD__.' method inherited from the Symfony\Component\HttpKernel\Log\LoggerInterface interface is deprecated since version 2.2 and will be removed in 3.0. Use the emergency() method instead, which is PSR-3 compatible.', E_USER_DEPRECATED);
 return parent::addRecord(BaseLogger::EMERGENCY, $message, $context);
 }
 public function crit($message, array $context = array())
 {
+@trigger_error('The '.__METHOD__.' method inherited from the Symfony\Component\HttpKernel\Log\LoggerInterface interface is deprecated since version 2.2 and will be removed in 3.0. Use the method critical() method instead, which is PSR-3 compatible.', E_USER_DEPRECATED);
 return parent::addRecord(BaseLogger::CRITICAL, $message, $context);
 }
 public function err($message, array $context = array())
 {
+@trigger_error('The '.__METHOD__.' method inherited from the Symfony\Component\HttpKernel\Log\LoggerInterface interface is deprecated since version 2.2 and will be removed in 3.0. Use the error() method instead, which is PSR-3 compatible.', E_USER_DEPRECATED);
 return parent::addRecord(BaseLogger::ERROR, $message, $context);
 }
 public function warn($message, array $context = array())
 {
+@trigger_error('The '.__METHOD__.' method inherited from the Symfony\Component\HttpKernel\Log\LoggerInterface interface is deprecated since version 2.2 and will be removed in 3.0. Use the warning() method instead, which is PSR-3 compatible.', E_USER_DEPRECATED);
 return parent::addRecord(BaseLogger::WARNING, $message, $context);
 }
 public function getLogs()
@@ -2874,7 +2878,7 @@ public function getController(Request $request)
 {
 if (!$controller = $request->attributes->get('_controller')) {
 if (null !== $this->logger) {
-$this->logger->warning('Unable to look for the controller as the "_controller" parameter is missing');
+$this->logger->warning('Unable to look for the controller as the "_controller" parameter is missing.');
 }
 return false;
 }
@@ -2984,15 +2988,15 @@ return $service;
 throw new \LogicException(sprintf('Unable to parse the controller name "%s".', $controller));
 }
 }
-list($class, $method) = explode('::', $controller, 2);
-if (!class_exists($class)) {
-throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));
+return parent::createController($controller);
 }
-$controller = $this->instantiateController($class);
+protected function instantiateController($class)
+{
+$controller = parent::instantiateController($class);
 if ($controller instanceof ContainerAwareInterface) {
 $controller->setContainer($this->container);
 }
-return array($controller, $method);
+return $controller;
 }
 }
 }
@@ -3120,7 +3124,7 @@ if ($ret = $this->matchCollection(rawurldecode($pathinfo), $this->routes)) {
 return $ret;
 }
 throw 0 < count($this->allow)
-? new MethodNotAllowedException(array_unique(array_map('strtoupper', $this->allow)))
+? new MethodNotAllowedException(array_unique($this->allow))
 : new ResourceNotFoundException(sprintf('No routes found for "%s".', $pathinfo));
 }
 public function matchRequest(Request $request)
@@ -3148,12 +3152,12 @@ $hostMatches = array();
 if ($compiledRoute->getHostRegex() && !preg_match($compiledRoute->getHostRegex(), $this->context->getHost(), $hostMatches)) {
 continue;
 }
-if ($req = $route->getRequirement('_method')) {
+if ($requiredMethods = $route->getMethods()) {
 if ('HEAD'=== $method = $this->context->getMethod()) {
 $method ='GET';
 }
-if (!in_array($method, $req = explode('|', strtoupper($req)))) {
-$this->allow = array_merge($this->allow, $req);
+if (!in_array($method, $requiredMethods)) {
+$this->allow = array_merge($this->allow, $requiredMethods);
 continue;
 }
 }
@@ -3285,7 +3289,9 @@ public function warmUp($cacheDir);
 namespace Symfony\Component\Routing
 {
 use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\Config\ConfigCache;
+use Symfony\Component\Config\ConfigCacheInterface;
+use Symfony\Component\Config\ConfigCacheFactoryInterface;
+use Symfony\Component\Config\ConfigCacheFactory;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Generator\ConfigurableRequirementsInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -3305,6 +3311,7 @@ protected $collection;
 protected $resource;
 protected $options = array();
 protected $logger;
+private $configCacheFactory;
 private $expressionLanguageProviders = array();
 public function __construct(LoaderInterface $loader, $resource, array $options = array(), RequestContext $context = null, LoggerInterface $logger = null)
 {
@@ -3365,6 +3372,10 @@ public function getContext()
 {
 return $this->context;
 }
+public function setConfigCacheFactory(ConfigCacheFactoryInterface $configCacheFactory)
+{
+$this->configCacheFactory = $configCacheFactory;
+}
 public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
 {
 return $this->getGenerator()->generate($name, $parameters, $referenceType);
@@ -3396,19 +3407,23 @@ $this->matcher->addExpressionLanguageProvider($provider);
 return $this->matcher;
 }
 $class = $this->options['matcher_cache_class'];
-$cache = new ConfigCache($this->options['cache_dir'].'/'.$class.'.php', $this->options['debug']);
-if (!$cache->isFresh()) {
-$dumper = $this->getMatcherDumperInstance();
+$baseClass = $this->options['matcher_base_class'];
+$expressionLanguageProviders = $this->expressionLanguageProviders;
+$that = $this;
+$cache = $this->getConfigCacheFactory()->cache($this->options['cache_dir'].'/'.$class.'.php',
+function (ConfigCacheInterface $cache) use ($that, $class, $baseClass, $expressionLanguageProviders) {
+$dumper = $that->getMatcherDumperInstance();
 if (method_exists($dumper,'addExpressionLanguageProvider')) {
-foreach ($this->expressionLanguageProviders as $provider) {
+foreach ($expressionLanguageProviders as $provider) {
 $dumper->addExpressionLanguageProvider($provider);
 }
 }
-$options = array('class'=> $class,'base_class'=> $this->options['matcher_base_class'],
+$options = array('class'=> $class,'base_class'=> $baseClass,
 );
-$cache->write($dumper->dump($options), $this->getRouteCollection()->getResources());
+$cache->write($dumper->dump($options), $that->getRouteCollection()->getResources());
 }
-require_once $cache;
+);
+require_once $cache->getPath();
 return $this->matcher = new $class($this->context);
 }
 public function getGenerator()
@@ -3420,14 +3435,16 @@ if (null === $this->options['cache_dir'] || null === $this->options['generator_c
 $this->generator = new $this->options['generator_class']($this->getRouteCollection(), $this->context, $this->logger);
 } else {
 $class = $this->options['generator_cache_class'];
-$cache = new ConfigCache($this->options['cache_dir'].'/'.$class.'.php', $this->options['debug']);
-if (!$cache->isFresh()) {
-$dumper = $this->getGeneratorDumperInstance();
-$options = array('class'=> $class,'base_class'=> $this->options['generator_base_class'],
+$baseClass = $this->options['generator_base_class'];
+$that = $this; $cache = $this->getConfigCacheFactory()->cache($this->options['cache_dir'].'/'.$class.'.php',
+function (ConfigCacheInterface $cache) use ($that, $class, $baseClass) {
+$dumper = $that->getGeneratorDumperInstance();
+$options = array('class'=> $class,'base_class'=> $baseClass,
 );
-$cache->write($dumper->dump($options), $this->getRouteCollection()->getResources());
+$cache->write($dumper->dump($options), $that->getRouteCollection()->getResources());
 }
-require_once $cache;
+);
+require_once $cache->getPath();
 $this->generator = new $class($this->context, $this->logger);
 }
 if ($this->generator instanceof ConfigurableRequirementsInterface) {
@@ -3439,13 +3456,20 @@ public function addExpressionLanguageProvider(ExpressionFunctionProviderInterfac
 {
 $this->expressionLanguageProviders[] = $provider;
 }
-protected function getGeneratorDumperInstance()
+public function getGeneratorDumperInstance()
 {
 return new $this->options['generator_dumper_class']($this->getRouteCollection());
 }
-protected function getMatcherDumperInstance()
+public function getMatcherDumperInstance()
 {
 return new $this->options['matcher_dumper_class']($this->getRouteCollection());
+}
+private function getConfigCacheFactory()
+{
+if (null === $this->configCacheFactory) {
+$this->configCacheFactory = new ConfigCacheFactory($this->options['debug']);
+}
+return $this->configCacheFactory;
 }
 }
 }
@@ -3491,10 +3515,23 @@ foreach ($route->getDefaults() as $name => $value) {
 $route->setDefault($name, $this->resolve($value));
 }
 foreach ($route->getRequirements() as $name => $value) {
+if ('_scheme'=== $name ||'_method'=== $name) {
+continue; }
 $route->setRequirement($name, $this->resolve($value));
 }
 $route->setPath($this->resolve($route->getPath()));
 $route->setHost($this->resolve($route->getHost()));
+$schemes = array();
+foreach ($route->getSchemes() as $scheme) {
+$schemes = array_merge($schemes, explode('|', $this->resolve($scheme)));
+}
+$route->setSchemes($schemes);
+$methods = array();
+foreach ($route->getMethods() as $method) {
+$methods = array_merge($methods, explode('|', $this->resolve($method)));
+}
+$route->setMethods($methods);
+$route->setCondition($this->resolve($route->getCondition()));
 }
 }
 private function resolve($value)
@@ -3533,7 +3570,6 @@ namespace Symfony\Bundle\FrameworkBundle\Templating
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\SecurityContext;
 class GlobalVariables
 {
@@ -3544,6 +3580,7 @@ $this->container = $container;
 }
 public function getSecurity()
 {
+@trigger_error('The '.__METHOD__.' method is deprecated since version 2.6 and will be removed in 3.0.', E_USER_DEPRECATED);
 if ($this->container->has('security.context')) {
 return $this->container->get('security.context');
 }
@@ -3672,7 +3709,7 @@ return $name;
 } elseif (isset($this->cache[$name])) {
 return $this->cache[$name];
 }
-$name = str_replace(':/',':', preg_replace('#/{2,}#','/', strtr($name,'\\','/')));
+$name = str_replace(':/',':', preg_replace('#/{2,}#','/', str_replace('\\','/', $name)));
 if (false !== strpos($name,'..')) {
 throw new \RuntimeException(sprintf('Template name "%s" contains invalid characters.', $name));
 }
@@ -3907,19 +3944,19 @@ E_CORE_ERROR =>'Core Error',
 private $loggers = array(
 E_DEPRECATED => array(null, LogLevel::INFO),
 E_USER_DEPRECATED => array(null, LogLevel::INFO),
-E_NOTICE => array(null, LogLevel::NOTICE),
-E_USER_NOTICE => array(null, LogLevel::NOTICE),
-E_STRICT => array(null, LogLevel::NOTICE),
+E_NOTICE => array(null, LogLevel::WARNING),
+E_USER_NOTICE => array(null, LogLevel::WARNING),
+E_STRICT => array(null, LogLevel::WARNING),
 E_WARNING => array(null, LogLevel::WARNING),
 E_USER_WARNING => array(null, LogLevel::WARNING),
 E_COMPILE_WARNING => array(null, LogLevel::WARNING),
 E_CORE_WARNING => array(null, LogLevel::WARNING),
-E_USER_ERROR => array(null, LogLevel::ERROR),
-E_RECOVERABLE_ERROR => array(null, LogLevel::ERROR),
-E_COMPILE_ERROR => array(null, LogLevel::EMERGENCY),
-E_PARSE => array(null, LogLevel::EMERGENCY),
-E_ERROR => array(null, LogLevel::EMERGENCY),
-E_CORE_ERROR => array(null, LogLevel::EMERGENCY),
+E_USER_ERROR => array(null, LogLevel::CRITICAL),
+E_RECOVERABLE_ERROR => array(null, LogLevel::CRITICAL),
+E_COMPILE_ERROR => array(null, LogLevel::CRITICAL),
+E_PARSE => array(null, LogLevel::CRITICAL),
+E_ERROR => array(null, LogLevel::CRITICAL),
+E_CORE_ERROR => array(null, LogLevel::CRITICAL),
 );
 private $thrownErrors = 0x1FFF; private $scopedErrors = 0x1FFF; private $tracedErrors = 0x77FB; private $screamedErrors = 0x55; private $loggedErrors = 0;
 private $loggedTraces = array();
@@ -4015,7 +4052,7 @@ return $prev;
 public function throwAt($levels, $replace = false)
 {
 $prev = $this->thrownErrors;
-$this->thrownErrors = ($levels | E_RECOVERABLE_ERROR | E_USER_ERROR) & ~E_USER_DEPRECATED & ~E_DEPRECATED;
+$this->thrownErrors = (E_ALL | E_STRICT) & ($levels | E_RECOVERABLE_ERROR | E_USER_ERROR) & ~E_USER_DEPRECATED & ~E_DEPRECATED;
 if (!$replace) {
 $this->thrownErrors |= $prev;
 }
@@ -4064,7 +4101,7 @@ set_error_handler(array($this,'handleError'), $this->thrownErrors | $this->logge
 }
 public function handleError($type, $message, $file, $line, array $context, array $backtrace = null)
 {
-$level = error_reporting() | E_RECOVERABLE_ERROR | E_USER_ERROR;
+$level = error_reporting() | E_RECOVERABLE_ERROR | E_USER_ERROR | E_DEPRECATED | E_USER_DEPRECATED;
 $log = $this->loggedErrors & $type;
 $throw = $this->thrownErrors & $type & $level;
 $type &= $level | $this->screamedErrors;
@@ -4101,10 +4138,11 @@ if ($type & $level) {
 if ($this->scopedErrors & $type) {
 $e['scope_vars'] = $context;
 if ($trace) {
-$e['stack'] = $backtrace ?: debug_backtrace(true); }
+$e['stack'] = $backtrace ?: debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT);
+}
 } elseif ($trace) {
 if (null === $backtrace) {
-$e['stack'] = debug_backtrace(PHP_VERSION_ID >= 50306 ? DEBUG_BACKTRACE_IGNORE_ARGS : false);
+$e['stack'] = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 } else {
 foreach ($backtrace as &$frame) {
 unset($frame['args'], $frame);
@@ -4245,11 +4283,13 @@ new ClassNotFoundFatalErrorHandler(),
 }
 public function setLevel($level)
 {
+@trigger_error('The '.__METHOD__.' method is deprecated since version 2.6 and will be removed in 3.0. Use the throwAt() method instead.', E_USER_DEPRECATED);
 $level = null === $level ? error_reporting() : $level;
 $this->throwAt($level, true);
 }
 public function setDisplayErrors($displayErrors)
 {
+@trigger_error('The '.__METHOD__.' method is deprecated since version 2.6 and will be removed in 3.0. Use the throwAt() method instead.', E_USER_DEPRECATED);
 if ($displayErrors) {
 $this->throwAt($this->displayErrors, true);
 } else {
@@ -4260,6 +4300,7 @@ $this->displayErrors = $displayErrors;
 }
 public static function setLogger(LoggerInterface $logger, $channel ='deprecation')
 {
+@trigger_error('The '.__METHOD__.' static method is deprecated since version 2.6 and will be removed in 3.0. Use the setLoggers() or setDefaultLogger() methods instead.', E_USER_DEPRECATED);
 $handler = set_error_handler('var_dump', 0);
 $handler = is_array($handler) ? $handler[0] : null;
 restore_error_handler();
@@ -4279,10 +4320,12 @@ $handler->screamAt(E_PARSE | E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR);
 }
 public function handle($level, $message, $file ='unknown', $line = 0, $context = array())
 {
+$this->handleError(E_USER_DEPRECATED,'The '.__METHOD__.' method is deprecated since version 2.6 and will be removed in 3.0. Use the handleError() method instead.', __FILE__, __LINE__, array());
 return $this->handleError($level, $message, $file, $line, (array) $context);
 }
 public function handleFatal()
 {
+@trigger_error('The '.__METHOD__.' method is deprecated since version 2.6 and will be removed in 3.0. Use the handleFatalError() method instead.', E_USER_DEPRECATED);
 static::handleFatalError();
 }
 }
@@ -4330,15 +4373,17 @@ $event = new Event();
 }
 $event->setDispatcher($this);
 $event->setName($eventName);
-if (!isset($this->listeners[$eventName])) {
-return $event;
+if ($listeners = $this->getListeners($eventName)) {
+$this->doDispatch($listeners, $eventName, $event);
 }
-$this->doDispatch($this->getListeners($eventName), $eventName, $event);
 return $event;
 }
 public function getListeners($eventName = null)
 {
 if (null !== $eventName) {
+if (!isset($this->listeners[$eventName])) {
+return array();
+}
 if (!isset($this->sorted[$eventName])) {
 $this->sortListeners($eventName);
 }
@@ -4409,10 +4454,8 @@ break;
 private function sortListeners($eventName)
 {
 $this->sorted[$eventName] = array();
-if (isset($this->listeners[$eventName])) {
 krsort($this->listeners[$eventName]);
 $this->sorted[$eventName] = call_user_func_array('array_merge', $this->listeners[$eventName]);
-}
 }
 }
 }
@@ -4491,11 +4534,6 @@ $this->listenerIds[$eventName][] = array($serviceId, $listener[0], isset($listen
 }
 }
 }
-public function dispatch($eventName, Event $event = null)
-{
-$this->lazyLoad($eventName);
-return parent::dispatch($eventName, $event);
-}
 public function getContainer()
 {
 return $this->container;
@@ -4540,10 +4578,12 @@ $this->dispatcher = $dispatcher;
 }
 public function getDispatcher()
 {
+@trigger_error('The '.__METHOD__.' method is deprecated since version 2.4 and will be removed in 3.0. The event dispatcher instance can be received in the listener call instead.', E_USER_DEPRECATED);
 return $this->dispatcher;
 }
 public function getName()
 {
+@trigger_error('The '.__METHOD__.' method is deprecated since version 2.4 and will be removed in 3.0. The event name can be received in the listener call instead.', E_USER_DEPRECATED);
 return $this->name;
 }
 public function setName($name)
@@ -5233,12 +5273,20 @@ throw new \InvalidArgumentException('Matcher must either implement UrlMatcherInt
 if (null === $context && !$matcher instanceof RequestContextAwareInterface) {
 throw new \InvalidArgumentException('You must either pass a RequestContext or the matcher must implement RequestContextAwareInterface.');
 }
+if (!$requestStack instanceof RequestStack) {
+@trigger_error('The '.__METHOD__.' method now requires a RequestStack instance as '.__CLASS__.'::setRequest method will not be supported anymore in 3.0.', E_USER_DEPRECATED);
+}
 $this->matcher = $matcher;
 $this->context = $context ?: $matcher->getContext();
 $this->requestStack = $requestStack;
 $this->logger = $logger;
 }
 public function setRequest(Request $request = null)
+{
+@trigger_error('The '.__METHOD__.' method is deprecated since version 2.4 and will be made private in 3.0.', E_USER_DEPRECATED);
+$this->setCurrentRequest($request);
+}
+private function setCurrentRequest(Request $request = null)
 {
 if (null !== $request && $this->request !== $request) {
 $this->context->fromRequest($request);
@@ -5249,13 +5297,13 @@ public function onKernelFinishRequest(FinishRequestEvent $event)
 {
 if (null === $this->requestStack) {
 return; }
-$this->setRequest($this->requestStack->getParentRequest());
+$this->setCurrentRequest($this->requestStack->getParentRequest());
 }
 public function onKernelRequest(GetResponseEvent $event)
 {
 $request = $event->getRequest();
 if (null !== $this->requestStack) {
-$this->setRequest($request);
+$this->setCurrentRequest($request);
 }
 if ($request->attributes->has('_controller')) {
 return;
@@ -5267,7 +5315,8 @@ $parameters = $this->matcher->matchRequest($request);
 $parameters = $this->matcher->match($request->getPathInfo());
 }
 if (null !== $this->logger) {
-$this->logger->info(sprintf('Matched route "%s" (parameters: %s)', $parameters['_route'], $this->parametersToString($parameters)));
+$this->logger->info(sprintf('Matched route "%s".', isset($parameters['_route']) ? $parameters['_route'] :'n/a'), array('route_parameters'=> $parameters,'request_uri'=> $request->getUri(),
+));
 }
 $request->attributes->add($parameters);
 unset($parameters['_route'], $parameters['_controller']);
@@ -5282,14 +5331,6 @@ throw new NotFoundHttpException($message, $e);
 $message = sprintf('No route found for "%s %s": Method Not Allowed (Allow: %s)', $request->getMethod(), $request->getPathInfo(), implode(', ', $e->getAllowedMethods()));
 throw new MethodNotAllowedHttpException($e->getAllowedMethods(), $message, $e);
 }
-}
-private function parametersToString(array $parameters)
-{
-$pieces = array();
-foreach ($parameters as $key => $val) {
-$pieces[] = sprintf('"%s": "%s"', $key, (is_string($val) ? $val : json_encode($val)));
-}
-return implode(', ', $pieces);
 }
 public static function getSubscribedEvents()
 {
@@ -5834,6 +5875,11 @@ public function __construct(array $providers, $eraseCredentials = true)
 if (!$providers) {
 throw new \InvalidArgumentException('You must at least add one authentication provider.');
 }
+foreach ($providers as $provider) {
+if (!$provider instanceof AuthenticationProviderInterface) {
+throw new \InvalidArgumentException(sprintf('Provider "%s" must implement the AuthenticationProviderInterface.', get_class($provider)));
+}
+}
 $this->providers = $providers;
 $this->eraseCredentials = (bool) $eraseCredentials;
 }
@@ -6105,6 +6151,7 @@ const LAST_USERNAME = Security::LAST_USERNAME;
 }
 namespace Symfony\Component\Security\Core
 {
+@trigger_error('The '.__NAMESPACE__.'\SecurityContext class is deprecated since version 2.6 and will be removed in 3.0. Use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage or Symfony\Component\Security\Core\Authorization\AuthorizationChecker instead.', E_USER_DEPRECATED);
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

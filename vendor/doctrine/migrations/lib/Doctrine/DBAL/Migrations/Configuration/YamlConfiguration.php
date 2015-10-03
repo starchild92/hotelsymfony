@@ -36,26 +36,16 @@ class YamlConfiguration extends AbstractFileConfiguration
      */
     protected function doLoad($file)
     {
-        $array = Yaml::parse(file_get_contents($file));
+        $config = Yaml::parse(file_get_contents($file));
 
-        if (isset($array['name'])) {
-            $this->setName($array['name']);
+        if (!is_array($config)) {
+            throw new \InvalidArgumentException('Not valid configuration.');
         }
-        if (isset($array['table_name'])) {
-            $this->setMigrationsTableName($array['table_name']);
+
+        if (isset($config['migrations_directory'])) {
+            $config['migrations_directory'] = $this->getDirectoryRelativeToFile($file, $config['migrations_directory']);
         }
-        if (isset($array['migrations_namespace'])) {
-            $this->setMigrationsNamespace($array['migrations_namespace']);
-        }
-        if (isset($array['migrations_directory'])) {
-            $migrationsDirectory = $this->getDirectoryRelativeToFile($file, $array['migrations_directory']);
-            $this->setMigrationsDirectory($migrationsDirectory);
-            $this->registerMigrationsFromDirectory($migrationsDirectory);
-        }
-        if (isset($array['migrations']) && is_array($array['migrations'])) {
-            foreach ($array['migrations'] as $migration) {
-                $this->registerMigration($migration['version'], $migration['class']);
-            }
-        }
+
+        $this->setConfiguration($config);
     }
 }

@@ -44,6 +44,11 @@ class Migration
     private $configuration;
 
     /**
+     * @var boolean
+     */
+    private $noMigrationException;
+
+    /**
      * Construct a Migration instance
      *
      * @param Configuration $configuration A migration Configuration instance
@@ -52,6 +57,7 @@ class Migration
     {
         $this->configuration = $configuration;
         $this->outputWriter = $configuration->getOutputWriter();
+        $this->noMigrationException = false;
     }
 
     /**
@@ -84,7 +90,7 @@ class Migration
             $to = $this->configuration->getLatestVersion();
         }
 
-        $direction = $from > $to ? 'down' : 'up';
+        $direction = $from > $to ? Version::DIRECTION_DOWN : Version::DIRECTION_UP;
 
         $this->outputWriter->write(sprintf("# Migrating from %s to %s\n", $from, $to));
 
@@ -95,6 +101,14 @@ class Migration
         );
 
         return $sqlWriter->write($sql, $direction);
+    }
+
+    /**
+     * @param boolean $noMigrationException Throw an exception or not if no migration is found. Mostly for Continuous Integration.
+     */
+    public function setNoMigrationException($noMigrationException = false)
+    {
+        $this->noMigrationException = $noMigrationException;
     }
 
     /**
@@ -125,11 +139,11 @@ class Migration
          * migrations.
          */
         $migrations = $this->configuration->getMigrations();
-        if ( ! isset($migrations[$to]) && $to > 0) {
+        if (!isset($migrations[$to]) && $to > 0) {
             throw MigrationException::unknownMigrationVersion($to);
         }
 
-        $direction = $from > $to ? 'down' : 'up';
+        $direction = $from > $to ? Version::DIRECTION_DOWN : Version::DIRECTION_UP;
         $migrationsToExecute = $this->configuration->getMigrationsToExecute($direction, $to);
 
         /**
@@ -141,7 +155,7 @@ class Migration
          * to signify that there is nothing left to do.
          */
         if ($from === $to && empty($migrationsToExecute) && !empty($migrations)) {
-            return array();
+            return [];
         }
 
         $output = $dryRun ? 'Executing dry run of migration' : 'Migrating';
@@ -151,11 +165,11 @@ class Migration
         /**
          * If there are no migrations to execute throw an exception.
          */
-        if (empty($migrationsToExecute)) {
+        if (empty($migrationsToExecute) && !$this->noMigrationException) {
             throw MigrationException::noMigrationsToExecute();
         }
 
-        $sql = array();
+        $sql = [];
         $time = 0;
         foreach ($migrationsToExecute as $version) {
             $versionSql = $version->execute($direction, $dryRun, $timeAllQueries);

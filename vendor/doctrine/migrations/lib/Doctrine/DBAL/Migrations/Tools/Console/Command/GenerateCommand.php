@@ -21,6 +21,7 @@
 namespace Doctrine\DBAL\Migrations\Tools\Console\Command;
 
 use Doctrine\DBAL\Migrations\Configuration\Configuration;
+use Doctrine\DBAL\Migrations\Tools\Console\Helper\MigrationDirectoryHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -101,33 +102,28 @@ EOT
 
     protected function generateMigration(Configuration $configuration, InputInterface $input, $version, $up = null, $down = null)
     {
-        $placeHolders = array(
+        $placeHolders = [
             '<namespace>',
             '<version>',
             '<up>',
-            '<down>'
-        );
-        $replacements = array(
+            '<down>',
+        ];
+        $replacements = [
             $configuration->getMigrationsNamespace(),
             $version,
             $up ? "        " . implode("\n        ", explode("\n", $up)) : null,
             $down ? "        " . implode("\n        ", explode("\n", $down)) : null
-        );
+        ];
         $code = str_replace($placeHolders, $replacements, self::$_template);
         $code = preg_replace('/^ +$/m', '', $code);
-        $dir = $configuration->getMigrationsDirectory();
-        $dir = $dir ? $dir : getcwd();
-        $dir = rtrim($dir, '/');
+        $migrationDirectoryHelper = new MigrationDirectoryHelper($configuration);
+        $dir = $migrationDirectoryHelper->getMigrationDirectory();
         $path = $dir . '/Version' . $version . '.php';
-
-        if ( ! file_exists($dir)) {
-            throw new \InvalidArgumentException(sprintf('Migrations directory "%s" does not exist.', $dir));
-        }
 
         file_put_contents($path, $code);
 
         if ($editorCmd = $input->getOption('editor-cmd')) {
-            proc_open($editorCmd . ' ' . escapeshellarg($path), array(), $pipes);
+            proc_open($editorCmd . ' ' . escapeshellarg($path), [], $pipes);
         }
 
         return $path;

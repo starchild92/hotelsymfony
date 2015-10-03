@@ -23,13 +23,14 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Migrations\Configuration\Configuration;
 use Doctrine\DBAL\Migrations\OutputWriter;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Helper\Helper;
 
 /**
  * Class ConfigurationHelper
  * @package Doctrine\DBAL\Migrations\Tools\Console\Helper
  * @internal
  */
-final class ConfigurationHelper
+class ConfigurationHelper extends Helper
 {
 
     /**
@@ -72,11 +73,12 @@ final class ConfigurationHelper
         /**
          * If no any other config has been found, look for default config file in the path.
          */
-        $defaultConfig = array(
+        $defaultConfig = [
             'migrations.xml',
             'migrations.yml',
             'migrations.yaml',
-        );
+            'migrations.json'
+        ];
         foreach ($defaultConfig as $config) {
             if ($this->configExists($config)) {
                 $outputWriter->write("Loading configuration from file: $config");
@@ -96,12 +98,33 @@ final class ConfigurationHelper
 
     private function loadConfig($config, OutputWriter $outputWriter)
     {
-        $info          = pathinfo($config);
+        $map = array(
+            'xml'   => '\XmlConfiguration',
+            'yaml'  => '\YamlConfiguration',
+            'yml'   => '\YamlConfiguration',
+            'php'   => '\ArrayConfiguration',
+            'json'  => '\JsonConfiguration'
+        );
+
+        $info = pathinfo($config);
+        // check we can support this file type
+        if (empty($map[$info['extension']])) {
+            throw new \InvalidArgumentException('Given config file type is not supported');
+        }
+
         $class         = 'Doctrine\DBAL\Migrations\Configuration';
-        $class        .= $info['extension'] === 'xml' ? '\XmlConfiguration' : '\YamlConfiguration';
+        $class        .= $map[$info['extension']];
         $configuration = new $class($this->connection, $outputWriter);
         $configuration->load($config);
 
         return $configuration;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'configuration';
     }
 }

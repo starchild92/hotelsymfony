@@ -1,1 +1,7 @@
-../vendor/doctrine/migrations/bin/doctrine-migrations
+#!/usr/bin/env sh
+SRC_DIR="`pwd`"
+cd "`dirname "$0"`"
+cd "../vendor/doctrine/migrations/bin"
+BIN_TARGET="`pwd`/doctrine-migrations"
+cd "$SRC_DIR"
+"$BIN_TARGET" "$@"
