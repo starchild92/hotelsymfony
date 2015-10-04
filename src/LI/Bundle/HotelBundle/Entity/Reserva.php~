@@ -34,25 +34,25 @@ class Reserva
      * @var string
      *
      * @ORM\Column(name="codigo_reserva", type="string", length=255)
-     * @Assert\NotBlank()
      */
     private $codigoReserva;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="habitacion", type="string", length=255)
-     * @Assert\NotBlank()
-     */
+     * @ORM\ManyToOne(targetEntity="Habitacion")
+     * @ORM\JoinColumn(name="habitacion_id", referencedColumnName="id")
+     **/
     private $habitacion;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="cliente", type="string", length=255)
-     * @Assert\NotBlank()
-     */
+     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
+     **/
     private $cliente;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Factura")
+     **/
+    private $factura;
 
     /**
      * @var integer
@@ -68,6 +68,21 @@ class Reserva
      * )
      */
     private $cantidadPersonas;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cantidad_ninos", type="integer")
+     * @Assert\Type(
+     *     type="integer",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\GreaterThan(
+     *     value = -1,
+     *     message = "Debe ser positivo mayor o igual a cero."
+     * )
+     */
+    private $cantidadNinos;
 
     /**
      * @var integer
@@ -202,6 +217,29 @@ class Reserva
     }
 
     /**
+     * Set cantidadNinos
+     *
+     * @param integer $cantidadNinos
+     * @return Reserva
+     */
+    public function setCantidadNinos($cantidadNinos)
+    {
+        $this->cantidadNinos = $cantidadNinos;
+
+        return $this;
+    }
+
+    /**
+     * Get cantidadNinos
+     *
+     * @return integer 
+     */
+    public function getCantidadNinos()
+    {
+        return $this->cantidadNinos;
+    }
+
+    /**
      * Set diasReserva
      *
      * @param integer $diasReserva
@@ -245,5 +283,51 @@ class Reserva
     public function getFecha()
     {
         return $this->fecha;
+    }
+
+    /**
+     * Set codigoReserva
+     *
+     * @param string $codigoReserva
+     * @return Reserva
+     */
+    public function setCodigoReserva($codigoReserva)
+    {
+        $this->codigoReserva = $codigoReserva;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoReserva
+     *
+     * @return string 
+     */
+    public function getCodigoReserva()
+    {
+        return $this->codigoReserva;
+    }
+
+    /**
+     * Set factura
+     *
+     * @param \LI\Bundle\HotelBundle\Entity\Factura $factura
+     * @return Reserva
+     */
+    public function setFactura(\LI\Bundle\HotelBundle\Entity\Factura $factura = null)
+    {
+        $this->factura = $factura;
+    
+        return $this;
+    }
+
+    /**
+     * Get factura
+     *
+     * @return \LI\Bundle\HotelBundle\Entity\Factura 
+     */
+    public function getFactura()
+    {
+        return $this->factura;
     }
 }

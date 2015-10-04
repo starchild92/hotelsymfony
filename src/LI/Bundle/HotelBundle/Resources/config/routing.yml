@@ -1,10 +1,14 @@
+li_hotel_usuarios:
+    resource: "@LIHotelBundle/Resources/config/routing/usuario.yml"
+    prefix:   /admin/usuarios
+
 li_hotel_factura:
     resource: "@LIHotelBundle/Resources/config/routing/factura.yml"
     prefix:   /factura
 
 li_hotel_compensacion:
     resource: "@LIHotelBundle/Resources/config/routing/compensacion.yml"
-    prefix:   /compensacion
+    prefix:   /admin/compensacion
 
 li_hotel_reserva:
     resource: "@LIHotelBundle/Resources/config/routing/reserva.yml"
@@ -12,11 +16,11 @@ li_hotel_reserva:
 
 li_hotel_bebida:
     resource: "@LIHotelBundle/Resources/config/routing/bebida.yml"
-    prefix:   /bebida
+    prefix:   /admin/bebida
 
 li_hotel_llamada:
     resource: "@LIHotelBundle/Resources/config/routing/llamada.yml"
-    prefix:   /llamada
+    prefix:   /admin/llamada
 
 li_hotel_categoriahabitacion:
     resource: "@LIHotelBundle/Resources/config/routing/categoriahabitacion.yml"
@@ -24,11 +28,11 @@ li_hotel_categoriahabitacion:
 
 li_hotel_tipohabitacion:
     resource: "@LIHotelBundle/Resources/config/routing/tipohabitacion.yml"
-    prefix:   /tipohabitacion
+    prefix:   /admin/tipohabitacion
 
 li_hotel_tipo:
     resource: "@LIHotelBundle/Resources/config/routing/tipo.yml"
-    prefix:   /tipo
+    prefix:   /admin/tipo
 
 li_hotel_habitacion:
     resource: "@LIHotelBundle/Resources/config/routing/habitacion.yml"

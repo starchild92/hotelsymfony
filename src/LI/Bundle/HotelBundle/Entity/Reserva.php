@@ -34,25 +34,25 @@ class Reserva
      * @var string
      *
      * @ORM\Column(name="codigo_reserva", type="string", length=255)
-     * @Assert\NotBlank()
      */
     private $codigoReserva;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="habitacion", type="string", length=255)
-     * @Assert\NotBlank()
-     */
+     * @ORM\ManyToOne(targetEntity="Habitacion")
+     * @ORM\JoinColumn(name="habitacion_id", referencedColumnName="id")
+     **/
     private $habitacion;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="cliente", type="string", length=255)
-     * @Assert\NotBlank()
-     */
+     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
+     **/
     private $cliente;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Factura")
+     **/
+    private $factura;
 
     /**
      * @var integer
@@ -306,5 +306,28 @@ class Reserva
     public function getCodigoReserva()
     {
         return $this->codigoReserva;
+    }
+
+    /**
+     * Set factura
+     *
+     * @param \LI\Bundle\HotelBundle\Entity\Factura $factura
+     * @return Reserva
+     */
+    public function setFactura(\LI\Bundle\HotelBundle\Entity\Factura $factura = null)
+    {
+        $this->factura = $factura;
+    
+        return $this;
+    }
+
+    /**
+     * Get factura
+     *
+     * @return \LI\Bundle\HotelBundle\Entity\Factura 
+     */
+    public function getFactura()
+    {
+        return $this->factura;
     }
 }

@@ -3,7 +3,7 @@
 {% block body -%}
 <div class="col-lg-12 col-sm-12 col-xs-12">
     <div class="page-header">
-        <h1>Factura list</h1>
+        <h1>Factura list <small>podrá ver todas las facturas de la reservas pasadas</small></h1>
     </div>
 
     <table class="table table-striped records_list">
@@ -12,7 +12,6 @@
                 <th>ID</th>
                 <th>Dias de Reserva</th>
                 <th>Costo Total</th>
-                <th>Cliente</th>
                 <th>Fecha</th>
                 <th>Actions</th>
             </tr>
@@ -23,7 +22,6 @@
                 <td><a href="{{ path('factura_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.diasReserva }}</td>
                 <td>{{ entity.costoTotal }}</td>
-                <td>{{ entity.cliente }}</td>
                 <td>{% if entity.fecha %}{{ entity.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
                 <ul>

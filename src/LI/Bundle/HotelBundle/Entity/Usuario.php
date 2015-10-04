@@ -212,4 +212,8 @@ class Usuario extends BaseUser
         parent::__construct();
         // your own logic
     }
+
+    public function __toString(){
+        return $this->nombre.' '.$this->apellido;
+    }
 }

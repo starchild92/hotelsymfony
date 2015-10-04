@@ -41,6 +41,14 @@ class HabitacionController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $tipo = $entity->getTipo();
+            $bebidas = $tipo->getbebidasMinibar();
+
+            foreach ($bebidas as $bebida) {
+                $bebida->settipoHabitacion($tipo);
+            }
+
             $em->persist($entity);
             $em->flush();
 

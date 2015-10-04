@@ -32,10 +32,9 @@ Entidades
 
 - Reserva
 	. estado_reserva
-		{ * en_cumplimiento = el cliente está en la habitacion }
-		{ * reservada = el cliente hizo la reserva pero no la a consolidado }
-		{ * cancelada = se habia reservado la habitación pero ya no es requerida }
-		{ * liberar = el cliente }
+		{ * por concretar: se hizo la reserva pero el cliente no está en el hotel }
+		{ * concretada: el cliente está en la habitación }
+		{ * cancelada: estado previo 'por concretar' el cliente elimino la reserva }
 	. habitacion -> relacionado con "Habitacion"
 	. cliente -> relacionado con "Factura"
 	. cantidad_personas

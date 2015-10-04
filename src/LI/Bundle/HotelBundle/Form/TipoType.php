@@ -17,7 +17,7 @@ class TipoType extends AbstractType
         $builder
             ->add('tipoHabitacion')
             ->add('categoriaHabitacion')
-            ->add('precio')
+            //->add('precio')
             ->add('espacioInterno')
             ->add('servicios')
             ->add('bebidasMinibar',

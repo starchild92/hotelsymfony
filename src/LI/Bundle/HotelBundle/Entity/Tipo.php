@@ -35,7 +35,7 @@ class Tipo
      */
     private $categoriaHabitacion;
 
-    /**
+    /***
      * @var float
      *
      * @ORM\Column(name="precio", type="float")
@@ -47,8 +47,8 @@ class Tipo
      *     value = 0,
      *     message = "Debe ser positivo superior a cero."
      * )
-     */
-    private $precio;
+     
+    private $precio;*/
 
     /**
      * @var string
@@ -134,28 +134,28 @@ class Tipo
         return $this->categoriaHabitacion;
     }
 
-    /**
+    /***
      * Set precio
      *
      * @param float $precio
      * @return Tipo
-     */
+     
     public function setPrecio($precio)
     {
         $this->precio = $precio;
 
         return $this;
-    }
+    }*/
 
-    /**
+    /***
      * Get precio
      *
      * @return float 
-     */
+     
     public function getPrecio()
     {
         return $this->precio;
-    }
+    }*/
 
     /**
      * Set espacioInterno

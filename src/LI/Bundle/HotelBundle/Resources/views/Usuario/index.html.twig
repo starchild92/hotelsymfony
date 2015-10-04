@@ -1,0 +1,43 @@
+{% extends 'LIHotelBundle::adminBase.html.twig' %}
+
+{% block body -%}
+    <h1>Usuario list</h1>
+
+    <table class="table table-bordered table-responsive table-striped records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre y Apellido</th>
+                <th>Fecha_nac</th>
+                <th>Estado</th>
+                <th>Correo y Usuario</th>
+                <th>Ultima Conexión</th>
+                <th>Roles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('usuarios_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.nombre }} {{ entity.apellido }}</td>
+                <td>{% if entity.fechanac %}{{ entity.fechanac|date('d-m-Y') }}{% endif %}</td>
+                <td>{% if entity.enabled %}Activo{% else %}Inactivo{% endif %}</td>
+                <td>{{ entity.email }} ({{ entity.username }})</td>
+                <td>{{ entity.lastLogin|date('d-m-Y H:i') }}</td>
+                <td>{% for role in entity.roles %}
+                    {{ role }} 
+                {% endfor %}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('usuarios_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endblock %}

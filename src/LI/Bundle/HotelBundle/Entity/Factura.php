@@ -51,13 +51,13 @@ class Factura
      */
     private $costoTotal;
 
-    /**
+    /***
      * @var string
      *
      * @ORM\Column(name="cliente", type="string", length=255)
      * @Assert\NotBlank()
-     */
-    private $cliente;
+     
+    private $cliente;*/
 
     /**
      * @var \DateTime
@@ -129,28 +129,28 @@ class Factura
         return $this->costoTotal;
     }
 
-    /**
+    /***
      * Set cliente
      *
      * @param string $cliente
      * @return Factura
-     */
+     
     public function setCliente($cliente)
     {
         $this->cliente = $cliente;
 
         return $this;
-    }
+    }*/
 
-    /**
+    /***
      * Get cliente
      *
      * @return string 
-     */
+    
     public function getCliente()
     {
         return $this->cliente;
-    }
+    } */
 
     /**
      * Set fecha

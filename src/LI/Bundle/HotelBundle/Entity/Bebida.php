@@ -183,4 +183,9 @@ class Bebida
     {
         return $this->tipoBebida;
     }
+
+    public function settipoHabitacion($tipoid){
+        $this->tipoHabitacion = $tipoid;
+        return $this;
+    }
 }

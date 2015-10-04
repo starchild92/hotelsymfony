@@ -8,6 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use LI\Bundle\HotelBundle\Entity\Reserva;
 use LI\Bundle\HotelBundle\Form\ReservaType;
 
+use LI\Bundle\HotelBundle\Entity\Factura;
+use LI\Bundle\HotelBundle\Form\FacturaType;
+
 /**
  * Reserva controller.
  *
@@ -41,9 +44,32 @@ class ReservaController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            
+            $factura = new Factura();
+            $factura->setDiasReserva($entity->getDiasReserva());
+            $factura->setFecha($entity->getFecha());
+
+            $factura->setCostoTotal(1); //calcular usando el tipo y reserva, como costo inicial sin los consumibles
+
+            $em->persist($factura);
+            $entity->setcodigoReserva('HSY'.date('dmY').'RES'.date('His'));
+
+            //cambiando el estado de la habitacion
+            if ($entity->getEstadoReserva() == 'Concretada') {
+                $habitacion = $entity->getHabitacion();
+                $habitacion->setEstado('Ocupada');
+            }else{
+                if ($entity->getEstadoReserva() == 'Por Concretar') {
+                    $habitacion = $entity->getHabitacion();
+                    $habitacion->setEstado('Reservada');
+                }
+            }
+
+            
+            
             $em->persist($entity);
             $em->flush();
-
+            
             return $this->redirect($this->generateUrl('reserva_show', array('id' => $entity->getId())));
         }
 

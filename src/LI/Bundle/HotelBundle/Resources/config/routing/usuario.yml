@@ -1,0 +1,10 @@
+usuarios:
+    path:     /
+    defaults: { _controller: "LIHotelBundle:Usuario:index" }
+
+usuarios_show:
+    path:     /{id}/show
+    defaults: { _controller: "LIHotelBundle:Usuario:show" }
+
+
+

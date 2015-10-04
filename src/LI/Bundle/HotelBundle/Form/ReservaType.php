@@ -15,8 +15,13 @@ class ReservaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('estadoReserva')
-            ->add('codigoReserva')
+            ->add('estadoReserva','choice', array(
+                   'choices'  => array(
+                    'Por Concretar' => 'Por Concretar',
+                    'Concretada' => 'Concretada',
+                    'Cancelada' => 'Cancelada',
+            )))
+            ->add('codigoReserva', 'hidden')
             ->add('habitacion')
             ->add('cliente')
             ->add('cantidadPersonas')

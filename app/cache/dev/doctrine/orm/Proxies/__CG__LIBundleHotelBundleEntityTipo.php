@@ -64,10 +64,10 @@ class Tipo extends \LI\Bundle\HotelBundle\Entity\Tipo implements \Doctrine\ORM\P
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'id', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'tipoHabitacion', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'categoriaHabitacion', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'precio', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'espacioInterno', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'servicios', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'bebidasMinibar');
+            return array('__isInitialized__', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'id', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'tipoHabitacion', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'categoriaHabitacion', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'espacioInterno', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'servicios', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'bebidasMinibar');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'id', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'tipoHabitacion', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'categoriaHabitacion', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'precio', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'espacioInterno', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'servicios', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'bebidasMinibar');
+        return array('__isInitialized__', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'id', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'tipoHabitacion', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'categoriaHabitacion', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'espacioInterno', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'servicios', '' . "\0" . 'LI\\Bundle\\HotelBundle\\Entity\\Tipo' . "\0" . 'bebidasMinibar');
     }
 
     /**
@@ -230,28 +230,6 @@ class Tipo extends \LI\Bundle\HotelBundle\Entity\Tipo implements \Doctrine\ORM\P
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCategoriaHabitacion', array());
 
         return parent::getCategoriaHabitacion();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setPrecio($precio)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPrecio', array($precio));
-
-        return parent::setPrecio($precio);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getPrecio()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPrecio', array());
-
-        return parent::getPrecio();
     }
 
     /**
