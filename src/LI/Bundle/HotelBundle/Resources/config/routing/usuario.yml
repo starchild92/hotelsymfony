@@ -1,10 +1,30 @@
-usuarios:
+usuario:
     path:     /
     defaults: { _controller: "LIHotelBundle:Usuario:index" }
 
-usuarios_show:
+usuario_show:
     path:     /{id}/show
     defaults: { _controller: "LIHotelBundle:Usuario:show" }
 
+usuario_new:
+    path:     /new
+    defaults: { _controller: "LIHotelBundle:Usuario:new" }
 
+usuario_create:
+    path:     /create
+    defaults: { _controller: "LIHotelBundle:Usuario:create" }
+    methods:  POST
 
+usuario_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LIHotelBundle:Usuario:edit" }
+
+usuario_update:
+    path:     /{id}/update
+    defaults: { _controller: "LIHotelBundle:Usuario:update" }
+    methods:  [POST, PUT]
+
+usuario_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LIHotelBundle:Usuario:delete" }
+    methods:  [POST, DELETE]

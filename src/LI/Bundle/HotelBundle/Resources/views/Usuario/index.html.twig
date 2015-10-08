@@ -19,7 +19,7 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('usuarios_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('usuario_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.nombre }} {{ entity.apellido }}</td>
                 <td>{% if entity.fechanac %}{{ entity.fechanac|date('d-m-Y') }}{% endif %}</td>
                 <td>{% if entity.enabled %}Activo{% else %}Inactivo{% endif %}</td>
@@ -31,7 +31,12 @@
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('usuarios_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('usuario_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">
+                            Edit
+                        </a>
                     </li>
                 </ul>
                 </td>

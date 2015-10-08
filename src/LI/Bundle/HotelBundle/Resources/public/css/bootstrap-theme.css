@@ -3,6 +3,10 @@
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+
+body { padding-top: 70px; font-family: Tahoma; }
+li {list-style-type: none;}
+
 .btn-default,
 .btn-primary,
 .btn-success,

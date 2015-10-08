@@ -27,6 +27,23 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
         $context = $this->context;
         $request = $this->request;
 
+        if (0 === strpos($pathinfo, '/admin/usuarios')) {
+            // usuarios
+            if (rtrim($pathinfo, '/') === '/admin/usuarios') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'usuarios');
+                }
+
+                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\UsuarioController::indexAction',  '_route' => 'usuarios',);
+            }
+
+            // usuarios_show
+            if (preg_match('#^/admin/usuarios/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'usuarios_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\UsuarioController::showAction',));
+            }
+
+        }
+
         if (0 === strpos($pathinfo, '/factura')) {
             // factura
             if (rtrim($pathinfo, '/') === '/factura') {
@@ -87,9 +104,9 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
         }
 
-        if (0 === strpos($pathinfo, '/compensacion')) {
+        if (0 === strpos($pathinfo, '/admin/compensacion')) {
             // compensacion
-            if (rtrim($pathinfo, '/') === '/compensacion') {
+            if (rtrim($pathinfo, '/') === '/admin/compensacion') {
                 if (substr($pathinfo, -1) !== '/') {
                     return $this->redirect($pathinfo.'/', 'compensacion');
                 }
@@ -98,17 +115,17 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
             }
 
             // compensacion_show
-            if (preg_match('#^/compensacion/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+            if (preg_match('#^/admin/compensacion/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'compensacion_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CompensacionController::showAction',));
             }
 
             // compensacion_new
-            if ($pathinfo === '/compensacion/new') {
+            if ($pathinfo === '/admin/compensacion/new') {
                 return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CompensacionController::newAction',  '_route' => 'compensacion_new',);
             }
 
             // compensacion_create
-            if ($pathinfo === '/compensacion/create') {
+            if ($pathinfo === '/admin/compensacion/create') {
                 if ($this->context->getMethod() != 'POST') {
                     $allow[] = 'POST';
                     goto not_compensacion_create;
@@ -119,12 +136,12 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
             not_compensacion_create:
 
             // compensacion_edit
-            if (preg_match('#^/compensacion/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+            if (preg_match('#^/admin/compensacion/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'compensacion_edit')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CompensacionController::editAction',));
             }
 
             // compensacion_update
-            if (preg_match('#^/compensacion/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
+            if (preg_match('#^/admin/compensacion/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
                 if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
                     $allow = array_merge($allow, array('POST', 'PUT'));
                     goto not_compensacion_update;
@@ -135,7 +152,7 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
             not_compensacion_update:
 
             // compensacion_delete
-            if (preg_match('#^/compensacion/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+            if (preg_match('#^/admin/compensacion/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
                 if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
                     $allow = array_merge($allow, array('POST', 'DELETE'));
                     goto not_compensacion_delete;
@@ -207,303 +224,306 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
         }
 
-        if (0 === strpos($pathinfo, '/bebida')) {
-            // bebida
-            if (rtrim($pathinfo, '/') === '/bebida') {
-                if (substr($pathinfo, -1) !== '/') {
-                    return $this->redirect($pathinfo.'/', 'bebida');
-                }
-
-                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::indexAction',  '_route' => 'bebida',);
-            }
-
-            // bebida_show
-            if (preg_match('#^/bebida/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'bebida_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::showAction',));
-            }
-
-            // bebida_new
-            if ($pathinfo === '/bebida/new') {
-                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::newAction',  '_route' => 'bebida_new',);
-            }
-
-            // bebida_create
-            if ($pathinfo === '/bebida/create') {
-                if ($this->context->getMethod() != 'POST') {
-                    $allow[] = 'POST';
-                    goto not_bebida_create;
-                }
-
-                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::createAction',  '_route' => 'bebida_create',);
-            }
-            not_bebida_create:
-
-            // bebida_edit
-            if (preg_match('#^/bebida/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'bebida_edit')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::editAction',));
-            }
-
-            // bebida_update
-            if (preg_match('#^/bebida/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
-                    $allow = array_merge($allow, array('POST', 'PUT'));
-                    goto not_bebida_update;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'bebida_update')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::updateAction',));
-            }
-            not_bebida_update:
-
-            // bebida_delete
-            if (preg_match('#^/bebida/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
-                    $allow = array_merge($allow, array('POST', 'DELETE'));
-                    goto not_bebida_delete;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'bebida_delete')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::deleteAction',));
-            }
-            not_bebida_delete:
-
-        }
-
-        if (0 === strpos($pathinfo, '/llamada')) {
-            // llamada
-            if (rtrim($pathinfo, '/') === '/llamada') {
-                if (substr($pathinfo, -1) !== '/') {
-                    return $this->redirect($pathinfo.'/', 'llamada');
-                }
-
-                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::indexAction',  '_route' => 'llamada',);
-            }
-
-            // llamada_show
-            if (preg_match('#^/llamada/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'llamada_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::showAction',));
-            }
-
-            // llamada_new
-            if ($pathinfo === '/llamada/new') {
-                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::newAction',  '_route' => 'llamada_new',);
-            }
-
-            // llamada_create
-            if ($pathinfo === '/llamada/create') {
-                if ($this->context->getMethod() != 'POST') {
-                    $allow[] = 'POST';
-                    goto not_llamada_create;
-                }
-
-                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::createAction',  '_route' => 'llamada_create',);
-            }
-            not_llamada_create:
-
-            // llamada_edit
-            if (preg_match('#^/llamada/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'llamada_edit')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::editAction',));
-            }
-
-            // llamada_update
-            if (preg_match('#^/llamada/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
-                    $allow = array_merge($allow, array('POST', 'PUT'));
-                    goto not_llamada_update;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'llamada_update')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::updateAction',));
-            }
-            not_llamada_update:
-
-            // llamada_delete
-            if (preg_match('#^/llamada/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
-                    $allow = array_merge($allow, array('POST', 'DELETE'));
-                    goto not_llamada_delete;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'llamada_delete')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::deleteAction',));
-            }
-            not_llamada_delete:
-
-        }
-
-        if (0 === strpos($pathinfo, '/categoriahabitacion')) {
-            // categoriahabitacion
-            if (rtrim($pathinfo, '/') === '/categoriahabitacion') {
-                if (substr($pathinfo, -1) !== '/') {
-                    return $this->redirect($pathinfo.'/', 'categoriahabitacion');
-                }
-
-                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::indexAction',  '_route' => 'categoriahabitacion',);
-            }
-
-            // categoriahabitacion_show
-            if (preg_match('#^/categoriahabitacion/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'categoriahabitacion_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::showAction',));
-            }
-
-            // categoriahabitacion_new
-            if ($pathinfo === '/categoriahabitacion/new') {
-                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::newAction',  '_route' => 'categoriahabitacion_new',);
-            }
-
-            // categoriahabitacion_create
-            if ($pathinfo === '/categoriahabitacion/create') {
-                if ($this->context->getMethod() != 'POST') {
-                    $allow[] = 'POST';
-                    goto not_categoriahabitacion_create;
-                }
-
-                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::createAction',  '_route' => 'categoriahabitacion_create',);
-            }
-            not_categoriahabitacion_create:
-
-            // categoriahabitacion_edit
-            if (preg_match('#^/categoriahabitacion/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'categoriahabitacion_edit')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::editAction',));
-            }
-
-            // categoriahabitacion_update
-            if (preg_match('#^/categoriahabitacion/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
-                    $allow = array_merge($allow, array('POST', 'PUT'));
-                    goto not_categoriahabitacion_update;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'categoriahabitacion_update')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::updateAction',));
-            }
-            not_categoriahabitacion_update:
-
-            // categoriahabitacion_delete
-            if (preg_match('#^/categoriahabitacion/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
-                    $allow = array_merge($allow, array('POST', 'DELETE'));
-                    goto not_categoriahabitacion_delete;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'categoriahabitacion_delete')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::deleteAction',));
-            }
-            not_categoriahabitacion_delete:
-
-        }
-
-        if (0 === strpos($pathinfo, '/tipo')) {
-            if (0 === strpos($pathinfo, '/tipohabitacion')) {
-                // tipohabitacion
-                if (rtrim($pathinfo, '/') === '/tipohabitacion') {
+        if (0 === strpos($pathinfo, '/admin')) {
+            if (0 === strpos($pathinfo, '/admin/bebida')) {
+                // bebida
+                if (rtrim($pathinfo, '/') === '/admin/bebida') {
                     if (substr($pathinfo, -1) !== '/') {
-                        return $this->redirect($pathinfo.'/', 'tipohabitacion');
+                        return $this->redirect($pathinfo.'/', 'bebida');
                     }
 
-                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::indexAction',  '_route' => 'tipohabitacion',);
+                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::indexAction',  '_route' => 'bebida',);
                 }
 
-                // tipohabitacion_show
-                if (preg_match('#^/tipohabitacion/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipohabitacion_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::showAction',));
+                // bebida_show
+                if (preg_match('#^/admin/bebida/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'bebida_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::showAction',));
                 }
 
-                // tipohabitacion_new
-                if ($pathinfo === '/tipohabitacion/new') {
-                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::newAction',  '_route' => 'tipohabitacion_new',);
+                // bebida_new
+                if ($pathinfo === '/admin/bebida/new') {
+                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::newAction',  '_route' => 'bebida_new',);
                 }
 
-                // tipohabitacion_create
-                if ($pathinfo === '/tipohabitacion/create') {
+                // bebida_create
+                if ($pathinfo === '/admin/bebida/create') {
                     if ($this->context->getMethod() != 'POST') {
                         $allow[] = 'POST';
-                        goto not_tipohabitacion_create;
+                        goto not_bebida_create;
                     }
 
-                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::createAction',  '_route' => 'tipohabitacion_create',);
+                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::createAction',  '_route' => 'bebida_create',);
                 }
-                not_tipohabitacion_create:
+                not_bebida_create:
 
-                // tipohabitacion_edit
-                if (preg_match('#^/tipohabitacion/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipohabitacion_edit')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::editAction',));
+                // bebida_edit
+                if (preg_match('#^/admin/bebida/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'bebida_edit')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::editAction',));
                 }
 
-                // tipohabitacion_update
-                if (preg_match('#^/tipohabitacion/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
+                // bebida_update
+                if (preg_match('#^/admin/bebida/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
                     if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
                         $allow = array_merge($allow, array('POST', 'PUT'));
-                        goto not_tipohabitacion_update;
+                        goto not_bebida_update;
                     }
 
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipohabitacion_update')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::updateAction',));
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'bebida_update')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::updateAction',));
                 }
-                not_tipohabitacion_update:
+                not_bebida_update:
 
-                // tipohabitacion_delete
-                if (preg_match('#^/tipohabitacion/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                // bebida_delete
+                if (preg_match('#^/admin/bebida/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
                     if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
                         $allow = array_merge($allow, array('POST', 'DELETE'));
-                        goto not_tipohabitacion_delete;
+                        goto not_bebida_delete;
                     }
 
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipohabitacion_delete')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::deleteAction',));
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'bebida_delete')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\BebidaController::deleteAction',));
                 }
-                not_tipohabitacion_delete:
+                not_bebida_delete:
 
             }
 
-            // tipo
-            if (rtrim($pathinfo, '/') === '/tipo') {
-                if (substr($pathinfo, -1) !== '/') {
-                    return $this->redirect($pathinfo.'/', 'tipo');
-                }
+            if (0 === strpos($pathinfo, '/admin/llamada')) {
+                // llamada
+                if (rtrim($pathinfo, '/') === '/admin/llamada') {
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'llamada');
+                    }
 
-                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::indexAction',  '_route' => 'tipo',);
-            }
-
-            // tipo_show
-            if (preg_match('#^/tipo/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipo_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::showAction',));
-            }
-
-            // tipo_new
-            if ($pathinfo === '/tipo/new') {
-                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::newAction',  '_route' => 'tipo_new',);
-            }
-
-            // tipo_create
-            if ($pathinfo === '/tipo/create') {
-                if ($this->context->getMethod() != 'POST') {
-                    $allow[] = 'POST';
-                    goto not_tipo_create;
+                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::indexAction',  '_route' => 'llamada',);
                 }
 
-                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::createAction',  '_route' => 'tipo_create',);
-            }
-            not_tipo_create:
-
-            // tipo_edit
-            if (preg_match('#^/tipo/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipo_edit')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::editAction',));
-            }
-
-            // tipo_update
-            if (preg_match('#^/tipo/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
-                    $allow = array_merge($allow, array('POST', 'PUT'));
-                    goto not_tipo_update;
+                // llamada_show
+                if (preg_match('#^/admin/llamada/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'llamada_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::showAction',));
                 }
 
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipo_update')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::updateAction',));
-            }
-            not_tipo_update:
-
-            // tipo_delete
-            if (preg_match('#^/tipo/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
-                    $allow = array_merge($allow, array('POST', 'DELETE'));
-                    goto not_tipo_delete;
+                // llamada_new
+                if ($pathinfo === '/admin/llamada/new') {
+                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::newAction',  '_route' => 'llamada_new',);
                 }
 
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipo_delete')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::deleteAction',));
+                // llamada_create
+                if ($pathinfo === '/admin/llamada/create') {
+                    if ($this->context->getMethod() != 'POST') {
+                        $allow[] = 'POST';
+                        goto not_llamada_create;
+                    }
+
+                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::createAction',  '_route' => 'llamada_create',);
+                }
+                not_llamada_create:
+
+                // llamada_edit
+                if (preg_match('#^/admin/llamada/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'llamada_edit')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::editAction',));
+                }
+
+                // llamada_update
+                if (preg_match('#^/admin/llamada/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
+                    if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
+                        $allow = array_merge($allow, array('POST', 'PUT'));
+                        goto not_llamada_update;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'llamada_update')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::updateAction',));
+                }
+                not_llamada_update:
+
+                // llamada_delete
+                if (preg_match('#^/admin/llamada/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                    if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
+                        $allow = array_merge($allow, array('POST', 'DELETE'));
+                        goto not_llamada_delete;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'llamada_delete')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\LlamadaController::deleteAction',));
+                }
+                not_llamada_delete:
+
             }
-            not_tipo_delete:
+
+            if (0 === strpos($pathinfo, '/admin/categoriahabitacion')) {
+                // categoriahabitacion
+                if (rtrim($pathinfo, '/') === '/admin/categoriahabitacion') {
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'categoriahabitacion');
+                    }
+
+                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::indexAction',  '_route' => 'categoriahabitacion',);
+                }
+
+                // categoriahabitacion_show
+                if (preg_match('#^/admin/categoriahabitacion/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'categoriahabitacion_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::showAction',));
+                }
+
+                // categoriahabitacion_new
+                if ($pathinfo === '/admin/categoriahabitacion/new') {
+                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::newAction',  '_route' => 'categoriahabitacion_new',);
+                }
+
+                // categoriahabitacion_create
+                if ($pathinfo === '/admin/categoriahabitacion/create') {
+                    if ($this->context->getMethod() != 'POST') {
+                        $allow[] = 'POST';
+                        goto not_categoriahabitacion_create;
+                    }
+
+                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::createAction',  '_route' => 'categoriahabitacion_create',);
+                }
+                not_categoriahabitacion_create:
+
+                // categoriahabitacion_edit
+                if (preg_match('#^/admin/categoriahabitacion/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'categoriahabitacion_edit')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::editAction',));
+                }
+
+                // categoriahabitacion_update
+                if (preg_match('#^/admin/categoriahabitacion/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
+                    if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
+                        $allow = array_merge($allow, array('POST', 'PUT'));
+                        goto not_categoriahabitacion_update;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'categoriahabitacion_update')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::updateAction',));
+                }
+                not_categoriahabitacion_update:
+
+                // categoriahabitacion_delete
+                if (preg_match('#^/admin/categoriahabitacion/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                    if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
+                        $allow = array_merge($allow, array('POST', 'DELETE'));
+                        goto not_categoriahabitacion_delete;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'categoriahabitacion_delete')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\CategoriaHabitacionController::deleteAction',));
+                }
+                not_categoriahabitacion_delete:
+
+            }
+
+            if (0 === strpos($pathinfo, '/admin/tipo')) {
+                if (0 === strpos($pathinfo, '/admin/tipohabitacion')) {
+                    // tipohabitacion
+                    if (rtrim($pathinfo, '/') === '/admin/tipohabitacion') {
+                        if (substr($pathinfo, -1) !== '/') {
+                            return $this->redirect($pathinfo.'/', 'tipohabitacion');
+                        }
+
+                        return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::indexAction',  '_route' => 'tipohabitacion',);
+                    }
+
+                    // tipohabitacion_show
+                    if (preg_match('#^/admin/tipohabitacion/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipohabitacion_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::showAction',));
+                    }
+
+                    // tipohabitacion_new
+                    if ($pathinfo === '/admin/tipohabitacion/new') {
+                        return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::newAction',  '_route' => 'tipohabitacion_new',);
+                    }
+
+                    // tipohabitacion_create
+                    if ($pathinfo === '/admin/tipohabitacion/create') {
+                        if ($this->context->getMethod() != 'POST') {
+                            $allow[] = 'POST';
+                            goto not_tipohabitacion_create;
+                        }
+
+                        return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::createAction',  '_route' => 'tipohabitacion_create',);
+                    }
+                    not_tipohabitacion_create:
+
+                    // tipohabitacion_edit
+                    if (preg_match('#^/admin/tipohabitacion/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipohabitacion_edit')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::editAction',));
+                    }
+
+                    // tipohabitacion_update
+                    if (preg_match('#^/admin/tipohabitacion/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
+                        if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
+                            $allow = array_merge($allow, array('POST', 'PUT'));
+                            goto not_tipohabitacion_update;
+                        }
+
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipohabitacion_update')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::updateAction',));
+                    }
+                    not_tipohabitacion_update:
+
+                    // tipohabitacion_delete
+                    if (preg_match('#^/admin/tipohabitacion/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                        if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
+                            $allow = array_merge($allow, array('POST', 'DELETE'));
+                            goto not_tipohabitacion_delete;
+                        }
+
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipohabitacion_delete')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoHabitacionController::deleteAction',));
+                    }
+                    not_tipohabitacion_delete:
+
+                }
+
+                // tipo
+                if (rtrim($pathinfo, '/') === '/admin/tipo') {
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'tipo');
+                    }
+
+                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::indexAction',  '_route' => 'tipo',);
+                }
+
+                // tipo_show
+                if (preg_match('#^/admin/tipo/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipo_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::showAction',));
+                }
+
+                // tipo_new
+                if ($pathinfo === '/admin/tipo/new') {
+                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::newAction',  '_route' => 'tipo_new',);
+                }
+
+                // tipo_create
+                if ($pathinfo === '/admin/tipo/create') {
+                    if ($this->context->getMethod() != 'POST') {
+                        $allow[] = 'POST';
+                        goto not_tipo_create;
+                    }
+
+                    return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::createAction',  '_route' => 'tipo_create',);
+                }
+                not_tipo_create:
+
+                // tipo_edit
+                if (preg_match('#^/admin/tipo/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipo_edit')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::editAction',));
+                }
+
+                // tipo_update
+                if (preg_match('#^/admin/tipo/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
+                    if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
+                        $allow = array_merge($allow, array('POST', 'PUT'));
+                        goto not_tipo_update;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipo_update')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::updateAction',));
+                }
+                not_tipo_update:
+
+                // tipo_delete
+                if (preg_match('#^/admin/tipo/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                    if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
+                        $allow = array_merge($allow, array('POST', 'DELETE'));
+                        goto not_tipo_delete;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'tipo_delete')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\TipoController::deleteAction',));
+                }
+                not_tipo_delete:
+
+            }
 
         }
 
@@ -603,6 +623,17 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
             return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::registroAction',  '_route' => 'LIHotelBundle_registro',);
         }
         not_LIHotelBundle_registro:
+
+        // _admin
+        if ($pathinfo === '/admin') {
+            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                $allow = array_merge($allow, array('GET', 'HEAD'));
+                goto not__admin;
+            }
+
+            return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::adminAction',  '_route' => '_admin',);
+        }
+        not__admin:
 
         if (0 === strpos($pathinfo, '/log')) {
             if (0 === strpos($pathinfo, '/login')) {

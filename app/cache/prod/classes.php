@@ -6138,61 +6138,6 @@ public function supportsClass($class);
 public function vote(TokenInterface $token, $object, array $attributes);
 }
 }
-namespace Symfony\Component\Security\Core
-{
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-interface SecurityContextInterface extends TokenStorageInterface, AuthorizationCheckerInterface
-{
-const ACCESS_DENIED_ERROR = Security::ACCESS_DENIED_ERROR;
-const AUTHENTICATION_ERROR = Security::AUTHENTICATION_ERROR;
-const LAST_USERNAME = Security::LAST_USERNAME;
-}
-}
-namespace Symfony\Component\Security\Core
-{
-@trigger_error('The '.__NAMESPACE__.'\SecurityContext class is deprecated since version 2.6 and will be removed in 3.0. Use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage or Symfony\Component\Security\Core\Authorization\AuthorizationChecker instead.', E_USER_DEPRECATED);
-use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-class SecurityContext implements SecurityContextInterface
-{
-private $tokenStorage;
-private $authorizationChecker;
-public function __construct($tokenStorage, $authorizationChecker, $alwaysAuthenticate = false)
-{
-$oldSignature = $tokenStorage instanceof AuthenticationManagerInterface && $authorizationChecker instanceof AccessDecisionManagerInterface;
-$newSignature = $tokenStorage instanceof TokenStorageInterface && $authorizationChecker instanceof AuthorizationCheckerInterface;
-if (!$oldSignature && !$newSignature) {
-throw new \BadMethodCallException('Unable to construct SecurityContext, please provide the correct arguments');
-}
-if ($oldSignature) {
-$authenticationManager = $tokenStorage;
-$accessDecisionManager = $authorizationChecker;
-$tokenStorage = new TokenStorage();
-$authorizationChecker = new AuthorizationChecker($tokenStorage, $authenticationManager, $accessDecisionManager, $alwaysAuthenticate);
-}
-$this->tokenStorage = $tokenStorage;
-$this->authorizationChecker = $authorizationChecker;
-}
-public function getToken()
-{
-return $this->tokenStorage->getToken();
-}
-public function setToken(TokenInterface $token = null)
-{
-return $this->tokenStorage->setToken($token);
-}
-public function isGranted($attributes, $object = null)
-{
-return $this->authorizationChecker->isGranted($attributes, $object);
-}
-}
-}
 namespace Symfony\Component\Security\Core\User
 {
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -6202,6 +6147,36 @@ interface UserProviderInterface
 public function loadUserByUsername($username);
 public function refreshUser(UserInterface $user);
 public function supportsClass($class);
+}
+}
+namespace Symfony\Component\Security\Http
+{
+use Symfony\Component\HttpFoundation\Request;
+interface AccessMapInterface
+{
+public function getPatterns(Request $request);
+}
+}
+namespace Symfony\Component\Security\Http
+{
+use Symfony\Component\HttpFoundation\RequestMatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
+class AccessMap implements AccessMapInterface
+{
+private $map = array();
+public function add(RequestMatcherInterface $requestMatcher, array $attributes = array(), $channel = null)
+{
+$this->map[] = array($requestMatcher, $attributes, $channel);
+}
+public function getPatterns(Request $request)
+{
+foreach ($this->map as $elements) {
+if (null === $elements[0] || $elements[0]->matches($request)) {
+return array($elements[1], $elements[2]);
+}
+}
+return array(null, null);
+}
 }
 }
 namespace Symfony\Component\Security\Http

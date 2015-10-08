@@ -1,6 +1,6 @@
-li_hotel_usuarios:
+li_hotel_usuario:
     resource: "@LIHotelBundle/Resources/config/routing/usuario.yml"
-    prefix:   /admin/usuarios
+    prefix:   /admin/usuario
 
 li_hotel_factura:
     resource: "@LIHotelBundle/Resources/config/routing/factura.yml"

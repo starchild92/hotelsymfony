@@ -127,20 +127,63 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        if (0 === strpos($pathinfo, '/admin/usuarios')) {
-            // usuarios
-            if (rtrim($pathinfo, '/') === '/admin/usuarios') {
+        if (0 === strpos($pathinfo, '/admin/usuario')) {
+            // usuario
+            if (rtrim($pathinfo, '/') === '/admin/usuario') {
                 if (substr($pathinfo, -1) !== '/') {
-                    return $this->redirect($pathinfo.'/', 'usuarios');
+                    return $this->redirect($pathinfo.'/', 'usuario');
                 }
 
-                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\UsuarioController::indexAction',  '_route' => 'usuarios',);
+                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\UsuarioController::indexAction',  '_route' => 'usuario',);
             }
 
-            // usuarios_show
-            if (preg_match('#^/admin/usuarios/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'usuarios_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\UsuarioController::showAction',));
+            // usuario_show
+            if (preg_match('#^/admin/usuario/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'usuario_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\UsuarioController::showAction',));
             }
+
+            // usuario_new
+            if ($pathinfo === '/admin/usuario/new') {
+                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\UsuarioController::newAction',  '_route' => 'usuario_new',);
+            }
+
+            // usuario_create
+            if ($pathinfo === '/admin/usuario/create') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_usuario_create;
+                }
+
+                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\UsuarioController::createAction',  '_route' => 'usuario_create',);
+            }
+            not_usuario_create:
+
+            // usuario_edit
+            if (preg_match('#^/admin/usuario/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'usuario_edit')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\UsuarioController::editAction',));
+            }
+
+            // usuario_update
+            if (preg_match('#^/admin/usuario/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
+                    $allow = array_merge($allow, array('POST', 'PUT'));
+                    goto not_usuario_update;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'usuario_update')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\UsuarioController::updateAction',));
+            }
+            not_usuario_update:
+
+            // usuario_delete
+            if (preg_match('#^/admin/usuario/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
+                    $allow = array_merge($allow, array('POST', 'DELETE'));
+                    goto not_usuario_delete;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'usuario_delete')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\UsuarioController::deleteAction',));
+            }
+            not_usuario_delete:
 
         }
 

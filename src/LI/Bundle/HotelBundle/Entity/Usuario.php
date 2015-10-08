@@ -50,31 +50,6 @@ class Usuario extends BaseUser
      */
     private $apellido;
 
-    /***
-     * @var string $mail
-     *
-     * @ORM\Column(name="mail", type="string", length=255, unique=true)
-     * @Assert\Email(
-     *     message = "El mail '{{ value }}' no es válido.",
-     *     checkMX = true,
-     *     checkHost = true
-     * )
-     */
-    //private $mail;
-
-    /***
-     * @var string
-     *
-     * @ORM\Column(name="clave", type="string", length=18)
-     * @Assert\Length(
-     *      min = 5,
-     *      max = 18,
-     *      minMessage = "Escriba una clave con 5 o más letras y menos o {{ limit }} letras",
-     *      maxMessage = "La clave que ha escrito supera el límite de {{ limit }} letras"
-     * )
-     */
-    //private $clave;
-
     /**
      * @var integer
      *
@@ -137,52 +112,6 @@ class Usuario extends BaseUser
     {
         return $this->apellido;
     }
-
-    /***
-     * Set mail
-     *
-     * @param string $mail
-     * @return Usuario
-     
-    public function setMail($mail)
-    {
-        $this->mail = $mail;
-
-        return $this;
-    }*/
-
-    /***
-     * Get mail
-     *
-     * @return string 
-     
-    public function getMail()
-    {
-        return $this->mail;
-    }*/
-
-    /***
-     * Set clave
-     *
-     * @param string $clave
-     * @return Usuario
-     
-    public function setClave($clave)
-    {
-        $this->clave = $clave;
-
-        return $this;
-    }*/
-
-    /***
-     * Get clave
-     *
-     * @return string 
-     
-    public function getClave()
-    {
-        return $this->clave;
-    }*/
 
     /**
      * Set fecha_nac
