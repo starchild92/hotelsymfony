@@ -14,6 +14,11 @@ class UsuarioType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $permissions = array(
+            'ROLE_USER'        => 'Usuario',
+            'ROLE_ADMIN' => 'Administrador'
+        );
+
         $builder
             ->add('nombre', 'text', array(
                 'label' => 'Nombre'))
@@ -23,7 +28,16 @@ class UsuarioType extends AbstractType
                 'label' => 'Fecha de Nacimiento',
                 'years' => range(date('Y') -18, date('Y') -115)
             ))
-        ;
+            ->add('enabled', 'choice', array(
+                'label' => 'Estado',
+                'choices'   => array(
+                    '1' => 'Activo',
+                    '0' => 'Inactivo')))
+            ->add('roles','choice',array(
+                    'label'   => 'Elija el Rol',
+                    'choices' => $permissions,
+                    'multiple' => true
+                ));
     }
     
     /**

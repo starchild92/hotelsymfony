@@ -8,7 +8,7 @@
             <tr>
                 <th>Id</th>
                 <th>Nombre y Apellido</th>
-                <th>Fecha_nac</th>
+                <th>Fecha Nacimiento</th>
                 <th>Estado</th>
                 <th>Correo y Usuario</th>
                 <th>Ultima Conexión</th>
@@ -31,12 +31,10 @@
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('usuario_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('usuario_show', { 'id': entity.id }) }}">Ver Detalles</a>
                     </li>
                     <li>
-                        <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">
-                            Edit
-                        </a>
+                        <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">Modificar</a>
                     </li>
                 </ul>
                 </td>
