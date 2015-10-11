@@ -13,6 +13,7 @@
                 <th>Dias de Reserva</th>
                 <th>Costo Total</th>
                 <th>Fecha</th>
+                <th>Reserva</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -22,7 +23,8 @@
                 <td><a href="{{ path('factura_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.diasReserva }}</td>
                 <td>{{ entity.costoTotal }}</td>
-                <td>{% if entity.fecha %}{{ entity.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.fecha|date('Y-m-d') }}</td>
+                <td>{{ entity.reserva.codigoReserva }}</td>
                 <td>
                 <ul>
                     <li>

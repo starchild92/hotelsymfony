@@ -60,6 +60,12 @@ class Factura
     private $cliente;*/
 
     /**
+     * @ORM\OneToOne(targetEntity="Reserva", cascade={"persist"})
+     * @ORM\JoinColumn(name="reserva_id", referencedColumnName="id")
+     **/
+    private $reserva;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha", type="datetime")
@@ -173,5 +179,28 @@ class Factura
     public function getFecha()
     {
         return $this->fecha;
+    }
+
+    /**
+     * Set reserva
+     *
+     * @param \LI\Bundle\HotelBundle\Entity\Reserva $reserva
+     * @return Factura
+     */
+    public function setReserva(\LI\Bundle\HotelBundle\Entity\Reserva $reserva = null)
+    {
+        $this->reserva = $reserva;
+    
+        return $this;
+    }
+
+    /**
+     * Get reserva
+     *
+     * @return \LI\Bundle\HotelBundle\Entity\Reserva 
+     */
+    public function getReserva()
+    {
+        return $this->reserva;
     }
 }

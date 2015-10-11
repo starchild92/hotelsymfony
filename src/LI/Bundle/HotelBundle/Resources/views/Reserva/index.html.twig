@@ -1,7 +1,10 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
-    <h1>Reserva list</h1>
+<div class="container-fluid row">
+    <div class="page-header">
+        <h1>Lista de Reservas</h1>
+    </div>
 
     <table class="table records_list">
         <thead>
@@ -13,6 +16,7 @@
                 <th>Cliente</th>
                 <th>Cantidadpersonas</th>
                 <th>Diasreserva</th>
+                <th>Hecha el</th>
                 <th>Desde</th>
                 <th>Hasta</th>
                 <th>Actions</th>
@@ -28,9 +32,10 @@
                 <td>{{ entity.cliente }}</td>
                 <td>{{ entity.cantidadPersonas }}</td>
                 <td>{{ entity.diasReserva }}</td>
-                <td>{{ entity.fecha|date('d-m-Y') }}</td>
+                <td>{{ entity.fechareserva|date('d-m-Y') }}</td>
+                <td>{{ entity.fechadesde|date('d-m-Y') }}</td>
                 {% set diasR = entity.diasReserva %}
-                <td>{{ entity.fecha|date_modify('+' ~ diasR ~ ' days')|date('d-m-Y') }}</td>
+                <td>{{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|date('d-m-Y') }}</td>
                 <td>
                 <ul>
                     <li>
@@ -53,4 +58,5 @@
             </a>
         </li>
     </ul>
+</div>
     {% endblock %}

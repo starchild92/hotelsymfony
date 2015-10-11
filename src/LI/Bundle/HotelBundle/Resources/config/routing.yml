@@ -39,25 +39,37 @@ li_hotel_habitacion:
     prefix:   /habitacion
 
 LIHotelBundle_homepage:
-    pattern:  /
+    path:  /
     defaults: { _controller: LIHotelBundle:Inicio:index }
     requirements:
-        _method:  GET
+        methods:  GET
 
 LIHotelBundle_consultar:
-    pattern:  /consultar
+    path:  /consultar
     defaults: { _controller: LIHotelBundle:Inicio:consultar }
     requirements:
-        _method:  GET
+        methods:  GET
 
 LIHotelBundle_registro:
-    pattern:  /registro
+    path:  /registro
     defaults: { _controller: LIHotelBundle:Inicio:registro }
     requirements:
-        _method:  GET|POST
+        methods:  GET|POST
+
+LIHotelBundle_registro_admin:
+    path:  /registroAdmin
+    defaults: { _controller: LIHotelBundle:Inicio:registro_admin }
+    requirements:
+        methods:  GET|POST
 
 _admin:
-    pattern:  /admin
+    path:  /admin
     defaults: { _controller: LIHotelBundle:Inicio:admin }
     requirements:
-        _method:  GET
+        methods:  GET
+
+_user:
+    path:  /user
+    defaults: { _controller: LIHotelBundle:Inicio:user }
+    requirements:
+        methods:  GET

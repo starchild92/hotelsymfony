@@ -27,7 +27,8 @@ class ReservaType extends AbstractType
             ->add('cantidadPersonas')
             ->add('cantidadNinos')
             ->add('diasReserva')
-            ->add('fecha')
+            ->add('fecha_desde', 'date', array(
+                'format' => 'dd MM yyyy'))
         ;
     }
     

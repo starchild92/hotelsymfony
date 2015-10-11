@@ -51,7 +51,10 @@ Entidades
 	. dias_reserva = es el mismo que está en "Reserva"
 	. costo_total {Está compuesto ((dias_reserva * costo_tipo_habitacion * costo_categoria_habitacion) + costo_llamadas + costo_bebidas) }
 	. cliente [persona quien hace la reserva] = es el mismo que está en "Reserva"
-	. fecha y hora
+	. codigo de la reserva
+	. llamadas hecha
+	. bebidas consumidas
+	. fecha
 
 ==================================================================
 DEJAR DE ÚLTIMO

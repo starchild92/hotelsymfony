@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>{% block title %}Hotel Symfony - Administrativo{% endblock %}</title>
+	
+	<link rel="icon" type="image/x-icon" href="{{ asset('bundles/lihotel/images/icon.ico') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap-theme.css') }}">
+	{% block stylesheets %}{% endblock %}
+
+	<script src="{{ asset('bundles/lihotel/js/jquery.min.js') }}"></script>
+	<script src="{{ asset('bundles/lihotel/js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('bundles/lihotel/js/modalSesion.js') }}"></script>
+	{% block javascripts %}{% endblock %}
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="{{ path('LIHotelBundle_homepage') }}">
+					<img width="20" height="20" alt="Brand" src="{{ asset('bundles/lihotel/images/icon.ico') }}">
+				</a>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand brandname" href="{{ path('LIHotelBundle_homepage') }}">Hotel Symfony</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<form class="navbar-form navbar-right" role="search">
+                    <a class="btn btn-danger" href="{{ path('fos_user_security_logout') }}">Cerrar Sesión</a>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="#">Bienvenid@, {{ user.nombre }} {{ user.apellido }}</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ayuda <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Cominiquese con nosotros</li>
+							<li><a>0500 HOTELSYM 00</a></li>
+							<li><a>@hotelsymfony</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+		<div class="row">
+		<div class="col-lg-12">
+			{% block body %}{% endblock %}
+		</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+	<div id="london"></div>
+		<div>
+			<div class="col-md-4">
+				<center>
+					<div class="col-md-6 col-xs-6">
+						<img src="{{ asset('bundles/lihotel/images/LOGO UC.png') }}" alt="rude" width="30" height="40">
+						<h6>Universidad de Carabobo</h6>
+					</div><!-- /.col-md-6 -->
+					<div class="col-md-6 col-xs-6">
+						<img src="{{ asset('bundles/lihotel/images/LOGO FACYT.png') }}" alt="rude" width="30" height="35">
+						<h6>Facultad Experimental de Ciencias y Tecnología</h6>
+					</div><!-- /.col-md-6 -->
+				</center>
+			</div>
+			<div class="col-md-4" id="lado">
+				<center>
+					<div class="col-md-12">
+						<img data-toggle="tooltip" title="Jajaja, Necesitas tiempo, tutoriales y mucha lectura para dominarme!" class="img-circle" src="{{ asset('bundles/lihotel/images/symfony2.png') }}" alt="rude" width="30" height="30">
+						<h6>Int. al uso de Frameworks <br>para el Desarrollo de Apps Web<br>Prof. Luis León<br></h6>
+					</div>
+				</center>
+			</div>
+			<div class="col-md-4" id="lado">
+				<center>
+					<div class="col-md-6 col-xs-6">
+						<img data-toggle="tooltip" title="Break a leg!" class="img-circle" src="{{ asset('bundles/lihotel/images/luis.jpg') }}" alt="rude" width="35" height="35">
+						<h6>Luis Pérez</h6>
+					</div><!-- /.col-md-4 -->
+					<div class="col-md-6 col-xs-6">
+						<img data-toggle="tooltip" title="Some people want to set the world on fire." class="img-circle" src="{{ asset('bundles/lihotel/images/ivo.jpg') }}" alt="rude" width="35" height="35">
+						<h6>Ivonne Ortega</h6>
+					</div><!-- /.col-md-4 -->
+				</center>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<style type="text/css">
+	@font-face{
+		font-family: "Raleway-Regular";
+		src: url('{{ asset('bundles/lihotel/fonts/Raleway-Medium.ttf') }}') format('truetype');
+	}
+	h6{ text-align: center; }
+	#london{ border-top: 1px solid #eeeeee; margin-bottom: 15px; margin-top: 15px; }
+	#lado{ border-left: 1px solid #eeeeee; }
+</style>
+<script> $(document).ready(function(){ $('[data-toggle="tooltip"]').tooltip(); }); </script>

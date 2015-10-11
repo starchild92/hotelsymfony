@@ -46,13 +46,14 @@ class ReservaController extends Controller
             $em = $this->getDoctrine()->getManager();
             
             $factura = new Factura();
+            $factura->setReserva($entity);
             $factura->setDiasReserva($entity->getDiasReserva());
-            $factura->setFecha($entity->getFecha());
+            $factura->setFecha($entity->getFechaDesde());
 
             $factura->setCostoTotal(1); //calcular usando el tipo y reserva, como costo inicial sin los consumibles
 
             $em->persist($factura);
-            $entity->setcodigoReserva('HSY'.date('dmY').'RES'.date('His'));
+            $entity->setcodigoReserva('RES'.date('dmY').date('His'));
 
             //cambiando el estado de la habitacion
             if ($entity->getEstadoReserva() == 'Concretada') {
@@ -64,8 +65,6 @@ class ReservaController extends Controller
                     $habitacion->setEstado('Reservada');
                 }
             }
-
-            
             
             $em->persist($entity);
             $em->flush();

@@ -632,51 +632,40 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
         // LIHotelBundle_homepage
         if (rtrim($pathinfo, '/') === '') {
-            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                $allow = array_merge($allow, array('GET', 'HEAD'));
-                goto not_LIHotelBundle_homepage;
-            }
-
             if (substr($pathinfo, -1) !== '/') {
                 return $this->redirect($pathinfo.'/', 'LIHotelBundle_homepage');
             }
 
             return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::indexAction',  '_route' => 'LIHotelBundle_homepage',);
         }
-        not_LIHotelBundle_homepage:
 
         // LIHotelBundle_consultar
         if ($pathinfo === '/consultar') {
-            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                $allow = array_merge($allow, array('GET', 'HEAD'));
-                goto not_LIHotelBundle_consultar;
-            }
-
             return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::consultarAction',  '_route' => 'LIHotelBundle_consultar',);
         }
-        not_LIHotelBundle_consultar:
 
-        // LIHotelBundle_registro
-        if ($pathinfo === '/registro') {
-            if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
-                $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
-                goto not_LIHotelBundle_registro;
+        if (0 === strpos($pathinfo, '/registro')) {
+            // LIHotelBundle_registro
+            if ($pathinfo === '/registro') {
+                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::registroAction',  '_route' => 'LIHotelBundle_registro',);
             }
 
-            return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::registroAction',  '_route' => 'LIHotelBundle_registro',);
+            // LIHotelBundle_registro_admin
+            if ($pathinfo === '/registroAdmin') {
+                return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::registro_adminAction',  '_route' => 'LIHotelBundle_registro_admin',);
+            }
+
         }
-        not_LIHotelBundle_registro:
 
         // _admin
         if ($pathinfo === '/admin') {
-            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                $allow = array_merge($allow, array('GET', 'HEAD'));
-                goto not__admin;
-            }
-
             return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::adminAction',  '_route' => '_admin',);
         }
-        not__admin:
+
+        // _user
+        if ($pathinfo === '/user') {
+            return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\InicioController::userAction',  '_route' => '_user',);
+        }
 
         if (0 === strpos($pathinfo, '/log')) {
             if (0 === strpos($pathinfo, '/login')) {

@@ -104,6 +104,7 @@
     <parameter key="session.handler.write_check.class">Symfony\Component\HttpFoundation\Session\Storage\Handler\WriteCheckSessionHandler</parameter>
     <parameter key="session_listener.class">Symfony\Bundle\FrameworkBundle\EventListener\SessionListener</parameter>
     <parameter key="session.storage.options" type="collection">
+      <parameter key="cookie_lifetime">0</parameter>
       <parameter key="gc_probability">1</parameter>
     </parameter>
     <parameter key="session.save_path">C:\xampp\htdocs\hotelsymfony\app\cache\dev/sessions</parameter>
@@ -1369,6 +1370,7 @@
     </service>
     <service id="session.storage.native" class="Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage">
       <argument type="collection">
+        <argument key="cookie_lifetime">0</argument>
         <argument key="gc_probability">1</argument>
       </argument>
       <argument>null</argument>
@@ -2135,7 +2137,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5619ada3a28578.10404115</argument>
+            <argument>561a80b1d07f05.19595408</argument>
           </service>
         </argument>
       </argument>
@@ -2429,7 +2431,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>5619ada3a28578.10404115</argument>
+            <argument>561a80b1d07f05.19595408</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>

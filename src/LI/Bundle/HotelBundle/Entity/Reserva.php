@@ -102,15 +102,24 @@ class Reserva
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime")
+     * @ORM\Column(name="fechadesde", type="datetime")
      * @Assert\NotBlank()
      */
-    private $fecha;
+    private $fechadesde;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechareserva", type="datetime")
+     * @Assert\NotBlank()
+     */
+    private $fechareserva;
 
 
     public function __construct()
     {
-        $this->fecha = new \DateTime();
+        $this->fechadesde = new \DateTime();
+        $this->fechareserva = new \DateTime();
     }
 
 
@@ -263,26 +272,49 @@ class Reserva
     }
 
     /**
-     * Set fecha
+     * Set fechadesde
      *
-     * @param \DateTime $fecha
+     * @param \DateTime $fechadesde
      * @return Factura
      */
-    public function setFecha($fecha)
+    public function setFechaDesde($fechadesde)
     {
-        $this->fecha = $fecha;
+        $this->fechadesde = $fechadesde;
 
         return $this;
     }
 
     /**
-     * Get fecha
+     * Get fechadesde
      *
      * @return \DateTime 
      */
-    public function getFecha()
+    public function getFechaDesde()
     {
-        return $this->fecha;
+        return $this->fechadesde;
+    }
+
+    /**
+     * Set fechareserva
+     *
+     * @param \DateTime $fechareserva
+     * @return Factura
+     */
+    public function setFechaReserva($fechareserva)
+    {
+        $this->fechareserva = $fechareserva;
+
+        return $this;
+    }
+
+    /**
+     * Get fechareserva
+     *
+     * @return \DateTime 
+     */
+    public function getFechaReserva()
+    {
+        return $this->fechareserva;
     }
 
     /**
