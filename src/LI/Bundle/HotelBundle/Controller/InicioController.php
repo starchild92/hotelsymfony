@@ -51,10 +51,14 @@ class InicioController extends Controller
                 //Obtener datos de las reservas
                 $em = $this->getDoctrine()->getManager();
                 $reservas = $em->getRepository('LIHotelBundle:Reserva')->findAll();
+                
+                $userManager = $this->get('fos_user.user_manager');
+                $usuarios = $userManager->findUsers();
 
                 $por_c = 0;
                 $con = 0;
                 $can = 0;
+                $cant_usuarios = sizeof($usuarios);
                 foreach ($reservas as $reserva) {
                     $estado = $reserva->getEstadoReserva();
                     if ($estado == 'Por Concretar'){
@@ -67,12 +71,24 @@ class InicioController extends Controller
                         $can = $can+1;
                     }
                 }
+                $admins = 0;
+                $users = 0;
+                foreach ($usuarios as $u) {
+                    $roles = $u->getRoles();
+                    if (in_array('ROLE_ADMIN', $roles)) {
+                        $admins = $admins+1;
+                    }else{
+                        $users = $users+1;
+                    }
+                }
 
                 return $this->render('LIHotelBundle:Inicio:inicioAdmin.html.twig', array(
                 'user' => $user,
                 'por_concretar' => $por_c,
                 'concretadas' => $con,
-                'canceladas' => $can));
+                'canceladas' => $can,
+                'admins' => $admins,
+                'users' => $users));
 
             }else{
                 return $this->redirect($this->generateUrl('LIHotelBundle_homepage'));

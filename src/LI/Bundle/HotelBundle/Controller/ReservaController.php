@@ -24,9 +24,16 @@ class ReservaController extends Controller
      */
     public function indexAction()
     {
+        $user = $this->getUser();
+        $roles = $user->getRoles();
+
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('LIHotelBundle:Reserva')->findAll();
+        if (in_array('ROLE_USER', $roles)) {
+            $entities = $em->getRepository('LIHotelBundle:Reserva')->reservas_usuario($user->getId());
+        }else{
+            $entities = $em->getRepository('LIHotelBundle:Reserva')->findAll();
+        }
 
         return $this->render('LIHotelBundle:Reserva:index.html.twig', array(
             'entities' => $entities,

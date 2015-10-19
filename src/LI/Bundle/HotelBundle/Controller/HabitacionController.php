@@ -178,6 +178,14 @@ class HabitacionController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+
+            $tipo = $entity->getTipo();
+            $bebidas = $tipo->getbebidasMinibar();
+
+            foreach ($bebidas as $bebida) {
+                $bebida->settipoHabitacion($tipo);
+            }
+
             $em->flush();
 
             return $this->redirect($this->generateUrl('habitacion_edit', array('id' => $id)));
