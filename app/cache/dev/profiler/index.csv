@@ -316,3 +316,12 @@ c62002,127.0.0.1,GET,http://127.0.0.1:8000/admin/llamada/,1445355902,,200
 cd68f6,127.0.0.1,GET,http://127.0.0.1:8000/profile/edit,1445355986,,200
 9282ea,127.0.0.1,GET,http://127.0.0.1:8000/logout,1445356318,,302
 012ced,127.0.0.1,GET,http://127.0.0.1:8000/,1445356319,,200
+a5c3e6,127.0.0.1,GET,http://hotel.local/app_dev.php/,1445383023,,302
+f7eb1c,127.0.0.1,GET,http://hotel.local/app_dev.php/,1445383076,,302
+e14556,127.0.0.1,GET,http://hotel.local/app_dev.php/admin,1445383080,,200
+74a0e8,127.0.0.1,GET,http://hotel.local/app_dev.php/logout,1445383086,,302
+85e57d,127.0.0.1,GET,http://hotel.local/app_dev.php/,1445383087,,200
+333d15,127.0.0.1,GET,http://hotel.local/app_dev.php/login,1445383091,,200
+259996,127.0.0.1,GET,http://hotel.local/app_dev.php/login,1445383197,,200
+9628f0,127.0.0.1,GET,http://hotel.local/app_dev.php/login,1445383213,,200
+c5a65b,127.0.0.1,GET,http://hotel.local/app_dev.php/login,1445383252,,200
