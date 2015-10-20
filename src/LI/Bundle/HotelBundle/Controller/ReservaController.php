@@ -20,24 +20,28 @@ class ReservaController extends Controller
 
     /**
      * Lists all Reserva entities.
-     *
      */
     public function indexAction()
     {
-        $user = $this->getUser();
-        $roles = $user->getRoles();
+        $securityContext = $this->container->get('security.context');
+        if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
 
-        $em = $this->getDoctrine()->getManager();
+            $user = $this->getUser();
+            $roles = $user->getRoles();
+            $em = $this->getDoctrine()->getManager();
 
-        if (in_array('ROLE_ADMIN', $roles)) {
-            $entities = $em->getRepository('LIHotelBundle:Reserva')->findAll();
-        }else{
-            $entities = $em->getRepository('LIHotelBundle:Reserva')->reservas_usuario($user->getId());
-        }
+            if (in_array('ROLE_ADMIN', $roles)) {
+                $entities = $em->getRepository('LIHotelBundle:Reserva')->findAll();
+            }else{
+                $entities = $em->getRepository('LIHotelBundle:Reserva')->reservas_usuario($user->getId());
+            }
 
-        return $this->render('LIHotelBundle:Reserva:index.html.twig', array(
+            return $this->render('LIHotelBundle:Reserva:index.html.twig', array(
             'entities' => $entities,
-        ));
+            ));
+        }else{
+            return $this->render('LIHotelBundle:Inicio:index.html.twig');
+        }
     }
     /**
      * Creates a new Reserva entity.

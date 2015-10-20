@@ -1,43 +1,46 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
-    <h1>CategoriaHabitacion list</h1>
+<div class="col-lg-12 col-sm-12 col-xs-12">
+	<div class="page-header">
+		<h1>Categorías de Habitación</h1>
+	</div>
+	<table class="table table-bordered records_list">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nombre</th>
+				<th>Precio</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for entity in entities %}
+			<tr>
+				<td><a href="{{ path('categoriahabitacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+				<td>{{ entity.nombre }}</td>
+				<td>{{ entity.precio }}</td>
+				<td>
+				<ul>
+					<li>
+						<a href="{{ path('categoriahabitacion_show', { 'id': entity.id }) }}">show</a>
+					</li>
+					<li>
+						<a href="{{ path('categoriahabitacion_edit', { 'id': entity.id }) }}">edit</a>
+					</li>
+				</ul>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
 
-    <table class="table records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('categoriahabitacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.nombre }}</td>
-                <td>{{ entity.precio }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('categoriahabitacion_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('categoriahabitacion_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('categoriahabitacion_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+		<ul>
+		<li>
+			<a href="{{ path('categoriahabitacion_new') }}">
+				Create a new entry
+			</a>
+		</li>
+	</ul>
+</div>
+{% endblock %}

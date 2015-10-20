@@ -12,7 +12,11 @@ li_hotel_compensacion:
 
 li_hotel_reserva:
     resource: "@LIHotelBundle/Resources/config/routing/reserva.yml"
-    prefix:   /reserva
+    prefix:   admin/reserva
+
+li_hotel_reserva_user:
+    resource: "@LIHotelBundle/Resources/config/routing/reserva.yml"
+    prefix:   user/reserva
 
 li_hotel_bebida:
     resource: "@LIHotelBundle/Resources/config/routing/bebida.yml"

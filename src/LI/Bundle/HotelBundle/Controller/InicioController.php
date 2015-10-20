@@ -51,6 +51,7 @@ class InicioController extends Controller
                 //Obtener datos de las reservas
                 $em = $this->getDoctrine()->getManager();
                 $reservas = $em->getRepository('LIHotelBundle:Reserva')->findAll();
+                $habitaciones = $em->getRepository('LIHotelBundle:Habitacion')->findAll();
                 
                 $userManager = $this->get('fos_user.user_manager');
                 $usuarios = $userManager->findUsers();
@@ -88,7 +89,8 @@ class InicioController extends Controller
                 'concretadas' => $con,
                 'canceladas' => $can,
                 'admins' => $admins,
-                'users' => $users));
+                'users' => $users,
+                'cant_habitaciones' => sizeof($habitaciones)));
 
             }else{
                 return $this->redirect($this->generateUrl('LIHotelBundle_homepage'));

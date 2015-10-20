@@ -307,9 +307,9 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        if (0 === strpos($pathinfo, '/reserva')) {
+        if (0 === strpos($pathinfo, '/user/reserva')) {
             // reserva
-            if (rtrim($pathinfo, '/') === '/reserva') {
+            if (rtrim($pathinfo, '/') === '/user/reserva') {
                 if (substr($pathinfo, -1) !== '/') {
                     return $this->redirect($pathinfo.'/', 'reserva');
                 }
@@ -318,17 +318,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             }
 
             // reserva_show
-            if (preg_match('#^/reserva/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+            if (preg_match('#^/user/reserva/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'reserva_show')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\ReservaController::showAction',));
             }
 
             // reserva_new
-            if ($pathinfo === '/reserva/new') {
+            if ($pathinfo === '/user/reserva/new') {
                 return array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\ReservaController::newAction',  '_route' => 'reserva_new',);
             }
 
             // reserva_create
-            if ($pathinfo === '/reserva/create') {
+            if ($pathinfo === '/user/reserva/create') {
                 if ($this->context->getMethod() != 'POST') {
                     $allow[] = 'POST';
                     goto not_reserva_create;
@@ -339,12 +339,12 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             not_reserva_create:
 
             // reserva_edit
-            if (preg_match('#^/reserva/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+            if (preg_match('#^/user/reserva/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'reserva_edit')), array (  '_controller' => 'LI\\Bundle\\HotelBundle\\Controller\\ReservaController::editAction',));
             }
 
             // reserva_update
-            if (preg_match('#^/reserva/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
+            if (preg_match('#^/user/reserva/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
                 if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
                     $allow = array_merge($allow, array('POST', 'PUT'));
                     goto not_reserva_update;
@@ -355,7 +355,7 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             not_reserva_update:
 
             // reserva_delete
-            if (preg_match('#^/reserva/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+            if (preg_match('#^/user/reserva/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
                 if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
                     $allow = array_merge($allow, array('POST', 'DELETE'));
                     goto not_reserva_delete;

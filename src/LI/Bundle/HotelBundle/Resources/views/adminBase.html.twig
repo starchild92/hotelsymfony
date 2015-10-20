@@ -35,7 +35,6 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right">
 					<!--<li><a href="{{ path('factura') }}">Facturas</a></li>-->
-					<li><a href="{{ path('compensacion') }}">Compensaciones</a></li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservas <span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -58,13 +57,18 @@
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Operaciones de Consulta</li>
 							<li><a href="{{ path('habitacion') }}">Listado Habitaciones</a></li>
-							<li><a href="{{ path('habitacion_new') }}">Crear Habitación</a></li>
-							<li role="separator" class="divider"></li>
+							<li><a href="{{ path('habitacion_new') }}">Crear Habitación</a></li>			
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuraciones <span class="caret"></span></a>
+						<ul class="dropdown-menu">
 							<li class="dropdown-header">Tareas Administrativas</li>
 							<!--<li><a href="{{ path('tipo') }}">Crear Nuevo Tipo Habitación</a></li>-->
 							<li><a href="{{ path('tipohabitacion') }}">Tipos de Habitación</a></li>
 							<li><a href="{{ path('categoriahabitacion') }}">Categorias de Habitación</a></li>
-							<li><a href="{{ path('llamada') }}">Precios LLamadas</a></li>
+							<li><a href="{{ path('llamada') }}">LLamadas</a></li>
+							<li><a href="{{ path('compensacion') }}">Compensaciones</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
