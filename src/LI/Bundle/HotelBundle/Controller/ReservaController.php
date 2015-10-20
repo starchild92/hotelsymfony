@@ -29,10 +29,10 @@ class ReservaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        if (in_array('ROLE_USER', $roles)) {
-            $entities = $em->getRepository('LIHotelBundle:Reserva')->reservas_usuario($user->getId());
-        }else{
+        if (in_array('ROLE_ADMIN', $roles)) {
             $entities = $em->getRepository('LIHotelBundle:Reserva')->findAll();
+        }else{
+            $entities = $em->getRepository('LIHotelBundle:Reserva')->reservas_usuario($user->getId());
         }
 
         return $this->render('LIHotelBundle:Reserva:index.html.twig', array(
