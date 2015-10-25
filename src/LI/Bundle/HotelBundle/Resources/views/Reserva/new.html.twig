@@ -1,7 +1,10 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
-    <h1>Reserva creation <small>verificar antes si hay habitaciones disponibles</small></h1>
+    <div class="page-header">
+        <h1>Reserva creation <br><small>verificar antes si hay habitaciones disponibles</small></h1>
+    </div>
+
 
     {{ form(form) }}
 

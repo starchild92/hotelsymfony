@@ -16,7 +16,7 @@ li_hotel_reserva:
 
 li_hotel_reserva_user:
     resource: "@LIHotelBundle/Resources/config/routing/reserva.yml"
-    prefix:   user/reserva
+    prefix:   user-admin/reserva
 
 li_hotel_bebida:
     resource: "@LIHotelBundle/Resources/config/routing/bebida.yml"
@@ -48,6 +48,12 @@ LIHotelBundle_homepage:
     requirements:
         methods:  GET
 
+LIHotelBundle_inicio:
+    path:  /inicio
+    defaults: { _controller: LIHotelBundle:Inicio:indexUser }
+    requirements:
+        methods:  GET
+
 LIHotelBundle_consultar:
     path:  /consultar
     defaults: { _controller: LIHotelBundle:Inicio:consultar }
@@ -73,7 +79,7 @@ _admin:
         methods:  GET
 
 _user:
-    path:  /user
+    path:  /user-admin
     defaults: { _controller: LIHotelBundle:Inicio:user }
     requirements:
         methods:  GET

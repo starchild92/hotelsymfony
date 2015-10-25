@@ -18,10 +18,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class InicioController extends Controller
 {
-    /**
-     * @Route("/index")
-     * @Template()
-     */
     public function indexAction()
     {
         $user = $this->getUser();
@@ -33,12 +29,17 @@ class InicioController extends Controller
                 if (in_array('ROLE_USER', $roles)) {
                     return $this->redirect($this->generateUrl('_user'));
                 }else{
-                    return $this->render('LIHotelBundle:Inicio:index.html.twig', array(
-                    'user' => $user));
+                    //return $this->render('LIHotelBundle:Inicio:index.html.twig', array('user' => $user));
+                    return $this->render('LIHotelBundle:Inicio:index.html.twig');
                 }
             }
         }
 
+        return $this->render('LIHotelBundle:Inicio:index.html.twig');
+    }
+
+    public function indexUserAction()
+    {
         return $this->render('LIHotelBundle:Inicio:index.html.twig');
     }
 
@@ -133,7 +134,12 @@ class InicioController extends Controller
 	            $em->flush();
 
 	            $this->get('session')->getFlashBag()->set('error', 'Gracias por registrarte, ya puedes hacer reservas!');
-	            return $this->redirect($this->generateUrl('LIHotelBundle_registro'));
+	            
+                $user = $this->getUser();
+                if ($user != null) {
+                    $this->indexAction();
+                }
+                return $this->redirect($this->generateUrl('LIHotelBundle_registro'));
 	        }
 	    }
 

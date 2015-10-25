@@ -46,7 +46,8 @@ class UsuarioType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'LI\Bundle\HotelBundle\Entity\Usuario'
+            'data_class' => 'LI\Bundle\HotelBundle\Entity\Usuario',
+            'allow_extra_fields' => true
         ));
     }
 

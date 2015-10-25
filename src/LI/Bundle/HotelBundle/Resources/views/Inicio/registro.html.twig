@@ -3,58 +3,59 @@
 {% block title %}Hotel Symfony - Registro{% endblock%}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="page-header">
-                    <h1>Regístrese</h1>
-                </div>
-                {% for flashMessage in app.session.flashbag.get('error') %}
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <strong> {{ flashMessage }}</strong>
-                  </div>
-                {% endfor %}
-                <div class="row">
-                    <div class="col-lg-8 col-md-8">
-                        <form action="{{ path('LIHotelBundle_registro') }}" method="post" {{ form_enctype(form) }} class="usuario">
-                            {% form_theme form 'bootstrap_3_layout.html.twig'  %}
-                            {{ form_errors(form) }}
-                            {{ form_row(form._token) }}
-                            <div class="row">
-                                <div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.nombre, {'attr':{'autocomplete':'off'}}) }}</div>
-                                <div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.apellido, {'attr':{'autocomplete':'off'}}) }}</div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.username, {'attr':{'autocomplete':'off'}}) }}</div>
-                                <div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.fecha_nac, {'attr':{'autocomplete':'off'}}) }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.email, {'attr':{'autocomplete':'off'}}) }}</div>
-                                <div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.plainPassword, {'attr':{'autocomplete':'off'}}) }}</div>
-                            </div>
-                            {{ form_rest(form) }}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12">
+				<div class="page-header">
+					<h1>Regístrese</h1>
+				</div>
+				{% for flashMessage in app.session.flashbag.get('error') %}
+					<div class="alert alert-success alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<strong> {{ flashMessage }}</strong>
+						<a href="{{ path('fos_user_security_login') }}">Iniciar Sesión</a>
+					</div>
+				{% endfor %}
+				<div class="row">
+					<div class="col-lg-8 col-md-8">
+						<form action="{{ path('LIHotelBundle_registro') }}" method="post" {{ form_enctype(form) }} class="usuario">
+							{% form_theme form 'bootstrap_3_layout.html.twig'  %}
+							{{ form_errors(form) }}
+							{{ form_row(form._token) }}
+							<div class="row">
+								<div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.nombre, {'attr':{'autocomplete':'off'}}) }}</div>
+								<div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.apellido, {'attr':{'autocomplete':'off'}}) }}</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.username, {'attr':{'autocomplete':'off'}}) }}</div>
+								<div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.fecha_nac, {'attr':{'autocomplete':'off'}}) }}</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.email, {'attr':{'autocomplete':'off'}}) }}</div>
+								<div class="col-lg-6 col-sm-6 col-xs-12">{{ form_row(form.plainPassword, {'attr':{'autocomplete':'off'}}) }}</div>
+							</div>
+							{{ form_rest(form) }}
 
-                            <button type="button submit" class="btn btn-success btn-block pull-right">
-                                <span class="glyphicon glyphicon-hand-right pull-left" aria-hidden="true"></span> Enviar Registro
-                            </button>
-                        </form>
-                    </div>
-                    <div class="col-lg-4 col-md-4">
-                        <center><img src="{{ asset('bundles/lihotel/images/signup-icon.png') }}" width="100px" height="100px"></center>
-                        <p>No sea un gran tonto y regístrese, descubra todos los beneficios de formar parte de nuestra exclusiva y singular cadena.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+							<button type="button submit" class="btn btn-success btn-block pull-right">
+								<span class="glyphicon glyphicon-hand-right pull-left" aria-hidden="true"></span> Enviar Registro
+							</button>
+						</form>
+					</div>
+					<div class="col-lg-4 col-md-4">
+						<center><img src="{{ asset('bundles/lihotel/images/signup-icon.png') }}" width="100px" height="100px"></center>
+						<p>No sea un gran tonto y regístrese, descubra todos los beneficios de formar parte de nuestra exclusiva y singular cadena.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
 
 {% block stylesheets %}
-    <style type="text/css">
-        .usuario > input{
-            margin-bottom: 10px;
-        }
-    </style>
+	<style type="text/css">
+		.usuario > input{
+			margin-bottom: 10px;
+		}
+	</style>
 {% endblock %}
