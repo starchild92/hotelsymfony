@@ -26,15 +26,9 @@
                 <td>{{ entity.aDias }} días</td>
                 <td>{{ entity.deHoras }} hrs</td>
                 <td>{{ entity.aHoras }} hrs</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('compensacion_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('compensacion_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                <td class="opciones">
+                    <a href="{{ path('compensacion_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                    <a href="{{ path('compensacion_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                 </td>
             </tr>
         {% endfor %}

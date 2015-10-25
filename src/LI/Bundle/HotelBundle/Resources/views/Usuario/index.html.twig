@@ -1,48 +1,39 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
-    <div class="page-header">
-        <h1>Usuarios de la Aplicación</h1>
-    </div>
+	<div class="page-header">
+		<h1>Usuarios de la Aplicación</h1>
+	</div>
 
-    <table class="table table-bordered table-responsive table-striped records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre y Apellido</th>
-                <th>Fecha Nacimiento</th>
-                <th>Estado</th>
-                <th>Correo y Usuario</th>
-                <th>Ultima Conexión</th>
-                <th>Roles</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('usuario_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.nombre }} {{ entity.apellido }}</td>
-                <td>{% if entity.fechanac %}{{ entity.fechanac|date('d-m-Y') }}{% endif %}</td>
-                <td>{% if entity.enabled %}Activo{% else %}Inactivo{% endif %}</td>
-                <td>{{ entity.email }} ({{ entity.username }})</td>
-                <td>{{ entity.lastLogin|date('d-m-Y H:i') }}</td>
-                <td>{% for role in entity.roles %}
-                    {{ role }} 
-                {% endfor %}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('usuario_show', { 'id': entity.id }) }}">Ver Detalles</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">Modificar</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    {% endblock %}
+	<table class="table table-bordered table-responsive table-striped records_list">
+		<thead>
+			<tr>
+				<th>Nombre y Apellido</th>
+				<th>Fecha Nacimiento</th>
+				<th>Estado</th>
+				<th>Correo y Usuario</th>
+				<th>Ultima Conexión</th>
+				<th>Roles</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for entity in entities %}
+			<tr>
+				<td>{{ entity.nombre }} {{ entity.apellido }}</td>
+				<td>{% if entity.fechanac %}{{ entity.fechanac|date('d-m-Y') }}{% endif %}</td>
+				<td>{% if entity.enabled %}Activo{% else %}Inactivo{% endif %}</td>
+				<td>{{ entity.email }} ({{ entity.username }})</td>
+				<td>{{ entity.lastLogin|date('d-m-Y H:i') }}</td>
+				<td>{% for role in entity.roles %}
+					{{ role }} 
+				{% endfor %}</td>
+				<td class="opciones">
+					<a href="{{ path('usuario_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+					<a href="{{ path('usuario_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

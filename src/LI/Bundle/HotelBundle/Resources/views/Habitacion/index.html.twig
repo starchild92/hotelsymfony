@@ -25,36 +25,30 @@
                 <td>{{ entity.numero }}</td>
                 <td>{{ entity.nombre }}</td>
                 <td>
-                    <table class="table table-condensed table-bordered">
-                        <tr>
+                    <table class="table table-condensed table-inception">
+                        <thead>
                             <th>Categoria</th>
                             <th>Tipo</th>
                             <th>Descripción</th>
-                        </tr>
+                        </thead>
                         <tr>
                             <td>{{ entity.tipo.categoriaHabitacion }}</td>
                             <td>{{ entity.tipo.tipoHabitacion }}</td>
                             <td>{{ entity.tipo.espacioInterno }}</td>
                         </tr>
-                        <tr>
+                        <thead>
                             <th>Servicios</th>
                             <th colspan="2">Cant. Bebidas</th>
-                        </tr>
+                        </thead>
                         <tr>
                             <td>{{ entity.tipo.servicios }}</td>
                             <td colspan="2">{{ entity.tipo.bebidasMinibar|length }}</td>
                         </tr>
                     </table>
                 </td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('habitacion_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('habitacion_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                <td class="opciones">
+                    <a href="{{ path('habitacion_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                    <a href="{{ path('habitacion_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                 </td>
             </tr>
         {% endfor %}

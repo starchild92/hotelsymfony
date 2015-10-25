@@ -6,16 +6,16 @@
         <h1>Lista de Reservas</h1>
     </div>
 
-    <table class="table records_list">
+    <table class="table table-bordered table-responsive table-striped records_list">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>codigo</th>
-                <th>Estadoreserva</th>
-                <th>Habitacion</th>
+                <th>Codigo</th>
+                <th>Estado Reserva</th>
+                <th>Habitación</th>
                 <th>Cliente</th>
-                <th>Cantidadpersonas</th>
-                <th>Diasreserva</th>
+                <th>Cantidad Personas</th>
+                <th>Días Reserva</th>
                 <th>Hecha el</th>
                 <th>Desde</th>
                 <th>Hasta</th>
@@ -28,23 +28,17 @@
                 <td><a href="{{ path('reserva_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.codigoReserva }}</td>
                 <td>{{ entity.estadoReserva }}</td>
-                <td>{{ entity.habitacion }} ({{ entity.habitacion.estado }})</td>
-                <td>{{ entity.cliente }}</td>
+                <td>{{ entity.habitacion }} ({{ entity.habitacion.estado }}) <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                <td>{{ entity.cliente }} <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                 <td>{{ entity.cantidadPersonas }}</td>
                 <td>{{ entity.diasReserva }}</td>
                 <td>{{ entity.fechareserva|date('d-m-Y') }}</td>
                 <td>{{ entity.fechadesde|date('d-m-Y') }}</td>
                 {% set diasR = entity.diasReserva %}
                 <td>{{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|date('d-m-Y') }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('reserva_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('reserva_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                <td class="opciones">
+                    <a href="{{ path('reserva_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                    <a href="{{ path('reserva_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                 </td>
             </tr>
         {% endfor %}

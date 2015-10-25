@@ -6,50 +6,53 @@
         <h1>Habitacion {{ entity.nombre }} (#{{ entity.numero }})</h1>
     </div>
 
-    <table class="table table-bordered record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Estado</th>
-                <td>{{ entity.estado }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ entity.numero }} - {{ entity.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Categoria</th>
-                <td>{{ entity.tipo.categoriaHabitacion }}</td>
-            </tr>
-            <tr><th>Tipo</th><td>{{ entity.tipo.tipoHabitacion }}</td></tr>
-            <tr><th>Espacio Interno</th><td>{{ entity.tipo.espacioInterno }}</td></tr>
-            <tr><th>Servicios</th><td>{{ entity.tipo.servicios }}</td></tr>
-            <tr>
-                <table class="table">
-                    <thead>
+    <div class="row">
+        <div class="col-lg-6 col-sm-6">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <th>Estado</th>
+                    </tr>
+                    <tr>
+                        <td>{{ entity.id }}</td>
+                        <td>{{ entity.estado }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Categoria</th>
+                    </tr>
+                    <tr>
+                        <td>{{ entity.numero }} - {{ entity.nombre }}</td>
+                        <td>{{ entity.tipo.categoriaHabitacion }}</td>
+                    </tr>
+                    <tr><th>Tipo</th><th>Espacio Interno</th></tr>
+                    <tr><td>{{ entity.tipo.tipoHabitacion }}</td><td>{{ entity.tipo.espacioInterno }}</td></tr>
+                    <tr><th>Servicios</th><td>{{ entity.tipo.servicios }}</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-6 col-sm-6">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="4">Bebidas del Minibar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bebida in entity.tipo.bebidasMinibar %}
                         <tr>
-                            <th>Bebidas del Minibar</th>
+                            <td>{{ bebida.marca }}</td>
+                            <td>{{ bebida.cantidad }} unidades</td>
+                            <td>{{ bebida.precio }} Bs</td>
+                            <td>{{ bebida.tipoBebida }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {% for bebida in entity.tipo.bebidasMinibar %}
-                            <tr>
-                                <td></td>
-                                <td>{{ bebida.marca }}</td>
-                                <td>{{ bebida.cantidad }} unidades</td>
-                                <td>{{ bebida.precio }} Bs</td>
-                                <td>{{ bebida.tipoBebida }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>   
-            </tr>
-        </tbody>
-    </table>
-
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
         <ul class="record_actions">
     <li>
         <a href="{{ path('habitacion') }}">
