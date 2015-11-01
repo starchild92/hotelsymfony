@@ -27,7 +27,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand brandname" href="{{ path('LIHotelBundle_inicio') }}">Hotel Symfony</a>
+				<a class="navbar-brand brandname" href="{{ path('LIHotelBundle_homepage') }}">Hotel Symfony</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<form class="navbar-form navbar-right" role="search">
@@ -36,6 +36,21 @@
                 <ul class="nav navbar-nav navbar-right">
 					<li>
 						<a href="#">Bienvenid@, {{ user.nombre }} {{ user.apellido }}</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservas <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ path('user_reserva_new') }}">Nueva Reserva</a></li>
+							<li><a href="{{ path('user_reserva') }}">Mis Reservas Reservas</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cuenta <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Operaciones sobre su cuenta</li>
+							<li><a href="{{ path('fos_user_profile_show') }}">Datos de la Cuenta</a></li>
+							<li><a href="{{ path('fos_user_profile_edit') }}">Cambiar Clave</a></li>
+						</ul>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ayuda <span class="caret"></span></a>

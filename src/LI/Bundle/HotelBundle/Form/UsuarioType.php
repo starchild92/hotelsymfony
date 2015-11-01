@@ -37,7 +37,8 @@ class UsuarioType extends AbstractType
                     'label'   => 'Elija el Rol',
                     'choices' => $permissions,
                     'multiple' => true
-                ));
+                ))
+            ;
     }
     
     /**

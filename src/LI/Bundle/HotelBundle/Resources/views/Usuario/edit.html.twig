@@ -2,10 +2,20 @@
 
 {% block body -%}
 	<div class="page-header">
-		<h1>Usuario Edit</h1>
+		<h1>Modificar Datos del Usuario</h1>
 	</div>
+    {{ form_start(edit_form) }}
 
-    {{ form(edit_form) }}
+        {{ form_row(edit_form.nombre) }}
+        {{ form_row(edit_form.apellido) }}
+        {{ form_row(edit_form.enabled) }}
+        {{ form_row(edit_form.roles) }}
+        {{ form_row(edit_form.username) }}
+        {{ form_row(edit_form.email) }}
+        {{ form_row(edit_form.fecha_nac) }}
+        {{ form_row(edit_form.submit) }}
+
+    {{ form_end(edit_form, {'render_rest': false}) }}
 
         <ul class="record_actions">
     <li>

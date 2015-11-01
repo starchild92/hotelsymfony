@@ -10,7 +10,8 @@
                 <th>Nombre y Apellido</th>
                 <th>Fecha Nacimiento</th>
                 <th>Estado</th>
-                <th>Correo y Usuario</th>
+                <th>Correo</th>
+                <th>Usuario</th>
                 <th>Ultima Conexión</th>
                 <th>Roles</th>
                 <th>Actions</th>
@@ -21,19 +22,14 @@
                 <td>{{ entity.nombre }} {{ entity.apellido }}</td>
                 <td>{% if entity.fechanac %}{{ entity.fechanac|date('d-m-Y') }}{% endif %}</td>
                 <td>{% if entity.enabled %}Activo{% else %}Inactivo{% endif %}</td>
-                <td>{{ entity.email }} ({{ entity.username }})</td>
+                <td>{{ entity.email }}</td>
+                <td>{{ entity.username }}</td>
                 <td>{{ entity.lastLogin|date('d-m-Y H:i') }}</td>
                 <td>{% for role in entity.roles %}
                     {{ role }} 
                 {% endfor %}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">
-                            Edit
-                        </a>
-                    </li>
-                </ul>
+                    <a href="{{ path('usuario_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                 </td>
             </tr>
         </tbody>

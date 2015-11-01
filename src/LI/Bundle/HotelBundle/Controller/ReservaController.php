@@ -30,19 +30,17 @@ class ReservaController extends Controller
             $roles = $user->getRoles();
             $em = $this->getDoctrine()->getManager();
 
-            if (in_array('ROLE_ADMIN', $roles)) {
-                $entities = $em->getRepository('LIHotelBundle:Reserva')->findAll();
-            }else{
-                $entities = $em->getRepository('LIHotelBundle:Reserva')->reservas_usuario($user->getId());
-            }
+            $entities = $em->getRepository('LIHotelBundle:Reserva')->findAll();
 
             return $this->render('LIHotelBundle:Reserva:index.html.twig', array(
             'entities' => $entities,
+            'user' => $user
             ));
         }else{
             return $this->render('LIHotelBundle:Inicio:index.html.twig');
         }
     }
+
     /**
      * Creates a new Reserva entity.
      *
@@ -103,7 +101,7 @@ class ReservaController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Crear'));
 
         return $form;
     }
@@ -183,7 +181,7 @@ class ReservaController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Actualizar'));
 
         return $form;
     }
@@ -253,8 +251,45 @@ class ReservaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('reserva_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar'))
             ->getForm()
         ;
     }
+
+    /**
+     * Lists all Reserva entities.
+     */
+    public function indexuserAction()
+    {
+        $securityContext = $this->container->get('security.context');
+        if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+
+            $user = $this->getUser();
+            $roles = $user->getRoles();
+            $em = $this->getDoctrine()->getManager();
+
+            $entities = $em->getRepository('LIHotelBundle:Reserva')->reservas_usuario($user->getId());
+
+            return $this->render('LIHotelBundle:Reserva:index.html.twig', array(
+            'entities' => $entities,
+            'user' => $user
+            ));
+        }else{
+            return $this->render('LIHotelBundle:Inicio:indexuser.html.twig');
+        }
+    }
+
+    public function newuserAction()
+    {
+        $user = $this->getUser();
+        $entity = new Reserva();
+        $form   = $this->createCreateForm($entity);
+
+        return $this->render('LIHotelBundle:Reserva:newuser.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+            'user' => $user
+        ));
+    }
+
 }
