@@ -3,7 +3,11 @@
 {% block title %}Administración Hotel Symfony{% endblock%}
 {% block stylesheets %}
 	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/font-awesome.min.css') }}">
-	<style type="text/css">.table{ margin-bottom: 0px !important; }</style>
+	<style type="text/css">
+	.table{ margin-bottom: 0px !important; }
+	.table tr td { border-bottom: 1px solid #fff; }
+	.table tr td { border-top: 1px solid #fff !important; }
+	</style>
 {% endblock %}
 
 {% block body %}
