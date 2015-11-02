@@ -1,6 +1,4 @@
-{% extends user.roles|first == 'ROLE_ADMIN' 
-    ? 'LIHotelBundle::adminBase.html.twig' 
-    : 'LIHotelBundle::userBase.html.twig' %}
+{% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
 <div class="container-fluid row">

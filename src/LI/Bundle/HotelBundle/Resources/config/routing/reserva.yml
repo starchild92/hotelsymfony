@@ -10,6 +10,10 @@ reserva_show:
     path:     /{id}/show
     defaults: { _controller: "LIHotelBundle:Reserva:show" }
 
+user_reserva_show:
+    path:     /{id}/user-show
+    defaults: { _controller: "LIHotelBundle:Reserva:showuser" }
+
 reserva_new:
     path:     /new
     defaults: { _controller: "LIHotelBundle:Reserva:new" }
@@ -26,6 +30,10 @@ reserva_create:
 reserva_edit:
     path:     /{id}/edit
     defaults: { _controller: "LIHotelBundle:Reserva:edit" }
+
+user_reserva_edit:
+    path:     /{id}/user-edit
+    defaults: { _controller: "LIHotelBundle:Reserva:edituser" }
 
 reserva_update:
     path:     /{id}/update

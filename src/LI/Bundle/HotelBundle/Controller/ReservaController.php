@@ -134,12 +134,13 @@ class ReservaController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Reserva entity.');
         }
-
+        $user = $this->getUser();
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('LIHotelBundle:Reserva:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'user' => $user
         ));
     }
 
@@ -159,11 +160,13 @@ class ReservaController extends Controller
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
+        $user = $this->getUser();
 
         return $this->render('LIHotelBundle:Reserva:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'user' => $user,
         ));
     }
 
@@ -203,17 +206,35 @@ class ReservaController extends Controller
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
-            $em->flush();
+        $user = $this->getUser();
+        if ($user != null) {
+            $roles = $user->getRoles();
+            if (in_array('ROLE_ADMIN', $roles)) {
+                if ($editForm->isValid()) {
+                    $em->flush();
+                    return $this->redirect($this->generateUrl('reserva_edit', array('id' => $id)));
+                }
 
-            return $this->redirect($this->generateUrl('reserva_edit', array('id' => $id)));
+                return $this->render('LIHotelBundle:Reserva:edit.html.twig', array(
+                    'entity'      => $entity,
+                    'edit_form'   => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                ));
+            }else{
+
+                if ($editForm->isValid()) {
+                    $em->flush();
+                    return $this->redirect($this->generateUrl('user_reserva_edit', array('id' => $id)));
+                }
+
+                return $this->render('LIHotelBundle:Reserva:edituser.html.twig', array(
+                    'entity'      => $entity,
+                    'edit_form'   => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'user'        => $user,
+                ));
+            }
         }
-
-        return $this->render('LIHotelBundle:Reserva:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
     }
     /**
      * Deletes a Reserva entity.
@@ -270,12 +291,12 @@ class ReservaController extends Controller
 
             $entities = $em->getRepository('LIHotelBundle:Reserva')->reservas_usuario($user->getId());
 
-            return $this->render('LIHotelBundle:Reserva:index.html.twig', array(
+            return $this->render('LIHotelBundle:Reserva:indexuser.html.twig', array(
             'entities' => $entities,
             'user' => $user
             ));
         }else{
-            return $this->render('LIHotelBundle:Inicio:indexuser.html.twig');
+            return $this->render('LIHotelBundle:Inicio:index.html.twig');
         }
     }
 
@@ -289,6 +310,47 @@ class ReservaController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
             'user' => $user
+        ));
+    }
+
+    public function showuserAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Reserva entity.');
+        }
+        $user = $this->getUser();
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('LIHotelBundle:Reserva:showuser.html.twig', array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),
+            'user' => $user
+        ));
+    }
+
+    public function edituserAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Reserva entity.');
+        }
+
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($id);
+        $user = $this->getUser();
+
+        return $this->render('LIHotelBundle:Reserva:edituser.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+            'user' => $user,
         ));
     }
 

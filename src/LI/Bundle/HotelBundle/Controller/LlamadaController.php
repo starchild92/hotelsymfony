@@ -216,7 +216,7 @@ class LlamadaController extends Controller
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('llamada_delete', array('id' => $id)))
-            ->setMethod('Eliminar')
+            ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Eliminar'))
             ->getForm()
         ;

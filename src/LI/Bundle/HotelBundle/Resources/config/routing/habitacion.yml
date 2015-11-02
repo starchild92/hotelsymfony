@@ -6,6 +6,10 @@ habitacion_show:
     path:     /{id}/show
     defaults: { _controller: "LIHotelBundle:Habitacion:show" }
 
+user_habitacion_show:
+    path:     /{id}/user-show
+    defaults: { _controller: "LIHotelBundle:Habitacion:showuser" }
+
 habitacion_new:
     path:     /new
     defaults: { _controller: "LIHotelBundle:Habitacion:new" }

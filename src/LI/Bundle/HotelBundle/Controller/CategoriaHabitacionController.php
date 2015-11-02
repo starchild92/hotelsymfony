@@ -216,7 +216,7 @@ class CategoriaHabitacionController extends Controller
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('categoriahabitacion_delete', array('id' => $id)))
-            ->setMethod('Eliminar')
+            ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Eliminar'))
             ->getForm()
         ;

@@ -109,11 +109,13 @@ class HabitacionController extends Controller
             throw $this->createNotFoundException('Unable to find Habitacion entity.');
         }
 
+        $user = $this->getUser();
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('LIHotelBundle:Habitacion:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'user' => $user
         ));
     }
 
@@ -232,9 +234,28 @@ class HabitacionController extends Controller
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('habitacion_delete', array('id' => $id)))
-            ->setMethod('Eliminar')
+            ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Eliminar'))
             ->getForm()
         ;
     }
+
+    public function showuserAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('LIHotelBundle:Habitacion')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Habitacion entity.');
+        }
+
+        $user = $this->getUser();
+
+        return $this->render('LIHotelBundle:Habitacion:showuser.html.twig', array(
+            'entity'      => $entity,
+            'user' => $user
+        ));
+    }
+
 }

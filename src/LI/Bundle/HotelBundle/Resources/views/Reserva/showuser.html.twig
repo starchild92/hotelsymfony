@@ -1,4 +1,4 @@
-{% extends 'LIHotelBundle::adminBase.html.twig' %}
+{% extends 'LIHotelBundle::userBase.html.twig' %}
 
 {% block body -%}
     <h1>Reserva</h1>
@@ -39,7 +39,7 @@
         </a>
     </li>
     <li>
-        <a href="{{ path('reserva_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('user_reserva_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>

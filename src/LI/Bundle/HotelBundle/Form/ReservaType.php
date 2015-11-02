@@ -38,7 +38,8 @@ class ReservaType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'LI\Bundle\HotelBundle\Entity\Reserva'
+            'data_class' => 'LI\Bundle\HotelBundle\Entity\Reserva',
+            'allow_extra_fields' => true
         ));
     }
 
