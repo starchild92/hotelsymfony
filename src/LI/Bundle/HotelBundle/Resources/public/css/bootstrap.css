@@ -10,6 +10,8 @@
 .opciones a { margin-right: 5px; font-size: 1.3em; }
 .table-inception { margin-bottom: 0 !important; }
 .table-td-inception { max-width: 400px !important; }
+.page-header h1 a { margin-left: 6px; }
+.col-xs-3{ font-size: 2.5em; }
 
 html {
 	font-family: "Raleway-Regular", sans-serif;

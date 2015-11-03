@@ -35,7 +35,7 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href="#">Bienvenid@ {{user.nombre}} {{user.apellido}}</a>
+						<a href="{{ path('LIHotelBundle_homepage') }}">Dashboard</a>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservas <span class="caret"></span></a>
@@ -58,6 +58,7 @@
 							<li class="dropdown-header">Cominiquese con nosotros</li>
 							<li><a>0500 HOTELSYM 00</a></li>
 							<li><a>@hotelsymfony</a></li>
+							<li><a href="{{ path('LIHotelBundle_inicio') }}">Página del Hotel</a></li>
 						</ul>
 					</li>
 				</ul>
