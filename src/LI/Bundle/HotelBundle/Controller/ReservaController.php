@@ -112,8 +112,9 @@ class ReservaController extends Controller
      */
     public function newAction()
     {
+
         $entity = new Reserva();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('LIHotelBundle:Reserva:new.html.twig', array(
             'entity' => $entity,
@@ -210,6 +211,7 @@ class ReservaController extends Controller
         if ($user != null) {
             $roles = $user->getRoles();
             if (in_array('ROLE_ADMIN', $roles)) {
+
                 if ($editForm->isValid()) {
                     $em->flush();
                     return $this->redirect($this->generateUrl('reserva_edit', array('id' => $id)));
@@ -221,9 +223,18 @@ class ReservaController extends Controller
                     'delete_form' => $deleteForm->createView(),
                 ));
             }else{
-
+                
                 if ($editForm->isValid()) {
                     $em->flush();
+
+                    $cliente = $em->getRepository('LIHotelBundle:Usuario')->find($user->getId());
+                    $factura = $em->getRepository('LIHotelBundle:Factura')->find($entity->getFactura()->getId());
+                    $factura->setDiasReserva($entity->getDiasReserva());
+                    $entity->setCliente($cliente);
+                    $em->persist($factura);
+                    $em->persist($entity);
+                    $em->flush();
+
                     return $this->redirect($this->generateUrl('user_reserva_edit', array('id' => $id)));
                 }
 

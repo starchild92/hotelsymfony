@@ -1,37 +1,64 @@
 {% extends 'LIHotelBundle::userBase.html.twig' %}
 
 {% block body -%}
-    <h1>Reserva</h1>
+    <div class="page-header">
+        <h1>Reserva</h1>
+    </div>
 
-    <table class="record_properties">
+<div class="row">
+    <div class="col-lg-6">
+        <table class="table table-bordered record_properties">
+            <thead>
+                <tr>
+                    <th colspan="2">Detalles de la Reserva</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Código de la Reserva</th>
+                    <td>{{ entity.codigoReserva }}</td>
+                </tr>
+                <tr>
+                    <th>Estado de su Reserva</th>
+                    <td>{{ entity.estadoReserva }}</td>
+                </tr>
+                <tr>
+                    <th>Habitación Reservada</th>
+                    <td>{{ entity.habitacion }} ({{ entity.habitacion.numero }})</td>
+                </tr>
+                <tr>
+                    <th>Cliente</th>
+                    <td>{{ entity.cliente }}</td>
+                </tr>
+                <tr>
+                    <th>Reservada para la fecha</th>
+                    <td>{{ entity.fechadesde|date('d M Y\\ D') }}</td>
+                </tr>
+                <tr>
+                    <th>Reserva realizada el</th>
+                    <td>{{ entity.fechareserva|date('d M Y\\ D') }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Reservada para {{ entity.cantidadPersonas }} personas</td>
+                </tr>
+                <tr>
+                    <th>Período en días de la reserva</th>
+                    <td>{{ entity.diasReserva }} días</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-6">
+        <table class="table table-bordered">
+        <thead><tr><th colspan="2">Factura Asociada a la Reserva</th></tr></thead>
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Estadoreserva</th>
-                <td>{{ entity.estadoReserva }}</td>
-            </tr>
-            <tr>
-                <th>Habitacion</th>
-                <td>{{ entity.habitacion }}</td>
-            </tr>
-            <tr>
-                <th>Cliente</th>
-                <td>{{ entity.cliente }}</td>
-            </tr>
-            <tr>
-                <th>Cantidadpersonas</th>
-                <td>{{ entity.cantidadPersonas }}</td>
-            </tr>
-            <tr>
-                <th>Diasreserva</th>
-                <td>{{ entity.diasReserva }}</td>
-            </tr>
+            <tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }}</td></tr>
+            <tr><td>Costo Acumulado</td><td>{{ entity.factura.costoTotal }} Bolívares</td></tr>
+            <tr><td>Fecha</td><td>{{ entity.factura.fecha|date('d M Y\\ D') }}</td></tr>
         </tbody>
-    </table>
-
+        </table>
+    </div>
+</div>
         <ul class="record_actions">
     <li>
         <a href="{{ path('user_reserva') }}">

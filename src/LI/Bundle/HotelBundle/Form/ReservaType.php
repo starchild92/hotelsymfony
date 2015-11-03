@@ -5,6 +5,7 @@ namespace LI\Bundle\HotelBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormEvents;
 
 class ReservaType extends AbstractType
 {
@@ -39,7 +40,6 @@ class ReservaType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'LI\Bundle\HotelBundle\Entity\Reserva',
-            'allow_extra_fields' => true
         ));
     }
 
