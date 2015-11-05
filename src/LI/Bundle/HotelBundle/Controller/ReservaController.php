@@ -213,7 +213,11 @@ class ReservaController extends Controller
             if (in_array('ROLE_ADMIN', $roles)) {
 
                 if ($editForm->isValid()) {
+                    $factura = $em->getRepository('LIHotelBundle:Factura')->find($entity->getFactura()->getId());
+                    $factura->setDiasReserva($entity->getDiasReserva());
+                    $em->persist($factura);
                     $em->flush();
+
                     return $this->redirect($this->generateUrl('reserva_edit', array('id' => $id)));
                 }
 

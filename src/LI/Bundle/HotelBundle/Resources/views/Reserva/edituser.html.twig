@@ -1,29 +1,31 @@
 {% extends user.roles|first == 'ROLE_ADMIN' 
     ? 'LIHotelBundle::adminBase.html.twig' 
     : 'LIHotelBundle::userBase.html.twig' %}
+
+{% block opciones %}
+    <li><a href="{{ path('user_reserva') }}" class="pull-right" name="Volver a todas"><span class="label label-success">Regresar a todas</span></a>
+    </li>
+{% endblock %}
     
 {% block body -%}
     <div class="page-header">
-        <h1>Modificar su Reserva</h1>
+        <h1>Modificar su Reserva </h1>
     </div>
     {{ form_start(edit_form) }}
         {{ form_errors(edit_form) }}
 
-        {{ form_row(edit_form.cliente, {'disabled': 'true'}) }}
-        {{ form_row(edit_form.estadoReserva) }}
-        {{ form_row(edit_form.habitacion) }}
-        {{ form_row(edit_form.cantidadPersonas) }}
-        {{ form_row(edit_form.cantidadNinos) }}
-        {{ form_row(edit_form.diasReserva) }}
-        {{ form_row(edit_form.fecha_desde) }}
-        {{ form_row(edit_form.submit) }}
+        {{ form_row(edit_form.cliente, {'disabled': 'true', 'label':'Usted'}) }}
+        {{ form_row(edit_form.estadoReserva, {'label':'Estado en el que se encuentra su reserva'}) }}
+        {{ form_row(edit_form.habitacion, {'label':'Nombre de la Habitación reservada'}) }}
+        {{ form_row(edit_form.cantidadPersonas, {'label':'Cantidad de Personas'}) }}
+        {{ form_row(edit_form.cantidadNinos, {'label':'Cantidad de Niños'}) }}
+        {{ form_row(edit_form.diasReserva, {'label':'Duración en días de la reserva'}) }}
+        {{ form_row(edit_form.fecha_desde, {'label':'Fecha Inicio Reserva'}) }}
+        {{ form_row(edit_form.submit, {'label':'Guardar cambios de la reserva'}) }}
 
     {{ form_end(edit_form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('user_reserva') }}">Back to the list</a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <ul class="record_actions">
+        <li>{{ form(delete_form) }}</li>
+    </ul>
 {% endblock %}

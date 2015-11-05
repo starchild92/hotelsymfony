@@ -33,6 +33,9 @@
 				<form class="navbar-form navbar-right" role="search">
                     <a class="btn btn-danger" href="{{ path('fos_user_security_logout') }}">Cerrar Sesión</a>
                 </form>
+                <ul class="nav navbar-nav opciones-extras">
+                	{% block opciones %}{% endblock %}
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
 					<li>
 						<a href="{{ path('LIHotelBundle_homepage') }}">Dashboard</a>
