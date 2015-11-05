@@ -17,9 +17,17 @@ class TipoType extends AbstractType
         $builder
             ->add('tipoHabitacion')
             ->add('categoriaHabitacion')
-            //->add('precio')
             ->add('espacioInterno')
-            ->add('servicios')
+            ->add('servicios',
+                    'collection', array(
+                        'type' => new ServicioType(),
+                        'cascade_validation' => true,
+                        'attr' => array('class' => 'servicios'),
+                        'allow_add'=>'true',
+                        'by_reference'=>'false',
+                        'allow_delete' =>'true',
+                        'data_class' => null,
+                        'label' => 'Servicios Disponibles en la Habitación'))
             ->add('bebidasMinibar',
                     'collection',array(
                         'type'=> new BebidaType(),

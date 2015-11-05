@@ -3,16 +3,14 @@
 namespace LI\Bundle\HotelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
- * Llamada
+ * Servicio
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="LI\Bundle\HotelBundle\Entity\LlamadaRepository")
+ * @ORM\Entity(repositoryClass="LI\Bundle\HotelBundle\Entity\ServicioRepository")
  */
-class Llamada
+class Servicio
 {
     /**
      * @var integer
@@ -26,25 +24,22 @@ class Llamada
     /**
      * @var string
      *
-     * @ORM\Column(name="tipo", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="nombre", type="string", length=255)
      */
-    private $tipo;
+    private $nombre;
 
     /**
      * @var float
      *
      * @ORM\Column(name="costo", type="float")
-     * @Assert\Type(
-     *     type="float",
-     *     message="El valor {{ value }} no es válido."
-     * )
-     * @Assert\GreaterThan(
-     *     value = -1,
-     *     message = "Debe ser positivo o igual a cero."
-     * )
      */
     private $costo;
+
+   /**
+     * @ORM\ManyToOne(targetEntity="Tipo", inversedBy="servicios")
+     * @ORM\JoinColumn(name="tipo_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+   private $tipo;
 
 
     /**
@@ -58,33 +53,33 @@ class Llamada
     }
 
     /**
-     * Set tipo
+     * Set nombre
      *
-     * @param string $tipo
-     * @return Llamada
+     * @param string $nombre
+     * @return Servicio
      */
-    public function setTipo($tipo)
+    public function setNombre($nombre)
     {
-        $this->tipo = $tipo;
+        $this->nombre = $nombre;
 
         return $this;
     }
 
     /**
-     * Get tipo
+     * Get nombre
      *
      * @return string 
      */
-    public function getTipo()
+    public function getNombre()
     {
-        return $this->tipo;
+        return $this->nombre;
     }
 
     /**
      * Set costo
      *
      * @param float $costo
-     * @return Llamada
+     * @return Servicio
      */
     public function setCosto($costo)
     {
@@ -101,5 +96,10 @@ class Llamada
     public function getCosto()
     {
         return $this->costo;
+    }
+
+    public function setTipo($tipoid){
+        $this->tipo = $tipoid;
+        return $this;
     }
 }

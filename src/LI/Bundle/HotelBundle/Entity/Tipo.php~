@@ -35,7 +35,7 @@ class Tipo
      */
     private $categoriaHabitacion;
 
-    /**
+    /***
      * @var float
      *
      * @ORM\Column(name="precio", type="float")
@@ -47,8 +47,8 @@ class Tipo
      *     value = 0,
      *     message = "Debe ser positivo superior a cero."
      * )
-     */
-    private $precio;
+     
+    private $precio;*/
 
     /**
      * @var string
@@ -59,11 +59,9 @@ class Tipo
     private $espacioInterno;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="servicios", type="text")
-     * @Assert\NotBlank()
-     */
+     * @ORM\OneToMany(targetEntity="Servicio", mappedBy="tipo", cascade={"persist","remove"})
+     * @Assert\Valid
+     **/
     private $servicios;
 
     /**
@@ -134,28 +132,28 @@ class Tipo
         return $this->categoriaHabitacion;
     }
 
-    /**
+    /***
      * Set precio
      *
      * @param float $precio
      * @return Tipo
-     */
+     
     public function setPrecio($precio)
     {
         $this->precio = $precio;
 
         return $this;
-    }
+    }*/
 
-    /**
+    /***
      * Get precio
      *
      * @return float 
-     */
+     
     public function getPrecio()
     {
         return $this->precio;
-    }
+    }*/
 
     /**
      * Set espacioInterno
@@ -181,29 +179,6 @@ class Tipo
     }
 
     /**
-     * Set servicios
-     *
-     * @param array $servicios
-     * @return Tipo
-     */
-    public function setServicios($servicios)
-    {
-        $this->servicios = $servicios;
-
-        return $this;
-    }
-
-    /**
-     * Get servicios
-     *
-     * @return array 
-     */
-    public function getServicios()
-    {
-        return $this->servicios;
-    }
-
-    /**
      * Set bebidasMinibar
      *
      * @param string $bebidasMinibar
@@ -225,4 +200,29 @@ class Tipo
     {
         return $this->bebidasMinibar;
     }
+
+    /**
+     * Add bebidasMinibar
+     *
+     * @param \LI\Bundle\HotelBundle\Entity\Bebida $bebidasMinibar
+     * @return Tipo
+     */
+    public function addBebidasMinibar(\LI\Bundle\HotelBundle\Entity\Bebida $bebidasMinibar)
+    {
+        $this->bebidasMinibar[] = $bebidasMinibar;
+
+        return $this;
+    }
+
+    /**
+     * Remove bebidasMinibar
+     *
+     * @param \LI\Bundle\HotelBundle\Entity\Bebida $bebidasMinibar
+     */
+    public function removeBebidasMinibar(\LI\Bundle\HotelBundle\Entity\Bebida $bebidasMinibar)
+    {
+        $this->bebidasMinibar->removeElement($bebidasMinibar);
+    }
+
+
 }

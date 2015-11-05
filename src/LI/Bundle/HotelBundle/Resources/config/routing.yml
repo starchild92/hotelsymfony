@@ -73,7 +73,7 @@ LIHotelBundle_registro_admin:
         methods:  GET|POST
 
 _admin:
-    path:  /admin
+    path:  /administrativo
     defaults: { _controller: LIHotelBundle:Inicio:admin }
     requirements:
         methods:  GET
