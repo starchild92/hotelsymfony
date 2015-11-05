@@ -5,7 +5,7 @@
 {% block body -%}
 <div class="col-lg-12 col-sm-12 col-xs-12">
     <div class="page-header">
-        <h1>Habitacion {{ entity.nombre }} (#{{ entity.numero }})</h1>
+        <h1>Habitación {{ entity.nombre }} (#{{ entity.numero }})</h1>
     </div>
 
     <div class="row">
@@ -30,7 +30,7 @@
                     </tr>
                     <tr><th>Tipo</th><th>Espacio Interno</th></tr>
                     <tr><td>{{ entity.tipo.tipoHabitacion }}</td><td>{{ entity.tipo.espacioInterno }}</td></tr>
-                    <tr><th>Servicios</th><td>{{ entity.tipo.servicios }}</td></tr>
+                    <tr><th>Servicios</th><td>{% for servicio in entity.tipo.servicios %} {{ servicio.nombre }} {% endfor %}</td></tr>
                 </tbody>
             </table>
         </div>

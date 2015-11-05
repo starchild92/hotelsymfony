@@ -44,9 +44,14 @@ class HabitacionController extends Controller
 
             $tipo = $entity->getTipo();
             $bebidas = $tipo->getbebidasMinibar();
+            $servicios = $tipo->getServicios();
 
             foreach ($bebidas as $bebida) {
                 $bebida->settipoHabitacion($tipo);
+            }
+
+            foreach ($servicios as $servicio) {
+                $servicio->setTipo($tipo);
             }
 
             $em->persist($entity);
@@ -183,9 +188,14 @@ class HabitacionController extends Controller
 
             $tipo = $entity->getTipo();
             $bebidas = $tipo->getbebidasMinibar();
+            $servicios = $tipo->getServicios();
 
             foreach ($bebidas as $bebida) {
                 $bebida->settipoHabitacion($tipo);
+            }
+
+            foreach ($servicios as $servicio) {
+                $servicio->setTipo($tipo);
             }
 
             $em->flush();

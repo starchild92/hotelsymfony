@@ -97,7 +97,6 @@ class TipoController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('LIHotelBundle:Tipo')->find($id);
-        $bebidas = $em->getRepository('LIHotelBundle:Bebida')->portipo_id($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tipo entity.');
@@ -107,7 +106,6 @@ class TipoController extends Controller
 
         return $this->render('LIHotelBundle:Tipo:show.html.twig', array(
             'entity'      => $entity,
-            'bebidas'     => $bebidas,
             'delete_form' => $deleteForm->createView(),
         ));
     }

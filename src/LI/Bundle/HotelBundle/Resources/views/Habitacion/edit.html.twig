@@ -1,15 +1,15 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
 {% block javascripts %}
-    <script src="{{ asset('bundles/lihotel/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('bundles/lihotel/js/TipoFormulario.js') }}"></script>
+    <script src="{{ asset('bundles/lihotel/js/TipoFormularioEdit.js') }}"></script>
+    <script src="{{ asset('bundles/lihotel/js/ServicioFormularioEdit.js') }}"></script>
 {% endblock %}
-{% block body -%}
+
+{% block body %}
 <div class="col-lg-12 col-sm-12 col-xs-12">
     <div class="page-header">
-    	<h1>Habitacion Edit</h1>
+    	<h1>Modificar Habitación<br><small>modifique como está compuesta la habitación</small></h1>
     </div>
 
-    {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
     {{ form(edit_form) }}
 
         <ul class="record_actions">

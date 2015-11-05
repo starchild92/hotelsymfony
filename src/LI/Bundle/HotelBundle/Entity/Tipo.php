@@ -35,21 +35,6 @@ class Tipo
      */
     private $categoriaHabitacion;
 
-    /***
-     * @var float
-     *
-     * @ORM\Column(name="precio", type="float")
-     * @Assert\Type(
-     *     type="float",
-     *     message="El valor {{ value }} no es válido."
-     * )
-     * @Assert\GreaterThan(
-     *     value = 0,
-     *     message = "Debe ser positivo superior a cero."
-     * )
-     
-    private $precio;*/
-
     /**
      * @var string
      *
@@ -59,11 +44,9 @@ class Tipo
     private $espacioInterno;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="servicios", type="text")
-     * @Assert\NotBlank()
-     */
+     * @ORM\OneToMany(targetEntity="Servicio", mappedBy="tipo", cascade={"persist","remove"})
+     * @Assert\Valid
+     **/
     private $servicios;
 
     /**
@@ -76,7 +59,6 @@ class Tipo
     {
         $this->bebidasMinibar = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -134,29 +116,6 @@ class Tipo
         return $this->categoriaHabitacion;
     }
 
-    /***
-     * Set precio
-     *
-     * @param float $precio
-     * @return Tipo
-     
-    public function setPrecio($precio)
-    {
-        $this->precio = $precio;
-
-        return $this;
-    }*/
-
-    /***
-     * Get precio
-     *
-     * @return float 
-     
-    public function getPrecio()
-    {
-        return $this->precio;
-    }*/
-
     /**
      * Set espacioInterno
      *
@@ -178,29 +137,6 @@ class Tipo
     public function getEspacioInterno()
     {
         return $this->espacioInterno;
-    }
-
-    /**
-     * Set servicios
-     *
-     * @param array $servicios
-     * @return Tipo
-     */
-    public function setServicios($servicios)
-    {
-        $this->servicios = $servicios;
-
-        return $this;
-    }
-
-    /**
-     * Get servicios
-     *
-     * @return array 
-     */
-    public function getServicios()
-    {
-        return $this->servicios;
     }
 
     /**
@@ -250,4 +186,37 @@ class Tipo
     }
 
 
+
+    /**
+     * Add servicios
+     *
+     * @param \LI\Bundle\HotelBundle\Entity\Servicio $servicios
+     * @return Tipo
+     */
+    public function addServicio(\LI\Bundle\HotelBundle\Entity\Servicio $servicios)
+    {
+        $this->servicios[] = $servicios;
+
+        return $this;
+    }
+
+    /**
+     * Remove servicios
+     *
+     * @param \LI\Bundle\HotelBundle\Entity\Servicio $servicios
+     */
+    public function removeServicio(\LI\Bundle\HotelBundle\Entity\Servicio $servicios)
+    {
+        $this->servicios->removeElement($servicios);
+    }
+
+    /**
+     * Get servicios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getServicios()
+    {
+        return $this->servicios;
+    }
 }

@@ -45,10 +45,6 @@
 					<div class="col-lg-4 col-md-4">
 						<center><img src="{{ asset('bundles/lihotel/images/signup-icon.png') }}" width="100px" height="100px"></center>
 						<p>No sea un gran tonto y regístrese, descubra todos los beneficios de formar parte de nuestra exclusiva y singular cadena.</p>
-						<p>
-							Puede iniciar sesión si hace clic en este botón
-							<form class="navbar-form" role="search"><a class="btn btn-warning" href="{{ path('fos_user_security_login') }}">Iniciar Sesión</a></form>
-						</p>
 					</div>
 				</div>
 			</div>
