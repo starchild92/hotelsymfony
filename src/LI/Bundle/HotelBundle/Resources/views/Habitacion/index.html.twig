@@ -35,13 +35,9 @@
         {% endfor %}
         </tbody>
     </table>
-    <ul>
-        <li>
-            <a href="{{ path('habitacion_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+    <p style="text-align: center;">
+        <a class="btn btn-default" href="{{ path('habitacion_new') }}" role="button">Agregar una Nueva Habitación</a>
+    </p>
     {% else %}
         <div class="jumbotron">
           <h2>Lo sentimos, <small>no se han añadido habitaciones</small></h2>

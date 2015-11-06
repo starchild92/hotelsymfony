@@ -51,34 +51,71 @@ class ReservaController extends Controller
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            
-            $factura = new Factura();
-            $factura->setReserva($entity);
-            $factura->setDiasReserva($entity->getDiasReserva());
-            $factura->setFecha($entity->getFechaDesde());
+        $user = $this->getUser();
+        if ($user != null) {
+            $roles = $user->getRoles();
+            if (in_array('ROLE_ADMIN', $roles)) {
+                if ($form->isValid()) {
+                    $em = $this->getDoctrine()->getManager();
+                    
+                    $factura = new Factura();
+                    $factura->setReserva($entity);
+                    $factura->setDiasReserva($entity->getDiasReserva());
+                    $factura->setFecha($entity->getFechaDesde());
 
-            $factura->setCostoTotal(1); //calcular usando el tipo y reserva, como costo inicial sin los consumibles
+                    $factura->setCostoTotal(1); //calcular usando el tipo y reserva, como costo inicial sin los consumibles
 
-            $em->persist($factura);
-            $entity->setcodigoReserva('RES'.date('dmY').date('His'));
+                    $em->persist($factura);
+                    $entity->setcodigoReserva('RES'.date('dmY').date('His'));
 
-            //cambiando el estado de la habitacion
-            if ($entity->getEstadoReserva() == 'Concretada') {
-                $habitacion = $entity->getHabitacion();
-                $habitacion->setEstado('Ocupada');
+                    //cambiando el estado de la habitacion
+                    if ($entity->getEstadoReserva() == 'Concretada') {
+                        $habitacion = $entity->getHabitacion();
+                        $habitacion->setEstado('Ocupada');
+                    }else{
+                        if ($entity->getEstadoReserva() == 'Por Concretar') {
+                            $habitacion = $entity->getHabitacion();
+                            $habitacion->setEstado('Reservada');
+                        }
+                    }
+                    
+                    $em->persist($entity);
+                    $em->flush();
+                    
+                    return $this->redirect($this->generateUrl('reserva_show', array('id' => $entity->getId())));
+                }
             }else{
-                if ($entity->getEstadoReserva() == 'Por Concretar') {
-                    $habitacion = $entity->getHabitacion();
-                    $habitacion->setEstado('Reservada');
+                /****** ROLE_USER ********/
+                if ($form->isValid()) {
+                    $em = $this->getDoctrine()->getManager();
+                    
+                    $factura = new Factura();
+                    $factura->setReserva($entity);
+                    $factura->setDiasReserva($entity->getDiasReserva());
+                    $factura->setFecha($entity->getFechaDesde());
+
+                    $factura->setCostoTotal(1); //calcular usando el tipo y reserva, como costo inicial sin los consumibles
+
+                    $em->persist($factura);
+                    $entity->setcodigoReserva('RES'.date('dmY').date('His'));
+
+                    //cambiando el estado de la habitacion
+                    if ($entity->getEstadoReserva() == 'Concretada') {
+                        $habitacion = $entity->getHabitacion();
+                        $habitacion->setEstado('Ocupada');
+                    }else{
+                        if ($entity->getEstadoReserva() == 'Por Concretar') {
+                            $habitacion = $entity->getHabitacion();
+                            $habitacion->setEstado('Reservada');
+                        }
+                    }
+                    
+                    $em->persist($entity);
+                    $em->flush();
+                    
+                    return $this->redirect($this->generateUrl('reserva_show', array('id' => $entity->getId())));
                 }
             }
-            
-            $em->persist($entity);
-            $em->flush();
-            
-            return $this->redirect($this->generateUrl('reserva_show', array('id' => $entity->getId())));
         }
 
         return $this->render('LIHotelBundle:Reserva:new.html.twig', array(

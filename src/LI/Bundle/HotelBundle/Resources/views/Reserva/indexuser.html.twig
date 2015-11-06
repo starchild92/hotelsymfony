@@ -2,6 +2,7 @@
 
 {% block body -%}
 <div class="container-fluid row">
+    {% if entities %}
     <div class="page-header">
         <h1>Lista de Reservas<br><small>Su historial de reservas con nosotros.</small></h1>
     </div>
@@ -42,5 +43,15 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <p style="text-align: center;">
+        <a class="btn btn-primary" href="{{ path('user_reserva_new') }}" role="button">Realizar una Reserva</a>
+    </p>
+    
+    {% else %}
+        <div class="jumbotron">
+          <h2>Vaya, <small>parece que usted no ha realizado ninguna reserva aun.</small></h2><a class="btn btn-success btn-lg" href="{{ path('user_reserva_new') }}" role="button">Realizar su primera reserva</a>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
