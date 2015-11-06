@@ -21,9 +21,9 @@
 		{% for entity in entities %}
 			<tr>
 				<td>{{ entity.nombre }} {{ entity.apellido }}</td>
-				<td>{% if entity.fechanac %}{{ entity.fechanac|date('d-m-Y') }}{% endif %}</td>
+				<td>{% if entity.fechanac %}{{ entity.fechanac|date('j F Y, D') }}{% endif %}</td>
 				<td>{% if entity.enabled %}Activo{% else %}Inactivo{% endif %}</td>
-				<td>{{ entity.email }} ({{ entity.username }})</td>
+				<td>{{ entity.email }} | {{ entity.username }}</td>
 				<td>{{ entity.lastLogin|date('d-m-Y H:i') }}</td>
 				<td>{% for role in entity.roles %}
 					{{ role }} 
@@ -36,4 +36,7 @@
 		{% endfor %}
 		</tbody>
 	</table>
+	<p style="text-align: center;">
+        <a class="btn btn-primary" href="{{ path('LIHotelBundle_registro_admin') }}" role="button">Registrar a un nuevo usuario</a>
+    </p>
 {% endblock %}
