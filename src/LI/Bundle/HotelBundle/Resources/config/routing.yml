@@ -83,3 +83,7 @@ _user:
     defaults: { _controller: LIHotelBundle:Inicio:user }
     requirements:
         methods:  GET
+
+reporte_diario:
+    path:  /reporte-diario
+    defaults: { _controller: LIHotelBundle:Inicio:reporteDiario }

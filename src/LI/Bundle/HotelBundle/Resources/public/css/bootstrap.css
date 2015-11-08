@@ -4,15 +4,15 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
-.brandname{ color: rgb(125, 165, 76) !important; }
-
-.opciones{ text-align: center; }
+.brandname { color: rgb(125, 165, 76) !important; }
+.opciones { text-align: center; }
 .opciones a { margin-right: 5px; font-size: 1.3em; }
 .table-inception { margin-bottom: 0 !important; }
 .table-td-inception { max-width: 400px !important; }
 .page-header h1 a { margin-left: 6px; }
-.col-xs-3{ font-size: 2.5em; }
-.opciones-extras li a{ padding-left: 5px !important; padding-right: 0px !important; }
+.col-xs-3 { font-size: 2.5em; }
+.opciones-extras li a { padding-left: 5px !important; padding-right: 0px !important; }
+.link-footer:hover { background-color: #EFEFEF; border-radius: 5px; }
 
 html {
 	font-family: "Raleway-Regular", sans-serif;

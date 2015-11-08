@@ -30,9 +30,6 @@
 				<a class="navbar-brand brandname" href="{{ path('LIHotelBundle_homepage') }}">Hotel Symfony</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
-				<form class="navbar-form navbar-right" role="search">
-                    <a class="btn btn-danger" href="{{ path('fos_user_security_logout') }}">Cerrar Sesión</a>
-                </form>
                 <ul class="nav navbar-nav navbar-right">
 					<!--<li><a href="{{ path('factura') }}">Facturas</a></li>-->
 					<li><a href="{{ path('_admin') }}">Dashboard</a></li>
@@ -41,6 +38,7 @@
 						<ul class="dropdown-menu">
 							<li><a href="{{ path('reserva') }}">Lista de Reservas</a></li>
 							<li><a href="{{ path('reserva_new') }}">Nueva Reserva</a></li>
+							<li><a href="{{ path('reserva_concretar') }}">Concretar Reserva</a></li>
 						</ul>
 					</li>
 					<!--<li><a href="{{ path('bebida') }}">Bebidas</a></li>-->
@@ -65,7 +63,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuraciones <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Tareas Administrativas</li>
-							<!--<li><a href="{{ path('tipo') }}">Crear Nuevo Tipo Habitación</a></li>-->
+							<li><a href="{{ path('reporte_diario') }}">Reporte Diario</a></li>
 							<li><a href="{{ path('tipohabitacion') }}">Tipos de Habitación</a></li>
 							<li><a href="{{ path('categoriahabitacion') }}">Categorias de Habitación</a></li>
 							<li><a href="{{ path('llamada') }}">LLamadas</a></li>
@@ -78,6 +76,11 @@
 							<li class="dropdown-header">Operaciones sobre su cuenta</li>
 							<li><a href="{{ path('fos_user_profile_show') }}">Datos de la Cuenta</a></li>
 							<li><a href="{{ path('fos_user_profile_edit') }}">Cambiar Clave</a></li>
+							<li>
+								<form class="navbar-form" role="search">
+			                    	<a class="btn btn-primary btn-sm btn-block" href="{{ path('fos_user_security_logout') }}">Cerrar Sesión</a>
+				                </form>
+				            </li>
 						</ul>
 					</li>
 				</ul>
@@ -98,14 +101,18 @@
 		<div>
 			<div class="col-md-4">
 				<center>
-					<div class="col-md-6 col-xs-6">
+					<a href="http://www.uc.edu.ve/" target="_blank">
+					<div class="link-footer col-md-6 col-xs-6">
 						<img src="{{ asset('bundles/lihotel/images/LOGO UC.png') }}" alt="rude" width="30" height="40">
 						<h6>Universidad de Carabobo</h6>
 					</div><!-- /.col-md-6 -->
-					<div class="col-md-6 col-xs-6">
+					</a>
+					<a href="http://www.facyt.uc.edu.ve/" target="_blank">
+					<div class="link-footer col-md-6 col-xs-6">
 						<img src="{{ asset('bundles/lihotel/images/LOGO FACYT.png') }}" alt="rude" width="30" height="35">
 						<h6>Facultad Experimental de Ciencias y Tecnología</h6>
 					</div><!-- /.col-md-6 -->
+					</a>
 				</center>
 			</div>
 			<div class="col-md-4" id="lado">
@@ -118,14 +125,18 @@
 			</div>
 			<div class="col-md-4" id="lado">
 				<center>
-					<div class="col-md-6 col-xs-6">
+					<a href="mailto:lapv1992@gmail.com?Subject=Contacto%20Hotel%20Symfony" target="_top">
+					<div class="link-footer col-md-6 col-xs-6">
 						<img data-toggle="tooltip" title="Break a leg!" class="img-circle" src="{{ asset('bundles/lihotel/images/luis.jpg') }}" alt="rude" width="35" height="35">
 						<h6>Luis Pérez</h6>
 					</div><!-- /.col-md-4 -->
-					<div class="col-md-6 col-xs-6">
+					</a>
+					<a href="mailto:lapv1992@gmail.com?Subject=Contacto%20Hotel%20Symfony" target="_top">
+					<div class="link-footer col-md-6 col-xs-6">
 						<img data-toggle="tooltip" title="Some people want to set the world on fire." class="img-circle" src="{{ asset('bundles/lihotel/images/ivo.jpg') }}" alt="rude" width="35" height="35">
 						<h6>Ivonne Ortega</h6>
 					</div><!-- /.col-md-4 -->
+					</a>
 				</center>
 			</div>
 		</div>

@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use LI\Bundle\HotelBundle\Entity\Usuario;
 use LI\Bundle\HotelBundle\Entity\Login;
 use LI\Bundle\HotelBundle\Form\UsuarioUserType;
+use LI\Bundle\HotelBundle\Form\UsuarioConPasswordType;
 use LI\Bundle\HotelBundle\Form\UsuarioType;
 use LI\Bundle\HotelBundle\Form\LoginType;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -151,7 +152,7 @@ class InicioController extends Controller
     /*Para registrar nuevos usuarios desde la vista de administrador*/
     public function registro_adminAction(){
         $usuario = new Usuario();
-        $form = $this->createForm(new UsuarioType(), $usuario);
+        $form = $this->createForm(new UsuarioConPasswordType(), $usuario);
 
         $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
@@ -171,6 +172,11 @@ class InicioController extends Controller
         return $this->render('LIHotelBundle:Inicio:registroAdmin.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    public function reporteDiarioAction()
+    {
+        return $this->render('LIHotelBundle:Inicio:reporteDiario.html.twig');
     }
 
 }

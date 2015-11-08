@@ -25,7 +25,7 @@
                 <td>{{ entity.numero }}</td>
                 <td>{{ entity.nombre }}</td>
                 <td class="table-td-inception">
-                    De categoría {{ entity.tipo.categoriaHabitacion }} y tipo {{ entity.tipo.tipoHabitacion }}, {{ entity.tipo.espacioInterno }} con los siguientes servicios: "{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }} {% endfor %}" y {{ entity.tipo.bebidasMinibar|length }} tipo de bebidas en el minibar.
+                    De categoría {{ entity.tipo.categoriaHabitacion }} y tipo {{ entity.tipo.tipoHabitacion }}, {{ entity.tipo.espacioInterno }} con los siguientes servicios: "{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}, {% endfor %}" y {{ entity.tipo.bebidasMinibar|length }} tipo de bebidas en el minibar.
                 </td>
                 <td class="opciones">
                     <a href="{{ path('habitacion_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>

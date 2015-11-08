@@ -44,3 +44,7 @@ reserva_delete:
     path:     /{id}/delete
     defaults: { _controller: "LIHotelBundle:Reserva:delete" }
     methods:  [POST, DELETE]
+
+reserva_concretar:
+    path:     /concretar
+    defaults: { _controller: "LIHotelBundle:Reserva:concretar" }

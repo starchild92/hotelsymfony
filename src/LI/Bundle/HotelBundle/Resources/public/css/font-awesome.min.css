@@ -155,10 +155,8 @@
 	    background-color: #2CACD2;
 	}
 
-	.panel-infoo a {
-	    color: #0097C3;
-	}
+	.panel-infoo a { color: #0097C3; }
+	.panel-infoo a:hover { color: #1D6A82; }
 
-	.panel-infoo a:hover {
-	    color: #1D6A82;
-	}
+	.panel-primary a { color: #2F71AB; }
+	.panel-primary a:hover { color: #4B94D4; }

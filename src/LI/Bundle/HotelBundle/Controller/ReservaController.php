@@ -406,4 +406,9 @@ class ReservaController extends Controller
         ));
     }
 
+    public function concretarAction()
+    {
+        return $this->render('LIHotelBundle:Reserva:concretar.html.twig');
+    }
+
 }
