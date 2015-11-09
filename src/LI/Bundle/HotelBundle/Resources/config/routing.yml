@@ -1,6 +1,6 @@
 li_hotel_usuario:
     resource: "@LIHotelBundle/Resources/config/routing/usuario.yml"
-    prefix:   /admin/usuario
+    prefix:   /admin/usuarios
 
 li_hotel_factura:
     resource: "@LIHotelBundle/Resources/config/routing/factura.yml"
@@ -12,19 +12,19 @@ li_hotel_compensacion:
 
 li_hotel_reserva:
     resource: "@LIHotelBundle/Resources/config/routing/reserva.yml"
-    prefix:   admin/reserva
+    prefix:   admin/reservas
 
 li_hotel_reserva_user:
     resource: "@LIHotelBundle/Resources/config/routing/reserva.yml"
-    prefix:   user-admin/reserva
+    prefix:   user-admin/reservas
 
 li_hotel_bebida:
     resource: "@LIHotelBundle/Resources/config/routing/bebida.yml"
-    prefix:   /admin/bebida
+    prefix:   /admin/bebidas
 
 li_hotel_llamada:
     resource: "@LIHotelBundle/Resources/config/routing/llamada.yml"
-    prefix:   /admin/llamada
+    prefix:   /admin/llamadas
 
 li_hotel_categoriahabitacion:
     resource: "@LIHotelBundle/Resources/config/routing/categoriahabitacion.yml"
@@ -40,7 +40,7 @@ li_hotel_tipo:
 
 li_hotel_habitacion:
     resource: "@LIHotelBundle/Resources/config/routing/habitacion.yml"
-    prefix:   /habitacion
+    prefix:   /habitaciones
 
 LIHotelBundle_homepage:
     path:  /
@@ -83,3 +83,7 @@ _user:
     defaults: { _controller: LIHotelBundle:Inicio:user }
     requirements:
         methods:  GET
+
+reporte_diario:
+    path:  /reporte-diario
+    defaults: { _controller: LIHotelBundle:Inicio:reporteDiario }

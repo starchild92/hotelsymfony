@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class UsuarioType extends AbstractType
+class UsuarioConPasswordType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -38,7 +38,6 @@ class UsuarioType extends AbstractType
                     'choices' => $permissions,
                     'multiple' => true
                 ))
-            ->add('plainPassword', 'hidden')
             ;
     }
     

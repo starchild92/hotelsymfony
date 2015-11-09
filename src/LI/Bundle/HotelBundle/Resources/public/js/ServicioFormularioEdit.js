@@ -8,19 +8,30 @@ jQuery(document).ready(function() {
     // Get the ul that holds the collection of tags
     $collectionHolder2 = $('div.servicios');
 
+    $forms = $collectionHolder2;
+    $forms2 = $forms.children();
+    $forms3 = $forms2.children();
+    $forms4 = $forms3.children();
+    $forms2.css({ "margin-bottom":"0px"});
+    $forms3.css({ "display": "inline-block", "margin-bottom":"0px", "margin-right":"5px"});
+    $forms4.css({ "display": "inline-block", "margin-bottom":"0px", "margin-right":"5px"});
+    $forms3.remove('label');
+    $forms4.remove('label');
+    $forms.find('label').remove();
+
     //Para en el editar quitar un almacen
     $collectionHolder2.children().append(
-        '<a href="#" class="remove-tag btn btn-danger btn-sm btn-block">Quitar Producto</a>');
+        '<a href="#" class="remove-tag btn btn-danger btn-sm" style="margin-bottom: 28px">X</a>');
 
     $remover = $collectionHolder2.find('.remove-tag');
     $cantHijos = $remover.length;
 
     //Para quitar el primer label 0 ese ladilloso y el label 1 cuando hay dos almacenes agregados
-    $collectionHolder2.find('.control-label').first().remove();
+    /*$collectionHolder2.find('.control-label').first().remove();
     if ($cantHijos > 1) {
         $hijos = $collectionHolder2.find('.control-label');
         $hijos.get(2).remove();
-    };
+    };*/
 
     $remover.click(function(e) {
         e.preventDefault();

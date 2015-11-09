@@ -1,8 +1,13 @@
 {% extends 'LIHotelBundle::userBase.html.twig' %}
 
+{% block opciones %}
+    <li><a href="{{ path('user_reserva') }}" class="pull-right" name="Volver a todas"><span class="label label-success">Regresar a todas</span></a></li>
+    <li><a class="pull-right" href="{{ path('user_reserva_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="label label-primary">Modificar</span></a></li>
+{% endblock %}
+
 {% block body -%}
     <div class="page-header">
-        <h1>Reserva <a href="{{ path('user_reserva') }}" class="pull-right" name="Volver a todas"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a><a class="pull-right" href="{{ path('user_reserva_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></h1>
+        <h1>Reserva </h1>
 
     </div>
 
@@ -40,7 +45,8 @@
                     <td>{{ entity.fechareserva|date('d M Y\\ D') }}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Reservada para {{ entity.cantidadPersonas }} personas</td>
+                    <th>Reservada para</th>
+                    <td>{{ entity.cantidadPersonas }} personas</td>
                 </tr>
                 <tr>
                     <th>Período en días de la reserva</th>
@@ -60,7 +66,7 @@
         </table>
     </div>
 </div>
-    <ul class="record_actions">
-        <li>{{ form(delete_form) }}</li>
-    </ul>
+
+    {{ form_widget(delete_form) }}
+
 {% endblock %}

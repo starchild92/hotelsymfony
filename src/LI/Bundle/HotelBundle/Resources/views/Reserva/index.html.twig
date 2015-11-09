@@ -14,7 +14,7 @@
                 <th>Estado Reserva</th>
                 <th>Habitación</th>
                 <th>Cliente</th>
-                <th>Cantidad Personas</th>
+                <th>Personas</th>
                 <th>Días Reserva</th>
                 <th>Hecha el</th>
                 <th>Desde</th>
@@ -45,12 +45,9 @@
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('reserva_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+    <p style="text-align: center;">
+        <a class="btn btn-primary" href="{{ path('reserva_new') }}" role="button">Agregar Reserva</a>
+    </p>
+
 </div>
 {% endblock %}

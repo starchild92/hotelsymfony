@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-lg-6 col-sm-6">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-responsive">
                 <tbody>
                     <tr>
                         <th>Id</th>
@@ -30,7 +30,7 @@
                     </tr>
                     <tr><th>Tipo</th><th>Espacio Interno</th></tr>
                     <tr><td>{{ entity.tipo.tipoHabitacion }}</td><td>{{ entity.tipo.espacioInterno }}</td></tr>
-                    <tr><th>Servicios</th><td>{% for servicio in entity.tipo.servicios %} {{ servicio.nombre }} {% endfor %}</td></tr>
+                    <tr><th>Servicios</th><td>{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}, {% endfor %}</td></tr>
                 </tbody>
             </table>
         </div>
@@ -54,19 +54,12 @@
             </table>
         </div>
     </div>
+
+    <p style="text-align: center;">
+        <a class="btn btn-success" href="{{ path('habitacion') }}" role="button">Regresar</a>
+        <a class="btn btn-warning" href="{{ path('habitacion_edit', { 'id': entity.id }) }}" role="button">Editar Habitación</a>
+        {{ form(delete_form) }}
+    </p>
     
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('habitacion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('habitacion_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
 </div>
 {% endblock %}

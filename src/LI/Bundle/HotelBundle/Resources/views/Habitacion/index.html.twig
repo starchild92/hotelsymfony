@@ -25,7 +25,7 @@
                 <td>{{ entity.numero }}</td>
                 <td>{{ entity.nombre }}</td>
                 <td class="table-td-inception">
-                    De categoría {{ entity.tipo.categoriaHabitacion }} y tipo {{ entity.tipo.tipoHabitacion }}, {{ entity.tipo.espacioInterno }} con los siguientes servicios: "{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }} {% endfor %}" y {{ entity.tipo.bebidasMinibar|length }} tipo de bebidas en el minibar.
+                    De categoría <b>{{ entity.tipo.categoriaHabitacion }}</b> y tipo <b>{{ entity.tipo.tipoHabitacion }}</b>, <i>{{ entity.tipo.espacioInterno }}</i> con los siguientes servicios: "{% set tam = entity.tipo.servicios|length  %}{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}{% set tam = tam-1 %}{% if tam != 0 %}, {% endif %}{% endfor %}" y {{ entity.tipo.bebidasMinibar|length }} tipo de bebidas en el minibar.
                 </td>
                 <td class="opciones">
                     <a href="{{ path('habitacion_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
@@ -35,13 +35,9 @@
         {% endfor %}
         </tbody>
     </table>
-    <ul>
-        <li>
-            <a href="{{ path('habitacion_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+    <p style="text-align: center;">
+        <a class="btn btn-primary" href="{{ path('habitacion_new') }}" role="button">Agregar una Nueva Habitación</a>
+    </p>
     {% else %}
         <div class="jumbotron">
           <h2>Lo sentimos, <small>no se han añadido habitaciones</small></h2>
