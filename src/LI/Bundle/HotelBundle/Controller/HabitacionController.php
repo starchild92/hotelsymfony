@@ -80,7 +80,7 @@ class HabitacionController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Crear'));
+        $form->add('submit', 'submit', array('label' => 'Crear', 'attr' => array('class'=>'btn btn-primary')));
 
         return $form;
     }
@@ -162,7 +162,7 @@ class HabitacionController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Actualizar'));
+        $form->add('submit', 'submit', array('label' => 'Actualizar', 'attr' => array('class'=>'btn btn-primary')));
 
         return $form;
     }
@@ -245,7 +245,7 @@ class HabitacionController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('habitacion_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Eliminar'))
+            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class'=>'btn btn-danger')))
             ->getForm()
         ;
     }

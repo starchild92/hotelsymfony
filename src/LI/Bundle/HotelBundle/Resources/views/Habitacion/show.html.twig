@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-lg-6 col-sm-6">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-responsive">
                 <tbody>
                     <tr>
                         <th>Id</th>
@@ -56,8 +56,8 @@
     </div>
 
     <p style="text-align: center;">
-        <a class="btn btn-default" href="{{ path('habitacion') }}" role="button">Regresar</a>
-        <a class="btn btn-default" href="{{ path('habitacion_edit', { 'id': entity.id }) }}" role="button">Editar Habitación</a>
+        <a class="btn btn-success" href="{{ path('habitacion') }}" role="button">Regresar</a>
+        <a class="btn btn-warning" href="{{ path('habitacion_edit', { 'id': entity.id }) }}" role="button">Editar Habitación</a>
         {{ form(delete_form) }}
     </p>
     
