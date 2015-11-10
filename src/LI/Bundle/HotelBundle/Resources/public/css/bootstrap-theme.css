@@ -1,12 +1,7 @@
-/*!
- * Bootstrap v3.3.5 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
-
- @font-face{
+  @font-face{
     font-family: "Raleway-Regular";
     src: url('{{ asset('bundles/lihotel/fonts/Raleway-Medium.ttf') }}') format('truetype');
+    /*src: url('{{ asset('bundles/lihotel/fonts/HelveticaNeueLT.otf') }}') format('opentype');*/
   }
 
 body { padding-top: 50px; font-family: "Raleway-regular"; }

@@ -14,7 +14,7 @@ jQuery(document).ready(function() {
     $forms4 = $forms3.children();
     $forms2.css({ "margin-bottom":"0px"});
     $forms3.css({ "display": "inline-block", "margin-bottom":"0px", "margin-right":"5px"});
-    $forms4.css({ "display": "inline-block", "margin-bottom":"0px", "margin-right":"5px"});
+    $forms4.css({ "display": "inline-block", "margin-bottom":"0px", "margin-right":"5px", "min-width":"400px"});
     $forms3.remove('label');
     $forms4.remove('label');
     $forms.find('label').remove();

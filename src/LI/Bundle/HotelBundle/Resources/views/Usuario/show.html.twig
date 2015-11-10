@@ -36,8 +36,8 @@
     </table>
 
     <p style="text-align: center;">
-        <a class="btn btn-primary" href="{{ path('usuario') }}" role="button">Regresar</a>
-        <a class="btn btn-primary" href="{{ path('usuario_edit', { 'id': entity.id }) }}" role="button">Editar</a>
+        <a class="btn btn-success" href="{{ path('usuario') }}" role="button">Regresar</a>
+        <a class="btn btn-warning" href="{{ path('usuario_edit', { 'id': entity.id }) }}" role="button">Modificar Detalles</a>
         {{ form(delete_form) }}
     </p>
 {% endblock %}

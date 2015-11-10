@@ -46,12 +46,20 @@ class HabitacionController extends Controller
             $bebidas = $tipo->getbebidasMinibar();
             $servicios = $tipo->getServicios();
 
-            foreach ($bebidas as $bebida) {
-                $bebida->settipoHabitacion($tipo);
+            if($bebidas != null){
+                foreach ($bebidas as $bebida) {
+                    $bebida->settipoHabitacion($tipo);
+                }
+            }else{
+                //añadir mensaje
             }
 
-            foreach ($servicios as $servicio) {
-                $servicio->setTipo($tipo);
+            if($servicios != null){
+                foreach ($servicios as $servicio) {
+                    $servicio->setTipo($tipo);
+                }
+            }else{
+                //añadir mensaje
             }
 
             $em->persist($entity);

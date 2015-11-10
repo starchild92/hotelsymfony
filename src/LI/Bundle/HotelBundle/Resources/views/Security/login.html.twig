@@ -7,7 +7,7 @@
     <h1>Iniciar Sesión</h1>
 </div>
 <div class="row">
-	<div class="col-lg-6 col-sm-6">
+	<div class="col-lg-5 col-sm-5" style="float: none; margin: 0 auto;">
 		{% if error %}
 		    <div class="alert alert-danger alert-dismissible" role="alert">
 		    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -15,7 +15,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-lg-6" style="float: none; margin: 0 auto;">
+	<div class="col-lg-5 col-sm-5" style="float: none; margin: 0 auto;">
 		<form action="{{ path("fos_user_security_check") }}" method="post">
 			<div class="input-group">
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />

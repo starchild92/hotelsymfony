@@ -12,13 +12,11 @@
 
     {{ form(edit_form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('habitacion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <p style="text-align: center;">
+        {{ form_row(edit_form.submit) }}
+        <a class="btn btn-success" href="{{ path('habitacion') }}" role="button">Regresar</a>
+        {{ form_widget(delete_form) }}
+    </p>
+    
 </div>
 {% endblock %}
