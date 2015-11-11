@@ -19,7 +19,7 @@
 			<tr>
 				<td><a href="{{ path('categoriahabitacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
 				<td>{{ entity.nombre }}</td>
-				<td>{{ entity.precio }}</td>
+				<td>{{ entity.precio }} veces el tipo de habitación</td>
 				<td class="opciones">
                     <a href="{{ path('categoriahabitacion_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
                     <a href="{{ path('categoriahabitacion_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
@@ -30,7 +30,7 @@
 	</table>
 
 	<p style="text-align: center;">
-        <a class="btn btn-default" href="{{ path('categoriahabitacion_new') }}">Añadir un Nuevo Tipo de Habitación</a>
+        <a class="btn btn-default" href="{{ path('categoriahabitacion_new') }}">Añadir una Nueva Categoría de Habitación</a>
     </p>
     
 </div>
