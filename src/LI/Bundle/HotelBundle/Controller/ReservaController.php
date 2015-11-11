@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use LI\Bundle\HotelBundle\Entity\Reserva;
 use LI\Bundle\HotelBundle\Form\ReservaType;
+use LI\Bundle\HotelBundle\Form\ReservaUsuarioType;
 
 use LI\Bundle\HotelBundle\Entity\Factura;
 use LI\Bundle\HotelBundle\Form\FacturaType;
@@ -66,6 +67,7 @@ class ReservaController extends Controller
                     $factura->setCostoTotal(1); //calcular usando el tipo y reserva, como costo inicial sin los consumibles
 
                     $em->persist($factura);
+                    $entity->setFactura($factura);
                     $entity->setcodigoReserva('RES'.date('dmY').date('His'));
 
                     //cambiando el estado de la habitacion
@@ -97,6 +99,10 @@ class ReservaController extends Controller
                     $factura->setCostoTotal(1); //calcular usando el tipo y reserva, como costo inicial sin los consumibles
 
                     $em->persist($factura);
+                    $entity->setFactura($factura);
+                    $cliente = $em->getRepository('LIHotelBundle:Usuario')->find($user->getId());
+                    $entity->setCliente($cliente);
+
                     $entity->setcodigoReserva('RES'.date('dmY').date('His'));
 
                     //cambiando el estado de la habitacion
@@ -113,7 +119,7 @@ class ReservaController extends Controller
                     $em->persist($entity);
                     $em->flush();
                     
-                    return $this->redirect($this->generateUrl('reserva_show', array('id' => $entity->getId())));
+                    return $this->redirect($this->generateUrl('user_reserva_show', array('id' => $entity->getId())));
                 }
             }
         }
@@ -133,10 +139,22 @@ class ReservaController extends Controller
      */
     private function createCreateForm(Reserva $entity)
     {
-        $form = $this->createForm(new ReservaType(), $entity, array(
-            'action' => $this->generateUrl('reserva_create'),
-            'method' => 'POST',
-        ));
+        
+        $user = $this->getUser();
+        if ($user != null) {
+            $roles = $user->getRoles();
+            if (in_array('ROLE_ADMIN', $roles)) {
+                $form = $this->createForm(new ReservaType(), $entity, array(
+                    'action' => $this->generateUrl('reserva_create'),
+                    'method' => 'POST',
+                ));
+            }else{
+                $form = $this->createForm(new ReservaUsuarioType(), $entity, array(
+                    'action' => $this->generateUrl('reserva_create'),
+                    'method' => 'POST',
+                ));
+            }
+        }
 
         $form->add('submit', 'submit', array('label' => 'Crear'));
 

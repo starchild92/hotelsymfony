@@ -4,15 +4,25 @@
 
 {% block body -%}
     <div class="page-header">
-        <h1>Reserva creation <br><small>verificar antes si hay habitaciones disponibles</small></h1>
+        <h1>Realizar una Reservaciòn<br><small>verificar antes si hay habitaciones disponibles</small></h1>
     </div>
 
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
 
-    {{ form(form) }}
+        {{ form_row(form.habitacion, {'label':'Nombre de la Habitación reservada'}) }}
+        {{ form_row(form.cantidadPersonas, {'label':'Cantidad de Personas'}) }}
+        {{ form_row(form.cantidadNinos, {'label':'Cantidad de Niños'}) }}
+        {{ form_row(form.diasReserva, {'label':'Duración en días de la reserva'}) }}
+        {{ form_row(form.fecha_desde, {'label':'Fecha Inicio Reserva'}) }}
+        {{ form_row(form.estadoReserva, {'label':'Estado Reserva'}) }}
+        {{ form_row(form.submit, {'label':'Guardar cambios de la reserva'}) }}
+
+    {{ form_end(form) }}
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('reserva') }}">
+        <a href="{{ path('user_reserva') }}">
             Back to the list
         </a>
     </li>
