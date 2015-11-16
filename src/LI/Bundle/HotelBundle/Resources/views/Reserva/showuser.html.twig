@@ -43,6 +43,8 @@
                 <tr>
                     <th>Reserva realizada el</th>
                     <td>{{ entity.fechareserva|date('d M Y\\ D') }}</td>
+                    {% set diasR = entity.diasReserva %}
+                    <td>{{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|date('d-m-Y') }}</td>
                 </tr>
                 <tr>
                     <th>Reservada para</th>

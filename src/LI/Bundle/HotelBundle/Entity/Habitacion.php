@@ -39,7 +39,7 @@ class Habitacion
     /**
      * @var integer
      *
-     * @ORM\Column(name="numero", type="integer")
+     * @ORM\Column(name="numero", type="integer", unique=true)
      * @Assert\Type(
      *     type="integer",
      *     message="El valor {{ value }} no es válido."

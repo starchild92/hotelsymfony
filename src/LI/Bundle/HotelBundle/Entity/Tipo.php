@@ -44,13 +44,13 @@ class Tipo
     private $espacioInterno;
 
     /**
-     * @ORM\OneToMany(targetEntity="Servicio", mappedBy="tipo", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Servicio", mappedBy="tipo", cascade={"persist","remove"}, orphanRemoval=true)
      * @Assert\Valid
      **/
     private $servicios;
 
     /**
-     * @ORM\OneToMany(targetEntity="Bebida", mappedBy="tipoHabitacion", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Bebida", mappedBy="tipoHabitacion", cascade={"persist","remove"}, orphanRemoval=true)
      * @Assert\Valid
      **/
     private $bebidasMinibar;
