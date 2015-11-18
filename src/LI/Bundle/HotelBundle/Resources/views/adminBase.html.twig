@@ -54,9 +54,12 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Habitaciones <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li class="dropdown-header">Operaciones de Consulta</li>
+							<li class="dropdown-header">Consulta</li>
 							<li><a href="{{ path('habitacion') }}">Listado Habitaciones</a></li>
-							<li><a href="{{ path('habitacion_new') }}">Crear Habitación</a></li>			
+							<li class="dropdown-header">Gestión</li>
+							<li><a href="{{ path('habitacion_new') }}">Crear Habitación</a></li>
+							<li><a href="{{ path('tipohabitacion') }}">Tipos de Habitación</a></li>
+							<li><a href="{{ path('categoriahabitacion') }}">Categorias de Habitación</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
@@ -64,9 +67,9 @@
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Tareas Administrativas</li>
 							<li><a href="{{ path('reporte_diario') }}">Reporte Diario</a></li>
-							<li><a href="{{ path('tipohabitacion') }}">Tipos de Habitación</a></li>
-							<li><a href="{{ path('categoriahabitacion') }}">Categorias de Habitación</a></li>
+							<li class="dropdown-header">Gestión Administrativa</li>
 							<li><a href="{{ path('llamada') }}">LLamadas</a></li>
+							<li><a href="{#{ path('ocupacion') }#}">Ocupación Habitaciones</a></li>
 							<li><a href="{{ path('compensacion') }}">Compensaciones</a></li>
 						</ul>
 					</li>

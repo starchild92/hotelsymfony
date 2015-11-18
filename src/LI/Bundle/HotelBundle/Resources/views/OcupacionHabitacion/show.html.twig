@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>OcupacionHabitacion</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Categoriahabitacion</th>
+                <td>{{ entity.categoriaHabitacion }}</td>
+            </tr>
+            <tr>
+                <th>Tipohabitacion</th>
+                <td>{{ entity.tipoHabitacion }}</td>
+            </tr>
+            <tr>
+                <th>Cantidadpersonashabitacion</th>
+                <td>{{ entity.cantidadPersonasHabitacion }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('ocupacion') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('ocupacion_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
