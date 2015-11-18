@@ -9,6 +9,12 @@
     </div>
 
     <div class="row">
+        {% for flashMessage in app.session.flashbag.get('msj_habitacion') %}
+            <div class = "alert alert-info alert-dismissable">
+                <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
         <div class="col-lg-6 col-sm-6">
             <table class="table table-bordered table-responsive">
                 <tbody>
@@ -30,7 +36,7 @@
                     </tr>
                     <tr><th>Tipo</th><th>Espacio Interno</th></tr>
                     <tr><td>{{ entity.tipo.tipoHabitacion }}</td><td>{{ entity.tipo.espacioInterno }}</td></tr>
-                    <tr><th>Servicios</th><td>{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}, {% endfor %}</td></tr>
+                    <tr><th>Servicios</th><td>{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}, {% endfor %}{% if entity.tipo.servicios == null %}No se han añadido servicios a esta habitación.{% endif %}</td></tr>
                 </tbody>
             </table>
         </div>
@@ -42,6 +48,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                {% if entity.tipo.bebidasMinibar|length == 0 %}No se han añadido bebidas al minibar de esta habitación.{% endif %}
                     {% for bebida in entity.tipo.bebidasMinibar %}
                         <tr>
                             <td>{{ bebida.marca }}</td>

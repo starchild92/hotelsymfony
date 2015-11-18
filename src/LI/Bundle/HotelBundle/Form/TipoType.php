@@ -15,8 +15,8 @@ class TipoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('tipoHabitacion')
             ->add('categoriaHabitacion')
+            ->add('tipoHabitacion')
             ->add('espacioInterno')
             ->add('servicios',
                     'collection', array(
