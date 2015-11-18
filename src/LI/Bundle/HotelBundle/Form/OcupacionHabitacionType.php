@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class HabitacionType extends AbstractType
+class OcupacionHabitacionType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,15 +15,9 @@ class HabitacionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('estado','choice', array(
-                   'choices'  => array(
-                    'Libre' => 'Libre',
-                    'Ocupada' => 'Ocupada',
-                    'Reservada' => 'Reservada',
-            )))
-            ->add('numero', 'integer')
-            ->add('nombre')
-            ->add('tipo', new TipoType())
+            ->add('categoriaHabitacion')
+            ->add('tipoHabitacion')
+            ->add('cantidadPersonasHabitacion')
         ;
     }
     
@@ -33,7 +27,7 @@ class HabitacionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'LI\Bundle\HotelBundle\Entity\Habitacion'
+            'data_class' => 'LI\Bundle\HotelBundle\Entity\OcupacionHabitacion'
         ));
     }
 
@@ -42,6 +36,6 @@ class HabitacionType extends AbstractType
      */
     public function getName()
     {
-        return 'li_bundle_hotelbundle_habitacion';
+        return 'li_bundle_hotelbundle_ocupacionhabitacion';
     }
 }
