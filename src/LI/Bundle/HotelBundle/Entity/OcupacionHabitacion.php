@@ -22,17 +22,13 @@ class OcupacionHabitacion
     private $id;
 
     /**
-     * @var \stdClass
-     *
-     * @ORM\Column(name="categoriaHabitacion", type="object")
-     */
+     * @ORM\ManyToOne(targetEntity="CategoriaHabitacion")
+     **/
     private $categoriaHabitacion;
 
     /**
-     * @var \stdClass
-     *
-     * @ORM\Column(name="tipoHabitacion", type="object")
-     */
+     * @ORM\ManyToOne(targetEntity="TipoHabitacion")
+     **/
     private $tipoHabitacion;
 
     /**
@@ -42,7 +38,6 @@ class OcupacionHabitacion
      */
     private $cantidadPersonasHabitacion;
 
-
     /**
      * Get id
      *
@@ -51,52 +46,6 @@ class OcupacionHabitacion
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set categoriaHabitacion
-     *
-     * @param \stdClass $categoriaHabitacion
-     * @return OcupacionHabitacion
-     */
-    public function setCategoriaHabitacion($categoriaHabitacion)
-    {
-        $this->categoriaHabitacion = $categoriaHabitacion;
-
-        return $this;
-    }
-
-    /**
-     * Get categoriaHabitacion
-     *
-     * @return \stdClass 
-     */
-    public function getCategoriaHabitacion()
-    {
-        return $this->categoriaHabitacion;
-    }
-
-    /**
-     * Set tipoHabitacion
-     *
-     * @param \stdClass $tipoHabitacion
-     * @return OcupacionHabitacion
-     */
-    public function setTipoHabitacion($tipoHabitacion)
-    {
-        $this->tipoHabitacion = $tipoHabitacion;
-
-        return $this;
-    }
-
-    /**
-     * Get tipoHabitacion
-     *
-     * @return \stdClass 
-     */
-    public function getTipoHabitacion()
-    {
-        return $this->tipoHabitacion;
     }
 
     /**
@@ -120,5 +69,51 @@ class OcupacionHabitacion
     public function getCantidadPersonasHabitacion()
     {
         return $this->cantidadPersonasHabitacion;
+    }
+
+    /**
+     * Set categoriaHabitacion
+     *
+     * @param \LI\Bundle\HotelBundle\Entity\CategoriaHabitacion $categoriaHabitacion
+     * @return OcupacionHabitacion
+     */
+    public function setCategoriaHabitacion(\LI\Bundle\HotelBundle\Entity\CategoriaHabitacion $categoriaHabitacion = null)
+    {
+        $this->categoriaHabitacion = $categoriaHabitacion;
+
+        return $this;
+    }
+
+    /**
+     * Get categoriaHabitacion
+     *
+     * @return \LI\Bundle\HotelBundle\Entity\CategoriaHabitacion 
+     */
+    public function getCategoriaHabitacion()
+    {
+        return $this->categoriaHabitacion;
+    }
+
+    /**
+     * Set tipoHabitacion
+     *
+     * @param \LI\Bundle\HotelBundle\Entity\TipoHabitacion $tipoHabitacion
+     * @return OcupacionHabitacion
+     */
+    public function setTipoHabitacion(\LI\Bundle\HotelBundle\Entity\TipoHabitacion $tipoHabitacion = null)
+    {
+        $this->tipoHabitacion = $tipoHabitacion;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoHabitacion
+     *
+     * @return \LI\Bundle\HotelBundle\Entity\TipoHabitacion 
+     */
+    public function getTipoHabitacion()
+    {
+        return $this->tipoHabitacion;
     }
 }

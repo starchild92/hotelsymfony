@@ -15,8 +15,8 @@ class OcupacionHabitacionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('categoriaHabitacion')
             ->add('tipoHabitacion')
+            ->add('categoriaHabitacion')
             ->add('cantidadPersonasHabitacion')
         ;
     }

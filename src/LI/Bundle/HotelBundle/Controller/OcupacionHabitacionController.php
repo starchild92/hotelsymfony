@@ -4,16 +4,13 @@ namespace LI\Bundle\HotelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use LI\Bundle\HotelBundle\Entity\OcupacionHabitacion;
 use LI\Bundle\HotelBundle\Form\OcupacionHabitacionType;
 
 /**
  * OcupacionHabitacion controller.
  *
- * @Route("/ocupacion")
  */
 class OcupacionHabitacionController extends Controller
 {
@@ -21,9 +18,6 @@ class OcupacionHabitacionController extends Controller
     /**
      * Lists all OcupacionHabitacion entities.
      *
-     * @Route("/", name="ocupacion")
-     * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
@@ -31,16 +25,13 @@ class OcupacionHabitacionController extends Controller
 
         $entities = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->findAll();
 
-        return array(
+        return $this->render('LIHotelBundle:OcupacionHabitacion:index.html.twig', array(
             'entities' => $entities,
-        );
+        ));
     }
     /**
      * Creates a new OcupacionHabitacion entity.
      *
-     * @Route("/", name="ocupacion_create")
-     * @Method("POST")
-     * @Template("LIHotelBundle:OcupacionHabitacion:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -48,18 +39,38 @@ class OcupacionHabitacionController extends Controller
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        $em = $this->getDoctrine()->getManager();
+
+        $categoria = $entity->getCategoriaHabitacion()->getNombre();
+        $tipo = $entity->getTipoHabitacion()->getNombre();
+
+        $entities = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->findAll();
+
+        $puede_insertar = true;
+        foreach ($entities as $key) {
+            if ($key->getCategoriaHabitacion()->getNombre() == $categoria
+                && $key->getTipoHabitacion()->getNombre() == $tipo) {
+                $puede_insertar = false;
+            }
+        }
+
+        if (!$puede_insertar) {
+            // mensaje de no pudo insertar porque ya existe esa combinacion de tipo y categoria
+        }
+
+        if ($form->isValid() && $puede_insertar) {
             $em = $this->getDoctrine()->getManager();
+
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ocupacion_show', array('id' => $entity->getId())));
+            return $this->indexAction();
         }
 
-        return array(
+        return $this->render('LIHotelBundle:OcupacionHabitacion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ));
     }
 
     /**
@@ -72,7 +83,7 @@ class OcupacionHabitacionController extends Controller
     private function createCreateForm(OcupacionHabitacion $entity)
     {
         $form = $this->createForm(new OcupacionHabitacionType(), $entity, array(
-            'action' => $this->generateUrl('ocupacion_create'),
+            'action' => $this->generateUrl('ocupacionhabitacion_create'),
             'method' => 'POST',
         ));
 
@@ -84,52 +95,21 @@ class OcupacionHabitacionController extends Controller
     /**
      * Displays a form to create a new OcupacionHabitacion entity.
      *
-     * @Route("/new", name="ocupacion_new")
-     * @Method("GET")
-     * @Template()
      */
     public function newAction()
     {
         $entity = new OcupacionHabitacion();
         $form   = $this->createCreateForm($entity);
 
-        return array(
+        return $this->render('LIHotelBundle:OcupacionHabitacion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Finds and displays a OcupacionHabitacion entity.
-     *
-     * @Route("/{id}", name="ocupacion_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find OcupacionHabitacion entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
      * Displays a form to edit an existing OcupacionHabitacion entity.
      *
-     * @Route("/{id}/edit", name="ocupacion_edit")
-     * @Method("GET")
-     * @Template()
      */
     public function editAction($id)
     {
@@ -144,11 +124,11 @@ class OcupacionHabitacionController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return $this->render('LIHotelBundle:OcupacionHabitacion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
@@ -161,7 +141,7 @@ class OcupacionHabitacionController extends Controller
     private function createEditForm(OcupacionHabitacion $entity)
     {
         $form = $this->createForm(new OcupacionHabitacionType(), $entity, array(
-            'action' => $this->generateUrl('ocupacion_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('ocupacionhabitacion_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -172,9 +152,6 @@ class OcupacionHabitacionController extends Controller
     /**
      * Edits an existing OcupacionHabitacion entity.
      *
-     * @Route("/{id}", name="ocupacion_update")
-     * @Method("PUT")
-     * @Template("LIHotelBundle:OcupacionHabitacion:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -193,20 +170,18 @@ class OcupacionHabitacionController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ocupacion_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('ocupacionhabitacion_edit', array('id' => $id)));
         }
 
-        return array(
+        return $this->render('LIHotelBundle:OcupacionHabitacion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
     /**
      * Deletes a OcupacionHabitacion entity.
      *
-     * @Route("/{id}", name="ocupacion_delete")
-     * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -225,7 +200,7 @@ class OcupacionHabitacionController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('ocupacion'));
+        return $this->redirect($this->generateUrl('ocupacionhabitacion'));
     }
 
     /**
@@ -238,7 +213,7 @@ class OcupacionHabitacionController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('ocupacion_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('ocupacionhabitacion_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

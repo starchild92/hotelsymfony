@@ -1,45 +1,31 @@
-{% extends '::base.html.twig' %}
-
+{% extends 'LIHotelBundle::adminBase.html.twig' %}
 {% block body -%}
-    <h1>OcupacionHabitacion list</h1>
+    <div class="page-header">
+        <h1>Ocupación Habitación<br><small>administre la cantidad de personas que pueden permanecer en una habitación segun su tipo y categoria.</small></h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-bordered table-responsive table-striped records_list">
+                <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.id }}</td>
+                        <td>Por habitacion de tipo <b>"{{ entity.tipoHabitacion.nombre }}"</b> y de categoría <b>"{{ entity.categoriaHabitacion.nombre }}"</b> se permiten una máxima cantidad de <i>{{ entity.cantidadPersonasHabitacion }} personas</i>.</td>
+                        <td><a href="{{ path('ocupacionhabitacion_edit', { 'id': entity.id }) }}">Modificar</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <p><small>consideres persona cualquier adulto o niño.</small></p>
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Categoriahabitacion</th>
-                <th>Tipohabitacion</th>
-                <th>Cantidadpersonashabitacion</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('ocupacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.categoriaHabitacion }}</td>
-                <td>{{ entity.tipoHabitacion }}</td>
-                <td>{{ entity.cantidadPersonasHabitacion }}</td>
-                <td>
                 <ul>
-                    <li>
-                        <a href="{{ path('ocupacion_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('ocupacion_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('ocupacion_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+                <li>
+                    <a href="{{ path('ocupacionhabitacion_new') }}">
+                        Create a new entry
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
     {% endblock %}
