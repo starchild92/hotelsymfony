@@ -10,7 +10,12 @@
                 {% for entity in entities %}
                     <tr>
                         <td>{{ entity.id }}</td>
-                        <td>Por habitacion de tipo <b>"{{ entity.tipoHabitacion.nombre }}"</b> y de categoría <b>"{{ entity.categoriaHabitacion.nombre }}"</b> se permiten una máxima cantidad de <i>{{ entity.cantidadPersonasHabitacion }} personas</i>.</td>
+                        <td>Por habitacion de tipo </td>
+                        <td><b>"{{ entity.tipoHabitacion.nombre }}"</b></td>
+                        <td> y de categoría </td>
+                        <td><b>"{{ entity.categoriaHabitacion.nombre }}"</b></td>
+                        <td> se permiten una cantidad máxima de </td>
+                        <td><i>{{ entity.cantidadPersonasHabitacion }} personas</i>.</td>
                         <td><a href="{{ path('ocupacionhabitacion_edit', { 'id': entity.id }) }}">Modificar</a></td>
                     </tr>
                 {% endfor %}

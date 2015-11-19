@@ -170,7 +170,7 @@ class OcupacionHabitacionController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ocupacionhabitacion_edit', array('id' => $id)));
+            return $this->indexAction();
         }
 
         return $this->render('LIHotelBundle:OcupacionHabitacion:edit.html.twig', array(

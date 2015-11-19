@@ -17,7 +17,7 @@
                 <p>Nombre: {{ user.nombre }}</p>
                 <p>Apellido: {{ user.apellido }}</p>
                 <p>Fecha de Nacimiento: {{ user.fechaNac|date("j \\d\\\e F") }}</p>
-                <p>Role|s: </p>
+                <p>Role|s: {% for role in user.roles %}{{ role }}. {% endfor %}</p>
             </div>
             <small>Cambiar contraseña actual</small>
             <small>Modificar datos de su cuenta</small>
