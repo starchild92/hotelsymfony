@@ -211,6 +211,7 @@ class HabitacionController extends Controller
             return $this->redirect($this->generateUrl('habitacion_edit', array('id' => $id)));
         }
 
+        //Añadir mensaje aqui "Se ha creado satisfactoriamente la nueva habitación"
         return $this->render('LIHotelBundle:Habitacion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
