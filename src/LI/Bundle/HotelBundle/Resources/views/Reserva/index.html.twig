@@ -16,7 +16,7 @@
                 <th>Cliente</th>
                 <th>Personas</th>
                 <th>Días Reserva</th>
-                <th>Hecha el</th>
+                <!--<th>Hecha el</th>-->
                 <th>Desde</th>
                 <th>Hasta</th>
                 <th>Actions</th>
@@ -32,9 +32,9 @@
                 <td>{{ entity.cliente }} <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                 <td>{{ entity.cantidadPersonas }}</td>
                 <td>{{ entity.diasReserva }}</td>
-                <td>{{ entity.fechareserva|date('d-m-Y') }}</td>
+                <!--<td>{{ entity.fechareserva|date('d-m-Y') }}</td>-->
                 <td>{{ entity.fechadesde|date('d-m-Y') }}</td>
-                {% set diasR = entity.diasReserva %}
+                {% set diasR = entity.diasReserva-1 %}
                 <td>{{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|date('d-m-Y') }}</td>
                 <td class="opciones">
                     <a href="{{ path('reserva_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>

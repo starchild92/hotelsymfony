@@ -50,7 +50,7 @@ class Reserva
     private $cliente;
 
     /**
-     * @ORM\OneToOne(targetEntity="Factura")
+     * @ORM\OneToOne(targetEntity="Factura", mappedBy="reserva")
      **/
     private $factura;
 
