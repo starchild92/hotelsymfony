@@ -51,7 +51,9 @@ class HabitacionController extends Controller
                     $bebida->settipoHabitacion($tipo);
                 }
             }else{
-                //añadir mensaje
+                $this->get('session')
+                    ->getFlashBag()
+                    ->add('msj_habitacion', 'No has agregado bebidas al minibar.');
             }
 
             if($servicios != null){
@@ -59,7 +61,9 @@ class HabitacionController extends Controller
                     $servicio->setTipo($tipo);
                 }
             }else{
-                //añadir mensaje
+                $this->get('session')
+                    ->getFlashBag()
+                    ->add('msj_habitacion', 'No has agregado ningun servicio.');
             }
 
             $em->persist($entity);

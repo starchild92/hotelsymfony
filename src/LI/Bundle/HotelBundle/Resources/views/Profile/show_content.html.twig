@@ -1,12 +1,25 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="page-header">
-    <h1>Detalles del Usuario</h1>
-</div>
-<div class="fos_user_user_show">
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
-    <p>Nombre: {{ user.nombre }}</p>
-    <p>Apellido: {{ user.apellido }}</p>
-    <p>Fecha de Nacimiento: {{ user.fechaNac|date("j \\d\\\e F") }}</p>
-</div>
+    <div class="page-header">
+        <h1>Detalles de su Cuenta</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2">
+            <h3>Fotografía</h3>
+            <p>Espacio para una imagen</p>
+        </div>
+        <div class="col-lg-10">
+            <h3>Detalles Personales</h3>
+            <div class="fos_user_user_show">
+                <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
+                <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+                <p>Nombre: {{ user.nombre }}</p>
+                <p>Apellido: {{ user.apellido }}</p>
+                <p>Fecha de Nacimiento: {{ user.fechaNac|date("j \\d\\\e F") }}</p>
+                <p>Role|s: {% for role in user.roles %}{{ role }}. {% endfor %}</p>
+            </div>
+            <small>Cambiar contraseña actual</small>
+            <small>Modificar datos de su cuenta</small>
+        </div>
+    </div>

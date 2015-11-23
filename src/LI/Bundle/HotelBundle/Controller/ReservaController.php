@@ -69,6 +69,10 @@ class ReservaController extends Controller
                     $em->persist($factura);
                     $entity->setFactura($factura);
                     $entity->setcodigoReserva('RES'.date('dmY').date('His'));
+                    /** 
+                        EL CODIGO DE LA RESERVA ESTA COMPUESTA
+                        RES(DIA MES AÑO)(HORA MINUTOS SEGUNDOS)
+                    **/
 
                     //cambiando el estado de la habitacion
                     if ($entity->getEstadoReserva() == 'Concretada') {
@@ -87,7 +91,9 @@ class ReservaController extends Controller
                     return $this->redirect($this->generateUrl('reserva_show', array('id' => $entity->getId())));
                 }
             }else{
-                /****** ROLE_USER ********/
+                /** 
+                    ROLE_USER 
+                **/
                 if ($form->isValid()) {
                     $em = $this->getDoctrine()->getManager();
                     
@@ -323,7 +329,15 @@ class ReservaController extends Controller
                 throw $this->createNotFoundException('Unable to find Reserva entity.');
             }
 
+            /**
+                ELIMIANNDO LA FACTURA DE LA RESERVA ANTES DE ELEIMINAR LA RESERVA
+            **/
+            $factura = $entity->getFactura();
+            $factura->setReserva(NULL);
+            $entity->setFactura(NULL);
+
             $em->remove($entity);
+            $em->remove($factura);
             $em->flush();
         }
 

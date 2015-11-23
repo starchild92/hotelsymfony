@@ -1,0 +1,26 @@
+ocupacionhabitacion:
+    path:     /
+    defaults: { _controller: "LIHotelBundle:OcupacionHabitacion:index" }
+
+ocupacionhabitacion_new:
+    path:     /new
+    defaults: { _controller: "LIHotelBundle:OcupacionHabitacion:new" }
+
+ocupacionhabitacion_create:
+    path:     /create
+    defaults: { _controller: "LIHotelBundle:OcupacionHabitacion:create" }
+    methods:  POST
+
+ocupacionhabitacion_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LIHotelBundle:OcupacionHabitacion:edit" }
+
+ocupacionhabitacion_update:
+    path:     /{id}/update
+    defaults: { _controller: "LIHotelBundle:OcupacionHabitacion:update" }
+    methods:  [POST, PUT]
+
+ocupacionhabitacion_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LIHotelBundle:OcupacionHabitacion:delete" }
+    methods:  [POST, DELETE]

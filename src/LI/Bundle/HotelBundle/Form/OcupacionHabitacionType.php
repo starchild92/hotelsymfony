@@ -5,9 +5,8 @@ namespace LI\Bundle\HotelBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\FormEvents;
 
-class ReservaUsuarioType extends AbstractType
+class OcupacionHabitacionType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,17 +15,9 @@ class ReservaUsuarioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('estadoReserva','choice', array(
-                   'choices'  => array(
-                    'Por Concretar' => 'Por Concretar',
-            )))
-            ->add('codigoReserva', 'hidden')
-            ->add('habitacion')
-            ->add('cantidadPersonas')
-            ->add('cantidadNinos')
-            ->add('diasReserva')
-            ->add('fecha_desde', 'date', array(
-                'format' => 'dd MM yyyy'))
+            ->add('tipoHabitacion')
+            ->add('categoriaHabitacion')
+            ->add('cantidadPersonasHabitacion')
         ;
     }
     
@@ -36,7 +27,7 @@ class ReservaUsuarioType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'LI\Bundle\HotelBundle\Entity\Reserva',
+            'data_class' => 'LI\Bundle\HotelBundle\Entity\OcupacionHabitacion'
         ));
     }
 
@@ -45,6 +36,6 @@ class ReservaUsuarioType extends AbstractType
      */
     public function getName()
     {
-        return 'li_bundle_hotelbundle_reserva';
+        return 'li_bundle_hotelbundle_ocupacionhabitacion';
     }
 }

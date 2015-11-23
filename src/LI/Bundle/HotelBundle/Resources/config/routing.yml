@@ -1,3 +1,7 @@
+ocupacionhabitacion:
+    resource: "@LIHotelBundle/Resources/config/routing/ocupacionhabitacion.yml"
+    prefix:   /admin/ocupacionhabitacion
+
 li_hotel_usuario:
     resource: "@LIHotelBundle/Resources/config/routing/usuario.yml"
     prefix:   /admin/usuarios

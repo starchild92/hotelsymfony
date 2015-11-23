@@ -1,0 +1,22 @@
+{% extends 'LIHotelBundle::adminBase.html.twig' %}
+
+{% block body -%}
+    <div class="page-header">
+        <h1>Modificar Ocupación Habitación<br><small>...</small></h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+
+            {{ form(edit_form) }}
+
+                <ul class="record_actions">
+            <li>
+                <a href="{{ path('ocupacionhabitacion') }}">
+                    Back to the list
+                </a>
+            </li>
+            <li>{{ form(delete_form) }}</li>
+        </ul>
+        </div>
+    </div>
+{% endblock %}

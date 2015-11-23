@@ -64,7 +64,7 @@
 					</div>
 					<a href="{{ path('reserva') }}">
 						<div class="panel-footer">
-							<span class="pull-left">Ver más Detalles</span>
+							<span class="pull-left">Ver las reservas</span>
 							<span class="pull-right"><i class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i></span>
 							<div class="clearfix"></div>
 						</div>
@@ -92,7 +92,7 @@
 					</div>
 					<a href="{{ path('usuario') }}">
 						<div class="panel-footer">
-							<span class="pull-left">Ver más Detalles</span>
+							<span class="pull-left">Ver los usuarios</span>
 							<span class="pull-right"><i class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i></span>
 							<div class="clearfix"></div>
 						</div>
@@ -121,7 +121,7 @@
 					</div>
 					<a href="{{ path('habitacion') }}">
 						<div class="panel-footer">
-							<span class="pull-left">Ver más Detalles</span>
+							<span class="pull-left">Ver las habitaciones</span>
 							<span class="pull-right"><i class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i></span>
 							<div class="clearfix"></div>
 						</div>
@@ -181,10 +181,12 @@
 		<div class="row">
 			<div class="page-header"><h3>Mensajes</h3></div>
 			<div class="over">
-			<span class="labelalert labelalert-primary">labelalert-primary</span>
-			<span class="labelalert labelalert-atencion">labelalert-atencion</span>
-			<span class="labelalert labelalert-grave">labelalert-grave</span>
-			<span class="labelalert labelalert-normal">labelalert-normal</span>
+				{% for message in app.session.flashbag.get('grave') %}
+					<span class="labelalert labelalert-grave">La reserva <a href="{{ path('reserva_show', { 'id': message.id }) }}">{{ message.codigo }}</a> tiene {{ message.dias }} días vencida. </span>
+				{% endfor %}
+				<span class="labelalert labelalert-primary">labelalert-primary</span>
+				<span class="labelalert labelalert-atencion">labelalert-atencion</span>
+				<span class="labelalert labelalert-normal">labelalert-normal</span>
 			</div>
 		</div>
 	</div>

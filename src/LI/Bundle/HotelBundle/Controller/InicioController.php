@@ -17,6 +17,8 @@ use LI\Bundle\HotelBundle\Form\UsuarioType;
 use LI\Bundle\HotelBundle\Form\LoginType;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+use Symfony\Component\Validator\Constraints\DateTime;
+
 class InicioController extends Controller
 {
 	public function indexAction()
@@ -29,9 +31,6 @@ class InicioController extends Controller
 			}else{
 				if (in_array('ROLE_USER', $roles)) {
 					return $this->redirect($this->generateUrl('_user'));
-				}else{
-					//return $this->render('LIHotelBundle:Inicio:index.html.twig', array('user' => $user));
-					return $this->render('LIHotelBundle:Inicio:index.html.twig');
 				}
 			}
 		}
@@ -58,12 +57,41 @@ class InicioController extends Controller
 				$userManager = $this->get('fos_user.user_manager');
 				$usuarios = $userManager->findUsers();
 
+				/**
+					BUSCAR LAS RESERVAS QUE YA CADUCARON Y EL ESTADO ES POR CONCRETAR,
+					AGREGARLAS EN UN FLASHBAG Y MOSTRARLO EN LA VISTA
+					LA INTERFAZ DE ESOS MENSAJES ES
+						<span class="labelalert labelalert-primary">labelalert-primary</span>
+						<span class="labelalert labelalert-atencion">labelalert-atencion</span>
+						<span class="labelalert labelalert-grave">labelalert-grave</span>
+						<span class="labelalert labelalert-normal">labelalert-normal</span>
+				**/
 				$por_c = 0; $con = 0; $can = 0;
 				$cant_usuarios = sizeof($usuarios);
+				$session = $this->get('session');
+				$hoy = new \DateTime('today');
+				
+
 				foreach ($reservas as $reserva) {
 					$estado = $reserva->getEstadoReserva();
 					if ($estado == 'Por Concretar'){
 						$por_c = $por_c+1;
+
+						$fecha2 = $reserva->getFechadesde();
+						$interval = $hoy->diff($fecha2);
+						$off = $interval->format('%R%a');
+
+						if ($off < 0) {
+							$off = $off * (-1);
+							//echo "La reserva ".$reserva->getId().", se venció hace ".$off." días.";
+							// AÑADIR AQUI EL FLASH BAG
+							// set flash messages
+							//$session->getFlashBag()->add('grave', "La reserva <a href='/reserva/".$reserva->getId()."/show'>".$reserva->getCodigoreserva()."</a>, se venció hace ".$off." días.");
+							$session->getFlashBag()->add('grave', array('id'  => $reserva->getId(),
+																		'codigo' => $reserva->getCodigoreserva(),
+																		'dias' => $off));
+						}
+
 					}
 					if ($estado == 'Concretada'){
 						$con = $con+1;
@@ -89,6 +117,7 @@ class InicioController extends Controller
 				}
 
 				return $this->render('LIHotelBundle:Inicio:inicioAdmin.html.twig', array(
+					'session' => $session,
 					'user' => $user,
 					'por_concretar' => $por_c,
 					'concretadas' => $con,

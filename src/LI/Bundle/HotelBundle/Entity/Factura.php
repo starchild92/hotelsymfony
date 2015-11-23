@@ -60,9 +60,9 @@ class Factura
     private $cliente;*/
 
     /**
-     * @ORM\OneToOne(targetEntity="Reserva", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Reserva", inversedBy="factura")
      * @ORM\JoinColumn(name="reserva_id", referencedColumnName="id")
-     **/
+     */
     private $reserva;
 
     /**
