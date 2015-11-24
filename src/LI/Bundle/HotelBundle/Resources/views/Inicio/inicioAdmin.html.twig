@@ -15,6 +15,12 @@
 	    display: block;
 	    color: #fcf8e3;
     }
+    a:hover {
+    	text-decoration: none;
+    }
+    .labelalert:hover{
+    	font-weight: bold;
+    }
 	.labelalert-primary{
 		background-color: rgba(54, 54, 54, 0.55);
 	    color: #fcf8e3;
@@ -31,10 +37,6 @@
     }
     .over{ max-height: 400px; overflow-y: auto; border-radius: 5px; }
 	</style>
-{% endblock %}
-
-{% block badges %}
-	 <span class="badge">42</span>
 {% endblock %}
 
 {% block body %}
@@ -182,7 +184,7 @@
 			<div class="page-header"><h3>Mensajes</h3></div>
 			<div class="over">
 				{% for message in app.session.flashbag.get('grave') %}
-					<span class="labelalert labelalert-grave">La reserva <a href="{{ path('reserva_show', { 'id': message.id }) }}">{{ message.codigo }}</a> tiene {{ message.dias }} días vencida. </span>
+					<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-grave">La reserva {{ message.codigo }} tiene {{ message.dias }} días vencida. </span></a>
 				{% endfor %}
 				<span class="labelalert labelalert-primary">labelalert-primary</span>
 				<span class="labelalert labelalert-atencion">labelalert-atencion</span>

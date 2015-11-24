@@ -12,10 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class ReservaRepository extends EntityRepository
 {
+	// OBTIENE LAS RESERVAS DE UN USUARIO DADO
 	public function reservas_usuario($iduser){
 		$query = $this->getEntityManager()
 			->createQuery('SELECT u FROM LIHotelBundle:Reserva u WHERE u.cliente = :iduser');
 		$query->setParameter('iduser', $iduser);
+		$result = $query->getResult();
+		return $result;
+	}
+
+	//DEVUELVE LAS INSTANCIAS DE LAS HABITACIONES CUYA ESTADO RESERVA ES DISTINTO DE CANCELADA
+	public function reservas_habitacion($idhabitacion){
+		$query = $this->getEntityManager()
+			->createQuery('SELECT u FROM LIHotelBundle:Reserva u WHERE u.habitacion = :idhabitacion');
+		$query->setParameter('idhabitacion', $idhabitacion);
 		$result = $query->getResult();
 		return $result;
 	}

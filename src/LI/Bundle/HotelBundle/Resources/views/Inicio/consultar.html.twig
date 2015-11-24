@@ -2,39 +2,50 @@
 
 {% block title %}Hotel Symfony - Consultar Reservaciones{% endblock%}
 
-{% block body %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap-datepicker3.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap-datepicker3-standalone.css') }}">
-    <script src="{{ asset('bundles/lihotel/js/bootstrap-datepicker.js') }}"></script>
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/daterangepicker.css') }}" />
+{% endblock %}
 
+{% block body %}
     <div class="container">
         <div class="page-header">
-            <h1>Consultar Reservaciones<small>las habitaciones disponibles</small></h1>
+            <h1>Consultar Reservaciones</h1>
         </div>
         <div class="row">
-            <div class="col-md-4 col-xs-4">
+            <div class="col-md-6 col-xs-12">
                 <div class="page-header">
-                    <h3 style="margin-top:0px;"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>  Fecha</h3>
+                    <h3 style="margin-top:0px;"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>  Datos Consulta</h3>
                 </div>
-                <div style="overflow:hidden;">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div id="datetimepicker12"></div>
-                            </div>
-                        </div>
+
+                    <div class="input-group input-group-lg">
+                      <input class="form-control" type="text" name="datefilter" value="" placeholder="Seleccione las fechas" describedby="basic-addon1" />
+                      <div class="input-group-btn">
+                        <button type="button" class="btn btn-default" aria-haspopup="true">Consultar</button>
+                      </div>
                     </div>
+ 
                     <script type="text/javascript">
-                        $(function () {
-                            $('#datetimepicker12').datetimepicker({
-                                inline: true,
-                                sideBySide: true
-                            });
-                        });
+                    $(function() {
+
+                      $('input[name="datefilter"]').daterangepicker({
+                          autoUpdateInput: false,
+                          locale: {
+                              cancelLabel: 'Limpiar'
+                          }
+                      });
+
+                      $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+                          $(this).val(picker.startDate.format('DD/MM/YYYY') + ' a ' + picker.endDate.format('DD/MM/YYYY'));
+                      });
+
+                      $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+                          $(this).val('');
+                      });
+
+                    });
                     </script>
-                </div>
             </div>
-            <div class="col-md-8 col-xs-8">
+            <div class="col-md-6 col-xs-12">
                 <article>
                 <p>Donec imperdiet ante sed diam consequat et dictum erat faucibus. Aliquam sit
                 amet vehicula leo. Morbi urna dui, tempor ac posuere et, rutrum at dui.
@@ -49,4 +60,6 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="{{ asset('bundles/lihotel/js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/lihotel/js/daterangepicker.js') }}"></script>
 {% endblock %}

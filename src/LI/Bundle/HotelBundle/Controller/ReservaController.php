@@ -42,6 +42,35 @@ class ReservaController extends Controller
         }
     }
 
+    public function comprobarFechas($fecha, $dias, $reservas)
+    {
+        $puede = true;
+        $dias = $dias - 1;
+        $fecha_inicio = new \DateTime($fecha->format('Y-m-d'));
+        $fecha_final = new \DateTime($fecha_inicio->format('Y-m-d'));
+        $fecha_final->add(new \DateInterval('P'.$dias.'D'));
+        
+        //$dias = $dias + 1;
+        //throw $this->createNotFoundException($dias.' dias '.$fecha_inicio->format('Y-M-d')." a ".$fecha_final->format('Y-M-d'));
+
+        foreach ($reservas as $reserva) {
+            $dias_reserva = $reserva->getDiasReserva() - 1;
+            $fecha_reserva = $reserva->getFechaDesde();
+            $fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
+            $fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
+            $fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
+            
+            //$dias_reserva = $reserva->getDiasReserva();
+            //throw $this->createNotFoundException($dias_reserva.' dias '.$fecha_inicio_->format('Y-M-d')." a ".$fecha_final_->format('Y-M-d'));
+
+            if ($fecha_inicio > $fecha_inicio_ && $fecha_inicio < $fecha_final_) { $puede = false; }
+            if ($fecha_inicio == $fecha_inicio_) { $puede = false; }
+            if ($fecha_inicio == $fecha_final_) { $puede = false; }
+        }
+
+        return $puede;
+    }
+
     /**
      * Creates a new Reserva entity.
      *
@@ -59,36 +88,54 @@ class ReservaController extends Controller
                 if ($form->isValid()) {
                     $em = $this->getDoctrine()->getManager();
                     
-                    $factura = new Factura();
-                    $factura->setReserva($entity);
-                    $factura->setDiasReserva($entity->getDiasReserva());
-                    $factura->setFecha($entity->getFechaDesde());
-
-                    $factura->setCostoTotal(1); //calcular usando el tipo y reserva, como costo inicial sin los consumibles
-
-                    $em->persist($factura);
-                    $entity->setFactura($factura);
-                    $entity->setcodigoReserva('RES'.date('dmY').date('His'));
-                    /** 
-                        EL CODIGO DE LA RESERVA ESTA COMPUESTA
-                        RES(DIA MES AÑO)(HORA MINUTOS SEGUNDOS)
+                    /**
+                        VERIFICANDO QUE DADA LA FECHA DE RESERVA SE PUEDA RESERVAR
                     **/
+                    $res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
+                    if($this->comprobarFechas($entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol))
+                    {
+                        $factura = new Factura();
+                        $factura->setReserva($entity);
+                        $factura->setDiasReserva($entity->getDiasReserva());
+                        $factura->setFecha($entity->getFechaDesde());
 
-                    //cambiando el estado de la habitacion
-                    if ($entity->getEstadoReserva() == 'Concretada') {
-                        $habitacion = $entity->getHabitacion();
-                        $habitacion->setEstado('Ocupada');
-                    }else{
-                        if ($entity->getEstadoReserva() == 'Por Concretar') {
+                        /**
+                            CALCULAR USANDO LOS DÍAS, EL TIPO Y CATEGORIA COMO COSTO INICIAL
+                            SIN LOS CONSUMIBLES
+                        **/
+                        $factura->setCostoTotal(
+                            $entity->getDiasReserva() * 
+                            $entity->getHabitacion()->getTipo()->getTipoHabitacion()->getPrecio() * 
+                            $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio()
+                        );
+
+                        $em->persist($factura);
+                        $entity->setFactura($factura);
+                        $entity->setcodigoReserva('RES'.date('dmY').date('His'));
+                        /** 
+                            EL CODIGO DE LA RESERVA ESTA COMPUESTA
+                            RES(DIA MES AÑO)(HORA MINUTOS SEGUNDOS)
+                        **/
+
+                        //cambiando el estado de la habitacion
+                        if ($entity->getEstadoReserva() == 'Concretada') {
                             $habitacion = $entity->getHabitacion();
-                            $habitacion->setEstado('Reservada');
+                            $habitacion->setEstado('Ocupada');
+                        }else{
+                            if ($entity->getEstadoReserva() == 'Por Concretar') {
+                                $habitacion = $entity->getHabitacion();
+                                $habitacion->setEstado('Reservada');
+                            }
                         }
+                        
+                        $em->persist($entity);
+                        $em->flush();
+                        
+                        return $this->redirect($this->generateUrl('reserva_show', array('id' => $entity->getId())));
+                    }else{
+                        //No se puede reservar
+                        throw $this->createNotFoundException('No se puede hacer la reserva en la fecha que especifico');
                     }
-                    
-                    $em->persist($entity);
-                    $em->flush();
-                    
-                    return $this->redirect($this->generateUrl('reserva_show', array('id' => $entity->getId())));
                 }
             }else{
                 /** 
@@ -96,36 +143,47 @@ class ReservaController extends Controller
                 **/
                 if ($form->isValid()) {
                     $em = $this->getDoctrine()->getManager();
+
+                    $res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
+                    if($this->comprobarFechas($entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol))
+                    {
                     
-                    $factura = new Factura();
-                    $factura->setReserva($entity);
-                    $factura->setDiasReserva($entity->getDiasReserva());
-                    $factura->setFecha($entity->getFechaDesde());
+                        $factura = new Factura();
+                        $factura->setReserva($entity);
+                        $factura->setDiasReserva($entity->getDiasReserva());
+                        $factura->setFecha($entity->getFechaDesde());
 
-                    $factura->setCostoTotal(1); //calcular usando el tipo y reserva, como costo inicial sin los consumibles
+                        $factura->setCostoTotal(
+                                $entity->getDiasReserva() * 
+                                $entity->getHabitacion()->getTipo()->getTipoHabitacion()->getPrecio() * 
+                                $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio()
+                            );
 
-                    $em->persist($factura);
-                    $entity->setFactura($factura);
-                    $cliente = $em->getRepository('LIHotelBundle:Usuario')->find($user->getId());
-                    $entity->setCliente($cliente);
+                        $em->persist($factura);
+                        $entity->setFactura($factura);
+                        $cliente = $em->getRepository('LIHotelBundle:Usuario')->find($user->getId());
+                        $entity->setCliente($cliente);
 
-                    $entity->setcodigoReserva('RES'.date('dmY').date('His'));
+                        $entity->setcodigoReserva('RES'.date('dmY').date('His'));
 
-                    //cambiando el estado de la habitacion
-                    if ($entity->getEstadoReserva() == 'Concretada') {
-                        $habitacion = $entity->getHabitacion();
-                        $habitacion->setEstado('Ocupada');
-                    }else{
-                        if ($entity->getEstadoReserva() == 'Por Concretar') {
+                        //cambiando el estado de la habitacion
+                        if ($entity->getEstadoReserva() == 'Concretada') {
                             $habitacion = $entity->getHabitacion();
-                            $habitacion->setEstado('Reservada');
+                            $habitacion->setEstado('Ocupada');
+                        }else{
+                            if ($entity->getEstadoReserva() == 'Por Concretar') {
+                                $habitacion = $entity->getHabitacion();
+                                $habitacion->setEstado('Reservada');
+                            }
                         }
+                        
+                        $em->persist($entity);
+                        $em->flush();
+                        
+                        return $this->redirect($this->generateUrl('user_reserva_show', array('id' => $entity->getId())));
+                    }else{
+                        throw $this->createNotFoundException('No se puede hacer la reserva en la fecha que especifico');
                     }
-                    
-                    $em->persist($entity);
-                    $em->flush();
-                    
-                    return $this->redirect($this->generateUrl('user_reserva_show', array('id' => $entity->getId())));
                 }
             }
         }
@@ -356,7 +414,7 @@ class ReservaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('reserva_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Eliminar'))
+            ->add('submit', 'submit', array('label' => 'Eliminar Reserva'))
             ->getForm()
         ;
     }

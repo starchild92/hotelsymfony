@@ -144,27 +144,4 @@ class Habitacion
     public function __toString(){
         return $this->nombre;
     }
-
-    /**
-     * Set tipo
-     *
-     * @param \LI\Bundle\HotelBundle\Entity\Tipo $tipo
-     * @return Habitacion
-     */
-    public function setTipo(\LI\Bundle\HotelBundle\Entity\Tipo $tipo = null)
-    {
-        $this->tipo = $tipo;
-    
-        return $this;
-    }
-
-    /**
-     * Get tipo
-     *
-     * @return \LI\Bundle\HotelBundle\Entity\Tipo 
-     */
-    public function getTipo()
-    {
-        return $this->tipo;
-    }
 }

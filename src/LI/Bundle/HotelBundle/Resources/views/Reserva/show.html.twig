@@ -25,11 +25,11 @@
                 </tr>
                 <tr>
                     <th>Habitación Reservada</th>
-                    <td>{{ entity.habitacion }} ({{ entity.habitacion.numero }})</td>
+                    <td>{{ entity.habitacion }} ({{ entity.habitacion.numero }}) <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                 </tr>
                 <tr>
                     <th>Cliente</th>
-                    <td>{{ entity.cliente }}</td>
+                    <td>{{ entity.cliente }} <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                 </tr>
                 <tr>
                     <th>Reservada para la fecha</th>
@@ -56,14 +56,14 @@
         <table class="table table-bordered">
         <thead><tr><th colspan="2">Factura Asociada a la Reserva</th></tr></thead>
         <tbody>
-            <tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }}</td></tr>
+            <tr><td>Fecha Factuación</td><td>{{ entity.factura.fecha|date('d M Y\\ D') }}</td></tr>
+            <tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }} días</td></tr>
             <tr><td>Costo Acumulado</td><td>{{ entity.factura.costoTotal }} Bolívares</td></tr>
-            <tr><td>Fecha</td><td>{{ entity.factura.fecha|date('d M Y\\ D') }}</td></tr>
         </tbody>
         </table>
     </div>
 </div>
 
-    {{ form_widget(delete_form) }}
+    {{ form(delete_form) }}
 
 {% endblock %}
