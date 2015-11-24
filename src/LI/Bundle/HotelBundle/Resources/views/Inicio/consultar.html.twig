@@ -29,13 +29,14 @@
 
                       $('input[name="datefilter"]').daterangepicker({
                           autoUpdateInput: false,
+                          language: 'es',
                           locale: {
                               cancelLabel: 'Limpiar'
                           }
                       });
 
                       $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-                          $(this).val(picker.startDate.format('DD/MM/YYYY') + ' a ' + picker.endDate.format('DD/MM/YYYY'));
+                          $(this).val(picker.startDate.format('DD, MM YYYY') + ' al ' + picker.endDate.format('DD, MM YYYY'));
                       });
 
                       $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {

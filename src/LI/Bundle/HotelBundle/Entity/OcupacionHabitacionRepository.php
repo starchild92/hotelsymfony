@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class OcupacionHabitacionRepository extends EntityRepository
 {
+	/** DADO EL TIPO Y CATEGORIA DE UNA HABITACION DEVUELVE EL NUMERO DE PERSONAS MAXIMO ADMITIDO **/
+	public function obtener_ocupacion($tipo, $categoria)
+	{
+		$query = $this->getEntityManager()
+			->createQuery('SELECT u FROM LIHotelBundle:OcupacionHabitacion u 
+							WHERE u.tipoHabitacion = :tipo AND u.categoriaHabitacion = :categoria');
+		$query->setParameter('tipo', $tipo);
+		$query->setParameter('categoria', $categoria);		
+		$result = $query->getResult();
+		return $result;
+	}
 }

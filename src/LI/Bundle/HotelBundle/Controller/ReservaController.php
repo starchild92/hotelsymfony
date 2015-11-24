@@ -71,6 +71,20 @@ class ReservaController extends Controller
         return $puede;
     }
 
+    public function comprobarCantidad($tipo, $categoria, $personas_reserva)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $cantidad = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->obtener_ocupacion($tipo, $categoria);
+        foreach ($cantidad as $key) {
+            if ($personas_reserva <= $key->getCantidadPersonasHabitacion()) {
+                return true;
+            }
+            $session = $this->get('session');
+            $session->getFlashBag()->add('reserva', 'La cantidad de personas que ha especificado es demasido alta. Como alternativa puede rentar mas habitaciones.');
+            return false;
+        }
+    }
+
     /**
      * Creates a new Reserva entity.
      *
@@ -80,7 +94,7 @@ class ReservaController extends Controller
         $entity = new Reserva();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-
+        $session = $this->get('session');
         $user = $this->getUser();
         if ($user != null) {
             $roles = $user->getRoles();
@@ -92,7 +106,11 @@ class ReservaController extends Controller
                         VERIFICANDO QUE DADA LA FECHA DE RESERVA SE PUEDA RESERVAR
                     **/
                     $res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
-                    if($this->comprobarFechas($entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol))
+                    $var = $this->comprobarFechas($entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol);
+                    if (!$var) {
+                        $session->getFlashBag()->add('reserva', 'La habitacion que selecciono no se encuentra disponible en la fecha seleccionada. Revise las reservas de esta habitación para obtener mas detalles.');
+                    }
+                    if( $var && $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos()))
                     {
                         $factura = new Factura();
                         $factura->setReserva($entity);
@@ -134,7 +152,11 @@ class ReservaController extends Controller
                         return $this->redirect($this->generateUrl('reserva_show', array('id' => $entity->getId())));
                     }else{
                         //No se puede reservar
-                        throw $this->createNotFoundException('No se puede hacer la reserva en la fecha que especifico');
+                        return $this->render('LIHotelBundle:Reserva:new.html.twig', array(
+                            'entity' => $entity,
+                            'form'   => $form->createView(),
+                        ));
+                        //throw $this->createNotFoundException('No se puede hacer la reserva en la fecha que especifico');
                     }
                 }
             }else{
@@ -393,6 +415,11 @@ class ReservaController extends Controller
             $factura = $entity->getFactura();
             $factura->setReserva(NULL);
             $entity->setFactura(NULL);
+
+            /**
+                LIBERANDO LA HABITACIÓN
+            **/
+            $entity->getHabitacion()->setEstado('Libre');
 
             $em->remove($entity);
             $em->remove($factura);
