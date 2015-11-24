@@ -36,6 +36,7 @@ class OcupacionHabitacionController extends Controller
     public function createAction(Request $request)
     {
         $entity = new OcupacionHabitacion();
+        $session = $this->get('session');
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -51,11 +52,18 @@ class OcupacionHabitacionController extends Controller
             if ($key->getCategoriaHabitacion()->getNombre() == $categoria
                 && $key->getTipoHabitacion()->getNombre() == $tipo) {
                 $puede_insertar = false;
+                $a = $key->getTipoHabitacion()->getNombre();
+                $b = $key->getCategoriaHabitacion()->getNombre();
             }
         }
 
         if (!$puede_insertar) {
             // mensaje de no pudo insertar porque ya existe esa combinacion de tipo y categoria
+            $session->getFlashBag()->add('ocupacion_malos', 'La configuración de tipo '.$a.' y categoria '.$b.' ya existe. Si deseas modificarla ve a todas y elige la que deseas editar.');
+            return $this->render('LIHotelBundle:OcupacionHabitacion:new.html.twig', array(
+                'entity' => $entity,
+                'form'   => $form->createView(),
+            ));
         }
 
         if ($form->isValid() && $puede_insertar) {
@@ -64,13 +72,10 @@ class OcupacionHabitacionController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $session->getFlashBag()->add('ocupacion_buenos', 'La configuración de tipo '.$a.' y categoria '.$b.', se ha agregado satisfactoriamente');
+
             return $this->indexAction();
         }
-
-        return $this->render('LIHotelBundle:OcupacionHabitacion:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
     }
 
     /**
@@ -87,7 +92,7 @@ class OcupacionHabitacionController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Crear', 'attr' => array('class' => 'btn btn-primary')));
 
         return $form;
     }

@@ -29,4 +29,24 @@ class ReservaRepository extends EntityRepository
 		$result = $query->getResult();
 		return $result;
 	}
+
+	//DADO EL CODIGO DE LA RESERVA VERIFICA SI EXISTE
+	public function reservas_existe_codigo($codigo_reserva)
+	{
+		$query = $this->getEntityManager()
+			->createQuery('SELECT u FROM LIHotelBundle:Reserva u WHERE u.codigoReserva = :codigo_reserva');
+		$query->setParameter('codigo_reserva', $codigo_reserva);
+		$result = $query->getResult();
+		if (sizeof($result)>0) { return true; }else{ return false; }
+	}
+
+	//DADO EL CODIGO DEVUELVE LA RESERVA
+	public function reservas_obtener_codigo($codigo_reserva)
+	{
+		$query = $this->getEntityManager()
+			->createQuery('SELECT u FROM LIHotelBundle:Reserva u WHERE u.codigoReserva = :codigo_reserva');
+		$query->setParameter('codigo_reserva', $codigo_reserva);
+		$result = $query->getResult();
+		return $result;
+	}
 }
