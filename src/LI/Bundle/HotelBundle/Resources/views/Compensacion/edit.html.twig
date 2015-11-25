@@ -5,16 +5,12 @@
     <div class="page-header">
     	<h1>Compensacion edit</h1>
 	</div>
-	{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+
 	{{ form(edit_form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('compensacion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{% form_theme delete_form 'bootstrap_3_layout.html.twig' %}{{ form(delete_form) }}</li>
-	</ul>
+    <div class="row">
+        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('compensacion') }}" role="button">Regresar</a></div>
+        <div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
+    </div>
 </div>
 {% endblock %}

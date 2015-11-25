@@ -147,7 +147,7 @@ class LlamadaController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Actualizar'));
+        $form->add('submit', 'submit', array('label' => 'Actualizar Llamada', 'attr' => array('class' => 'btn btn-block btn-info')));
 
         return $form;
     }
@@ -217,7 +217,7 @@ class LlamadaController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('llamada_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Eliminar'))
+            ->add('submit', 'submit', array('label' => 'Eliminar Llamada', 'attr' => array('class' => 'btn btn-block btn-danger')))
             ->getForm()
         ;
     }

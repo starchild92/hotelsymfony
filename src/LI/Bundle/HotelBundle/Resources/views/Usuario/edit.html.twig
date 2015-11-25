@@ -19,8 +19,8 @@
     {{ form_end(edit_form) }}
     {#{ form_end(edit_form, {'render_rest': false}) }#}
 
-    <p style="text-align: center;">
-        <a class="btn btn-success" href="{{ path('usuario') }}" role="button">Regresar</a>
-        {{ form(delete_form) }}
-    </p>
+    <div class="row">
+        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('usuario') }}" role="button">Regresar</a></div>
+        <div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
+    </div>
 {% endblock %}

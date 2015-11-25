@@ -20,17 +20,9 @@
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('categoriahabitacion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('categoriahabitacion_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <div class="row">
+        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('categoriahabitacion') }}" role="button">Regresar</a></div>
+        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-warning btn-block" href="{{ path('categoriahabitacion_edit', { 'id': entity.id }) }}" role="button">Editar Categoría Habitación</a></div>
+        <div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
+    </div>
 {% endblock %}

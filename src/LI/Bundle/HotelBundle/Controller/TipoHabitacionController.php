@@ -217,7 +217,7 @@ class TipoHabitacionController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('tipohabitacion_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Eliminar'))
+            ->add('submit', 'submit', array('label' => 'Eliminar Tipo Habitación','attr' => array('class'=>'btn btn-block btn-danger')))
             ->getForm()
         ;
     }

@@ -6,7 +6,7 @@
         <h1>Llamada</h1>
     </div>
 
-    <table class="table table-striped record_properties">
+    <table class="table table-bordered table-striped record_properties">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -23,18 +23,10 @@
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('llamada') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('llamada_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <div class="row">
+        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('llamada') }}" role="button">Regresar</a></div>
+        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-warning btn-block" href="{{ path('llamada_edit', { 'id': entity.id }) }}" role="button">Editar Llamada</a></div>
+        <div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
+    </div>
 </div>
 {% endblock %}

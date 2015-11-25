@@ -7,16 +7,16 @@
     <div class="row">
         <div class="col-lg-12">
 
-            {{ form(edit_form) }}
+        {{ form_start(edit_form) }}
+            {{ form_errors(edit_form) }}
 
-                <ul class="record_actions">
-            <li>
-                <a href="{{ path('ocupacionhabitacion') }}">
-                    Back to the list
-                </a>
-            </li>
-            <li>{{ form(delete_form) }}</li>
-        </ul>
+        {{ form_end(edit_form) }}
+
         </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('ocupacionhabitacion') }}" role="button">Regresar</a></div>
+        <div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
+        <div class="col-lg-4 col-sm-4 col-xs-12">{{ form_row(edit_form.submit) }}</div>
     </div>
 {% endblock %}

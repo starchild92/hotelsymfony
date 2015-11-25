@@ -59,7 +59,7 @@ class OcupacionHabitacionController extends Controller
 
         if (!$puede_insertar) {
             // mensaje de no pudo insertar porque ya existe esa combinacion de tipo y categoria
-            $session->getFlashBag()->add('ocupacion_malos', 'La configuración de tipo '.$a.' y categoria '.$b.' ya existe. Si deseas modificarla ve a todas y elige la que deseas editar.');
+            $session->getFlashBag()->add('ocupacion_malos', 'La configuración de tipo '.$tipo.' y categoría '.$categoria.' ya existe. Si deseas modificarla ve a todas y elige la que deseas editar.');
             return $this->render('LIHotelBundle:OcupacionHabitacion:new.html.twig', array(
                 'entity' => $entity,
                 'form'   => $form->createView(),
@@ -72,7 +72,7 @@ class OcupacionHabitacionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $session->getFlashBag()->add('ocupacion_buenos', 'La configuración de tipo '.$a.' y categoria '.$b.', se ha agregado satisfactoriamente');
+            $session->getFlashBag()->add('ocupacion_buenos', 'La configuración de tipo '.$tipo.' y categoría '.$categoria.', se ha agregado satisfactoriamente');
 
             return $this->indexAction();
         }
@@ -150,7 +150,7 @@ class OcupacionHabitacionController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Actualizar Ocupacion', 'attr' => array('class' => 'btn btn-block btn-info')));
 
         return $form;
     }
@@ -220,7 +220,7 @@ class OcupacionHabitacionController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('ocupacionhabitacion_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar Ocupación', 'attr' => array('class' => 'btn btn-danger btn-block')))
             ->getForm()
         ;
     }

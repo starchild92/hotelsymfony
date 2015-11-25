@@ -11,6 +11,9 @@
 			{% for message in app.session.flashbag.get('concretar_buenos') %}
 				<div class="alert alert-success" role="alert"><b>En horabuena! </b>{{ message }}</div>
 			{% endfor %}
+			{% for message in app.session.flashbag.get('concretar_info') %}
+				<div class="alert alert-info" role="alert"><b>Disculpe! </b>{{ message }}</div>
+			{% endfor %}
 			{{ form_start(form) }}
 			<div class="input-group">
   				<span class="input-group-addon" id="basic-addon1">Código</span>

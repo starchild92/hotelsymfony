@@ -258,7 +258,7 @@ class HabitacionController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('habitacion_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class'=>'btn btn-danger')))
+            ->add('submit', 'submit', array('label' => 'Eliminar Habitación', 'attr' => array('class'=>'btn btn-block btn-danger')))
             ->getForm()
         ;
     }

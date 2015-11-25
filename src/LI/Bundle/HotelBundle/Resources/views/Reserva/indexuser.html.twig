@@ -46,7 +46,8 @@
                     <td>{{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|date('d-m-Y') }}</td>
                     <td class="opciones">
                         <a href="{{ path('user_reserva_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
-                        <a href="{{ path('user_reserva_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        {% if entity.estadoReserva != 'Concretada' %}
+                        <a href="{{ path('user_reserva_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>{% endif %}
                     </td>
                 </tr>
             {% endfor %}

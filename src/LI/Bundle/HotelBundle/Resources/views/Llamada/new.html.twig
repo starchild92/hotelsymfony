@@ -5,15 +5,11 @@
     <div class="page-header">
     	<h1>Llamada creation</h1>
 	</div>
-	{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
     {{ form(form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('llamada') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    <div class="row">
+        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('llamada') }}" role="button">Regresar</a></div>
+    </div>
 </div>
 {% endblock %}

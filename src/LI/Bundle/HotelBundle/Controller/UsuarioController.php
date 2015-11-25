@@ -220,7 +220,7 @@ class UsuarioController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('usuario_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Eliminar', 'attr' => array('class' => 'btn btn-danger')))
+            ->add('submit', 'submit', array('label' => 'Eliminar Usuario', 'attr' => array('class' => 'btn btn-block btn-danger')))
             ->getForm()
         ;
     }

@@ -147,7 +147,7 @@ class CompensacionController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Actualizar'));
+        $form->add('submit', 'submit', array('label' => 'Actualizar Compensacion', 'attr' => array('class' => 'btn btn-info btn-block')));
 
         return $form;
     }
@@ -216,8 +216,8 @@ class CompensacionController extends Controller
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('compensacion_delete', array('id' => $id)))
-            ->setMethod('Eliminar')
-            ->add('submit', 'submit', array('label' => 'Eliminar'))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Eliminar Compensacion', 'attr' => array('class' => 'btn btn-block btn-danger')))
             ->getForm()
         ;
     }

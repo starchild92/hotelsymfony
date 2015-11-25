@@ -245,7 +245,7 @@ class ReservaController extends Controller
 			}
 		}
 
-		$form->add('submit', 'submit', array('label' => 'Crear'));
+		$form->add('submit', 'submit', array('label' => 'Crear', 'attr' => array('class' => 'btn btn-block btn-info')));
 
 		return $form;
 	}
@@ -444,7 +444,7 @@ class ReservaController extends Controller
 		return $this->createFormBuilder()
 			->setAction($this->generateUrl('reserva_delete', array('id' => $id)))
 			->setMethod('DELETE')
-			->add('submit', 'submit', array('label' => 'Eliminar Reserva'))
+			->add('submit', 'submit', array('label' => 'Eliminar Reserva', 'attr' => array('class'=>'btn btn-danger btn-block')))
 			->getForm()
 		;
 	}
@@ -560,16 +560,19 @@ class ReservaController extends Controller
 			{
 				//throw $this->createNotFoundException('El codigo de la reserva que ha ingreasado existe.');
 				$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($data['codigo_reserva']);
-				
-				foreach ($reservas as $reserva) {
-					$reserva->setEstadoReserva('Concretada');
-					$reserva->getHabitacion()->setEstado('Ocupada');
+				if($reservas[0]->getEstadoReserva() == 'Concretada')
+				{
+					$session->getFlashBag()->add('concretar_info', 'Esta reserva ya ha sido concretada.');
+				}else{
+					foreach ($reservas as $reserva) {
+						$reserva->setEstadoReserva('Concretada');
+						$reserva->getHabitacion()->setEstado('Ocupada');
+					}
+					$em->persist($reserva);
+					$em->flush();
+
+					$session->getFlashBag()->add('concretar_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
 				}
-				$em->persist($reserva);
-				$em->flush();
-
-				$session->getFlashBag()->add('concretar_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
-
 			}else{
 				//throw $this->createNotFoundException('Holy Mother of God! El codigo no existe.');
 				$session->getFlashBag()->add('concretar_malos', 'Tal vez estás en drogas! Ese código no existe.');
