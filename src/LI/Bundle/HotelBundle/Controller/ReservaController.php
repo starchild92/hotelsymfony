@@ -329,7 +329,7 @@ class ReservaController extends Controller
 			'method' => 'PUT',
 		));
 
-		$form->add('submit', 'submit', array('label' => 'Actualizar'));
+		$form->add('submit', 'submit', array('label' => 'Actualizar Reserva', 'attr' => array('class' => 'btn btn-info btn-block')));
 
 		return $form;
 	}
