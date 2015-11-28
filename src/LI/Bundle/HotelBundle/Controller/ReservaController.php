@@ -72,11 +72,27 @@ class ReservaController extends Controller
 					$session = $this->get('session');
 					$session->getFlashBag()->add('reserva', 'La fecha que ha elegido esta contenida dentro de otra reserva.');
 				}
+				if ($fecha_final > $fecha_inicio_ && $fecha_final < $fecha_final_) { $puede = false; 
+					$session = $this->get('session');
+					$session->getFlashBag()->add('reserva', 'La fecha que ha elegido esta contenida dentro de otra reserva.');
+				}
+				if ($fecha_inicio_ > $fecha_inicio && $fecha_inicio_ < $fecha_final) { $puede = false; 
+					$session = $this->get('session');
+					$session->getFlashBag()->add('reserva', 'La fecha que ha elegido esta contenida dentro de otra reserva.');
+				}
 				if ($fecha_inicio == $fecha_inicio_) { $puede = false;
 					$session = $this->get('session');
 					$session->getFlashBag()->add('reserva', 'El dia de inicio ya está reservada, eliga el día anterior al '.$fecha_inicio->format('d \\d\\e M \\d\\e\\l Y'));
 				}
 				if ($fecha_inicio == $fecha_final_) { $puede = false; 
+					$session = $this->get('session');
+					$session->getFlashBag()->add('reserva', 'Trate de elegir menos días porque ya esta reservada en los últimos dias.');
+				}
+				if ($fecha_final == $fecha_inicio_) { $puede = false;
+					$session = $this->get('session');
+					$session->getFlashBag()->add('reserva', 'El dia de inicio ya está reservada, eliga el día anterior al '.$fecha_inicio->format('d \\d\\e M \\d\\e\\l Y'));
+				}
+				if ($fecha_final == $fecha_final_) { $puede = false; 
 					$session = $this->get('session');
 					$session->getFlashBag()->add('reserva', 'Trate de elegir menos días porque ya esta reservada en los últimos dias.');
 				}
