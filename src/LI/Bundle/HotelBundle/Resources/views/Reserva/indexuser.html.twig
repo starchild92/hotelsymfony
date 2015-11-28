@@ -39,7 +39,7 @@
                         <td>{{ entity.codigoReserva }}</td>
                         <td>{{ entity.estadoReserva }}</td>
                         <td>{{ entity.habitacion }} ({{ entity.habitacion.estado }}) <a href="{{ path('user_habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
-                        <td>{{ entity.cantidadPersonas }}</td>
+                        <td>{{ entity.cantidadPersonas + entity.cantidadNinos }}</td>
                         <td>{{ entity.diasReserva }}</td>
                         <td>{{ entity.fechareserva|date('d-m-Y') }}</td>
                         <td>{{ entity.fechadesde|date('d-m-Y') }}</td>

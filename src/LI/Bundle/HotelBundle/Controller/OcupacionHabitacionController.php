@@ -161,20 +161,44 @@ class OcupacionHabitacionController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $session = $this->get('session');
         $entity = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find OcupacionHabitacion entity.');
         }
 
+        $categoria = $entity->getCategoriaHabitacion()->getNombre();
+        $tipo = $entity->getTipoHabitacion()->getNombre();
+
+        $entities = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->findAll();
+
+        $puede_insertar = true;
+        foreach ($entities as $key) {
+            if ($key->getCategoriaHabitacion()->getNombre() == $categoria
+                && $key->getTipoHabitacion()->getNombre() == $tipo && $entity->getId() != $id) {
+                $puede_insertar = false;
+                $a = $key->getTipoHabitacion()->getNombre();
+                $b = $key->getCategoriaHabitacion()->getNombre();
+            }
+        }
+
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
+        if (!$puede_insertar) {
+            $session->getFlashBag()->add('ocupacion_malos', 'La configuración de tipo '.$tipo.' y categoría '.$categoria.' ya existe. Si deseas modificarla ve a todas y elige la que deseas editar.');
+            return $this->render('LIHotelBundle:OcupacionHabitacion:edit.html.twig', array(
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            ));
+        }
+
         if ($editForm->isValid()) {
             $em->flush();
-
+            $session->getFlashBag()->add('ocupacion_buenos', 'Se han guardado los cambios satisfactoriamente.');
             return $this->indexAction();
         }
 

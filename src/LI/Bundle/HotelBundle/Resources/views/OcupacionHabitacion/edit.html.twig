@@ -6,6 +6,12 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
+        {% for message in app.session.flashbag.get('ocupacion_malos') %}
+            <div class="alert alert-danger" role="alert"><b>Oh crap! </b>{{ message }}</div>
+        {% endfor %}
+        {% for message in app.session.flashbag.get('ocupacion_buenos') %}
+            <div class="alert alert-success" role="alert"><b>En horabuena! </b>{{ message }}</div>
+        {% endfor %}
 
         {{ form_start(edit_form) }}
             {{ form_errors(edit_form) }}

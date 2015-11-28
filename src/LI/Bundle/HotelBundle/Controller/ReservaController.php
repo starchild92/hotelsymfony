@@ -91,7 +91,7 @@ class ReservaController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$cantidad = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->obtener_ocupacion($tipo, $categoria);
 		foreach ($cantidad as $key) {
-			if ($personas_reserva <= $key->getCantidadPersonasHabitacion()) {
+			if ($key->getCantidadPersonasHabitacion() >= $personas_reserva ) {
 				return true;
 			}
 			$session = $this->get('session');
@@ -182,7 +182,8 @@ class ReservaController extends Controller
 					$em = $this->getDoctrine()->getManager();
 
 					$res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
-					if($this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol))
+					if($this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol)
+						&& $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos()))
 					{
 					
 						$factura = new Factura();
@@ -255,7 +256,7 @@ class ReservaController extends Controller
 			}
 		}
 
-		$form->add('submit', 'submit', array('label' => 'Crear', 'attr' => array('class' => 'btn btn-block btn-info')));
+		$form->add('submit', 'submit', array('label' => 'Crear Nueva Reserva', 'attr' => array('class' => 'btn btn-block btn-info')));
 
 		return $form;
 	}
@@ -376,7 +377,8 @@ class ReservaController extends Controller
 			$roles = $user->getRoles();
 			if (in_array('ROLE_ADMIN', $roles)) {
 				$res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
-				if($this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol)){
+				if($this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol)
+					&& $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos())){
 					
 					if ($editForm->isValid()) {
 						$factura = $em->getRepository('LIHotelBundle:Factura')->find($entity->getFactura()->getId());
@@ -394,26 +396,28 @@ class ReservaController extends Controller
 					'delete_form' => $deleteForm->createView(),
 				));
 			}else{
-				if ($editForm->isValid()) {
-					$em->flush();
+				$res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
+				if($this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol)
+					&& $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos())){
+				
+					if ($editForm->isValid()) {
+						$em->flush();
 
-					$cliente = $em->getRepository('LIHotelBundle:Usuario')->find($user->getId());
-					$factura = $em->getRepository('LIHotelBundle:Factura')->find($entity->getFactura()->getId());
-					$factura->setDiasReserva($entity->getDiasReserva());
-					$entity->setCliente($cliente);
-					$em->persist($factura);
-					$em->persist($entity);
-					$em->flush();
+						$cliente = $em->getRepository('LIHotelBundle:Usuario')->find($user->getId());
+						$factura = $em->getRepository('LIHotelBundle:Factura')->find($entity->getFactura()->getId());
+						$factura->setDiasReserva($entity->getDiasReserva());
+						$entity->setCliente($cliente);
+						$em->persist($factura);
+						$em->persist($entity);
+						$em->flush();
 
-					return $this->redirect($this->generateUrl('user_reserva_edit', array('id' => $id)));
+						//return $this->redirect($this->generateUrl('user_reserva_edit', array('id' => $id)));
+					}
+				}else{
+					$session->getFlashBag()->add('reserva_error', 'La cantidad de personas supera la permitidad por habitación.');
 				}
-
-				return $this->render('LIHotelBundle:Reserva:edituser.html.twig', array(
-					'entity'      => $entity,
-					'edit_form'   => $editForm->createView(),
-					'delete_form' => $deleteForm->createView(),
-					'user'        => $user,
-				));
+				$session->getFlashBag()->add('reserva_bien', 'Se ha modificado satisfactoriamente la reserva.');
+				return $this->redirect($this->generateUrl('user_reserva_edit', array('id' => $id)));
 			}
 		}
 	}
@@ -451,7 +455,15 @@ class ReservaController extends Controller
 			$em->flush();
 		}
 
-		return $this->redirect($this->generateUrl('reserva'));
+		$user = $this->getUser();
+		if ($user != null) {
+			$roles = $user->getRoles();
+			if (in_array('ROLE_ADMIN', $roles)) {
+				return $this->redirect($this->generateUrl('reserva'));
+			}else{
+				return $this->indexuserAction();
+			}
+		}
 	}
 
 	/**

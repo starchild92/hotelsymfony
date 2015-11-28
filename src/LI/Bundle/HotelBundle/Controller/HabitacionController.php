@@ -14,13 +14,13 @@ use LI\Bundle\HotelBundle\Form\HabitacionType;
  */
 class HabitacionController extends Controller
 {
-
     /**
      * Lists all Habitacion entities.
      *
      */
     public function indexAction()
     {
+        $user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('LIHotelBundle:Habitacion')->findAll();
@@ -35,6 +35,7 @@ class HabitacionController extends Controller
      */
     public function createAction(Request $request)
     {
+        $user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
         $entity = new Habitacion();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -92,7 +93,7 @@ class HabitacionController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Crear', 'attr' => array('class'=>'btn btn-primary')));
+        $form->add('submit', 'submit', array('label' => 'Crear Nueva Habitación', 'attr' => array('class'=>'btn btn-block btn-primary')));
 
         return $form;
     }
@@ -103,6 +104,7 @@ class HabitacionController extends Controller
      */
     public function newAction()
     {
+        $user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
         $entity = new Habitacion();
         $form   = $this->createCreateForm($entity);
 
@@ -110,7 +112,7 @@ class HabitacionController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
-    }
+}
 
     /**
      * Finds and displays a Habitacion entity.
@@ -118,8 +120,9 @@ class HabitacionController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 
+        $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LIHotelBundle:Habitacion')->find($id);
 
         if (!$entity) {
@@ -142,6 +145,7 @@ class HabitacionController extends Controller
      */
     public function editAction($id)
     {
+        $user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('LIHotelBundle:Habitacion')->find($id);
@@ -184,6 +188,7 @@ class HabitacionController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        $user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('LIHotelBundle:Habitacion')->find($id);
@@ -228,6 +233,7 @@ class HabitacionController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        $user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -265,6 +271,7 @@ class HabitacionController extends Controller
 
     public function showuserAction($id)
     {
+        $user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('LIHotelBundle:Habitacion')->find($id);

@@ -1,80 +1,80 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
-    <div class="page-header">
-        <h1>Reserva</h1>
-    </div>
+	<div class="page-header">
+		<h1>Reserva</h1>
+	</div>
 
 <div class="row">
-    <div class="col-lg-12">
-    {% for message in app.session.flashbag.get('reserva_info') %}
-        <div class="alert alert-info" role="alert"><b>Pss Disculpe! </b>{{ message }}</div>
-    {% endfor %}
-    </div>
+	<div class="col-lg-12">
+	{% for message in app.session.flashbag.get('reserva_info') %}
+		<div class="alert alert-info" role="alert"><b>Pss Disculpe! </b>{{ message }}</div>
+	{% endfor %}
+	</div>
 
-    <div class="col-lg-6">
-        <table class="table table-bordered record_properties">
-            <thead>
-                <tr>
-                    <th colspan="2">Detalles de la Reserva</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th>Código de la Reserva</th>
-                    <td>{{ entity.codigoReserva }}</td>
-                </tr>
-                <tr>
-                    <th>Estado de su Reserva</th>
-                    <td>{{ entity.estadoReserva }}</td>
-                </tr>
-                <tr>
-                    <th>Habitación Reservada</th>
-                    <td>{{ entity.habitacion }} ({{ entity.habitacion.numero }}) <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
-                </tr>
-                <tr>
-                    <th>Cliente</th>
-                    <td>{{ entity.cliente }} <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
-                </tr>
-                <tr>
-                    <th>Reservada para la fecha</th>
-                    <td>{{ entity.fechadesde|date('d M Y\\ D') }}</td>
-                </tr>
-                <tr>
-                    <th>Reserva realizada el</th>
-                    <td>{{ entity.fechareserva|date('d M Y\\ D') }}
-                    {% set diasR = entity.diasReserva %}
-                    | {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|date('d-m-Y') }}</td>
-                </tr>
-                <tr>
-                    <th>Reservada para</th>
-                    <td>{{ entity.cantidadPersonas + entity.cantidadNinos }} personas</td>
-                </tr>
-                <tr>
-                    <th>Período en días de la reserva</th>
-                    <td>{{ entity.diasReserva }} días</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-lg-6">
-        <table class="table table-bordered">
-        <thead><tr><th colspan="2">Factura Asociada a la Reserva</th></tr></thead>
-        <tbody>
-            <tr><td>Fecha Factuación</td><td>{{ entity.factura.fecha|date('d M Y\\ D') }}</td></tr>
-            <tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }} días</td></tr>
-            <tr><td>Costo Acumulado</td><td>{{ entity.factura.costoTotal }} Bolívares</td></tr>
-        </tbody>
-        </table>
-    </div>
+	<div class="col-lg-6">
+		<table class="table table-bordered record_properties">
+			<thead>
+				<tr>
+					<th colspan="2">Detalles de la Reserva</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>Código de la Reserva</th>
+					<td>{{ entity.codigoReserva }}</td>
+				</tr>
+				<tr>
+					<th>Estado de su Reserva</th>
+					<td>{{ entity.estadoReserva }}</td>
+				</tr>
+				<tr>
+					<th>Habitación Reservada</th>
+					<td>{{ entity.habitacion }} ({{ entity.habitacion.numero }}) <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+				</tr>
+				<tr>
+					<th>Cliente</th>
+					<td>{{ entity.cliente }} <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+				</tr>
+				<tr>
+					<th>Reservada para la fecha</th>
+					<td>{{ entity.fechadesde|date('d M Y\\ D') }}</td>
+				</tr>
+				<tr>
+					<th>Reserva realizada el</th>
+					<td>{{ entity.fechareserva|date('d M Y\\ D') }}
+					{% set diasR = entity.diasReserva %}
+					| {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|date('d-m-Y') }}</td>
+				</tr>
+				<tr>
+					<th>Reservada para</th>
+					<td>{{ entity.cantidadPersonas + entity.cantidadNinos }} personas</td>
+				</tr>
+				<tr>
+					<th>Período en días de la reserva</th>
+					<td>{{ entity.diasReserva }} días</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-lg-6">
+		<table class="table table-bordered">
+		<thead><tr><th colspan="2">Factura Asociada a la Reserva</th></tr></thead>
+		<tbody>
+			<tr><td>Fecha Factuación</td><td>{{ entity.factura.fecha|date('d M Y\\ D') }}</td></tr>
+			<tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }} días</td></tr>
+			<tr><td>Costo Acumulado</td><td>{{ entity.factura.costoTotal }} Bolívares</td></tr>
+		</tbody>
+		</table>
+	</div>
 </div>
 
-    <div class="row">
-        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('reserva') }}" role="button">Regresar</a></div>
-        {% if entity.estadoReserva != 'Cancelada' %}
-        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-warning btn-block" href="{{ path('reserva_edit', { 'id': entity.id }) }}" role="button">Editar Reserva</a></div>
-        {% endif %}
-        <div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
-    </div>
+	<div class="row">
+		<div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('reserva') }}" role="button">Regresar</a></div>
+		{% if entity.estadoReserva != 'Cancelada' %}
+		<div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-warning btn-block" href="{{ path('reserva_edit', { 'id': entity.id }) }}" role="button">Editar Reserva</a></div>
+		{% endif %}
+		<div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
+	</div>
 
 {% endblock %}
