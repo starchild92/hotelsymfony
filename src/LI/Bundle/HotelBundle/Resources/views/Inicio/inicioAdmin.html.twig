@@ -20,6 +20,7 @@
     }
     .labelalert:hover{
     	font-weight: bold;
+    	cursor: pointer;
     }
 	.labelalert-primary{
 		background-color: rgba(54, 54, 54, 0.55);
@@ -183,13 +184,20 @@
 	<div class="col-lg-3 col-sm-2 col-md-4 col-xs-12">
 		<div class="row">
 			<div class="page-header"><h3>Mensajes</h3></div>
-			<div class="over">
-				{% for message in app.session.flashbag.get('grave') %}
-					<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-grave">La reserva {{ message.codigo }} tiene {{ message.dias }} días vencida. </span></a>
-				{% endfor %}
-				<span class="labelalert labelalert-primary">labelalert-primary</span>
-				<span class="labelalert labelalert-atencion">labelalert-atencion</span>
-				<span class="labelalert labelalert-normal">labelalert-normal</span>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="over">
+						{% if app.session.flashbag.get('grave') is empty %}
+							<span>No hay mensajes para mostrar.</span>
+						{% endif %}
+						{% for message in app.session.flashbag.get('grave') %}
+							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-grave">La reserva {{ message.codigo }} tiene {{ message.dias }} días vencida. </span></a>
+						{% endfor %}
+						<!--<span class="labelalert labelalert-primary">labelalert-primary</span>
+						<span class="labelalert labelalert-atencion">labelalert-atencion</span>
+						<span class="labelalert labelalert-normal">labelalert-normal</span>-->
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

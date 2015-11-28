@@ -3,10 +3,13 @@
 {% block body -%}
     <div class="page-header">
         <h1>Reserva </h1>
-
     </div>
 
 <div class="row">
+    {% for message in app.session.flashbag.get('reserva_info') %}
+        <div class="alert alert-info" role="alert"><b>Pss Disculpe! </b>{{ message }}</div>
+    {% endfor %}
+
     <div class="col-lg-6">
         <table class="table table-bordered record_properties">
             <thead>
@@ -43,7 +46,7 @@
                 </tr>
                 <tr>
                     <th>Reservada para</th>
-                    <td>{{ entity.cantidadPersonas }} personas</td>
+                    <td>{{ entity.cantidadPersonas + entity.cantidadNinos }} personas</td>
                 </tr>
                 <tr>
                     <th>Período en días de la reserva</th>

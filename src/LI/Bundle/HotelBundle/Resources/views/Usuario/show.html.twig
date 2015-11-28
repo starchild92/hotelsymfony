@@ -12,9 +12,8 @@
                 <th>Estado</th>
                 <th>Correo</th>
                 <th>Usuario</th>
-                <th>Ultima Conexión</th>
+                <th>Última Conexión</th>
                 <th>Roles</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -27,9 +26,7 @@
                 <td>{{ entity.lastLogin|date('d-m-Y H:i') }}</td>
                 <td>{% for role in entity.roles %}
                     {{ role }} 
-                {% endfor %}</td>
-                <td>
-                    <a href="{{ path('usuario_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                {% endfor %}
                 </td>
             </tr>
         </tbody>

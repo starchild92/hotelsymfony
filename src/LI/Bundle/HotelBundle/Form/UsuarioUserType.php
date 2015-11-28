@@ -24,7 +24,8 @@ class UsuarioUserType extends AbstractType
                 'label' => 'Fecha de Nacimiento',
                 'years' => range(date('Y') -18, date('Y') -115)
             ))
-            ->add('plainPassword');
+            //->add('plainPassword')
+            ;
     }
     
     /**

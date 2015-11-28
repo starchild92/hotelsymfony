@@ -17,8 +17,7 @@
                 <th>Personas</th>
                 <th>Días Reserva</th>
                 <!--<th>Hecha el</th>-->
-                <th>Desde</th>
-                <th>Hasta</th>
+                <th>Período</th>
                 <th>Opciones</th>
             </tr>
         </thead>
@@ -31,14 +30,16 @@
                 <td>{{ entity.habitacion }} ({{ entity.habitacion.estado }}) <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                 <td>{{ entity.cliente }} <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                 <td>{{ entity.cantidadPersonas }}</td>
-                <td>{{ entity.diasReserva }}</td>
+                <td>{{ entity.diasReserva }} días</td>
                 <!--<td>{{ entity.fechareserva|date('d-m-Y') }}</td>-->
-                <td>{{ entity.fechadesde|date('d-m-Y') }}</td>
+                <td>{{ entity.fechadesde|date('d-m-Y') }} - 
                 {% set diasR = entity.diasReserva-1 %}
-                <td>{{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|date('d-m-Y') }}</td>
+                {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|date('d-m-Y') }}</td>
                 <td class="opciones">
                     <a href="{{ path('reserva_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                    {% if entity.estadoReserva != 'Cancelada' %}
                     <a href="{{ path('reserva_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}

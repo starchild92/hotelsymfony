@@ -4,6 +4,12 @@
 <div class="page-header">
     <h1>Modificar Reserva</h1>
 </div>
+	{% for message in app.session.flashbag.get('reserva') %}
+        <div class="alert alert-danger" role="alert"><b>Oh crap! </b>{{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('reserva_bien') %}
+        <div class="alert alert-success" role="alert"><b>Enhorabuena! </b>{{ message }}</div>
+    {% endfor %}
 
     {{ form(edit_form) }}
 

@@ -38,8 +38,7 @@ class InicioController extends Controller
 		return $this->render('LIHotelBundle:Inicio:index.html.twig');
 	}
 
-	public function indexUserAction()
-	{
+	public function indexUserAction(){
 		return $this->render('LIHotelBundle:Inicio:index.html.twig');
 	}
 
@@ -167,6 +166,7 @@ class InicioController extends Controller
 
 			if ($form->isValid()) {
 				$em = $this->getDoctrine()->getEntityManager();
+				$usuario->setEnabled(true);
 				$em->persist($usuario);
 				$em->flush();
 

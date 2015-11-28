@@ -45,7 +45,7 @@ class ReservaController extends Controller
 		}
 	}
 
-	public function comprobarFechas($fecha, $dias, $reservas)
+	public function comprobarFechas($id, $fecha, $dias, $reservas)
 	{
 		$puede = true;
 		$dias = $dias - 1;
@@ -57,18 +57,30 @@ class ReservaController extends Controller
 		//throw $this->createNotFoundException($dias.' dias '.$fecha_inicio->format('Y-M-d')." a ".$fecha_final->format('Y-M-d'));
 
 		foreach ($reservas as $reserva) {
-			$dias_reserva = $reserva->getDiasReserva() - 1;
-			$fecha_reserva = $reserva->getFechaDesde();
-			$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
-			$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
-			$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
-			
-			//$dias_reserva = $reserva->getDiasReserva();
-			//throw $this->createNotFoundException($dias_reserva.' dias '.$fecha_inicio_->format('Y-M-d')." a ".$fecha_final_->format('Y-M-d'));
+			if ($id != $reserva->getId()) {
 
-			if ($fecha_inicio > $fecha_inicio_ && $fecha_inicio < $fecha_final_) { $puede = false; }
-			if ($fecha_inicio == $fecha_inicio_) { $puede = false; }
-			if ($fecha_inicio == $fecha_final_) { $puede = false; }
+				$dias_reserva = $reserva->getDiasReserva() - 1;
+				$fecha_reserva = $reserva->getFechaDesde();
+				$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
+				$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
+				$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
+				
+				//$dias_reserva = $reserva->getDiasReserva();
+				//throw $this->createNotFoundException($dias_reserva.' dias '.$fecha_inicio_->format('Y-M-d')." a ".$fecha_final_->format('Y-M-d'));
+
+				if ($fecha_inicio > $fecha_inicio_ && $fecha_inicio < $fecha_final_) { $puede = false; 
+					$session = $this->get('session');
+					$session->getFlashBag()->add('reserva', 'La fecha que ha elegido esta contenida dentro de otra reserva.');
+				}
+				if ($fecha_inicio == $fecha_inicio_) { $puede = false;
+					$session = $this->get('session');
+					$session->getFlashBag()->add('reserva', 'El dia de inicio ya está reservada, eliga el día anterior al '.$fecha_inicio->format('d \\d\\e M \\d\\e\\l Y'));
+				}
+				if ($fecha_inicio == $fecha_final_) { $puede = false; 
+					$session = $this->get('session');
+					$session->getFlashBag()->add('reserva', 'Trate de elegir menos días porque ya esta reservada en los últimos dias.');
+				}
+			}
 		}
 
 		return $puede;
@@ -109,7 +121,7 @@ class ReservaController extends Controller
 						VERIFICANDO QUE DADA LA FECHA DE RESERVA SE PUEDA RESERVAR
 					**/
 					$res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
-					$var = $this->comprobarFechas($entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol);
+					$var = $this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol);
 					if (!$var) {
 						$session->getFlashBag()->add('reserva', 'La habitacion que selecciono no se encuentra disponible en la fecha seleccionada. Revise las reservas de esta habitación para obtener mas detalles.');
 					}
@@ -170,7 +182,7 @@ class ReservaController extends Controller
 					$em = $this->getDoctrine()->getManager();
 
 					$res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
-					if($this->comprobarFechas($entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol))
+					if($this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol))
 					{
 					
 						$factura = new Factura();
@@ -207,16 +219,15 @@ class ReservaController extends Controller
 						
 						return $this->redirect($this->generateUrl('user_reserva_show', array('id' => $entity->getId())));
 					}else{
-						throw $this->createNotFoundException('No se puede hacer la reserva en la fecha que especifico');
+						$this->get('session')->getFlashBag()->set('reserva_error', 'No se puede hacer la reserva en la fecha que especifico. Bien puede que habitación ya este reservada en algun periodo de tiempo igual al que has seleccionado.');
+						return $this->render('LIHotelBundle:Reserva:newuser.html.twig', array(
+							'entity' => $entity,
+							'form'   => $form->createView(),
+						));
 					}
 				}
 			}
 		}
-
-		return $this->render('LIHotelBundle:Reserva:new.html.twig', array(
-			'entity' => $entity,
-			'form'   => $form->createView(),
-		));
 	}
 
 	/**
@@ -228,7 +239,6 @@ class ReservaController extends Controller
 	 */
 	private function createCreateForm(Reserva $entity)
 	{
-		
 		$user = $this->getUser();
 		if ($user != null) {
 			$roles = $user->getRoles();
@@ -298,21 +308,31 @@ class ReservaController extends Controller
 		$em = $this->getDoctrine()->getManager();
 
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
+		if ($entity->getEstadoReserva() != 'Cancelada') {
 
-		if (!$entity) {
-			throw $this->createNotFoundException('Unable to find Reserva entity.');
+
+		
+			if (!$entity) {
+				throw $this->createNotFoundException('Unable to find Reserva entity.');
+			}
+
+			$editForm = $this->createEditForm($entity);
+			$deleteForm = $this->createDeleteForm($id);
+			$user = $this->getUser();
+
+			return $this->render('LIHotelBundle:Reserva:edit.html.twig', array(
+				'entity'      => $entity,
+				'edit_form'   => $editForm->createView(),
+				'delete_form' => $deleteForm->createView(),
+				'user' => $user,
+			));
+		}else{
+			/**
+			AQUI DEBERIA MANDAR UN MENSAJE DE QUE NO SE PUEDE EDITAR UNA RESERVA CANCELADA
+			**/
+			$this->get('session')->getFlashBag()->set('reserva_info', 'Esta reserva, ha sido cancelada, por este motivo no puede ser modificada. Si lo desea puede generar otra reserva con las mismas caracteristicas.');
+			return $this->showAction($id);
 		}
-
-		$editForm = $this->createEditForm($entity);
-		$deleteForm = $this->createDeleteForm($id);
-		$user = $this->getUser();
-
-		return $this->render('LIHotelBundle:Reserva:edit.html.twig', array(
-			'entity'      => $entity,
-			'edit_form'   => $editForm->createView(),
-			'delete_form' => $deleteForm->createView(),
-			'user' => $user,
-		));
 	}
 
 	/**
@@ -340,7 +360,7 @@ class ReservaController extends Controller
 	public function updateAction(Request $request, $id)
 	{
 		$em = $this->getDoctrine()->getManager();
-
+		$session = $this->get('session');
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
 
 		if (!$entity) {
@@ -355,23 +375,25 @@ class ReservaController extends Controller
 		if ($user != null) {
 			$roles = $user->getRoles();
 			if (in_array('ROLE_ADMIN', $roles)) {
-
-				if ($editForm->isValid()) {
-					$factura = $em->getRepository('LIHotelBundle:Factura')->find($entity->getFactura()->getId());
-					$factura->setDiasReserva($entity->getDiasReserva());
-					$em->persist($factura);
-					$em->flush();
-
-					return $this->redirect($this->generateUrl('reserva_edit', array('id' => $id)));
+				$res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
+				if($this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol)){
+					
+					if ($editForm->isValid()) {
+						$factura = $em->getRepository('LIHotelBundle:Factura')->find($entity->getFactura()->getId());
+						$factura->setDiasReserva($entity->getDiasReserva());
+						$em->persist($factura);
+						$em->flush();
+						$session->getFlashBag()->add('reserva_bien', 'Se ha modificado con exito la reserva.');
+						return $this->redirect($this->generateUrl('reserva_edit', array('id' => $id)));
+					}
 				}
-
+				
 				return $this->render('LIHotelBundle:Reserva:edit.html.twig', array(
 					'entity'      => $entity,
 					'edit_form'   => $editForm->createView(),
 					'delete_form' => $deleteForm->createView(),
 				));
 			}else{
-				
 				if ($editForm->isValid()) {
 					$em->flush();
 
