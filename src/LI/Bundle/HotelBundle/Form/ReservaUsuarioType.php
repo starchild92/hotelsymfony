@@ -26,7 +26,11 @@ class ReservaUsuarioType extends AbstractType
             ->add('cantidadNinos')
             ->add('diasReserva')
             ->add('fecha_desde', 'date', array(
-                'format' => 'dd MM yyyy'))
+                'years' => range(date('Y'), date('Y')),
+                'months' => range(date('m'), date('m') +2),
+                'format' => 'dd MMM yyyy',
+                'label' => 'Fecha de Inicio de la Reserva',
+                ))
         ;
     }
     

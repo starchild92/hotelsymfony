@@ -21,10 +21,10 @@
 		{% for entity in entities %}
 			<tr>
 				<td>{{ entity.nombre }} {{ entity.apellido }}</td>
-				<td>{% if entity.fechanac %}{{ entity.fechanac|date('j F Y, D') }}{% endif %}</td>
+				<td>{% if entity.fechanac %}{{ entity.fechanac|localizeddate('long', 'none', 'es') }}{% endif %}</td>
 				<td>{% if entity.enabled %}Activo{% else %}Inactivo{% endif %}</td>
 				<td>{{ entity.email }} | {{ entity.username }}</td>
-				<td>{{ entity.lastLogin|date('d-m-Y H:i') }}</td>
+				<td>{{ entity.lastLogin|localizeddate('long', 'none', 'es') }}</td>
 				<td>{% for role in entity.roles %}
 					{{ role }} 
 				{% endfor %}</td>

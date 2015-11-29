@@ -21,7 +21,14 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ReservaController extends Controller
 {
-
+	public function es_admin(){
+		$user = $this->getUser();
+		if ($user != null) {
+			$roles = $user->getRoles();
+			return in_array('ROLE_ADMIN', $roles);
+		}
+		return false;
+	}
 	/**
 	 * Lists all Reserva entities.
 	 */
@@ -283,7 +290,6 @@ class ReservaController extends Controller
 	 */
 	public function newAction()
 	{
-
 		$entity = new Reserva();
 		$form = $this->createCreateForm($entity);
 
@@ -327,8 +333,6 @@ class ReservaController extends Controller
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
 		if ($entity->getEstadoReserva() != 'Cancelada') {
 
-
-		
 			if (!$entity) {
 				throw $this->createNotFoundException('Unable to find Reserva entity.');
 			}
@@ -344,9 +348,6 @@ class ReservaController extends Controller
 				'user' => $user,
 			));
 		}else{
-			/**
-			AQUI DEBERIA MANDAR UN MENSAJE DE QUE NO SE PUEDE EDITAR UNA RESERVA CANCELADA
-			**/
 			$this->get('session')->getFlashBag()->set('reserva_info', 'Esta reserva, ha sido cancelada, por este motivo no puede ser modificada. Si lo desea puede generar otra reserva con las mismas caracteristicas.');
 			return $this->showAction($id);
 		}

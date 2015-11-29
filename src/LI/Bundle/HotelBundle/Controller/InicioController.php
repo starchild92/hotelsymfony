@@ -42,7 +42,8 @@ class InicioController extends Controller
 		return $this->render('LIHotelBundle:Inicio:index.html.twig');
 	}
 
-	public function adminAction(){
+	public function adminAction()
+	{
 		$user = $this->getUser();
 		if ($user != null) {
 			$roles = $user->getRoles();
@@ -89,6 +90,11 @@ class InicioController extends Controller
 							$session->getFlashBag()->add('grave', array('id'  => $reserva->getId(),
 																		'codigo' => $reserva->getCodigoreserva(),
 																		'dias' => $off));
+						}
+
+						if ($fecha2 == $hoy) {
+							$session->getFlashBag()->add('informacion', array(
+								'id' => $reserva->getId()));
 						}
 
 					}
