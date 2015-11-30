@@ -4,7 +4,7 @@
 <div class="page-header">
     <h1>Modificar Reserva</h1>
 </div>
-	{% for message in app.session.flashbag.get('reserva') %}
+	{% for message in app.session.flashbag.get('reserva_error') %}
         <div class="alert alert-danger" role="alert"><b>Oh crap! </b>{{ message }}</div>
     {% endfor %}
     {% for message in app.session.flashbag.get('reserva_bien') %}

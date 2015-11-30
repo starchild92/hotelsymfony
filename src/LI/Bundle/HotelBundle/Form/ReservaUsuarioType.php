@@ -28,7 +28,7 @@ class ReservaUsuarioType extends AbstractType
             ->add('fecha_desde', 'date', array(
                 'years' => range(date('Y'), date('Y')),
                 'months' => range(date('m'), date('m') +2),
-                'format' => 'dd MMM yyyy',
+                'format' => 'dd MMMM yyyy',
                 'label' => 'Fecha de Inicio de la Reserva',
                 ))
         ;

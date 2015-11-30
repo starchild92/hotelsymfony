@@ -36,13 +36,13 @@
                 </tr>
                 <tr>
                     <th>Reservada para la fecha</th>
-                    <td>{{ entity.fechadesde|date('d M Y\\ D') }}</td>
+                    <td>{{ entity.fechareserva|localizeddate('long', 'medium', 'es') }}</td>
                 </tr>
                 <tr>
-                    <th>Reserva realizada el</th>
-                    <td>{{ entity.fechareserva|date('d M Y\\ D') }} | 
-                    {% set diasR = entity.diasReserva %}
-                    {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|date('d-m-Y') }}</td>
+                    <th>Periodo de Estadia</th>
+                    <td>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }} <b>al</b> 
+                    {% set diasR = entity.diasReserva - 1 %}
+                    {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
                 </tr>
                 <tr>
                     <th>Reservada para</th>
@@ -61,7 +61,7 @@
         <tbody>
             <tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }}</td></tr>
             <tr><td>Costo Acumulado</td><td>{{ entity.factura.costoTotal }} Bolívares</td></tr>
-            <tr><td>Fecha</td><td>{{ entity.factura.fecha|date('d M Y\\ D') }}</td></tr>
+            <tr><td>Fecha</td><td>{{ entity.factura.fecha|localizeddate('long', 'none', 'es') }}</td></tr>
         </tbody>
         </table>
     </div>

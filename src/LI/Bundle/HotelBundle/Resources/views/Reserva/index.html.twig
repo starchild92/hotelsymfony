@@ -32,9 +32,9 @@
                 <td>{{ entity.cantidadPersonas + entity.cantidadNinos  }}</td>
                 <td>{{ entity.diasReserva }} días</td>
                 <!--<td>{{ entity.fechareserva|date('d-m-Y') }}</td>-->
-                <td>{{ entity.fechadesde|date('d-m-Y') }} - 
+                <td>{{ entity.fechadesde|localizeddate('long', 'medium', 'es') }} - 
                 {% set diasR = entity.diasReserva-1 %}
-                {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|date('d-m-Y') }}</td>
+                {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'medium', 'es') }}</td>
                 <td class="opciones">
                     <a href="{{ path('reserva_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
                     {% if entity.estadoReserva != 'Cancelada' %}

@@ -21,9 +21,11 @@ class ReservaType extends AbstractType
                     'Por Concretar' => 'Por Concretar',
                     'Concretada' => 'Concretada',
                     'Cancelada' => 'Cancelada',
-            )))
+            ),
+                   'label' => 'Estado de la Reservación'))
             ->add('codigoReserva', 'hidden')
             ->add('habitacion')
+            //->add('info_habitacion', 'button', array('label' => 'Habitación Datos'))
             ->add('cliente')
             ->add('cantidadPersonas')
             ->add('cantidadNinos')

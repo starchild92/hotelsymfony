@@ -77,31 +77,31 @@ class ReservaController extends Controller
 
 				if ($fecha_inicio > $fecha_inicio_ && $fecha_inicio < $fecha_final_) { $puede = false; 
 					$session = $this->get('session');
-					$session->getFlashBag()->add('reserva', 'La fecha que ha elegido esta contenida dentro de otra reserva.');
+					$session->getFlashBag()->add('reserva_error', 'La fecha que ha elegido esta contenida dentro de otra reserva.');
 				}
 				if ($fecha_final > $fecha_inicio_ && $fecha_final < $fecha_final_) { $puede = false; 
 					$session = $this->get('session');
-					$session->getFlashBag()->add('reserva', 'La fecha que ha elegido esta contenida dentro de otra reserva.');
+					$session->getFlashBag()->add('reserva_error', 'La fecha que ha elegido esta contenida dentro de otra reserva.');
 				}
 				if ($fecha_inicio_ > $fecha_inicio && $fecha_inicio_ < $fecha_final) { $puede = false; 
 					$session = $this->get('session');
-					$session->getFlashBag()->add('reserva', 'La fecha que ha elegido esta contenida dentro de otra reserva.');
+					$session->getFlashBag()->add('reserva_error', 'La fecha que ha elegido esta contenida dentro de otra reserva.');
 				}
 				if ($fecha_inicio == $fecha_inicio_) { $puede = false;
 					$session = $this->get('session');
-					$session->getFlashBag()->add('reserva', 'El dia de inicio ya está reservada, eliga el día anterior al '.$fecha_inicio->format('d \\d\\e M \\d\\e\\l Y'));
+					$session->getFlashBag()->add('reserva_error', 'El dia de inicio ya está reservada, eliga el día anterior al '.$fecha_inicio->format('d \\d\\e M \\d\\e\\l Y'));
 				}
 				if ($fecha_inicio == $fecha_final_) { $puede = false; 
 					$session = $this->get('session');
-					$session->getFlashBag()->add('reserva', 'Trate de elegir menos días porque ya esta reservada en los últimos dias.');
+					$session->getFlashBag()->add('reserva_error', 'Trate de elegir menos días porque ya esta reservada en los últimos dias.');
 				}
 				if ($fecha_final == $fecha_inicio_) { $puede = false;
 					$session = $this->get('session');
-					$session->getFlashBag()->add('reserva', 'El dia de inicio ya está reservada, eliga el día anterior al '.$fecha_inicio->format('d \\d\\e M \\d\\e\\l Y'));
+					$session->getFlashBag()->add('reserva_error', 'El dia de final de su reserva '.$fecha_final->format('d \\d\\e M \\d\\e\\l Y').' coincide casualmente con el inicio de otra reserva para esta habitación.');
 				}
 				if ($fecha_final == $fecha_final_) { $puede = false; 
 					$session = $this->get('session');
-					$session->getFlashBag()->add('reserva', 'Trate de elegir menos días porque ya esta reservada en los últimos dias.');
+					$session->getFlashBag()->add('reserva_error', 'Trate de elegir menos días porque ya esta reservada en los últimos dias.');
 				}
 			}
 		}
@@ -118,7 +118,7 @@ class ReservaController extends Controller
 				return true;
 			}
 			$session = $this->get('session');
-			$session->getFlashBag()->add('reserva', 'La cantidad de personas que ha especificado es demasido alta. Como alternativa puede rentar mas habitaciones.');
+			$session->getFlashBag()->add('reserva_error', 'La cantidad de personas que ha especificado es demasido alta. Como alternativa puede rentar mas habitaciones. Solo se permiten un máximo de '.$key->getCantidadPersonasHabitacion().' personas para esta habitación.');
 			return false;
 		}
 	}
@@ -201,12 +201,17 @@ class ReservaController extends Controller
 				/** 
 					ROLE_USER 
 				**/
+				//throw $this->createNotFoundException('WILD WILD');
+
 				if ($form->isValid()) {
 					$em = $this->getDoctrine()->getManager();
 
 					$res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
-					if($this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol)
-						&& $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos()))
+					$var = $this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol);
+					if (!$var) {
+						$session->getFlashBag()->add('reserva', 'La habitacion que selecciono no se encuentra disponible en la fecha seleccionada. Revise las reservas de esta habitación para obtener mas detalles.');
+					}
+					if( $var && $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos()))
 					{
 					
 						$factura = new Factura();
@@ -243,13 +248,19 @@ class ReservaController extends Controller
 						
 						return $this->redirect($this->generateUrl('user_reserva_show', array('id' => $entity->getId())));
 					}else{
-						$this->get('session')->getFlashBag()->set('reserva_error', 'No se puede hacer la reserva en la fecha que especifico. Bien puede que habitación ya este reservada en algun periodo de tiempo igual al que has seleccionado.');
+						$this->get('session')->getFlashBag()->set('reserva_error', 'No se puede hacer la reserva en la fecha que especifico. Bien puede que la habitación ya este reservada en algun periodo de tiempo igual al que has seleccionado.');
 						return $this->render('LIHotelBundle:Reserva:newuser.html.twig', array(
 							'entity' => $entity,
 							'form'   => $form->createView(),
 						));
 					}
 				}
+
+				$this->get('session')->getFlashBag()->set('reserva_error', 'El formulario no ha superado la is_valid()');
+				return $this->render('LIHotelBundle:Reserva:newuser.html.twig', array(
+					'entity' => $entity,
+					'form'   => $form->createView(),
+				));
 			}
 		}
 	}
@@ -305,6 +316,7 @@ class ReservaController extends Controller
 	 */
 	public function showAction($id)
 	{
+		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
 
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
@@ -328,6 +340,7 @@ class ReservaController extends Controller
 	 */
 	public function editAction($id)
 	{
+		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
 
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
@@ -377,6 +390,7 @@ class ReservaController extends Controller
 	 */
 	public function updateAction(Request $request, $id)
 	{
+		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
 		$session = $this->get('session');
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
@@ -395,7 +409,8 @@ class ReservaController extends Controller
 			if (in_array('ROLE_ADMIN', $roles)) {
 				$res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
 				if($this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol)
-					&& $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos())){
+					&& $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos()))
+				{
 					
 					if ($editForm->isValid()) {
 						$factura = $em->getRepository('LIHotelBundle:Factura')->find($entity->getFactura()->getId());
@@ -403,6 +418,7 @@ class ReservaController extends Controller
 						$em->persist($factura);
 						$em->flush();
 						$session->getFlashBag()->add('reserva_bien', 'Se ha modificado con exito la reserva.');
+						
 						return $this->redirect($this->generateUrl('reserva_edit', array('id' => $id)));
 					}
 				}
@@ -414,11 +430,11 @@ class ReservaController extends Controller
 				));
 			}else{
 				$res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
-				if($this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol)
-					&& $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos())){
-				
+				if( $this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol)
+				 	&& $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos()))
+				{
 					if ($editForm->isValid()) {
-						$em->flush();
+						//$em->flush();
 
 						$cliente = $em->getRepository('LIHotelBundle:Usuario')->find($user->getId());
 						$factura = $em->getRepository('LIHotelBundle:Factura')->find($entity->getFactura()->getId());
@@ -428,12 +444,12 @@ class ReservaController extends Controller
 						$em->persist($entity);
 						$em->flush();
 
-						//return $this->redirect($this->generateUrl('user_reserva_edit', array('id' => $id)));
+						$session->getFlashBag()->add('reserva_bien', 'Se ha modificado satisfactoriamente la reserva.');
+					}else{
+						$session->getFlashBag()->add('reserva_error', 'Ha ocurrido un error en el formulario');	
 					}
-				}else{
-					$session->getFlashBag()->add('reserva_error', 'La cantidad de personas supera la permitidad por habitación.');
 				}
-				$session->getFlashBag()->add('reserva_bien', 'Se ha modificado satisfactoriamente la reserva.');
+
 				return $this->redirect($this->generateUrl('user_reserva_edit', array('id' => $id)));
 			}
 		}
