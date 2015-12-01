@@ -49,3 +49,11 @@ reserva_concretar:
     path:     /concretar
     defaults: { _controller: "LIHotelBundle:Reserva:concretar" }
     methods:  [POST, PUT, GET]
+
+reserva_concretar_auto:
+    path:     /{codigo}/concretar
+    defaults: { _controller: "LIHotelBundle:Reserva:concretarAuto" }
+
+reserva_cancelar:
+    path:     /{codigo}/cancelar
+    defaults: { _controller: "LIHotelBundle:Reserva:cancelar" }

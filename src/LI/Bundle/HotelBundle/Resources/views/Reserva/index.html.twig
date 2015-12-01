@@ -3,12 +3,13 @@
 {% block body -%}
 <div class="container-fluid row">
     <div class="page-header">
-        <h1>Lista de Reservas</h1>
+        <h1>Lista de Reservas</h1><a type="button" class="btn btn-primary" href="{{ path('reserva_new') }}" role="button">Agregar Reserva</a>
     </div>
 
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#actuales" aria-controls="actuales" role="tab" data-toggle="tab">Reservas en Proceso</a></li>
         <li role="presentation"><a href="#antiguas" aria-controls="antiguas" role="tab" data-toggle="tab">Reservas Pasadas</a></li>
+        <li></li>
     </ul>
     <p></p>
     <!-- Tab panes -->
@@ -74,9 +75,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                {% set hay = true %}
                 {% for entity in entities %}
                     {% set diasR = entity.diasReserva-1 %}
                     {% if entity.fechadesde|date_modify('+' ~ diasR ~ ' days') < date('today') %}
+                    {% set hay = false %}
                     <tr>
                         <!--<td><a href="{{ path('reserva_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>-->
                         <td>{{ entity.codigoReserva }}</td>
@@ -98,14 +101,12 @@
                     </tr>
                     {% endif %}
                 {% endfor %}
+                {% if hay %}
+                    <tr><td colspan="8">No hay reservas pasadas para mostrar.</td></tr>
+                {% endif %}
                 </tbody>
             </table>
         </div>
     </div>
-
-    <p style="text-align: center;">
-        <a class="btn btn-primary" href="{{ path('reserva_new') }}" role="button">Agregar Reserva</a>
-    </p>
-
 </div>
 {% endblock %}

@@ -10,9 +10,15 @@
 	{% for message in app.session.flashbag.get('reserva_info') %}
 		<div class="alert alert-info" role="alert"><b>Pss Disculpe! </b>{{ message }}</div>
 	{% endfor %}
+	{% for message in app.session.flashbag.get('reserva_buenos') %}
+		<div class="alert alert-success" role="alert"><b>Yay! </b>{{ message }}</div>
+	{% endfor %}
+	{% for message in app.session.flashbag.get('reserva_malos') %}
+		<div class="alert alert-danger" role="alert"><b>Holy Mother of God! </b>{{ message }}</div>
+	{% endfor %}
 	</div>
 
-	<div class="col-lg-6">
+	<div class="col-lg-5 col-sm-5">
 		<table class="table table-bordered record_properties">
 			<thead>
 				<tr>
@@ -56,7 +62,7 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="col-lg-6">
+	<div class="col-lg-5 col-sm-5">
 		<table class="table table-bordered">
 		<thead><tr><th colspan="2">Factura Asociada a la Reserva</th></tr></thead>
 		<tbody>
@@ -65,6 +71,18 @@
 			<tr><td>Costo Acumulado</td><td>{{ entity.factura.costoTotal }} Bolívares</td></tr>
 		</tbody>
 		</table>
+	</div>
+	<style type="text/css">
+		.green .active a,
+		.green .active a:hover {
+		    background-color: green;
+		}
+	</style>
+	<div class="col-lg-2 col-sm-2 col-xs-12">
+		<ul class="nav nav-pills nav-stacked green">
+		  <li role="presentation" class="active"><a href="{{ path('reserva_concretar_auto', { 'codigo': entity.codigoReserva }) }}">Concretar Reserva</a></li>
+		  <li role="presentation"><a href="{{ path('reserva_cancelar', { 'codigo': entity.codigoReserva }) }}">Cancelar Reserva</a></li>
+		</ul>
 	</div>
 </div>
 

@@ -21,7 +21,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ReservaController extends Controller
 {
-	public function es_admin(){
+	public function es_admin()
+	{
 		$user = $this->getUser();
 		if ($user != null) {
 			$roles = $user->getRoles();
@@ -132,7 +133,6 @@ class ReservaController extends Controller
 
 	/**
 	 * Creates a new Reserva entity.
-	 *
 	 */
 	public function createAction(Request $request)
 	{
@@ -290,9 +290,7 @@ class ReservaController extends Controller
 
 	/**
 	 * Creates a form to create a Reserva entity.
-	 *
 	 * @param Reserva $entity The entity
-	 *
 	 * @return \Symfony\Component\Form\Form The form
 	 */
 	private function createCreateForm(Reserva $entity)
@@ -320,7 +318,6 @@ class ReservaController extends Controller
 
 	/**
 	 * Displays a form to create a new Reserva entity.
-	 *
 	 */
 	public function newAction()
 	{
@@ -335,7 +332,6 @@ class ReservaController extends Controller
 
 	/**
 	 * Finds and displays a Reserva entity.
-	 *
 	 */
 	public function showAction($id)
 	{
@@ -359,7 +355,6 @@ class ReservaController extends Controller
 
 	/**
 	 * Displays a form to edit an existing Reserva entity.
-	 *
 	 */
 	public function editAction($id)
 	{
@@ -391,9 +386,7 @@ class ReservaController extends Controller
 
 	/**
 	* Creates a form to edit a Reserva entity.
-	*
 	* @param Reserva $entity The entity
-	*
 	* @return \Symfony\Component\Form\Form The form
 	*/
 	private function createEditForm(Reserva $entity)
@@ -409,7 +402,6 @@ class ReservaController extends Controller
 	}
 	/**
 	 * Edits an existing Reserva entity.
-	 *
 	 */
 	public function updateAction(Request $request, $id)
 	{
@@ -479,7 +471,6 @@ class ReservaController extends Controller
 	}
 	/**
 	 * Deletes a Reserva entity.
-	 *
 	 */
 	public function deleteAction(Request $request, $id)
 	{
@@ -524,9 +515,7 @@ class ReservaController extends Controller
 
 	/**
 	 * Creates a form to delete a Reserva entity by id.
-	 *
 	 * @param mixed $id The entity id
-	 *
 	 * @return \Symfony\Component\Form\Form The form
 	 */
 	private function createDeleteForm($id)
@@ -578,7 +567,6 @@ class ReservaController extends Controller
 	public function showuserAction($id)
 	{
 		$em = $this->getDoctrine()->getManager();
-
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
 
 		if (!$entity) {
@@ -597,7 +585,6 @@ class ReservaController extends Controller
 	public function edituserAction($id)
 	{
 		$em = $this->getDoctrine()->getManager();
-
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
 
 		if (!$entity) {
@@ -648,7 +635,6 @@ class ReservaController extends Controller
 			$em = $this->getDoctrine()->getManager();
 			if($em->getRepository('LIHotelBundle:Reserva')->reservas_existe_codigo($data['codigo_reserva']))
 			{
-				//throw $this->createNotFoundException('El codigo de la reserva que ha ingreasado existe.');
 				$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($data['codigo_reserva']);
 				if($reservas[0]->getEstadoReserva() == 'Concretada')
 				{
@@ -664,7 +650,6 @@ class ReservaController extends Controller
 					$session->getFlashBag()->add('concretar_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
 				}
 			}else{
-				//throw $this->createNotFoundException('Holy Mother of God! El codigo no existe.');
 				$session->getFlashBag()->add('concretar_malos', 'Tal vez estás en drogas! Ese código no existe.');
 				return $this->render('LIHotelBundle:Reserva:concretar.html.twig', array(
 					'form' => $form->createView(),
@@ -676,6 +661,60 @@ class ReservaController extends Controller
 		return $this->render('LIHotelBundle:Reserva:concretar.html.twig', array(
 			'form' => $form->createView(),
 		));
+	}
+
+	public function concretarAutoAction($codigo)
+	{
+		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
+		$em = $this->getDoctrine()->getManager();
+		$session = $this->get('session');
+		if($em->getRepository('LIHotelBundle:Reserva')->reservas_existe_codigo($codigo))
+		{
+			$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($codigo);
+			if($reservas[0]->getEstadoReserva() == 'Concretada')
+			{
+				$session->getFlashBag()->add('reserva_info', 'Esta reserva ya ha sido concretada.');
+			}else{
+				foreach ($reservas as $reserva) {
+					$reserva->setEstadoReserva('Concretada');
+					$reserva->getHabitacion()->setEstado('Ocupada');
+				}
+				$em->persist($reserva);
+				$em->flush();
+
+				$session->getFlashBag()->add('reserva_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
+			}
+		}else{
+			$session->getFlashBag()->add('reserva_malos', 'Tal vez estás en drogas! Ese código no existe.');	
+		}
+		return $this->showAction($reservas[0]->getId());
+	}
+
+	public function cancelarAction($codigo)
+	{
+		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
+		$em = $this->getDoctrine()->getManager();
+		$session = $this->get('session');
+		if($em->getRepository('LIHotelBundle:Reserva')->reservas_existe_codigo($codigo))
+		{
+			$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($codigo);
+			if($reservas[0]->getEstadoReserva() == 'Concretada')
+			{
+				$session->getFlashBag()->add('reserva_info', 'Esta reserva ya ha sido concretada.');
+			}else{
+				foreach ($reservas as $reserva) {
+					$reserva->setEstadoReserva('Concretada');
+					$reserva->getHabitacion()->setEstado('Ocupada');
+				}
+				$em->persist($reserva);
+				$em->flush();
+
+				$session->getFlashBag()->add('reserva_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
+			}
+		}else{
+			$session->getFlashBag()->add('reserva_malos', 'Tal vez estás en drogas! Ese código no existe.');	
+		}
+		return $this->showAction($reservas[0]->getId());
 	}
 
 }
