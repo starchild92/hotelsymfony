@@ -72,18 +72,14 @@
 		</tbody>
 		</table>
 	</div>
-	<style type="text/css">
-		.green .active a,
-		.green .active a:hover {
-		    background-color: green;
-		}
-	</style>
+	{% if entity.estadoReserva != 'Cancelada' %}
 	<div class="col-lg-2 col-sm-2 col-xs-12">
-		<ul class="nav nav-pills nav-stacked green">
+		<ul class="nav nav-pills nav-stacked">
 		  <li role="presentation" class="active"><a href="{{ path('reserva_concretar_auto', { 'codigo': entity.codigoReserva }) }}">Concretar Reserva</a></li>
 		  <li role="presentation"><a href="{{ path('reserva_cancelar', { 'codigo': entity.codigoReserva }) }}">Cancelar Reserva</a></li>
 		</ul>
 	</div>
+	{% endif %}
 </div>
 
 	<div class="row">

@@ -698,21 +698,21 @@ class ReservaController extends Controller
 		if($em->getRepository('LIHotelBundle:Reserva')->reservas_existe_codigo($codigo))
 		{
 			$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($codigo);
-			if($reservas[0]->getEstadoReserva() == 'Concretada')
+			if($reservas[0]->getEstadoReserva() == 'Cancelada')
 			{
-				$session->getFlashBag()->add('reserva_info', 'Esta reserva ya ha sido concretada.');
+				$session->getFlashBag()->add('reserva_info', 'Esta reserva ya ha sido cancelada.');
 			}else{
 				foreach ($reservas as $reserva) {
-					$reserva->setEstadoReserva('Concretada');
-					$reserva->getHabitacion()->setEstado('Ocupada');
+					$reserva->setEstadoReserva('Cancelada');
+					$reserva->getHabitacion()->setEstado('Libre');
 				}
 				$em->persist($reserva);
 				$em->flush();
 
-				$session->getFlashBag()->add('reserva_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
+				$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva. lamentamos que haya tenido que ser asi.');
 			}
 		}else{
-			$session->getFlashBag()->add('reserva_malos', 'Tal vez estás en drogas! Ese código no existe.');	
+			$session->getFlashBag()->add('reserva_malos', 'Tal vez estás en drogas! Ese código no existe.');
 		}
 		return $this->showAction($reservas[0]->getId());
 	}
