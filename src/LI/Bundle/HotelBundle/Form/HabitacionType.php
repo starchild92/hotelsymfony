@@ -20,6 +20,7 @@ class HabitacionType extends AbstractType
                     'Libre' => 'Libre',
                     'Ocupada' => 'Ocupada',
                     'Reservada' => 'Reservada',
+                    'Indispuesta' => 'Indispuesta'
             )))
             ->add('numero', 'integer')
             ->add('nombre')

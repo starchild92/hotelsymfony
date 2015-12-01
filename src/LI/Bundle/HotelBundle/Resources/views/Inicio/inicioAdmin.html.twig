@@ -115,7 +115,7 @@
 							<table class="table table-condensed">
 								<tr><td>Reservadas</td><td>{{ habitaciones_reservadas }}</td></tr>
 								<tr><td>Libres</td><td>{{ habitaciones_libres }}</td></tr>
-								<tr><td>Ocupadas</td><td>{{ habitaciones_ocupadas }}</td></tr>
+								<tr><td>Ocupadas o Indispuestas</td><td>{{ habitaciones_ocupadas }}</td></tr>
 							</table>
 						</div>
 					</div>
@@ -205,8 +205,8 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="over">
-						{% if (app.session.flashbag.has('grave')) %}
-						{% if (app.session.flashbag.has('informacion')) %}
+						{% if not (app.session.flashbag.has('grave')) %}
+						{% if not (app.session.flashbag.has('informacion')) %}
 							<span>No hay mensajes para mostrar.</span>
 						{% endif %}
 						{% endif %}
@@ -214,11 +214,10 @@
 							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-grave">La reserva {{ message.codigo }} tiene {{ message.dias }} días vencida. </span></a>
 						{% endfor %}
 						{% for message in app.session.flashbag.get('informacion') %}
-							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-normal">Esta reserva debería ser concretada hoy.</span></a>
+							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-normal">Esta {{ message.codigo }} debería ser concretada hoy.</span></a>
 						{% endfor %}
 						<!--<span class="labelalert labelalert-primary">labelalert-primary</span>
-						<span class="labelalert labelalert-atencion">labelalert-atencion</span>
-						<span class="labelalert labelalert-normal">labelalert-normal</span>-->
+						<span class="labelalert labelalert-atencion">labelalert-atencion</span>-->
 					</div>
 				</div>
 			</div>

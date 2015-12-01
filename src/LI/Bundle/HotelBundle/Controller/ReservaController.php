@@ -123,6 +123,13 @@ class ReservaController extends Controller
 		}
 	}
 
+	/*VERIFICA SI UNA HABITACIÓN ESTÁ DISPONIBLE PARA RESERVAR*/
+	public function habitacion_disponible($habitacion)
+	{
+		if ($habitacion->getEstado() == 'Indispuesta') { return false; }
+		return true;
+	}
+
 	/**
 	 * Creates a new Reserva entity.
 	 *
@@ -137,66 +144,82 @@ class ReservaController extends Controller
 		if ($user != null) {
 			$roles = $user->getRoles();
 			if (in_array('ROLE_ADMIN', $roles)) {
-				if ($form->isValid()) {
+				if ($form->isValid())
+				{
 					$em = $this->getDoctrine()->getManager();
-					
-					/**
-						VERIFICANDO QUE DADA LA FECHA DE RESERVA SE PUEDA RESERVAR
-					**/
-					$res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
-					$var = $this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol);
-					if (!$var) {
-						$session->getFlashBag()->add('reserva', 'La habitacion que selecciono no se encuentra disponible en la fecha seleccionada. Revise las reservas de esta habitación para obtener mas detalles.');
-					}
-					if( $var && $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos()))
+					if ($this->habitacion_disponible($entity->getHabitacion()))
 					{
-						$factura = new Factura();
-						$factura->setReserva($entity);
-						$factura->setDiasReserva($entity->getDiasReserva());
-						$factura->setFecha($entity->getFechaDesde());
-
 						/**
-							CALCULAR USANDO LOS DÍAS, EL TIPO Y CATEGORIA COMO COSTO INICIAL
-							SIN LOS CONSUMIBLES
+							VERIFICANDO QUE DADA LA FECHA DE RESERVA SE PUEDA RESERVAR
 						**/
-						$factura->setCostoTotal(
-							$entity->getDiasReserva() * 
-							$entity->getHabitacion()->getTipo()->getTipoHabitacion()->getPrecio() * 
-							$entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio()
-						);
-
-						$em->persist($factura);
-						$entity->setFactura($factura);
-						$entity->setcodigoReserva('RES'.date('dmY').date('His'));
-						/** 
-							EL CODIGO DE LA RESERVA ESTA COMPUESTA
-							RES(DIA MES AÑO)(HORA MINUTOS SEGUNDOS)
-						**/
-
-						//cambiando el estado de la habitacion
-						if ($entity->getEstadoReserva() == 'Concretada') {
-							$habitacion = $entity->getHabitacion();
-							$habitacion->setEstado('Ocupada');
-						}else{
-							if ($entity->getEstadoReserva() == 'Por Concretar') {
-								$habitacion = $entity->getHabitacion();
-								$habitacion->setEstado('Reservada');
-							}
+						$res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
+						$var = $this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol);
+						if (!$var) {
+							$session->getFlashBag()->add('reserva_error', 'La habitacion que selecciono no se encuentra disponible en la fecha seleccionada. Revise las reservas de esta habitación para obtener mas detalles.');
 						}
-						
-						$em->persist($entity);
-						$em->flush();
-						
-						return $this->redirect($this->generateUrl('reserva_show', array('id' => $entity->getId())));
+						if( $var 
+							&& $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos()))
+						{
+							$factura = new Factura();
+							$factura->setReserva($entity);
+							$factura->setDiasReserva($entity->getDiasReserva());
+							$factura->setFecha($entity->getFechaDesde());
+
+							/**
+								CALCULAR USANDO LOS DÍAS, EL TIPO Y CATEGORIA COMO COSTO INICIAL
+								SIN LOS CONSUMIBLES
+							**/
+							$factura->setCostoTotal(
+								$entity->getDiasReserva() * 
+								$entity->getHabitacion()->getTipo()->getTipoHabitacion()->getPrecio() * 
+								$entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio()
+							);
+
+							$em->persist($factura);
+							$entity->setFactura($factura);
+							$entity->setcodigoReserva('RES'.date('dmY').date('His'));
+							/** 
+								EL CODIGO DE LA RESERVA ESTA COMPUESTA
+								RES(DIA MES AÑO)(HORA MINUTOS SEGUNDOS)
+							**/
+
+							//cambiando el estado de la habitacion
+							if ($entity->getEstadoReserva() == 'Concretada') {
+								$habitacion = $entity->getHabitacion();
+								$habitacion->setEstado('Ocupada');
+							}else{
+								if ($entity->getEstadoReserva() == 'Por Concretar') {
+									$habitacion = $entity->getHabitacion();
+									$habitacion->setEstado('Reservada');
+								}
+							}
+							
+							$em->persist($entity);
+							$em->flush();
+							
+							return $this->redirect($this->generateUrl('reserva_show', array('id' => $entity->getId())));
+						}else{
+							//No se puede reservar
+							return $this->render('LIHotelBundle:Reserva:new.html.twig', array(
+								'entity' => $entity,
+								'form'   => $form->createView(),
+							));
+							//throw $this->createNotFoundException('No se puede hacer la reserva en la fecha que especifico');
+						}
 					}else{
-						//No se puede reservar
+						$session->getFlashBag()->add('reserva_error', 'La habitación que ha seleccionado no está disponible por tiempo indefinido.');
 						return $this->render('LIHotelBundle:Reserva:new.html.twig', array(
 							'entity' => $entity,
 							'form'   => $form->createView(),
 						));
-						//throw $this->createNotFoundException('No se puede hacer la reserva en la fecha que especifico');
 					}
 				}
+				$session->getFlashBag()->add('reserva_error', 'Hay un error con la fecha en el formulario.');
+				return $this->render('LIHotelBundle:Reserva:new.html.twig', array(
+					'entity' => $entity,
+					'form'   => $form->createView(),
+				));
+				throw $this->createNotFoundException('Form Invalido');
 			}else{
 				/** 
 					ROLE_USER 

@@ -2,36 +2,28 @@
 
 {% block body -%}
     <div class="page-header">
-        <h1>Usuario</h1>
+        <h1>Resumen Datos Usuario</h1>
     </div>
-    <table class="table table-bordered table-responsive table-striped records_list">
-        <thead>
-            <tr>
-                <th>Nombre y Apellido</th>
-                <th>Fecha Nacimiento</th>
-                <th>Estado</th>
-                <th>Correo</th>
-                <th>Usuario</th>
-                <th>Última Conexión</th>
-                <th>Roles</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ entity.nombre }} {{ entity.apellido }}</td>
-                <td>{% if entity.fechanac %}{{ entity.fechanac|date('d-m-Y') }}{% endif %}</td>
-                <td>{% if entity.enabled %}Activo{% else %}Inactivo{% endif %}</td>
-                <td>{{ entity.email }}</td>
-                <td>{{ entity.username }}</td>
-                <td>{{ entity.lastLogin|date('d-m-Y H:i') }}</td>
-                <td>{% for role in entity.roles %}
+    <div class="row">
+    <div class="col-lg-6 col-sm-6 col-xs-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Datos de {{ entity.nombre }}</h3>
+            </div>
+            <div class="panel-body">
+                <b>Nombre y Apellido: </b>{{ entity.nombre }} {{ entity.apellido }}<br>
+                <b>Fecha de Nacimiento: </b>{% if entity.fechanac %}{{ entity.fechanac|localizeddate('long', 'none', 'es') }}{% endif %}<br>
+                <b>Correo Electronico: </b>{{ entity.email }}<br>
+                <b>Nombre de Usuario: </b>{{ entity.username }}<br>
+                <b>Última Conexión al Sistema: </b>{{ entity.lastLogin|localizeddate('long', 'short', 'es') }}<br>
+                <b>Su Estado en el Sistema es: </b>{% if entity.enabled %}Activo{% else %}Inactivo{% endif %}<br>
+                <b>Su Role del Sistema: </b>{% for role in entity.roles %}
                     {{ role }} 
                 {% endfor %}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
+            </div>
+        </div>
+    </div>
+    </div>
     <div class="row">
         <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('usuario') }}" role="button">Regresar</a></div>
         <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-warning btn-block" href="{{ path('usuario_edit', { 'id': entity.id }) }}" role="button">Editar Datos de {{ entity.nombre }}</a></div>

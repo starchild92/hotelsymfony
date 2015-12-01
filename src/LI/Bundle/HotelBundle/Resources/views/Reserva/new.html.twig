@@ -5,7 +5,7 @@
         <h1>Creación Nueva Reserva<br><small>verificar antes si hay habitaciones disponibles</small></h1>
     </div>
 
-    {% for message in app.session.flashbag.get('reserva') %}
+    {% for message in app.session.flashbag.get('reserva_error') %}
         <div class="alert alert-danger" role="alert"><b>Oh crap! </b>{{ message }}</div>
     {% endfor %}
     {{ form(form) }}

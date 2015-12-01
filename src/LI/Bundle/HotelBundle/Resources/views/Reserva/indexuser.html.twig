@@ -10,88 +10,88 @@
         <li role="presentation" class="active"><a href="#actuales" aria-controls="actuales" role="tab" data-toggle="tab">Reservas Sin Concretar</a></li>
         <li role="presentation"><a href="#antiguas" aria-controls="antiguas" role="tab" data-toggle="tab">Reservas Concretadas</a></li>
     </ul>
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="actuales"><table class="table table-bordered table-responsive table-striped records_list">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Codigo</th>
-                        <th>Estado Reserva</th>
-                        <th>Habitación</th>
-                        <th>Cantidad Personas</th>
-                        <th>Días Reserva</th>
-                        <th>Hecha el</th>
-                        <th>Desde</th>
-                        <th>Hasta</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for entity in entities %}
-                    {% if entity.estadoReserva == 'Por Concretar' %}
-                    <tr>
-                        <td><a href="{{ path('reserva_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                        <td>{{ entity.codigoReserva }}</td>
-                        <td>{{ entity.estadoReserva }}</td>
-                        <td>{{ entity.habitacion }} ({{ entity.habitacion.estado }}) <a href="{{ path('user_habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
-                        <td>{{ entity.cantidadPersonas + entity.cantidadNinos }} personas</td>
-                        <td>{{ entity.diasReserva }} días</td>
-                        <td>{{ entity.fechareserva|localizeddate('long', 'medium', 'es') }}</td>
-                        <td>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }}</td>
-                        {% set diasR = entity.diasReserva-1 %}
-                        <td>{{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
-                        <td class="opciones">
-                            <a href="{{ path('user_reserva_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
-                            {% if entity.estadoReserva != 'Concretada' %}
-                            <a href="{{ path('user_reserva_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>{% endif %}
-                        </td>
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-                </tbody>
-            </table></div>
 
-            <!-- RESERVAS ANTIGUAS, ESTAS NO SE PUEDEN EDITAR
-                REALAIZAR LA VALIDACION POR EL CONTROLADOR
-            -->
-            <div role="tabpanel" class="tab-pane" id="antiguas"><table class="table table-bordered table-responsive table-striped records_list">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Codigo</th>
-                        <th>Estado Reserva</th>
-                        <th>Habitación</th>
-                        <th>Cantidad Personas</th>
-                        <th>Días Reserva</th>
-                        <th>Hecha el</th>
-                        <th>Desde</th>
-                        <th>Hasta</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for entity in entities %}
-                    {% if (entity.estadoReserva == 'Cancelada' or entity.estadoReserva == 'Concretada') %}
-                    <tr>
-                        <td><a href="{{ path('reserva_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                        <td>{{ entity.codigoReserva }}</td>
-                        <td>{{ entity.estadoReserva }}</td>
-                        <td>{{ entity.habitacion }} ({{ entity.habitacion.estado }}) <a href="{{ path('user_habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
-                        <td>{{ entity.cantidadPersonas }} personas</td>
-                        <td>{{ entity.diasReserva }} días</td>
-                        <td>{{ entity.fechareserva|localizeddate('long', 'none', 'es') }}</td>
-                        <td>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }}</td>
-                        {% set diasR = entity.diasReserva-1 %}
-                        <td>{{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-                </tbody>
-            </table></div>
-        </div>
-        </div>
+    <p></p>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="actuales"><table class="table table-bordered table-responsive table-striped records_list">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Codigo</th>
+                    <th>Estado Reserva</th>
+                    <th>Habitación</th>
+                    <th>Cantidad Personas</th>
+                    <th>Días Reserva</th>
+                    <th>Hecha el</th>
+                    <th>Desde</th>
+                    <th>Hasta</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                {% if entity.estadoReserva == 'Por Concretar' %}
+                <tr>
+                    <td><a href="{{ path('reserva_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.codigoReserva }}</td>
+                    <td>{{ entity.estadoReserva }}</td>
+                    <td>{{ entity.habitacion }} ({{ entity.habitacion.estado }}) <a href="{{ path('user_habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                    <td>{{ entity.cantidadPersonas + entity.cantidadNinos }} personas</td>
+                    <td>{{ entity.diasReserva }} días</td>
+                    <td>{{ entity.fechareserva|localizeddate('long', 'medium', 'es') }}</td>
+                    <td>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }}</td>
+                    {% set diasR = entity.diasReserva-1 %}
+                    <td>{{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
+                    <td class="opciones">
+                        <a href="{{ path('user_reserva_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                        {% if entity.estadoReserva != 'Concretada' %}
+                        <a href="{{ path('user_reserva_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>{% endif %}
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table></div>
+
+        <div role="tabpanel" class="tab-pane" id="antiguas"><table class="table table-bordered table-responsive table-striped records_list">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Codigo</th>
+                    <th>Estado Reserva</th>
+                    <th>Habitación</th>
+                    <th>Cantidad Personas</th>
+                    <th>Días Reserva</th>
+                    <th>Hecha el</th>
+                    <th>Desde</th>
+                    <th>Hasta</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% set hay = true %}
+            {% for entity in entities %}
+                {% if (entity.estadoReserva == 'Cancelada' or entity.estadoReserva == 'Concretada') %}
+                    {% set hay = false %}
+                <tr>
+                    <td><a href="{{ path('reserva_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.codigoReserva }}</td>
+                    <td>{{ entity.estadoReserva }}</td>
+                    <td>{{ entity.habitacion }} ({{ entity.habitacion.estado }}) <a href="{{ path('user_habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                    <td>{{ entity.cantidadPersonas }} personas</td>
+                    <td>{{ entity.diasReserva }} días</td>
+                    <td>{{ entity.fechareserva|localizeddate('long', 'none', 'es') }}</td>
+                    <td>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }}</td>
+                    {% set diasR = entity.diasReserva-1 %}
+                    <td>{{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            {% if hay %}
+                <tr><td colspan="9">No hay reservas concretadas para mostrar.</td></tr>
+            {% endif %}
+            </tbody>
+        </table></div>
     </div>
 
     <p style="text-align: center;">

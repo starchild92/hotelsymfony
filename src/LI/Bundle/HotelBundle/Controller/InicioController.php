@@ -77,33 +77,32 @@ class InicioController extends Controller
 					if ($estado == 'Por Concretar'){
 						$por_c = $por_c+1;
 
+						/** OBTENIENDO LAS RESERVAS QUE NO SE CONCRETARON EN LA FECHA PREVISTA **/
 						$fecha2 = $reserva->getFechadesde();
 						$interval = $hoy->diff($fecha2);
 						$off = $interval->format('%R%a');
 
 						if ($off < 0) {
 							$off = $off * (-1);
-							//echo "La reserva ".$reserva->getId().", se venció hace ".$off." días.";
-							// AÑADIR AQUI EL FLASH BAG
-							// set flash messages
-							//$session->getFlashBag()->add('grave', "La reserva <a href='/reserva/".$reserva->getId()."/show'>".$reserva->getCodigoreserva()."</a>, se venció hace ".$off." días.");
-							$session->getFlashBag()->add('grave', array('id'  => $reserva->getId(),
-																		'codigo' => $reserva->getCodigoreserva(),
-																		'dias' => $off));
+							$session->getFlashBag()
+								->add('grave', array(
+									'id'		=> $reserva->getId(),
+									'codigo'	=> $reserva->getCodigoreserva(),
+									'dias'		=> $off
+									)
+								);
 						}
 
 						if ($fecha2 == $hoy) {
 							$session->getFlashBag()->add('informacion', array(
-								'id' => $reserva->getId()));
+								'id' => $reserva->getId(),
+								'codigo' => $reserva->getCodigoreserva()
+							));
 						}
 
 					}
-					if ($estado == 'Concretada'){
-						$con = $con+1;
-					}
-					if ($estado == 'Cancelada'){
-						$can = $can+1;
-					}
+					if ($estado == 'Concretada'){ $con = $con + 1; }
+					if ($estado == 'Cancelada'){ $can = $can + 1; }
 				}
 				$admins = 0; $users = 0;
 				foreach ($usuarios as $u) {
@@ -117,7 +116,7 @@ class InicioController extends Controller
 				$libres = $reservadas = $ocupadas = 0;
 				foreach ($habitaciones as $key) {
 					if ($key->getEstado() == 'Libre') { $libres = $libres + 1; }
-					if ($key->getEstado() == 'Ocupada') { $ocupadas = $ocupadas + 1; }
+					if ($key->getEstado() == 'Ocupada' || $key->getEstado() == 'Indispuesta') { $ocupadas = $ocupadas + 1; }
 					if ($key->getEstado() == 'Reservada') { $reservadas = $reservadas + 1; }
 				}
 
