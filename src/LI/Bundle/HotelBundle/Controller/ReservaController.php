@@ -705,6 +705,7 @@ class ReservaController extends Controller
 				foreach ($reservas as $reserva) {
 					$reserva->setEstadoReserva('Cancelada');
 					$reserva->getHabitacion()->setEstado('Libre');
+					/* CAMBIAR AQUI LA FECHA FINAL, COLOCARLA EL DIA QUE SE CANCELO PARA QUE SE PUEDA HACER LA RESERVA*/
 				}
 				$em->persist($reserva);
 				$em->flush();

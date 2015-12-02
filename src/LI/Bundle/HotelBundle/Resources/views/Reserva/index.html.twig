@@ -1,6 +1,18 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/dataTables.bootstrap.css') }}">
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/lihotel/js/jquery.dataTables.js') }}"></script>
+{% endblock %}
+
 {% block body -%}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#tabla').DataTable();
+        } );
+    </script>
 <div class="container-fluid row">
     <div class="page-header">
         <h1>Lista de Reservas</h1><a type="button" class="btn btn-primary" href="{{ path('reserva_new') }}" role="button">Agregar Reserva</a>
@@ -15,7 +27,7 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="actuales">
-            <table class="table table-bordered table-responsive table-striped records_list">
+            <table id="tabla" class="display table table-bordered table-responsive table-striped records_list">
                 <thead>
                     <tr>
                         <!--<th>ID</th>-->
@@ -40,7 +52,7 @@
                         <td>{{ entity.estadoReserva }}</td>
                         <td>{{ entity.habitacion }} ({{ entity.habitacion.estado }}) <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                         <td>{{ entity.cliente }} <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
-                        <td>{{ entity.cantidadPersonas + entity.cantidadNinos  }}</td>
+                        <td>{{ entity.cantidadPersonas + entity.cantidadNinos  }} personas</td>
                         <td>{{ entity.diasReserva }} días</td>
                         <!--<td>{{ entity.fechareserva|localizeddate('long', 'none', 'es') }}</td>-->
                         <td>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }} <br> 
@@ -59,7 +71,7 @@
             </table>
         </div>
         <div role="tabpanel" class="tab-pane" id="antiguas">
-            <table class="table table-bordered table-responsive table-striped records_list">
+            <table id="tabla" class="display table table-bordered table-responsive table-striped records_list">
                 <thead>
                     <tr>
                         <!--<th>ID</th>-->
