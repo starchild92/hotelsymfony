@@ -24,8 +24,9 @@ class ReservaRepository extends EntityRepository
 	//DEVUELVE LAS INSTANCIAS DE LAS HABITACIONES CUYA ESTADO RESERVA ES DISTINTO DE CANCELADA
 	public function reservas_habitacion($idhabitacion){
 		$query = $this->getEntityManager()
-			->createQuery('SELECT u FROM LIHotelBundle:Reserva u WHERE u.habitacion = :idhabitacion');
+			->createQuery('SELECT u FROM LIHotelBundle:Reserva u WHERE u.habitacion = :idhabitacion AND u.estadoReserva != :estadoReserva');
 		$query->setParameter('idhabitacion', $idhabitacion);
+		$query->setParameter('estadoReserva', 'Cancelada');
 		$result = $query->getResult();
 		return $result;
 	}
