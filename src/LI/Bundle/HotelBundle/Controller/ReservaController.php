@@ -21,6 +21,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ReservaController extends Controller
 {
+	/* VERIFICA SI UN USUARIO ES DE ROLE ADMINISTRADOR */
 	public function es_admin()
 	{
 		$user = $this->getUser();
@@ -30,29 +31,28 @@ class ReservaController extends Controller
 		}
 		return false;
 	}
+
 	/**
 	 * Lists all Reserva entities.
 	 */
 	public function indexAction()
 	{
-		$securityContext = $this->container->get('security.context');
-		if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 
-			$user = $this->getUser();
-			$roles = $user->getRoles();
-			$em = $this->getDoctrine()->getManager();
+		$user = $this->getUser();
+		$roles = $user->getRoles();
+		$em = $this->getDoctrine()->getManager();
 
-			$entities = $em->getRepository('LIHotelBundle:Reserva')->findAll();
+		$entities = $em->getRepository('LIHotelBundle:Reserva')->findAll();
 
-			return $this->render('LIHotelBundle:Reserva:index.html.twig', array(
-			'entities' => $entities,
-			'user' => $user
-			));
-		}else{
-			return $this->render('LIHotelBundle:Inicio:index.html.twig');
-		}
+		return $this->render('LIHotelBundle:Reserva:index.html.twig', array(
+		'entities' => $entities,
+		'user' => $user
+		));
+		
 	}
 
+	/* RECIBE UN ID_RESERVA, FECHA_RESERVA, CANTIDAD DE DIAS DE LA RESERVA Y UNA LISTA DE RESERVAS */
 	public function comprobarFechas($id, $fecha, $dias, $reservas)
 	{
 		$puede = true;
@@ -110,6 +110,7 @@ class ReservaController extends Controller
 		return $puede;
 	}
 
+	/* COMPRUEBA QUE LA CANTIDAD DE PERSONAS QUE INCLUYE LA RESERVA NO SEA SUPERIOR A LA QUE ESTA ESTABLECIDA SEGUN EL TIPO Y CATEGORIA DE HABITACIÓN QUE SE ESTÁ RESERVANDO */
 	public function comprobarCantidad($tipo, $categoria, $personas_reserva)
 	{
 		$em = $this->getDoctrine()->getManager();
@@ -124,7 +125,7 @@ class ReservaController extends Controller
 		}
 	}
 
-	/*VERIFICA SI UNA HABITACIÓN ESTÁ DISPONIBLE PARA RESERVAR*/
+	/* VERIFICA SI UNA HABITACIÓN ESTÁ DISPONIBLE PARA RESERVAR */
 	public function habitacion_disponible($habitacion)
 	{
 		if ($habitacion->getEstado() == 'Indispuesta') { return false; }
@@ -486,7 +487,7 @@ class ReservaController extends Controller
 			}
 
 			/**
-				ELIMIANNDO LA FACTURA DE LA RESERVA ANTES DE ELEIMINAR LA RESERVA
+			ELIMIANNDO LA FACTURA DE LA RESERVA ANTES DE ELEIMINAR LA RESERVA
 			**/
 			$factura = $entity->getFactura();
 			$factura->setReserva(NULL);
@@ -605,6 +606,7 @@ class ReservaController extends Controller
 
 	public function concretarAction(Request $request)
 	{
+		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$form = $this->createFormBuilder()
 			->add('codigo_reserva', 'text', array(
 				'label' => false,
@@ -640,17 +642,31 @@ class ReservaController extends Controller
 				{
 					$session->getFlashBag()->add('concretar_info', 'Esta reserva ya ha sido concretada.');
 				}else{
-					foreach ($reservas as $reserva) {
-						$reserva->setEstadoReserva('Concretada');
-						$reserva->getHabitacion()->setEstado('Ocupada');
-					}
-					$em->persist($reserva);
-					$em->flush();
+					/** OBTENIENDO LAS RESERVAS QUE NO SE CONCRETARON EN LA FECHA PREVISTA **/
+					$hoy = new \DateTime('today');
+					$fecha2 = $reservas[0]->getFechadesde();
+					$interval = $hoy->diff($fecha2);
+					$off = $interval->format('%R%a');
 
-					$session->getFlashBag()->add('concretar_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
+					if ($off == 0) {
+						foreach ($reservas as $reserva) {
+							$reserva->setEstadoReserva('Concretada');
+							$reserva->getHabitacion()->setEstado('Ocupada');
+						}
+						$em->persist($reserva);
+						$em->flush();
+
+						$session->getFlashBag()->add('reserva_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
+					}else{
+						$session->getFlashBag()->add('reserva_malos', 'Las reservas deben ser concretadas el día para el cual fueron reservadas y no antes. Puede modificar la reservación para hoy o esperar al día. Tenga en cuenta que la modificación no garantiza que pueda concretarse hoy.');
+						return $this->render('LIHotelBundle:Reserva:concretar.html.twig', array(
+								'form' => $form->createView(),
+								'id_reserva' => $reservas[0]->getId(),
+							));
+					}	
 				}
 			}else{
-				$session->getFlashBag()->add('concretar_malos', 'Tal vez estás en drogas! Ese código no existe.');
+				$session->getFlashBag()->add('reserva_malos', 'Tal vez estás en drogas! Ese código no existe.');
 				return $this->render('LIHotelBundle:Reserva:concretar.html.twig', array(
 					'form' => $form->createView(),
 				));
@@ -675,14 +691,24 @@ class ReservaController extends Controller
 			{
 				$session->getFlashBag()->add('reserva_info', 'Esta reserva ya ha sido concretada.');
 			}else{
-				foreach ($reservas as $reserva) {
-					$reserva->setEstadoReserva('Concretada');
-					$reserva->getHabitacion()->setEstado('Ocupada');
-				}
-				$em->persist($reserva);
-				$em->flush();
+				/** OBTENIENDO LAS RESERVAS QUE NO SE CONCRETARON EN LA FECHA PREVISTA **/
+				$hoy = new \DateTime('today');
+				$fecha2 = $reservas[0]->getFechadesde();
+				$interval = $hoy->diff($fecha2);
+				$off = $interval->format('%R%a');
 
-				$session->getFlashBag()->add('reserva_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
+				if ($off == 0) {
+					foreach ($reservas as $reserva) {
+						$reserva->setEstadoReserva('Concretada');
+						$reserva->getHabitacion()->setEstado('Ocupada');
+					}
+					$em->persist($reserva);
+					$em->flush();
+
+					$session->getFlashBag()->add('reserva_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
+				}else{
+					$session->getFlashBag()->add('reserva_malos', 'Las reservas deben ser concretadas el día para el cual fueron reservadas y no antes. Puede modificar la reservación para hoy o esperar al día. Tenga en cuenta que la modificación no garantiza que pueda concretarse hoy.');
+				}	
 			}
 		}else{
 			$session->getFlashBag()->add('reserva_malos', 'Tal vez estás en drogas! Ese código no existe.');	

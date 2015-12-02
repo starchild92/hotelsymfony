@@ -5,13 +5,13 @@
 
 	<div class="row">
 		<div class="col-lg-6" style="float: none; margin: 0 auto;">
-			{% for message in app.session.flashbag.get('concretar_malos') %}
+			{% for message in app.session.flashbag.get('reserva_malos') %}
 				<div class="alert alert-danger" role="alert"><b>Oh crap! </b>{{ message }}</div>
 			{% endfor %}
-			{% for message in app.session.flashbag.get('concretar_buenos') %}
+			{% for message in app.session.flashbag.get('reserva_buenos') %}
 				<div class="alert alert-success" role="alert"><b>En horabuena! </b>{{ message }}</div>
 			{% endfor %}
-			{% for message in app.session.flashbag.get('concretar_info') %}
+			{% for message in app.session.flashbag.get('reserva_info') %}
 				<div class="alert alert-info" role="alert"><b>Disculpe! </b>{{ message }}</div>
 			{% endfor %}
 			{{ form_start(form) }}
@@ -19,6 +19,12 @@
   				<span class="input-group-addon" id="basic-addon1">Código</span>
   				{{ form_row(form.codigo_reserva) }}
   			</div>
+  			{% if id_reserva is defined %}
+  				<div class="row"><div class="col-lg-12">
+  					<br>
+					<a type="button" class="btn btn-warning btn-block" href="{{ path('reserva_edit', { 'id': id_reserva }) }}">Modifique la Reserva</a>
+				</div></div>
+			{% endif %}
 			<div class="row">
 				<br>
 				<div class="col-lg-6">{{ form_row(form.reset)}}</div>
