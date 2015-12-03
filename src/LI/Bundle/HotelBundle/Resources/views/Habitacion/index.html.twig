@@ -1,12 +1,23 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/dataTables.bootstrap.css') }}">
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/lihotel/js/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bundles/lihotel/js/dataTables.bootstrap.js') }}"></script>
+{% endblock %}
 {% block body -%}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#tabla').DataTable();
+        } );
+    </script>
 <div class="col-lg-12 col-sm-12 col-xs-12">
     {% if entities %}
     <div class="page-header">
         <h1>Habitaciones del Hotel<br><small>como están conformadas las habitaciones del hotel</small></h1>
     </div>
-    <table class="table table-striped table-bordered records_list">
+    <table id="tabla" class="display table table-striped table-bordered records_list">
         <thead>
             <tr>
                 <th>Id</th>

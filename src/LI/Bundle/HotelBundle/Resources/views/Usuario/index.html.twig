@@ -1,11 +1,21 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/dataTables.bootstrap.css') }}">
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/lihotel/js/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bundles/lihotel/js/dataTables.bootstrap.js') }}"></script>
+{% endblock %}
 {% block body -%}
+	<script type="text/javascript">
+        $(document).ready(function() {
+            $('#tabla').DataTable();
+        } );
+    </script>
 	<div class="page-header">
 		<h1>Usuarios de la Aplicación</h1>
 	</div>
-
-	<table class="table table-bordered table-responsive table-striped records_list">
+	<table id="tabla" class="display table table-bordered table-responsive table-striped records_list">
 		<thead>
 			<tr>
 				<th>Nombre y Apellido</th>

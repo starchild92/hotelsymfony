@@ -120,7 +120,7 @@ class ReservaController extends Controller
 				return true;
 			}
 			$session = $this->get('session');
-			$session->getFlashBag()->add('reserva_error', 'La cantidad de personas que ha especificado es demasido alta. Como alternativa puede rentar mas habitaciones. Solo se permiten un máximo de '.$key->getCantidadPersonasHabitacion().' personas para esta habitación.');
+			$session->getFlashBag()->add('reserva_error', 'La cantidad de personas que ha especificado es demasido alta. Solo se permiten un máximo de '.$key->getCantidadPersonasHabitacion().' personas para esta habitación.');
 			return false;
 		}
 	}
@@ -233,7 +233,7 @@ class ReservaController extends Controller
 					$res_invol = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($entity->getHabitacion()->getId());
 					$var = $this->comprobarFechas($entity->getId(), $entity->getFechaDesde(), $entity->getDiasReserva(), $res_invol);
 					if (!$var) {
-						$session->getFlashBag()->add('reserva', 'La habitacion que selecciono no se encuentra disponible en la fecha seleccionada. Revise las reservas de esta habitación para obtener mas detalles.');
+						$session->getFlashBag()->add('reserva_error', 'La habitacion que selecciono no se encuentra disponible en la fecha seleccionada. Revise las reservas de esta habitación para obtener mas detalles.');
 					}
 					if( $var && $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos()))
 					{
@@ -269,10 +269,9 @@ class ReservaController extends Controller
 						
 						$em->persist($entity);
 						$em->flush();
-						
+						$session->getFlashBag()->add('reserva_buenos', 'Se ha agrega una nueva reserva. ¡No olvides resguardar el código para concretarla más adelante!');
 						return $this->redirect($this->generateUrl('user_reserva_show', array('id' => $entity->getId())));
 					}else{
-						$this->get('session')->getFlashBag()->set('reserva_error', 'No se puede hacer la reserva en la fecha que especifico. Bien puede que la habitación ya este reservada en algun periodo de tiempo igual al que has seleccionado.');
 						return $this->render('LIHotelBundle:Reserva:newuser.html.twig', array(
 							'entity' => $entity,
 							'form'   => $form->createView(),
@@ -280,7 +279,7 @@ class ReservaController extends Controller
 					}
 				}
 
-				$this->get('session')->getFlashBag()->set('reserva_error', 'El formulario no ha superado la is_valid()');
+				$session->getFlashBag()->add('reserva_error', 'El formulario no ha se ha validado correctamente, revise los datos.');
 				return $this->render('LIHotelBundle:Reserva:newuser.html.twig', array(
 					'entity' => $entity,
 					'form'   => $form->createView(),
@@ -380,7 +379,7 @@ class ReservaController extends Controller
 				'user' => $user,
 			));
 		}else{
-			$this->get('session')->getFlashBag()->set('reserva_info', 'Esta reserva, ha sido cancelada, por este motivo no puede ser modificada. Si lo desea puede generar otra reserva con las mismas caracteristicas.');
+			$session->getFlashBag()->set('reserva_info', 'Esta reserva, ha sido cancelada, por este motivo no puede ser modificada. Si lo desea puede generar otra reserva con las mismas caracteristicas.');
 			return $this->showAction($id);
 		}
 	}

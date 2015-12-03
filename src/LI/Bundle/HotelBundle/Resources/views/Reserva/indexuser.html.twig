@@ -1,5 +1,18 @@
 {% extends 'LIHotelBundle::userBase.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/dataTables.bootstrap.css') }}">
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/lihotel/js/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bundles/lihotel/js/dataTables.bootstrap.js') }}"></script>
+{% endblock %}
 {% block body -%}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#tabla').DataTable();
+            $('#tabla2').DataTable();
+        } );
+    </script>
 <div class="container-fluid row">
     {% if entities %}
     <div class="page-header">
@@ -14,7 +27,7 @@
     <p></p>
     <!-- Tab panes -->
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="actuales"><table class="table table-bordered table-responsive table-striped records_list">
+        <div role="tabpanel" class="tab-pane active" id="actuales"><table id="tabla" class="display table table-bordered table-responsive table-striped records_list">
             <thead>
                 <tr>
                     <th>Codigo</th>
@@ -36,7 +49,7 @@
                 <tr>
                     <td>{{ entity.codigoReserva }}</td>
                     <td>{{ entity.estadoReserva }}</td>
-                    <td>{{ entity.habitacion }} <a href="{{ path('user_habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                    <td>{{ entity.habitacion }}{% if entity.estadoReserva == 'Concretada' %} <a href="{{ path('user_habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>{% endif %}</td>
                     <td>{{ entity.cantidadPersonas + entity.cantidadNinos }} personas</td>
                     <td>{{ entity.diasReserva }} días</td>
                     <td>{{ entity.fechareserva|localizeddate('long', 'medium', 'es') }}</td>
@@ -59,7 +72,7 @@
             </tbody>
         </table></div>
 
-        <div role="tabpanel" class="tab-pane" id="antiguas"><table class="table table-bordered table-responsive table-striped records_list">
+        <div role="tabpanel" class="tab-pane" id="antiguas"><table id="tabla2" class="display table table-bordered table-responsive table-striped records_list">
             <thead>
                 <tr>
                     <th>Codigo</th>
@@ -81,7 +94,7 @@
                 <tr>
                     <td>{{ entity.codigoReserva }}</td>
                     <td>{{ entity.estadoReserva }}</td>
-                    <td>{{ entity.habitacion }} <a href="{{ path('user_habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                    <td>{{ entity.habitacion }}{% if entity.estadoReserva == 'Concretada' %} <a href="{{ path('user_habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>{% endif %}</td>
                     <td>{{ entity.cantidadPersonas }} personas</td>
                     <td>{{ entity.diasReserva }} días</td>
                     <td>{{ entity.fechareserva|localizeddate('long', 'none', 'es') }}</td>

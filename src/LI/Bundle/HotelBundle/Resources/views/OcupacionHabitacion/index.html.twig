@@ -11,7 +11,14 @@
             {% for message in app.session.flashbag.get('ocupacion_buenos') %}
                 <div class="alert alert-success" role="alert"><b>En horabuena! </b>{{ message }}</div>
             {% endfor %}
-            <table class="table table-bordered table-responsive table-striped records_list">
+
+            <table class="table table-striped table-bordered records_list">
+                <thead>
+                    <tr>
+                        <th colspan="7">Resumen</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
                 <tbody>
                 {% for entity in entities %}
                     <tr>
@@ -22,7 +29,7 @@
                         <td><b>"{{ entity.categoriaHabitacion.nombre }}"</b></td>
                         <td> se permiten una cantidad máxima de </td>
                         <td><i>{{ entity.cantidadPersonasHabitacion }} personas</i>.</td>
-                        <td><a href="{{ path('ocupacionhabitacion_edit', { 'id': entity.id }) }}">Modificar</a></td>
+                        <td><a href="{{ path('ocupacionhabitacion_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -35,4 +42,4 @@
         <a class="btn btn-primary" href="{{ path('ocupacionhabitacion_new') }}" role="button">Agregar Opción de Ocupación</a>
     </p>
     
-    {% endblock %}
+{% endblock %}
