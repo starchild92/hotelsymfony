@@ -98,7 +98,9 @@ class FacturaController extends Controller
         $entity = $em->getRepository('LIHotelBundle:Factura')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Factura entity.');
+            $session = $this->get('session');
+            $session->getFlashBag()->add('administrador_malos', 'No existe el elemento que está solicitando.');
+            return $this->redirect($this->generateUrl('_admin'));
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -120,7 +122,9 @@ class FacturaController extends Controller
         $entity = $em->getRepository('LIHotelBundle:Factura')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Factura entity.');
+            $session = $this->get('session');
+            $session->getFlashBag()->add('administrador_malos', 'No existe el elemento que está solicitando.');
+            return $this->redirect($this->generateUrl('_admin'));
         }
 
         $editForm = $this->createEditForm($entity);
@@ -162,7 +166,9 @@ class FacturaController extends Controller
         $entity = $em->getRepository('LIHotelBundle:Factura')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Factura entity.');
+            $session = $this->get('session');
+            $session->getFlashBag()->add('administrador_malos', 'No existe el elemento que está solicitando.');
+            return $this->redirect($this->generateUrl('_admin'));
         }
 
         $deleteForm = $this->createDeleteForm($id);

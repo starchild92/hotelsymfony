@@ -55,14 +55,19 @@
 					<th>Reservada para</th>
 					<td>{{ entity.cantidadPersonas + entity.cantidadNinos }} personas</td>
 				</tr>
+				{% if entity.estadoReserva != 'Cancelada' %}
 				<tr>
 					<th>Período en días de la reserva</th>
 					<td>{{ entity.diasReserva }} días</td>
 				</tr>
+				{% endif %}
 			</tbody>
 		</table>
 	</div>
 	<div class="col-lg-5 col-sm-5">
+		{% if entity.estadoReserva == 'Cancelada' %}
+			<div class="alert alert-danger" role="alert">Esta reserva ha sido cancelada.</div>
+		{% endif %}
 		<table class="table table-bordered">
 		<thead><tr><th colspan="2">Factura Asociada a la Reserva</th></tr></thead>
 		<tbody>

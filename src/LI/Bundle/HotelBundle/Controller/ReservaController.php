@@ -341,8 +341,11 @@ class ReservaController extends Controller
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
 
 		if (!$entity) {
-			throw $this->createNotFoundException('Unable to find Reserva entity.');
+			$session = $this->get('session');
+			$session->getFlashBag()->add('administrador_malos', 'No existe esta reserva.');
+			return $this->redirect($this->generateUrl('_admin'));
 		}
+
 		$user = $this->getUser();
 		$deleteForm = $this->createDeleteForm($id);
 
@@ -360,13 +363,16 @@ class ReservaController extends Controller
 	{
 		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
-
+		$session = $this->get('session');
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
-		if ($entity->getEstadoReserva() != 'Cancelada') {
 
-			if (!$entity) {
-				throw $this->createNotFoundException('Unable to find Reserva entity.');
-			}
+		if (!$entity) {
+			$session = $this->get('session');
+			$session->getFlashBag()->add('administrador_malos', 'No existe esta reserva.');
+			return $this->redirect($this->generateUrl('_admin'));
+		}
+
+		if ($entity->getEstadoReserva() != 'Cancelada') {
 
 			$editForm = $this->createEditForm($entity);
 			$deleteForm = $this->createDeleteForm($id);
@@ -450,11 +456,14 @@ class ReservaController extends Controller
 				{
 					if ($editForm->isValid()) {
 						//$em->flush();
+						//$data = $editForm->getData();
+						//throw $this->createNotFoundException($data->getFechaDesde()->format('d m Y').' and '.$entity->getFechaDesde()->format('d m Y'));
 
 						$cliente = $em->getRepository('LIHotelBundle:Usuario')->find($user->getId());
 						$factura = $em->getRepository('LIHotelBundle:Factura')->find($entity->getFactura()->getId());
 						$factura->setDiasReserva($entity->getDiasReserva());
 						$entity->setCliente($cliente);
+						
 						$em->persist($factura);
 						$em->persist($entity);
 						$em->flush();
@@ -570,8 +579,11 @@ class ReservaController extends Controller
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
 
 		if (!$entity) {
-			throw $this->createNotFoundException('Unable to find Reserva entity.');
+			$session = $this->get('session');
+			$session->getFlashBag()->add('usuario_malos', 'No existe esta reserva.');
+			return $this->redirect($this->generateUrl('_user'));
 		}
+
 		$user = $this->getUser();
 		$deleteForm = $this->createDeleteForm($id);
 
@@ -588,7 +600,9 @@ class ReservaController extends Controller
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
 
 		if (!$entity) {
-			throw $this->createNotFoundException('Unable to find Reserva entity.');
+			$session = $this->get('session');
+			$session->getFlashBag()->add('usuario_malos', 'No existe esta reserva.');
+			return $this->redirect($this->generateUrl('_user'));
 		}
 
 		$editForm = $this->createEditForm($entity);
@@ -706,7 +720,7 @@ class ReservaController extends Controller
 
 					$session->getFlashBag()->add('reserva_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
 				}else{
-					$session->getFlashBag()->add('reserva_malos', 'Las reservas deben ser concretadas el día para el cual fueron reservadas y no antes. Puede modificar la reservación para hoy o esperar al día. Tenga en cuenta que la modificación no garantiza que pueda concretarse hoy.');
+					$session->getFlashBag()->add('reserva_malos', 'Esta reserva debio ser concretada el '.$fecha2->format('D, d M Y').'. Las reservas deben ser concretadas el día para el cual fueron reservadas y no antes o despues.');
 				}	
 			}
 		}else{
@@ -730,7 +744,7 @@ class ReservaController extends Controller
 				foreach ($reservas as $reserva) {
 					$reserva->setEstadoReserva('Cancelada');
 					$reserva->getHabitacion()->setEstado('Libre');
-					/* CAMBIAR AQUI LA FECHA FINAL, COLOCARLA EL DIA QUE SE CANCELO PARA QUE SE PUEDA HACER LA RESERVA*/
+					$reserva->setDiasReserva(1);
 				}
 				$em->persist($reserva);
 				$em->flush();

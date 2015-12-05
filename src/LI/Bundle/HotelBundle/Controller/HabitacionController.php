@@ -134,7 +134,9 @@ class HabitacionController extends Controller
         $entity = $em->getRepository('LIHotelBundle:Habitacion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Habitacion entity.');
+            $session = $this->get('session');
+            $session->getFlashBag()->add('administrador_malos', 'No existe esta habitación.');
+            return $this->redirect($this->generateUrl('_admin'));
         }
 
         $user = $this->getUser();
@@ -160,7 +162,9 @@ class HabitacionController extends Controller
             $entity = $em->getRepository('LIHotelBundle:Habitacion')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Habitacion entity.');
+                $session = $this->get('session');
+                $session->getFlashBag()->add('administrador_malos', 'No existe esta habitación.');
+                return $this->redirect($this->generateUrl('_admin'));
             }
 
             $editForm = $this->createEditForm($entity);
@@ -206,7 +210,9 @@ class HabitacionController extends Controller
         $entity = $em->getRepository('LIHotelBundle:Habitacion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Habitacion entity.');
+            $session = $this->get('session');
+            $session->getFlashBag()->add('administrador_malos', 'No existe esta habitación.');
+            return $this->redirect($this->generateUrl('_admin'));
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -254,7 +260,9 @@ class HabitacionController extends Controller
             $entity = $em->getRepository('LIHotelBundle:Habitacion')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Habitacion entity.');
+                $session = $this->get('session');
+                $session->getFlashBag()->add('administrador_malos', 'No existe esta habitación.');
+                return $this->redirect($this->generateUrl('_admin'));
             }
 
             $em->remove($entity);
@@ -289,7 +297,9 @@ class HabitacionController extends Controller
         $entity = $em->getRepository('LIHotelBundle:Habitacion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Habitacion entity.');
+            $session = $this->get('session');
+            $session->getFlashBag()->add('usuario_malos', 'No existe esta habitación.');
+            return $this->redirect($this->generateUrl('_user'));
         }
 
         $user = $this->getUser();

@@ -123,7 +123,9 @@ class OcupacionHabitacionController extends Controller
         $entity = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find OcupacionHabitacion entity.');
+            $session = $this->get('session');
+            $session->getFlashBag()->add('administrador_malos', 'No existe el elemento que está solicitando.');
+            return $this->redirect($this->generateUrl('_admin'));
         }
 
         $editForm = $this->createEditForm($entity);
@@ -165,7 +167,9 @@ class OcupacionHabitacionController extends Controller
         $entity = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find OcupacionHabitacion entity.');
+            $session = $this->get('session');
+            $session->getFlashBag()->add('administrador_malos', 'No existe el elemento que está solicitando.');
+            return $this->redirect($this->generateUrl('_admin'));
         }
 
         $categoria = $entity->getCategoriaHabitacion()->getNombre();

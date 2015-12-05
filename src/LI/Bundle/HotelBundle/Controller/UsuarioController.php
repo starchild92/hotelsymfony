@@ -101,7 +101,9 @@ class UsuarioController extends Controller
         $entity = $em->getRepository('LIHotelBundle:Usuario')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Usuario entity.');
+            $session = $this->get('session');
+            $session->getFlashBag()->add('administrador_malos', 'No existe este usuario.');
+            return $this->redirect($this->generateUrl('_admin'));
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -123,7 +125,9 @@ class UsuarioController extends Controller
         $entity = $em->getRepository('LIHotelBundle:Usuario')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Usuario entity.');
+            $session = $this->get('session');
+            $session->getFlashBag()->add('administrador_malos', 'No existe este usuario.');
+            return $this->redirect($this->generateUrl('_admin'));
         }
 
         $editForm = $this->createEditForm($entity);
@@ -165,7 +169,9 @@ class UsuarioController extends Controller
         $entity = $em->getRepository('LIHotelBundle:Usuario')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Usuario entity.');
+            $session = $this->get('session');
+            $session->getFlashBag()->add('administrador_malos', 'No existe este usuario.');
+            return $this->redirect($this->generateUrl('_admin'));
         }
 
         $deleteForm = $this->createDeleteForm($id);

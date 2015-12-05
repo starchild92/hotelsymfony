@@ -29,7 +29,7 @@ class ReservaUsuarioType extends AbstractType
                 'years' => range(date('Y'), date('Y')),
                 'months' => range(date('m'), date('m') +2),
                 'format' => 'dd MMMM yyyy',
-                'label' => 'Fecha de Inicio de la Reserva',
+                'label' => 'Fecha de Inicio de la Reserva'
                 ))
         ;
     }
