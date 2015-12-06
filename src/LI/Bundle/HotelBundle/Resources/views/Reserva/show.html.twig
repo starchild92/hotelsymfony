@@ -22,15 +22,24 @@
 
 	<!-- PANEL DEL CONTENIDO -->
 	<div class="col-lg-9 col-sm-9 col-xs-12">
-		{% for message in app.session.flashbag.get('reserva_info') %}
-			<div class="alert alert-info" role="alert"><b>Pss Disculpe! </b>{{ message }}</div>
-		{% endfor %}
-		{% for message in app.session.flashbag.get('reserva_buenos') %}
-			<div class="alert alert-success" role="alert"><b>Yay! </b>{{ message }}</div>
-		{% endfor %}
 		{% for message in app.session.flashbag.get('reserva_malos') %}
-			<div class="alert alert-danger" role="alert"><b>Holy Mother of God! </b>{{ message }}</div>
-		{% endfor %}
+				<div class = "alert alert-danger alert-dismissable">
+			        <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+			        <b>Oh crap! </b>{{ message }}
+		    	</div>
+			{% endfor %}
+			{% for message in app.session.flashbag.get('reserva_buenos') %}
+				<div class = "alert alert-success alert-dismissable">
+        			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+        			<b>En horabuena! </b>{{ message }}
+        		</div>
+			{% endfor %}
+			{% for message in app.session.flashbag.get('reserva_info') %}
+				<div class = "alert alert-info alert-dismissable">
+	    			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+	    			<b>Disculpe! </b>{{ message }}
+	    		</div>
+			{% endfor %}
 
 		{% if entity.estadoReserva == 'Cancelada' %}
 			<div class="alert alert-danger" role="alert">Esta reserva ha sido cancelada. Ciertas operaciones no están permitidas.</div>

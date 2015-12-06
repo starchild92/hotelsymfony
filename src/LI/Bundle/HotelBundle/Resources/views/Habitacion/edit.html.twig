@@ -1,29 +1,48 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
 {% block javascripts %}
-    <script src="{{ asset('bundles/lihotel/js/TipoFormularioEdit.js') }}"></script>
-    <script src="{{ asset('bundles/lihotel/js/ServicioFormularioEdit.js') }}"></script>
+	<script src="{{ asset('bundles/lihotel/js/TipoFormularioEdit.js') }}"></script>
+	<script src="{{ asset('bundles/lihotel/js/ServicioFormularioEdit.js') }}"></script>
 {% endblock %}
 
 {% block body %}
-<div class="col-lg-12 col-sm-12 col-xs-12">
-    <div class="page-header">
-    	<h1>Modificar Habitación<br><small>modifique como está compuesta la habitación</small></h1>
-    </div>
+	<div class="col-lg-12 col-sm-12 col-xs-12">
+		<div class="page-header">
+		   <h1>Modificar Habitación<br><small>modifique como está compuesta la habitación</small></h1>
+	   </div>
 
-    <div class="row">
-        <div class="col-lg-3 col-sm-3 col-xs-12">
-            <ul class="nav nav-stacked">
-                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('habitacion') }}" role="button">Ver todas las Habitaciones</a></li>
-                <li role="presentation">{{ form(delete_form) }}</li>
-            </ul>
-        </div>
+	   <div class="row">
+		<div class="col-lg-3 col-sm-3 col-xs-12">
+			<ul class="nav nav-stacked">
+				<li role="presentation"><a class="btn btn-success btn-block" href="{{ path('habitacion') }}" role="button">Ver todas las Habitaciones</a></li>
+				<li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarHabitacion">Eliminar Habitación</a></li>
+			</ul>
+		</div>
 
-        <!-- PANEL DEL CONTENIDO -->
-        <div class="col-lg-9 col-sm-9 col-xs-12">
-            {{ form_start(edit_form) }}
-            {{ form_errors(edit_form) }}
-            {{ form_end(edit_form) }}
-        </div>
-    </div>
+		<!-- PANEL DEL CONTENIDO -->
+		<div class="col-lg-9 col-sm-9 col-xs-12">
+			{{ form_start(edit_form) }}
+			{{ form_errors(edit_form) }}
+			{{ form_end(edit_form) }}
+		</div>
+	</div>
 </div>
+<!-- EL MODAL -->
+<div class="modal fade" id="ModalEliminarHabitacion" role="dialog">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title text-danger">¡Cuidado!</h4>
+			</div>
+			<div class="modal-body">
+				<p>¿Está seguro de que desea realizar esta operación? Se eliminarán los datos asociados a la habitación. <p class="text-danger">Incluyendo las Reservas</p></p>
+			</div>
+			<div class="modal-footer">
+				<style type="text/css">form div.form-group{ margin-bottom: 0px !important; }</style>
+				{{ form(delete_form) }}
+			</div>
+		</div>
+	</div>
+</div>
+<!-- AQUI FINALIZA EL MODAL -->
 {% endblock %}

@@ -4,23 +4,50 @@
 	<div class="page-header">
 		<h1>Modificar Datos del Usuario</h1>
 	</div>
-    {{ form_start(edit_form) }}
-    {{ form_errors(edit_form) }}
-    
-        {{ form_row(edit_form.nombre) }}
-        {{ form_row(edit_form.apellido) }}
-        {{ form_row(edit_form.enabled) }}
-        {{ form_row(edit_form.roles) }}
-        {{ form_row(edit_form.username) }}
-        {{ form_row(edit_form.email) }}
-        {{ form_row(edit_form.fecha_nac) }}
-        {{ form_row(edit_form.submit) }}
-
-    {{ form_end(edit_form) }}
-    {#{ form_end(edit_form, {'render_rest': false}) }#}
-
     <div class="row">
-        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('usuario') }}" role="button">Regresar</a></div>
-        <div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+            <ul class="nav nav-stacked">
+                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('usuario') }}" role="button">Ver todo los Usuarios</a></li>
+                <li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarUsuario">Eliminar Usuario</a></li>
+            </ul>
+        </div>
+
+        <!-- PANEL DEL CONTENIDO -->
+        <div class="col-lg-9 col-sm-9 col-xs-12">
+            {{ form_start(edit_form) }}
+            {{ form_errors(edit_form) }}
+            
+                {{ form_row(edit_form.nombre) }}
+                {{ form_row(edit_form.apellido) }}
+                {{ form_row(edit_form.enabled) }}
+                {{ form_row(edit_form.roles) }}
+                {{ form_row(edit_form.username) }}
+                {{ form_row(edit_form.email) }}
+                {{ form_row(edit_form.fecha_nac) }}
+                {{ form_row(edit_form.submit) }}
+
+            {{ form_end(edit_form) }}
+            {#{ form_end(edit_form, {'render_rest': false}) }#}
+        </div>
     </div>
+<!-- EL MODAL -->
+<div class="modal fade" id="ModalEliminarUsuario" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-danger">¡Cuidado!</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea realizar esta operación?</p>
+                <p class="text-danger">Al eliminar un usuario, se eliminará toda la información asociada a sus reservas pasadas y actuales. Puede obtar por inhabilitarlo.</p>
+            </div>
+            <div class="modal-footer">
+            <style type="text/css">.form-group{ margin-bottom: 0px !important; }</style>
+            {{ form(delete_form) }}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- AQUI FINALIZA EL MODAL -->
 {% endblock %}

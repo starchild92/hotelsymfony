@@ -195,17 +195,24 @@ class CategoriaHabitacionController extends Controller
     {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
-
+        $session = $this->get('session');
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('LIHotelBundle:CategoriaHabitacion')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find CategoriaHabitacion entity.');
+                $session->getFlashBag()->add('administrador_malos', 'No existe el elemento que está solicitando.');
+                return $this->redirect($this->generateUrl('_admin'));
             }
 
+            try{
             $em->remove($entity);
             $em->flush();
+            }
+            catch(\Exception $e){
+                $session->getFlashBag()->add('categoriahabitacion_malos', 'La eliminación ha fallado! Debido a que existen habitaciones que tienen esta categoría asociada.');
+                return $this->editAction($id);
+            }
         }
 
         return $this->redirect($this->generateUrl('categoriahabitacion'));

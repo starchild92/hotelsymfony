@@ -1,35 +1,60 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
 
 {% block body -%}
-    <div class="page-header"><h1>Tipo Habitación</h1></div>
-    
-    <div class="row">
-        <div class="col-lg-3 col-sm-3 col-xs-12">
-            <ul class="nav nav-stacked">
-                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('tipohabitacion') }}" role="button">Ver todos los Tipos</a></li>
-                <li role="presentation"><a class="btn btn-warning btn-block" href="{{ path('tipohabitacion_edit', { 'id': entity.id }) }}" role="button">Editar Tipo de Habitación {{ entity.nombre }}</a></li>
-                <li role="presentation">{{ form(delete_form) }}</li>
-            </ul>
-        </div>
+<div class="page-header"><h1>Tipo Habitación</h1></div>
 
-        <!-- PANEL DEL CONTENIDO -->
-        <div class="col-lg-9 col-sm-9 col-xs-12">
-            <table class="table table-bordered record_properties">
-            <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ entity.id }}</td>
-                </tr>
-                <tr>
-                    <th>Nombre</th>
-                    <td>{{ entity.nombre }}</td>
-                </tr>
-                <tr>
-                    <th>Costo</th>
-                    <td>{{ entity.precio }} Bs</td>
-                </tr>
-            </tbody>
-        </table>
+<div class="row">
+    <div class="col-lg-3 col-sm-3 col-xs-12">
+        <ul class="nav nav-stacked">
+            <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('tipohabitacion') }}" role="button">Ver todos los Tipos</a></li>
+            <li role="presentation"><a class="btn btn-warning btn-block" href="{{ path('tipohabitacion_edit', { 'id': entity.id }) }}" role="button">Editar Tipo de Habitación {{ entity.nombre }}</a></li>
+            <li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarTipoHabitacion">Eliminar Tipo Habitación</a></li>
+        </ul>
+    </div>
+
+    <!-- PANEL DEL CONTENIDO -->
+    <div class="col-lg-9 col-sm-9 col-xs-12">
+        {% for flashMessage in app.session.flashbag.get('tipohabitacion_malos') %}
+        <div class = "alert alert-danger alert-dismissable">
+            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+            <b>Holy Whack-A-Mole!</b> {{ flashMessage }}
+        </div>
+        {% endfor %}
+        <table class="table table-bordered record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Costo</th>
+                <td>{{ entity.precio }} Bs</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+<!-- EL MODAL -->
+<div class="modal fade" id="ModalEliminarTipoHabitacion" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-danger">¡Cuidado!</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea realizar esta operación? Es preferible que modifique un tipo existente</p><p class="text-danger">Si una habitación tiene asociado el tipo que esta por eliminar debe modificarla y cambiar su tipo.</p>
+            </div>
+            <div class="modal-footer">
+                <style type="text/css">.form-group{ margin-bottom: 0px !important; }</style>
+                {{ form(delete_form) }}
+            </div>
         </div>
     </div>
+</div>
+<!-- AQUI FINALIZA EL MODAL -->
 {% endblock %}

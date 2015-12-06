@@ -6,14 +6,24 @@
 	<div class="row">
 		<div class="col-lg-6" style="float: none; margin: 0 auto;">
 			{% for message in app.session.flashbag.get('reserva_malos') %}
-				<div class="alert alert-danger" role="alert"><b>Oh crap! </b>{{ message }}</div>
+				<div class = "alert alert-danger alert-dismissable">
+			        <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+			        <b>Holy Whack-A-Mole! </b>{{ message }}
+		    	</div>
 			{% endfor %}
 			{% for message in app.session.flashbag.get('reserva_buenos') %}
-				<div class="alert alert-success" role="alert"><b>En horabuena! </b>{{ message }}</div>
+				<div class = "alert alert-success alert-dismissable">
+        			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+        			<b>En horabuena! </b>{{ message }}
+        		</div>
 			{% endfor %}
 			{% for message in app.session.flashbag.get('reserva_info') %}
-				<div class="alert alert-info" role="alert"><b>Disculpe! </b>{{ message }}</div>
+				<div class = "alert alert-info alert-dismissable">
+	    			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+	    			<b>Disculpe! </b>{{ message }}
+	    		</div>
 			{% endfor %}
+
 			{{ form_start(form) }}
 			<div class="input-group">
   				<span class="input-group-addon" id="basic-addon1">Código</span>

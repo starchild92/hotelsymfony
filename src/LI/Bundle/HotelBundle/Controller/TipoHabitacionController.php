@@ -162,7 +162,7 @@ class TipoHabitacionController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $session = $this->get('session');
         $entity = $em->getRepository('LIHotelBundle:TipoHabitacion')->find($id);
 
         if (!$entity) {
@@ -177,7 +177,7 @@ class TipoHabitacionController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
+            $session->getFlashBag()->add('tipohabitacion_buenos', 'Se ha actualizado el tipo de habitación con exito.');
             return $this->redirect($this->generateUrl('tipohabitacion_edit', array('id' => $id)));
         }
 
@@ -195,17 +195,26 @@ class TipoHabitacionController extends Controller
     {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
+        $session = $this->get('session');
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('LIHotelBundle:TipoHabitacion')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find TipoHabitacion entity.');
+                $session->getFlashBag()->add('administrador_malos', 'No existe el elemento que está solicitando.');
+                return $this->redirect($this->generateUrl('_admin'));
             }
 
+            try{
             $em->remove($entity);
             $em->flush();
+            $session->getFlashBag()->add('tipohabitacion_buenos', 'Se ha eliminado el tipo de habitación con exito.');
+            }
+            catch(\Exception $e) {
+                $session->getFlashBag()->add('tipohabitacion_malos', 'La eliminación ha fallado! Debido a que existen habitaciones que tienen este tipo asociado.');
+                return $this->editAction($id);
+            }
         }
 
         return $this->redirect($this->generateUrl('tipohabitacion'));

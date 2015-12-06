@@ -3,14 +3,39 @@
 {% block body -%}
 <div class="col-lg-12 col-sm-12 col-xs-12">
     <div class="page-header">
-    	<h1>Compensacion edit</h1>
+    	<h1>Modificar Compensacion</h1>
 	</div>
-
-	{{ form(edit_form) }}
-
     <div class="row">
-        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('compensacion') }}" role="button">Regresar</a></div>
-        <div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+            <ul class="nav nav-stacked">
+                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('compensacion') }}" role="button">Ver todas las Compensaciones</a></li>
+                <li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarCompensacion">Eliminar Compensación</a></li>
+            </ul>
+        </div>
+        <!-- PANEL DEL CONTENIDO -->
+        <div class="col-lg-9 col-sm-9 col-xs-12">
+            {{ form(edit_form) }}
+        </div>
     </div>
 </div>
+<!-- EL MODAL -->
+<div class="modal fade" id="ModalEliminarCompensacion" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-danger">¡Cuidado!</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea realizar esta operación?</p>
+                <p class="text-danger">Al eliminar una compensación no habra forma de calcular el costo, segun el tiempo de la reserva o cancelación previa a esta.</p>
+            </div>
+            <div class="modal-footer">
+            <style type="text/css">.form-group{ margin-bottom: 0px !important; }</style>
+            {{ form(delete_form) }}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- AQUI FINALIZA EL MODAL -->
 {% endblock %}

@@ -220,6 +220,7 @@ class OcupacionHabitacionController extends Controller
     {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
+        $session = $this->get('session');
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -231,6 +232,7 @@ class OcupacionHabitacionController extends Controller
 
             $em->remove($entity);
             $em->flush();
+            $session->getFlashBag()->add('ocupacion_buenos','Se ha eliminado la Ocupación de forma correcta. Tenga en cuenta que ahora no hay limite de personas para las habitaciones de tipo y categoria de la ocupacion que ha eliminado.');
         }
 
         return $this->redirect($this->generateUrl('ocupacionhabitacion'));

@@ -9,20 +9,45 @@
         <div class="col-lg-3 col-sm-3 col-xs-12">
             <ul class="nav nav-stacked">
                 <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('reserva') }}" role="button">Ver todas las Reservas</a></li>
-                <li role="presentation">{{ form(delete_form) }}</li>
+                <li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarReserva">Eliminar Reserva</a></li>
             </ul>
         </div>
 
         <!-- PANEL DEL CONTENIDO -->
         <div class="col-lg-9 col-sm-9 col-xs-12">
             {% for message in app.session.flashbag.get('reserva_error') %}
-                <div class="alert alert-danger" role="alert"><b>Oh crap! </b>{{ message }}</div>
+                <div class = "alert alert-danger alert-dismissable">
+                    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+                    <b>Oh crap! </b>{{ message }}
+                </div>
             {% endfor %}
             {% for message in app.session.flashbag.get('reserva_bien') %}
-                <div class="alert alert-success" role="alert"><b>Enhorabuena! </b>{{ message }}</div>
+                <div class = "alert alert-success alert-dismissable">
+                    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+                    <b>En horabuena! </b>{{ message }}
+                </div>
             {% endfor %}
 
             {{ form(edit_form) }}
         </div>
     </div>
+<!-- EL MODAL -->
+<div class="modal fade" id="ModalEliminarReserva" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-danger">¡Cuidado!</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea realizar esta operación? Se eliminarán los datos asociados a la reserva.</p>
+            </div>
+            <div class="modal-footer">
+            <style type="text/css">.form-group{ margin-bottom: 0px !important; }</style>
+            {{ form(delete_form) }}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- AQUI FINALIZA EL MODAL -->
 {% endblock %}

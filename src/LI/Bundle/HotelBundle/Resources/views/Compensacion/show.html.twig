@@ -5,39 +5,66 @@
     <div class="page-header">
         <h1>Compensacion</h1>
     </div>
-    <table class="table table-bordered table-striped record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Porcentaje</th>
-                <td>{{ entity.porcentaje }}</td>
-            </tr>
-            <tr>
-                <th>Dedias</th>
-                <td>{{ entity.deDias }}</td>
-            </tr>
-            <tr>
-                <th>Adias</th>
-                <td>{{ entity.aDias }}</td>
-            </tr>
-            <tr>
-                <th>Dehoras</th>
-                <td>{{ entity.deHoras }}</td>
-            </tr>
-            <tr>
-                <th>Ahoras</th>
-                <td>{{ entity.aHoras }}</td>
-            </tr>
-        </tbody>
-    </table>
-
     <div class="row">
-        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('compensacion') }}" role="button">Regresar</a></div>
-        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-warning btn-block" href="{{ path('compensacion_edit', { 'id': entity.id }) }}" role="button">Editar Compensación</a></div>
-        <div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+            <ul class="nav nav-stacked">
+                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('compensacion') }}" role="button">Ver todas las Compensaciones</a></li>
+                <li role="presentation"><a class="btn btn-warning btn-block" href="{{ path('compensacion_edit', { 'id': entity.id }) }}" role="button">Editar Compensación</a></li>
+                <li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarCompensacion">Eliminar Compensación</a></li>
+            </ul>
+        </div>
+
+        <!-- PANEL DEL CONTENIDO -->
+        <div class="col-lg-9 col-sm-9 col-xs-12">
+            <table class="table table-bordered table-striped record_properties">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ entity.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Porcentaje</th>
+                        <td>{{ entity.porcentaje }}</td>
+                    </tr>
+                    <tr>
+                        <th>Dedias</th>
+                        <td>{{ entity.deDias }}</td>
+                    </tr>
+                    <tr>
+                        <th>Adias</th>
+                        <td>{{ entity.aDias }}</td>
+                    </tr>
+                    <tr>
+                        <th>Dehoras</th>
+                        <td>{{ entity.deHoras }}</td>
+                    </tr>
+                    <tr>
+                        <th>Ahoras</th>
+                        <td>{{ entity.aHoras }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+<!-- EL MODAL -->
+<div class="modal fade" id="ModalEliminarCompensacion" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-danger">¡Cuidado!</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea realizar esta operación?</p>
+                <p class="text-danger">Al eliminar una compensación no habra forma de calcular el costo, segun el tiempo de la reserva o cancelación previa a esta.</p>
+            </div>
+            <div class="modal-footer">
+            <style type="text/css">.form-group{ margin-bottom: 0px !important; }</style>
+            {{ form(delete_form) }}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- AQUI FINALIZA EL MODAL -->
 {% endblock %}

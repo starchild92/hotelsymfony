@@ -268,6 +268,8 @@ class HabitacionController extends Controller
 
             $em->remove($entity);
             $em->flush();
+            $session = $this->get('session');
+            $session->getFlashBag()->add('habitacion_buenos', 'Se ha eliminado con exito la habitación y todo lo relacionado con ella.');
         }
 
         return $this->redirect($this->generateUrl('habitacion'));

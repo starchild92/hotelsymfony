@@ -8,7 +8,7 @@
             <ul class="nav nav-stacked">
                 <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('categoriahabitacion') }}" role="button">Regresar</a></li>
                 <li role="presentation"><a class="btn btn-warning btn-block" href="{{ path('categoriahabitacion_edit', { 'id': entity.id }) }}" role="button">Editar Categoría Habitación</a></li>
-                <li role="presentation">{{ form(delete_form) }}</li>
+                <li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarCategoria">Eliminar Categoría Habitación</a></li>
             </ul>
         </div>
 
@@ -25,17 +25,29 @@
                         <td>{{ entity.nombre }}</td>
                     </tr>
                     <tr>
-                        <th>Precio</th>
-                        <td>{{ entity.precio }}</td>
+                        <th>Precio (por tipo de habitación)</th>
+                        <td>{{ entity.precio }} veces</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
-    
-
-    <div class="row">
-        
+<!-- EL MODAL -->
+<div class="modal fade" id="ModalEliminarCategoria" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-danger">¡Cuidado!</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea realizar esta operación? Es preferible que modifique una categoría existente</p><p class="text-danger">Si una habitación tiene asociada la categoría que esta por eliminar, no podrá eliminarse y deberá primero desvincular todas las habitaciones de esta categoría.</p>
+            </div>
+            <div class="modal-footer">
+            <style type="text/css">.form-group{ margin-bottom: 0px !important; }</style>
+            {{ form(delete_form) }}
+            </div>
+        </div>
     </div>
+</div>
 {% endblock %}
