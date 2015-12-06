@@ -67,7 +67,7 @@ class CategoriaHabitacionController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Crear'));
+        $form->add('submit', 'submit', array('label' => 'Crear Categoría', 'attr' => array('class'=>'btn btn-block btn-primary')));
 
         return $form;
     }
@@ -151,7 +151,7 @@ class CategoriaHabitacionController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Actualizar', 'attr' => array('class' => 'btn btn-info btn-block')));
+        $form->add('submit', 'submit', array('label' => 'Actualizar Categoría', 'attr' => array('class' => 'btn btn-info btn-block')));
 
         return $form;
     }

@@ -67,7 +67,7 @@ class TipoHabitacionController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Crear'));
+        $form->add('submit', 'submit', array('label' => 'Crear Tipo de Habitación', 'attr' => array('class' => 'btn btn-primary btn-block')));
 
         return $form;
     }

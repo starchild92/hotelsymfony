@@ -5,56 +5,70 @@
 {% block javascripts %}
     <script src="{{ asset('bundles/lihotel/js/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('bundles/lihotel/js/dataTables.bootstrap.js') }}"></script>
-{% endblock %}
-{% block body -%}
     <script type="text/javascript">
         $(document).ready(function() {
             $('#tabla').DataTable();
         } );
     </script>
+{% endblock %}
+{% block body -%}
+    
 <div class="col-lg-12 col-sm-12 col-xs-12">
     {% if entities %}
     <div class="page-header">
         <h1>Habitaciones del Hotel<br><small>como están conformadas las habitaciones del hotel</small></h1>
     </div>
-    <table id="tabla" class="display table table-striped table-bordered records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Estado</th>
-                <th>Número</th>
-                <th>Nombre</th>
-                <th>Caracteristicas de la Habitación</th>
-                <th>Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('habitacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.estado }}</td>
-                <td>{{ entity.numero }}</td>
-                <td>{{ entity.nombre }}</td>
-                <td class="table-td-inception">
-                    De categoría <b>{{ entity.tipo.categoriaHabitacion }}</b> y tipo <b>{{ entity.tipo.tipoHabitacion }}</b>, <i>{{ entity.tipo.espacioInterno }}</i> con los siguientes servicios: "{% set tam = entity.tipo.servicios|length  %}{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}{% set tam = tam-1 %}{% if tam != 0 %}, {% endif %}{% endfor %}" y {{ entity.tipo.bebidasMinibar|length }} tipo de bebidas en el minibar.
-                </td>
-                <td class="opciones">
-                    <a href="{{ path('habitacion_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
-                    <a href="{{ path('habitacion_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <p style="text-align: center;">
-        <a class="btn btn-primary" href="{{ path('habitacion_new') }}" role="button">Agregar una Nueva Habitación</a>
-    </p>
+
+    <div class="row">
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+            <ul class="nav nav-stacked">
+                <li role="presentation"><a class="btn btn-primary" href="{{ path('habitacion_new') }}" role="button">Agregar Habitación</a></li>
+                <li role="presentation"></li>
+            </ul>
+        </div>
+
+        <!-- PANEL DEL CONTENIDO -->
+        <div class="col-lg-9 col-sm-9 col-xs-12">
+            <table id="tabla" class="display table table-striped table-bordered records_list">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Estado</th>
+                        <th>Número</th>
+                        <th>Nombre</th>
+                        <th>Caracteristicas de la Habitación</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td><a href="{{ path('habitacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                        <td>{{ entity.estado }}</td>
+                        <td>{{ entity.numero }}</td>
+                        <td>{{ entity.nombre }}</td>
+                        <td class="table-td-inception">
+                            De categoría <b>{{ entity.tipo.categoriaHabitacion }}</b> y tipo <b>{{ entity.tipo.tipoHabitacion }}</b>, <i>{{ entity.tipo.espacioInterno }}</i> con los siguientes servicios: "{% set tam = entity.tipo.servicios|length  %}{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}{% set tam = tam-1 %}{% if tam != 0 %}, {% endif %}{% endfor %}" y {{ entity.tipo.bebidasMinibar|length }} tipo de bebidas en el minibar.
+                        </td>
+                        <td class="opciones">
+                            <a href="{{ path('habitacion_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                            <a href="{{ path('habitacion_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     {% else %}
+
         <div class="jumbotron">
           <h2>Lo sentimos, <small>no se han añadido habitaciones</small></h2>
           <p>No hay nada para mostrar, disculpe. Puede agregar algo haciendo click en el siguiente botón.</p>
           <p><a class="btn btn-success btn-lg" href="{{ path('habitacion_new') }}" role="button">Agregar una Habitación</a></p>
         </div>
+
     {% endif %}
 </div>
 {% endblock %}

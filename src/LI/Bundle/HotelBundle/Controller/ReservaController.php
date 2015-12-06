@@ -198,6 +198,7 @@ class ReservaController extends Controller
 							$em->persist($entity);
 							$em->flush();
 							
+							$session->getFlashBag()->add('reserva_buenos', 'Se ha realizado la reservación exitosamente. No olvide tomar nota de codigo.');
 							return $this->redirect($this->generateUrl('reserva_show', array('id' => $entity->getId())));
 						}else{
 							//No se puede reservar
@@ -653,7 +654,7 @@ class ReservaController extends Controller
 				$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($data['codigo_reserva']);
 				if($reservas[0]->getEstadoReserva() == 'Concretada')
 				{
-					$session->getFlashBag()->add('concretar_info', 'Esta reserva ya ha sido concretada.');
+					$session->getFlashBag()->add('reserva_info', 'Esta reserva ya ha sido concretada.');
 				}else{
 					/** OBTENIENDO LAS RESERVAS QUE NO SE CONCRETARON EN LA FECHA PREVISTA **/
 					$hoy = new \DateTime('today');
@@ -741,15 +742,31 @@ class ReservaController extends Controller
 			{
 				$session->getFlashBag()->add('reserva_info', 'Esta reserva ya ha sido cancelada.');
 			}else{
-				foreach ($reservas as $reserva) {
-					$reserva->setEstadoReserva('Cancelada');
-					$reserva->getHabitacion()->setEstado('Libre');
-					$reserva->setDiasReserva(1);
-				}
-				$em->persist($reserva);
-				$em->flush();
+				if($reservas[0]->getEstadoReserva() == 'Concretada'){
+					////***/////
+					$dias_reserva = $reservas[0]->getDiasReserva() - 1;
+					$fecha_reserva = $reservas[0]->getFechaDesde();
+					$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
+					$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
+					$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
+					$hoy = new \DateTime('today');
 
-				$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva. lamentamos que haya tenido que ser asi.');
+					if ($hoy > $fecha_final_) {
+						$session->getFlashBag()->add('reserva_malos', 'No puede cancelar una reserva que ya ha cumplido su tiempo');
+					}else{
+						throw $this->createNotFoundException('la reserva no ha finalizado su tiempo, al cancelarla se recalculara el tiempo y se finalizara hoy. El costo de la habitación se recalculara en base a los dias que estuvo en la habitación.');
+					}
+				}else{
+					//la reserva no se ha concretado y se puede cancelar. Los costos de cancelacion estan sujetos a las compensaciones que establecen los administradores.
+					foreach ($reservas as $reserva) {
+						$reserva->setEstadoReserva('Cancelada');
+						$reserva->getHabitacion()->setEstado('Libre');
+						$reserva->setDiasReserva(1);
+					}
+					$em->persist($reserva);
+					$em->flush();
+					$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva. lamentamos que haya tenido que ser asi.');
+				}
 			}
 		}else{
 			$session->getFlashBag()->add('reserva_malos', 'Tal vez estás en drogas! Ese código no existe.');

@@ -4,13 +4,17 @@
 <div class="page-header">
     <h1>Tipo Habitación<br><small>Añada un nuevo tipo que ayude a organizar mejor sus habitaciones</small></h1>
 </div>
-    {{ form(form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('tipohabitacion') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    <div class="row">
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+            <ul class="nav nav-stacked">
+                <li role="presentation"><li role="presentation"><a class="btn btn-success btn-block" href="{{ path('tipohabitacion') }}" role="button">Ver todos los Tipos</a></li></li>
+            </ul>
+        </div>
+
+        <!-- PANEL DEL CONTENIDO -->
+        <div class="col-lg-9 col-sm-9 col-xs-12">
+            {{ form(form) }}
+        </div>
+    </div>
 {% endblock %}

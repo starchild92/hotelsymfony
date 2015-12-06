@@ -5,24 +5,31 @@
         <h1>Realizar una Reservación<br><small>verificar antes si hay habitaciones disponibles</small></h1>
     </div>
 
-    {% for message in app.session.flashbag.get('reserva_error') %}
-        <div class="alert alert-danger" role="alert"><b>Oh crap! </b>{{ message }}</div>
-    {% endfor %}
-
-    {{ form_start(form) }}
-        {{ form_errors(form) }}
-
-        {{ form_row(form.habitacion, {'label':'Nombre de la Habitación reservada'}) }}
-        {{ form_row(form.cantidadPersonas, {'label':'Cantidad de Personas'}) }}
-        {{ form_row(form.cantidadNinos, {'label':'Cantidad de Niños'}) }}
-        {{ form_row(form.diasReserva, {'label':'Duración en días de la reserva'}) }}
-        {{ form_row(form.fecha_desde, {'label':'Fecha Inicio Reserva'}) }}
-        {{ form_row(form.estadoReserva, {'label':'Estado Reserva'}) }}
-        {{ form_row(form.submit, {'label':'Guardar cambios de la reserva'}) }}
-
-    {{ form_end(form) }}
-
     <div class="row">
-        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('user_reserva') }}" role="button">Ver todas las Reservas</a></div>
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+            <ul class="nav nav-stacked">
+                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('user_reserva') }}" role="button">Ver todas las Reservas</a></li>
+            </ul>
+        </div>
+
+        <!-- PANEL DEL CONTENIDO -->
+        <div class="col-lg-9 col-sm-9 col-xs-12">
+            {% for message in app.session.flashbag.get('reserva_error') %}
+                <div class="alert alert-danger" role="alert"><b>Oh crap! </b>{{ message }}</div>
+            {% endfor %}
+
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
+
+                {{ form_row(form.habitacion, {'label':'Nombre de la Habitación reservada'}) }}
+                {{ form_row(form.cantidadPersonas, {'label':'Cantidad de Personas'}) }}
+                {{ form_row(form.cantidadNinos, {'label':'Cantidad de Niños'}) }}
+                {{ form_row(form.diasReserva, {'label':'Duración en días de la reserva'}) }}
+                {{ form_row(form.fecha_desde, {'label':'Fecha Inicio Reserva'}) }}
+                {{ form_row(form.estadoReserva, {'label':'Estado Reserva'}) }}
+                {{ form_row(form.submit, {'label':'Guardar cambios de la reserva'}) }}
+
+            {{ form_end(form) }}
+        </div>
     </div>
 {% endblock %}

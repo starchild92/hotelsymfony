@@ -10,11 +10,20 @@
     	<h1>Modificar Habitación<br><small>modifique como está compuesta la habitación</small></h1>
     </div>
 
-    {{ form(edit_form) }}
-    
     <div class="row">
-        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('habitacion') }}" role="button">Regresar</a></div>
-        <div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+            <ul class="nav nav-stacked">
+                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('habitacion') }}" role="button">Ver todas las Habitaciones</a></li>
+                <li role="presentation">{{ form(delete_form) }}</li>
+            </ul>
+        </div>
+
+        <!-- PANEL DEL CONTENIDO -->
+        <div class="col-lg-9 col-sm-9 col-xs-12">
+            {{ form_start(edit_form) }}
+            {{ form_errors(edit_form) }}
+            {{ form_end(edit_form) }}
+        </div>
     </div>
 </div>
 {% endblock %}

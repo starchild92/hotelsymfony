@@ -192,6 +192,7 @@ class HabitacionController extends Controller
         $form = $this->createForm(new HabitacionType(), $entity, array(
             'action' => $this->generateUrl('habitacion_update', array('id' => $entity->getId())),
             'method' => 'PUT',
+            /*'attr'   => array('class' => 'form-inline')*/
         ));
 
         $form->add('submit', 'submit', array('label' => 'Actualizar', 'attr' => array('class' => 'btn btn-info btn-block')));

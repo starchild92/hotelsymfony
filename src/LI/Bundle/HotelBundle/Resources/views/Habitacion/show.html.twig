@@ -9,80 +9,82 @@
 	</div>
 
 	<div class="row">
-		{% for flashMessage in app.session.flashbag.get('msj_habitacion') %}
-		<div class = "alert alert-info alert-dismissable">
-			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-			{{ flashMessage }}
+		<div class="col-lg-3 col-sm-3 col-xs-12">
+			<ul class="nav nav-stacked">
+				<li role="presentation"><a class="btn btn-success btn-block" href="{{ path('habitacion') }}" role="button">Ver todas las Habitaciones</a></li>
+				<li role="presentation"><a class="btn btn-warning btn-block" href="{{ path('habitacion_edit', { 'id': entity.id }) }}" role="button">Editar Habitación</a></li>
+				<li role="presentation">{{ form(delete_form) }}</li>
+			</ul>
 		</div>
-		{% endfor %}
-		<div class="col-lg-6 col-sm-6">
-			<div class="panel panel-success">
-				<div class="panel-heading">
-					<h3 class="panel-title">Datos de la Habitación</h3>
+
+		<!-- PANEL DEL CONTENIDO -->
+		<div class="col-lg-9 col-sm-9 col-xs-12">
+			{% for flashMessage in app.session.flashbag.get('msj_habitacion') %}
+			<div class = "alert alert-info alert-dismissable">
+				<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+				{{ flashMessage }}
+			</div>
+			{% endfor %}
+			<div class="col-lg-12">
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h3 class="panel-title">Datos de la Habitación</h3>
+					</div>
+					<table class="table table-bordered table-responsive">
+						<tbody>
+							<tr>
+								<th>Estado</th>
+								<td>{{ entity.estado }}</td>
+							</tr>
+							<tr>
+								<th>Nombre</th>
+								<td>{{ entity.numero }} - {{ entity.nombre }}</td>
+							</tr>
+							<tr>
+								<th>Categoria</th>
+								<td>{{ entity.tipo.categoriaHabitacion }}</td>
+							</tr>
+							<tr>
+								<th>Tipo</th>
+								<td>{{ entity.tipo.tipoHabitacion }}</td>
+							</tr>
+							<tr>
+								<th>Espacio Interno</th>
+								<td>{{ entity.tipo.espacioInterno }}</td>
+							</tr>
+							<tr>
+								<th>Servicios</th>
+								<td>{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}, {% endfor %}{% if entity.tipo.servicios == null %}No se han añadido servicios a esta habitación.{% endif %}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<table class="table table-bordered table-responsive">
+			</div>
+			<div class="col-lg-12">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th colspan="4">Bebidas del Minibar</th>
+						</tr>
+						<tr>
+							{% if entity.tipo.bebidasMinibar|length == 0 %}<th>No se han añadido bebidas al minibar de esta habitación.</th>{% endif %}
+						</tr>
+					</thead>
 					<tbody>
+						{% for bebida in entity.tipo.bebidasMinibar %}
 						<tr>
-							<th>Id</th>
-							<td>{{ entity.id }}</td>
-							
+							<td>{{ bebida.marca }}</td>
+							<td>{{ bebida.cantidad }} unidades</td>
+							<td>{{ bebida.precio }} Bs C/U</td>
+							<td>{{ bebida.tipoBebida }}</td>
 						</tr>
-						<tr>
-							<th>Estado</th>
-							<td>{{ entity.estado }}</td>
-						</tr>
-						<tr>
-							<th>Nombre</th>
-							<td>{{ entity.numero }} - {{ entity.nombre }}</td>
-						</tr>
-						<tr>
-							<th>Categoria</th>
-							<td>{{ entity.tipo.categoriaHabitacion }}</td>
-						</tr>
-						<tr>
-							<th>Tipo</th>
-							<td>{{ entity.tipo.tipoHabitacion }}</td>
-						</tr>
-						<tr>
-							<th>Espacio Interno</th>
-							<td>{{ entity.tipo.espacioInterno }}</td>
-						</tr>
-						<tr>
-							<th>Servicios</th>
-							<td>{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}, {% endfor %}{% if entity.tipo.servicios == null %}No se han añadido servicios a esta habitación.{% endif %}</td>
-						</tr>
+						{% endfor %}
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<div class="col-lg-6 col-sm-6">
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th colspan="4">Bebidas del Minibar</th>
-					</tr>
-					<tr>
-						{% if entity.tipo.bebidasMinibar|length == 0 %}<th>No se han añadido bebidas al minibar de esta habitación.</th>{% endif %}
-					</tr>
-				</thead>
-				<tbody>
-					{% for bebida in entity.tipo.bebidasMinibar %}
-					<tr>
-						<td>{{ bebida.marca }}</td>
-						<td>{{ bebida.cantidad }} unidades</td>
-						<td>{{ bebida.precio }} Bs</td>
-						<td>{{ bebida.tipoBebida }}</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('habitacion') }}" role="button">Regresar</a></div>
-	<div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-warning btn-block" href="{{ path('habitacion_edit', { 'id': entity.id }) }}" role="button">Editar Habitación</a></div>
-	<div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
 </div>
 {% endblock %}

@@ -5,33 +5,41 @@
 	<div class="page-header">
 		<h1>Categorías de Habitación</h1>
 	</div>
-    <table class="table table-striped table-bordered records_list">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Nombre</th>
-				<th>Precio</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-		{% for entity in entities %}
-			<tr>
-				<td><a href="{{ path('categoriahabitacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-				<td>{{ entity.nombre }}</td>
-				<td>{{ entity.precio }} veces el tipo de habitación</td>
-				<td class="opciones">
-                    <a href="{{ path('categoriahabitacion_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
-                    <a href="{{ path('categoriahabitacion_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                </td>
-			</tr>
-		{% endfor %}
-		</tbody>
-	</table>
 
-	<p style="text-align: center;">
-        <a class="btn btn-primary" href="{{ path('categoriahabitacion_new') }}">Añadir una Nueva Categoría de Habitación</a>
-    </p>
-    
+    <div class="row">
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+            <ul class="nav nav-stacked">
+                <li role="presentation"><a class="btn btn-primary" href="{{ path('categoriahabitacion_new') }}">Añadir una Nueva Categoría de Habitación</a></li>
+                <li role="presentation"></li>
+            </ul>
+        </div>
+
+        <!-- PANEL DEL CONTENIDO -->
+        <div class="col-lg-9 col-sm-9 col-xs-12">
+            <table class="table table-striped table-bordered records_list">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td><a href="{{ path('categoriahabitacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                        <td>{{ entity.nombre }}</td>
+                        <td>{{ entity.precio }} veces el tipo de habitación</td>
+                        <td class="opciones">
+                            <a href="{{ path('categoriahabitacion_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                            <a href="{{ path('categoriahabitacion_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 {% endblock %}

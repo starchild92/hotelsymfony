@@ -1,20 +1,28 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
     
 {% block body -%}
-<div class="page-header">
-    <h1>Modificar Reserva</h1>
-</div>
-	{% for message in app.session.flashbag.get('reserva_error') %}
-        <div class="alert alert-danger" role="alert"><b>Oh crap! </b>{{ message }}</div>
-    {% endfor %}
-    {% for message in app.session.flashbag.get('reserva_bien') %}
-        <div class="alert alert-success" role="alert"><b>Enhorabuena! </b>{{ message }}</div>
-    {% endfor %}
+    <div class="page-header">
+        <h1>Modificar Reserva</h1>
+    </div>
 
-    {{ form(edit_form) }}
+    <div class="row">
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+            <ul class="nav nav-stacked">
+                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('reserva') }}" role="button">Ver todas las Reservas</a></li>
+                <li role="presentation">{{ form(delete_form) }}</li>
+            </ul>
+        </div>
 
-	<div class="row">
-        <div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('reserva') }}" role="button">Regresar</a></div>
-        <div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
+        <!-- PANEL DEL CONTENIDO -->
+        <div class="col-lg-9 col-sm-9 col-xs-12">
+            {% for message in app.session.flashbag.get('reserva_error') %}
+                <div class="alert alert-danger" role="alert"><b>Oh crap! </b>{{ message }}</div>
+            {% endfor %}
+            {% for message in app.session.flashbag.get('reserva_bien') %}
+                <div class="alert alert-success" role="alert"><b>Enhorabuena! </b>{{ message }}</div>
+            {% endfor %}
+
+            {{ form(edit_form) }}
+        </div>
     </div>
 {% endblock %}

@@ -1,24 +1,41 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
-
 {% block body -%}
 	<div class="page-header">
 		<h1>Detalles Reserva</h1>
 	</div>
 
 <div class="row">
-	<div class="col-lg-12">
-	{% for message in app.session.flashbag.get('reserva_info') %}
-		<div class="alert alert-info" role="alert"><b>Pss Disculpe! </b>{{ message }}</div>
-	{% endfor %}
-	{% for message in app.session.flashbag.get('reserva_buenos') %}
-		<div class="alert alert-success" role="alert"><b>Yay! </b>{{ message }}</div>
-	{% endfor %}
-	{% for message in app.session.flashbag.get('reserva_malos') %}
-		<div class="alert alert-danger" role="alert"><b>Holy Mother of God! </b>{{ message }}</div>
-	{% endfor %}
+	<!-- PANEL DE LOS BOTONES -->
+	<div class="col-lg-3 col-sm-3 col-xs-12">
+		<ul class="nav nav-stacked">
+			{% if (entity.estadoReserva != 'Cancelada' and entity.estadoReserva != 'Concretada') %}
+			<li role="presentation"><a class="btn btn-primary btn-block" href="{{ path('reserva_concretar_auto', { 'codigo': entity.codigoReserva }) }}">Concretar Reserva</a></li>
+			<li role="presentation"><a class="btn btn-primary btn-block" href="{{ path('reserva_cancelar', { 'codigo': entity.codigoReserva }) }}">Cancelar Reserva</a></li>
+			{% endif %}
+			<li role="presentation"><a class="btn btn-success btn-block" href="{{ path('reserva') }}" role="button">Ver todas las Reservas</a></li>
+			<li role="presentation">{% if entity.estadoReserva != 'Cancelada' %}
+				<a class="btn btn-warning btn-block" href="{{ path('reserva_edit', { 'id': entity.id }) }}" role="button">Editar Reserva</a>
+			{% endif %}</li>
+			<li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarReserva">Eliminar Reserva</a></li>
+		</ul>
 	</div>
 
-	<div class="col-lg-5 col-sm-5">
+	<!-- PANEL DEL CONTENIDO -->
+	<div class="col-lg-9 col-sm-9 col-xs-12">
+		{% for message in app.session.flashbag.get('reserva_info') %}
+			<div class="alert alert-info" role="alert"><b>Pss Disculpe! </b>{{ message }}</div>
+		{% endfor %}
+		{% for message in app.session.flashbag.get('reserva_buenos') %}
+			<div class="alert alert-success" role="alert"><b>Yay! </b>{{ message }}</div>
+		{% endfor %}
+		{% for message in app.session.flashbag.get('reserva_malos') %}
+			<div class="alert alert-danger" role="alert"><b>Holy Mother of God! </b>{{ message }}</div>
+		{% endfor %}
+
+		{% if entity.estadoReserva == 'Cancelada' %}
+			<div class="alert alert-danger" role="alert">Esta reserva ha sido cancelada. Ciertas operaciones no están permitidas.</div>
+		{% endif %}
+
 		<table class="table table-bordered record_properties">
 			<thead>
 				<tr>
@@ -63,11 +80,8 @@
 				{% endif %}
 			</tbody>
 		</table>
-	</div>
-	<div class="col-lg-5 col-sm-5">
-		{% if entity.estadoReserva == 'Cancelada' %}
-			<div class="alert alert-danger" role="alert">Esta reserva ha sido cancelada.</div>
-		{% endif %}
+
+		<p>Detalles de los consumos y costos asociados a la reserva y la habitación.</p>
 		<table class="table table-bordered">
 		<thead><tr><th colspan="2">Factura Asociada a la Reserva</th></tr></thead>
 		<tbody>
@@ -77,22 +91,25 @@
 		</tbody>
 		</table>
 	</div>
-	{% if entity.estadoReserva != 'Cancelada' %}
-	<div class="col-lg-2 col-sm-2 col-xs-12">
-		<ul class="nav nav-pills nav-stacked">
-		  <li role="presentation" class="active"><a href="{{ path('reserva_concretar_auto', { 'codigo': entity.codigoReserva }) }}">Concretar Reserva</a></li>
-		  <li role="presentation"><a href="{{ path('reserva_cancelar', { 'codigo': entity.codigoReserva }) }}">Cancelar Reserva</a></li>
-		</ul>
-	</div>
-	{% endif %}
 </div>
 
-	<div class="row">
-		<div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-success btn-block" href="{{ path('reserva') }}" role="button">Regresar</a></div>
-		{% if entity.estadoReserva != 'Cancelada' %}
-		<div class="col-lg-4 col-sm-4 col-xs-12"><a class="btn btn-warning btn-block" href="{{ path('reserva_edit', { 'id': entity.id }) }}" role="button">Editar Reserva</a></div>
-		{% endif %}
-		<div class="col-lg-4 col-sm-4 col-xs-12">{{ form(delete_form) }}</div>
+<!-- EL MODAL -->
+<div class="modal fade" id="ModalEliminarReserva" role="dialog">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">¡Cuidado!</h4>
+			</div>
+			<div class="modal-body">
+				<p>¿Está seguro de que desea realizar esta operación? Se eliminarán los datos asociados a la reserva.</p>
+			</div>
+			<div class="modal-footer">
+				<style type="text/css">.form-group{ margin-bottom: 0px !important; }</style>
+				{{ form(delete_form) }}
+			</div>
+		</div>
 	</div>
-
+</div>
+<!-- AQUI FINALIZA EL MODAL -->
 {% endblock %}

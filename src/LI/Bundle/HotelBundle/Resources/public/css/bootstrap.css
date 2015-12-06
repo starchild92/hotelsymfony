@@ -13,6 +13,7 @@
 .col-xs-3 { font-size: 2.5em; }
 .opciones-extras li a { padding-left: 5px !important; padding-right: 0px !important; }
 .link-footer:hover { background-color: #EFEFEF; border-radius: 5px; }
+.tab-content{ margin-top: 5px; }
 
 html {
 	font-family: "Raleway-Regular", sans-serif;
@@ -4038,7 +4039,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 	position: relative;
 	display: block;
 }
-.nav > li > a {
+.nav > li > a,
+.form-group > button { 
 	position: relative;
 	display: block;
 	padding: 10px 15px;
@@ -4046,7 +4048,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a:hover,
 .nav > li > a:focus {
 	text-decoration: none;
-	background-color: #eee;
+	/*background-color: #eee;*/
 }
 .nav > li.disabled > a {
 	color: #777;

@@ -1,38 +1,39 @@
-{% extends user.roles|first == 'ROLE_ADMIN' 
-    ? 'LIHotelBundle::adminBase.html.twig' 
-    : 'LIHotelBundle::userBase.html.twig' %}
-
-{% block opciones %}
-    <li><a href="{{ path('user_reserva') }}" class="pull-right" name="Volver a todas"><span class="label label-success">Regresar a todas</span></a>
-    </li>
-{% endblock %}
+{% extends 'LIHotelBundle::userBase.html.twig' %}
     
 {% block body -%}
     <div class="page-header">
         <h1>Modificar su Reserva </h1>
     </div>
-    {% for message in app.session.flashbag.get('reserva_error') %}
-        <div class="alert alert-danger" role="alert"><b>Oh crap! </b>{{ message }}</div>
-    {% endfor %}
-    {% for message in app.session.flashbag.get('reserva_bien') %}
-        <div class="alert alert-success" role="alert"><b>Muy bien! </b>{{ message }}</div>
-    {% endfor %}
+    <div class="row">
+        <div class="col-lg-3 col-sm-3 col-xs-12">
+            <ul class="nav nav-stacked">
+                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('user_reserva') }}" role="button">Ver todas las Reservas</a></li>
+                <li role="presentation">{{ form(delete_form) }}</li>
+            </ul>
+        </div>
 
-    {{ form_start(edit_form) }}
-        {{ form_errors(edit_form) }}
+        <!-- PANEL DEL CONTENIDO -->
+        <div class="col-lg-9 col-sm-9 col-xs-12">
+            {% for message in app.session.flashbag.get('reserva_error') %}
+                <div class="alert alert-danger" role="alert"><b>Oh crap! </b>{{ message }}</div>
+            {% endfor %}
+            {% for message in app.session.flashbag.get('reserva_bien') %}
+                <div class="alert alert-success" role="alert"><b>Muy bien! </b>{{ message }}</div>
+            {% endfor %}
 
-        {{ form_row(edit_form.cliente, {'disabled': 'true', 'label':'Usted'}) }}
-        {{ form_row(edit_form.estadoReserva, {'label':'Estado en el que se encuentra su reserva'}) }}
-        {{ form_row(edit_form.habitacion, {'label':'Nombre de la Habitación reservada'}) }}
-        {{ form_row(edit_form.cantidadPersonas, {'label':'Cantidad de Personas'}) }}
-        {{ form_row(edit_form.cantidadNinos, {'label':'Cantidad de Niños'}) }}
-        {{ form_row(edit_form.diasReserva, {'label':'Duración en días de la reserva'}) }}
-        {{ form_row(edit_form.fecha_desde, {'label':'Fecha Inicio Reserva', 'attr':{'disabled':'true'}}) }}
-        {{ form_row(edit_form.submit, {'label':'Guardar cambios de la reserva', 'attr' : {'class':'btn btn-block btn-primary'}}) }}
+            {{ form_start(edit_form) }}
+                {{ form_errors(edit_form) }}
 
-    {{ form_end(edit_form) }}
+                {{ form_row(edit_form.cliente, {'disabled': 'true', 'label':'Usted'}) }}
+                {{ form_row(edit_form.estadoReserva, {'label':'Estado en el que se encuentra su reserva'}) }}
+                {{ form_row(edit_form.habitacion, {'label':'Nombre de la Habitación reservada'}) }}
+                {{ form_row(edit_form.cantidadPersonas, {'label':'Cantidad de Personas'}) }}
+                {{ form_row(edit_form.cantidadNinos, {'label':'Cantidad de Niños'}) }}
+                {{ form_row(edit_form.diasReserva, {'label':'Duración en días de la reserva'}) }}
+                {{ form_row(edit_form.fecha_desde, {'label':'Fecha Inicio Reserva', 'attr':{'disabled':'true'}}) }}
+                {{ form_row(edit_form.submit, {'label':'Guardar cambios de la reserva', 'attr' : {'class':'btn btn-block btn-primary'}}) }}
 
-    <ul class="record_actions">
-        <li>{{ form(delete_form) }}</li>
-    </ul>
+            {{ form_end(edit_form) }}
+        </div>
+    </div>
 {% endblock %}

@@ -10,10 +10,10 @@
 
 	.labelalert{
 	    border-radius: 5px;
-	    padding: 0.5em;
-	    margin: 5px 5px 5px 0px;
+	    padding: 5px;
+	    margin: 5px 5px 5px 5px;
 	    display: block;
-	    color: #fcf8e3;
+	    color: #F5F5F5;
     }
     a:hover { text-decoration: none; }
     .labelalert:hover{
@@ -33,6 +33,7 @@
     .over{ max-height: 400px; overflow-y: auto; border-radius: 5px; }
     .pull-left{ font-weight: bold; }
     .page-header{ text-align: center; }
+    .panel-body-p{ padding: 0px !important; }
 	</style>
 {% endblock %}
 
@@ -206,18 +207,18 @@
 		<div class="row">
 			<div class="page-header"><h3>Mensajes</h3></div>
 			<div class="panel panel-default">
-				<div class="panel-body">
+				<div class="panel-body panel-body-p">
 					<div class="over">
 						{% if not (app.session.flashbag.has('grave')) %}
 						{% if not (app.session.flashbag.has('informacion')) %}
-							<span>No hay mensajes para mostrar.</span>
+							<span class='labelalert' style="color: #000;">No hay mensajes para mostrar.</span>
 						{% endif %}
 						{% endif %}
 						{% for message in app.session.flashbag.get('grave') %}
 							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-grave">La reserva {{ message.codigo }} tiene {{ message.dias }} días vencida. </span></a>
 						{% endfor %}
 						{% for message in app.session.flashbag.get('informacion') %}
-							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-normal">Esta {{ message.codigo }} debería ser concretada hoy.</span></a>
+							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-normal">Esta reserva {{ message.codigo }} debería ser concretada hoy.</span></a>
 						{% endfor %}
 						<!--<span class="labelalert labelalert-primary">labelalert-primary</span>
 						<span class="labelalert labelalert-atencion">labelalert-atencion</span>-->

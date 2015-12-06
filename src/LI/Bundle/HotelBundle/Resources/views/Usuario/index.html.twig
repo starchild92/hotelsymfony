@@ -15,38 +15,46 @@
 	<div class="page-header">
 		<h1>Usuarios de la Aplicación</h1>
 	</div>
-	<table id="tabla" class="display table table-bordered table-responsive table-striped records_list">
-		<thead>
-			<tr>
-				<th>Nombre y Apellido</th>
-				<th>Fecha Nacimiento</th>
-				<th>Estado</th>
-				<th>Correo y Usuario</th>
-				<th>Ultima Conexión</th>
-				<th>Roles</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-		{% for entity in entities %}
-			<tr>
-				<td>{{ entity.nombre }} {{ entity.apellido }}</td>
-				<td>{% if entity.fechanac %}{{ entity.fechanac|localizeddate('long', 'none', 'es') }}{% endif %}</td>
-				<td>{% if entity.enabled %}Activo{% else %}Inactivo{% endif %}</td>
-				<td>{{ entity.email }} | {{ entity.username }}</td>
-				<td>{{ entity.lastLogin|localizeddate('long', 'none', 'es') }}</td>
-				<td>{% for role in entity.roles %}
-					{{ role }} 
-				{% endfor %}</td>
-				<td class="opciones">
-					<a href="{{ path('usuario_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
-					<a href="{{ path('usuario_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-				</td>
-			</tr>
-		{% endfor %}
-		</tbody>
-	</table>
-	<p style="text-align: center;">
-        <a class="btn btn-primary" href="{{ path('LIHotelBundle_registro_admin') }}" role="button">Registrar a un nuevo usuario</a>
-    </p>
+	<div class="row">
+		<div class="col-lg-3 col-sm-3 col-xs-12">
+			<ul class="nav nav-stacked">
+				<li role="presentation"><a class="btn btn-primary" href="{{ path('LIHotelBundle_registro_admin') }}" role="button">Registrar a un nuevo usuario</a></li>
+			</ul>
+		</div>
+
+		<!-- PANEL DEL CONTENIDO -->
+		<div class="col-lg-9 col-sm-9 col-xs-12">
+			<table id="tabla" class="display table table-bordered table-responsive table-striped records_list">
+				<thead>
+					<tr>
+						<th>Nombre y Apellido</th>
+						<th>Fecha Nacimiento</th>
+						<th>Estado</th>
+						<th>Correo y Usuario</th>
+						<th>Ultima Conexión</th>
+						<th>Roles</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for entity in entities %}
+					<tr>
+						<td>{{ entity.nombre }} {{ entity.apellido }}</td>
+						<td>{% if entity.fechanac %}{{ entity.fechanac|localizeddate('long', 'none', 'es') }}{% endif %}</td>
+						<td>{% if entity.enabled %}Activo{% else %}Inactivo{% endif %}</td>
+						<td>{{ entity.email }} | {{ entity.username }}</td>
+						<td>{{ entity.lastLogin|localizeddate('long', 'none', 'es') }}</td>
+						<td>{% for role in entity.roles %}
+							{{ role }} 
+						{% endfor %}</td>
+						<td class="opciones">
+							<a href="{{ path('usuario_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+							<a href="{{ path('usuario_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 {% endblock %}
