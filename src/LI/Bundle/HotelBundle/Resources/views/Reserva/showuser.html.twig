@@ -8,21 +8,30 @@
     <div class="row">
         <div class="col-lg-3 col-sm-3 col-xs-12">
             <ul class="nav nav-stacked">
-                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('user_reserva') }}" role="button">Regresar</a></li>
-                <li role="presentation">{% if entity.estadoReserva != 'Cancelada' %}<a class="btn btn-warning btn-block" href="{{ path('user_reserva_edit', { 'id': entity.id }) }}" role="button">Editar Reserva</a>{% endif %}</li>
-                <li role="presentation">{% if entity.estadoReserva != 'Cancelada' %}{{ form(delete_form) }}{% endif %}</li>
+                {% if entity.estadoReserva != 'Cancelada' %}
+                <li role="presentation"><a class="btn btn-primary btn-block" href="{{ path('reserva_cancelar', { 'codigo': entity.codigoReserva }) }}">Cancelar Reserva</a></li>{% endif %}
+                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('user_reserva') }}" role="button">Ver todas las Reservas</a></li>
+                {% if entity.estadoReserva != 'Cancelada' %}<li role="presentation"><a class="btn btn-warning btn-block" href="{{ path('user_reserva_edit', { 'id': entity.id }) }}" role="button">Editar Reserva</a></li>{% endif %}
+                {% if entity.estadoReserva != 'Cancelada' %}<li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarReserva">Eliminar Reserva</a></li>{% endif %}
             </ul>
         </div>
 
         <!-- PANEL DEL CONTENIDO -->
         <div class="col-lg-9 col-sm-9 col-xs-12">
-            {% for message in app.session.flashbag.get('reserva_info') %}
-                <div class="alert alert-info" role="alert"><b>Pss Disculpe! </b>{{ message }}</div>
-            {% endfor %}
             {% for message in app.session.flashbag.get('reserva_buenos') %}
-                <div class="alert alert-success" role="alert"><b>En horabuena! </b>{{ message }}</div>
+                <div class = "alert alert-success alert-dismissable">
+                    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+                    <b>Muy bien! </b>{{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.session.flashbag.get('reserva_info') %}
+                <div class = "alert alert-info alert-dismissable">
+                    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+                    <b>Muy bien! </b>{{ message }}
+                </div>
             {% endfor %}
 
+            <p class="text-success">Ningun cobro séra realizado previamente a la concretación o cancelaracion de esta reserva.</p>
             <div class="table-responsive">
             <table class="table table-bordered table-condensed record_properties">
                 <thead>
@@ -68,11 +77,30 @@
             <table class="table table-bordered table-condensed">
             <thead><tr><th colspan="2">Factura Asociada a la Reserva</th></tr></thead>
             <tbody>
-                <tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }}</td></tr>
+                <tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }} días</td></tr>
                 <tr><td>Costo Acumulado</td><td>{{ entity.factura.costoTotal }} Bolívares</td></tr>
                 <tr><td>Fecha</td><td>{{ entity.factura.fecha|localizeddate('long', 'none', 'es') }}</td></tr>
             </tbody>
             </table>
         </div>
     </div>
+<!-- EL MODAL -->
+<div class="modal fade" id="ModalEliminarReserva" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-danger">¡Cuidado!</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea realizar esta operación? Se eliminarán los datos asociados a la reserva.</p>
+            </div>
+            <div class="modal-footer">
+            <style type="text/css">.form-group{ margin-bottom: 0px !important; }</style>
+            {{ form(delete_form) }}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- AQUI FINALIZA EL MODAL -->
 {% endblock %}

@@ -171,9 +171,10 @@ class ReservaController extends Controller
 								SIN LOS CONSUMIBLES
 							**/
 							$factura->setCostoTotal(
-								$entity->getDiasReserva() * 
+								($entity->getDiasReserva() * 
 								$entity->getHabitacion()->getTipo()->getTipoHabitacion()->getPrecio() * 
-								$entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio()
+								$entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio()) +
+								(10 * $entity->getCantidadNinos())
 							);
 
 							$em->persist($factura);
@@ -245,10 +246,11 @@ class ReservaController extends Controller
 						$factura->setFecha($entity->getFechaDesde());
 
 						$factura->setCostoTotal(
-								$entity->getDiasReserva() * 
-								$entity->getHabitacion()->getTipo()->getTipoHabitacion()->getPrecio() * 
-								$entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio()
-							);
+							($entity->getDiasReserva() * 
+							$entity->getHabitacion()->getTipo()->getTipoHabitacion()->getPrecio() * 
+							$entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio()) +
+							(10 * $entity->getCantidadNinos())
+						);
 
 						$em->persist($factura);
 						$entity->setFactura($factura);
@@ -398,10 +400,27 @@ class ReservaController extends Controller
 	*/
 	private function createEditForm(Reserva $entity)
 	{
-		$form = $this->createForm(new ReservaType(), $entity, array(
-			'action' => $this->generateUrl('reserva_update', array('id' => $entity->getId())),
-			'method' => 'PUT',
-		));
+		$user = $this->getUser();
+		if ($user != null) {
+			$roles = $user->getRoles();
+			if (in_array('ROLE_ADMIN', $roles)) {
+				$form = $this->createForm(new ReservaType(), $entity, array(
+					'action' => $this->generateUrl('reserva_update', array('id' => $entity->getId())),
+					'method' => 'PUT',
+				));
+			}else{
+				$form = $this->createForm(new ReservaUsuarioType(), $entity, array(
+					'action' => $this->generateUrl('reserva_update', array('id' => $entity->getId())),
+					'method' => 'PUT',
+				));
+				$form->add('cliente');
+				$form->add('estadoReserva','choice', array(
+	                   'choices'  => array(
+	                    'Por Concretar' => 'Por Concretar'),
+	                   'disabled' => 'disabled'
+	                   ));
+			}
+		}
 
 		$form->add('submit', 'submit', array('label' => 'Actualizar Reserva', 'attr' => array('class' => 'btn btn-info btn-block')));
 
@@ -437,6 +456,12 @@ class ReservaController extends Controller
 					if ($editForm->isValid()) {
 						$factura = $em->getRepository('LIHotelBundle:Factura')->find($entity->getFactura()->getId());
 						$factura->setDiasReserva($entity->getDiasReserva());
+						$factura->setCostoTotal(
+							($entity->getDiasReserva() * 
+							$entity->getHabitacion()->getTipo()->getTipoHabitacion()->getPrecio() * 
+							$entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio()) +
+							(10 * $entity->getCantidadNinos())
+						);
 						$em->persist($factura);
 						$em->flush();
 						$session->getFlashBag()->add('reserva_bien', 'Se ha modificado con exito la reserva.');
@@ -456,10 +481,6 @@ class ReservaController extends Controller
 				 	&& $this->comprobarCantidad($entity->getHabitacion()->getTipo()->getTipoHabitacion()->getId(), $entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getId(), $entity->getCantidadPersonas()+$entity->getCantidadNinos()))
 				{
 					if ($editForm->isValid()) {
-						//$em->flush();
-						//$data = $editForm->getData();
-						//throw $this->createNotFoundException($data->getFechaDesde()->format('d m Y').' and '.$entity->getFechaDesde()->format('d m Y'));
-
 						$cliente = $em->getRepository('LIHotelBundle:Usuario')->find($user->getId());
 						$factura = $em->getRepository('LIHotelBundle:Factura')->find($entity->getFactura()->getId());
 						$factura->setDiasReserva($entity->getDiasReserva());
@@ -576,16 +597,20 @@ class ReservaController extends Controller
 
 	public function showuserAction($id)
 	{
+		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
+		$session = $this->get('session');
 		$em = $this->getDoctrine()->getManager();
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
 
 		if (!$entity) {
-			$session = $this->get('session');
 			$session->getFlashBag()->add('usuario_malos', 'No existe esta reserva.');
 			return $this->redirect($this->generateUrl('_user'));
 		}
 
-		$user = $this->getUser();
+		if ($entity->getCliente()->getId() != $user->getId()) {
+			$session->getFlashBag()->add('usuario_malos', 'No tiene permisos para ver las reservas de otros usuarios. Este incidente será reportado.');
+			return $this->redirect($this->generateUrl('_user'));
+		}
 		$deleteForm = $this->createDeleteForm($id);
 
 		return $this->render('LIHotelBundle:Reserva:showuser.html.twig', array(
@@ -597,12 +622,18 @@ class ReservaController extends Controller
 
 	public function edituserAction($id)
 	{
+		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
+		$session = $this->get('session');
 		$em = $this->getDoctrine()->getManager();
 		$entity = $em->getRepository('LIHotelBundle:Reserva')->find($id);
 
 		if (!$entity) {
-			$session = $this->get('session');
 			$session->getFlashBag()->add('usuario_malos', 'No existe esta reserva.');
+			return $this->redirect($this->generateUrl('_user'));
+		}
+
+		if ($entity->getCliente()->getId() != $user->getId()) {
+			$session->getFlashBag()->add('usuario_malos', 'No tiene permisos para ver las reservas de otros usuarios. Este incidente será reportado.');
 			return $this->redirect($this->generateUrl('_user'));
 		}
 
@@ -656,28 +687,32 @@ class ReservaController extends Controller
 				{
 					$session->getFlashBag()->add('reserva_info', 'Esta reserva ya ha sido concretada.');
 				}else{
-					/** OBTENIENDO LAS RESERVAS QUE NO SE CONCRETARON EN LA FECHA PREVISTA **/
-					$hoy = new \DateTime('today');
-					$fecha2 = $reservas[0]->getFechadesde();
-					$interval = $hoy->diff($fecha2);
-					$off = $interval->format('%R%a');
-
-					if ($off == 0) {
-						foreach ($reservas as $reserva) {
-							$reserva->setEstadoReserva('Concretada');
-							$reserva->getHabitacion()->setEstado('Ocupada');
-						}
-						$em->persist($reserva);
-						$em->flush();
-
-						$session->getFlashBag()->add('reserva_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
+					if ($reservas[0]->getEstadoReserva() == 'Cancelada') {
+						$session->getFlashBag()->add('reserva_info', 'Esta reserva ha sido cancelada, ergo no se puede concretar.');
 					}else{
-						$session->getFlashBag()->add('reserva_malos', 'Las reservas deben ser concretadas el día para el cual fueron reservadas y no antes. Puede modificar la reservación para hoy o esperar al día. Tenga en cuenta que la modificación no garantiza que pueda concretarse hoy.');
-						return $this->render('LIHotelBundle:Reserva:concretar.html.twig', array(
-								'form' => $form->createView(),
-								'id_reserva' => $reservas[0]->getId(),
-							));
-					}	
+						/** OBTENIENDO LAS RESERVAS QUE NO SE CONCRETARON EN LA FECHA PREVISTA **/
+						$hoy = new \DateTime('today');
+						$fecha2 = $reservas[0]->getFechadesde();
+						$interval = $hoy->diff($fecha2);
+						$off = $interval->format('%R%a');
+
+						if ($off == 0) {
+							foreach ($reservas as $reserva) {
+								$reserva->setEstadoReserva('Concretada');
+								$reserva->getHabitacion()->setEstado('Ocupada');
+							}
+							$em->persist($reserva);
+							$em->flush();
+
+							$session->getFlashBag()->add('reserva_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
+						}else{
+							$session->getFlashBag()->add('reserva_malos', 'Las reservas deben ser concretadas el día para el cual fueron reservadas y no antes. Puede modificar la reservación para hoy o esperar al día. Tenga en cuenta que la modificación no garantiza que pueda concretarse hoy.');
+							return $this->render('LIHotelBundle:Reserva:concretar.html.twig', array(
+									'form' => $form->createView(),
+									'id_reserva' => $reservas[0]->getId(),
+								));
+						}
+					}
 				}
 			}else{
 				$session->getFlashBag()->add('reserva_malos', 'Tal vez estás en drogas! Ese código no existe.');
@@ -705,24 +740,28 @@ class ReservaController extends Controller
 			{
 				$session->getFlashBag()->add('reserva_info', 'Esta reserva ya ha sido concretada.');
 			}else{
-				/** OBTENIENDO LAS RESERVAS QUE NO SE CONCRETARON EN LA FECHA PREVISTA **/
-				$hoy = new \DateTime('today');
-				$fecha2 = $reservas[0]->getFechadesde();
-				$interval = $hoy->diff($fecha2);
-				$off = $interval->format('%R%a');
-
-				if ($off == 0) {
-					foreach ($reservas as $reserva) {
-						$reserva->setEstadoReserva('Concretada');
-						$reserva->getHabitacion()->setEstado('Ocupada');
-					}
-					$em->persist($reserva);
-					$em->flush();
-
-					$session->getFlashBag()->add('reserva_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
+				if ($reservas[0]->getEstadoReserva() == 'Cancelada') {
+					$session->getFlashBag()->add('reserva_info', 'Esta reserva ha sido cancelada, ergo no se puede concretar.');
 				}else{
-					$session->getFlashBag()->add('reserva_malos', 'Esta reserva debio ser concretada el '.$fecha2->format('D, d M Y').'. Las reservas deben ser concretadas el día para el cual fueron reservadas y no antes o despues.');
-				}	
+					/** OBTENIENDO LAS RESERVAS QUE NO SE CONCRETARON EN LA FECHA PREVISTA **/
+					$hoy = new \DateTime('today');
+					$fecha2 = $reservas[0]->getFechadesde();
+					$interval = $hoy->diff($fecha2);
+					$off = $interval->format('%R%a');
+
+					if ($off == 0) {
+						foreach ($reservas as $reserva) {
+							$reserva->setEstadoReserva('Concretada');
+							$reserva->getHabitacion()->setEstado('Ocupada');
+						}
+						$em->persist($reserva);
+						$em->flush();
+
+						$session->getFlashBag()->add('reserva_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
+					}else{
+						$session->getFlashBag()->add('reserva_malos', 'Esta reserva debio ser concretada el '.$fecha2->format('D, d M Y').'. Las reservas deben ser concretadas el día para el cual fueron reservadas y no antes o despues.');
+					}
+				}
 			}
 		}else{
 			$session->getFlashBag()->add('reserva_malos', 'Tal vez estás en drogas! Ese código no existe.');	
@@ -732,46 +771,124 @@ class ReservaController extends Controller
 
 	public function cancelarAction($codigo)
 	{
-		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
+		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
 		$session = $this->get('session');
-		if($em->getRepository('LIHotelBundle:Reserva')->reservas_existe_codigo($codigo))
-		{
-			$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($codigo);
-			if($reservas[0]->getEstadoReserva() == 'Cancelada')
-			{
-				$session->getFlashBag()->add('reserva_info', 'Esta reserva ya ha sido cancelada.');
-			}else{
-				if($reservas[0]->getEstadoReserva() == 'Concretada'){
-					////***/////
-					$dias_reserva = $reservas[0]->getDiasReserva() - 1;
-					$fecha_reserva = $reservas[0]->getFechaDesde();
-					$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
-					$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
-					$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
-					$hoy = new \DateTime('today');
-
-					if ($hoy > $fecha_final_) {
-						$session->getFlashBag()->add('reserva_malos', 'No puede cancelar una reserva que ya ha cumplido su tiempo');
-					}else{
-						throw $this->createNotFoundException('la reserva no ha finalizado su tiempo, al cancelarla se recalculara el tiempo y se finalizara hoy. El costo de la habitación se recalculara en base a los dias que estuvo en la habitación.');
-					}
+		$roles = $user->getRoles();
+		if (in_array('ROLE_ADMIN', $roles)) {
+			if($em->getRepository('LIHotelBundle:Reserva')->reservas_existe_codigo($codigo)){
+				$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($codigo);
+				$reserva = $reservas[0];
+				if($reservas[0]->getEstadoReserva() == 'Cancelada'){
+					$session->getFlashBag()->add('reserva_info', 'Esta reserva ya ha sido cancelada.');
 				}else{
-					//la reserva no se ha concretado y se puede cancelar. Los costos de cancelacion estan sujetos a las compensaciones que establecen los administradores.
-					foreach ($reservas as $reserva) {
-						$reserva->setEstadoReserva('Cancelada');
-						$reserva->getHabitacion()->setEstado('Libre');
-						$reserva->setDiasReserva(1);
+					if($reservas[0]->getEstadoReserva() == 'Concretada'){
+						$dias_reserva = $reservas[0]->getDiasReserva() - 1;
+						$fecha_reserva = $reservas[0]->getFechaDesde();
+						$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
+						$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
+						$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
+						$hoy = new \DateTime('today');
+
+						if ($hoy > $fecha_final_) {
+							$session->getFlashBag()->add('reserva_malos', 'No puede cancelar una reserva que ya ha cumplido su tiempo.');
+							return $this->redirect($this->generateUrl('reserva_show', array('id' => $reserva->getId())));
+						}else{
+							$days = date_diff($fecha_inicio_, $hoy);
+							$dias = $days->format('%R%a days') + 1;
+							$tipo = $reserva->getHabitacion()->getTipo()->getTipoHabitacion()->getPrecio();
+							$tipo = $tipo + (10 * $reserva->getCantidadNinos());
+							$categoria = $reserva->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio();
+							$precio_total = $dias * $tipo * $categoria;
+
+							$factura = $reserva->getFactura();
+							$factura->setDiasReserva($dias);
+							$factura->setCostoTotal($precio_total);
+
+							$reserva->setEstadoReserva('Cancelada');
+							$reserva->setDiasReserva($dias);
+
+							$em->persist($factura);
+							$em->persist($reserva);
+							$em->flush();
+
+							$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva.');
+							return $this->redirect($this->generateUrl('reserva_show', array('id' => $reserva->getId())));
+						}
+					}else{
+						//la reserva no se ha concretado y se puede cancelar. Los costos de cancelacion estan sujetos a las compensaciones que establecen los administradores.
+						foreach ($reservas as $reserva) {
+							$reserva->setEstadoReserva('Cancelada');
+							$reserva->getHabitacion()->setEstado('Libre');
+							$reserva->setDiasReserva(1);
+						}
+						$em->persist($reserva);
+						$em->flush();
+						$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva. lamentamos que haya tenido que ser asi.');
 					}
-					$em->persist($reserva);
-					$em->flush();
-					$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva. lamentamos que haya tenido que ser asi.');
 				}
+			}else{
+				$session->getFlashBag()->add('reserva_malos', 'Tal vez estás en drogas! Ese código no existe.');
 			}
 		}else{
-			$session->getFlashBag()->add('reserva_malos', 'Tal vez estás en drogas! Ese código no existe.');
+			if($em->getRepository('LIHotelBundle:Reserva')->reservas_existe_codigo($codigo)){
+				$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($codigo);
+				$reserva = $reservas[0];
+				if($reserva->getEstadoReserva() == 'Cancelada')
+				{
+					$session->getFlashBag()->add('reserva_info', 'El codigo pertenece a una reserva que ha sido cancelada.');
+					return $this->showuserAction($reserva->getId());
+				}else{
+					if($reserva->getEstadoReserva() == 'Concretada'){
+						$dias_reserva = $reserva->getDiasReserva() - 1;
+						$fecha_reserva = $reserva->getFechaDesde();
+						$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
+						$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
+						$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
+						$hoy = new \DateTime('today');
+
+						if ($hoy > $fecha_final_) {
+							$session->getFlashBag()->add('reserva_malos', 'Esta reserva ya ha culminado y no se puede modificar o cancelar.');
+							return $this->showuserAction($reserva->getId());
+						}else{
+							$days = date_diff($fecha_inicio_, $hoy);
+							$dias = $days->format('%R%a days') + 1;
+							$tipo = $reserva->getHabitacion()->getTipo()->getTipoHabitacion()->getPrecio();
+							$tipo = $tipo + (10 * $reserva->getCantidadNinos());
+							$categoria = $reserva->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio();
+							$precio_total = $dias * $tipo * $categoria;
+
+							$factura = $reserva->getFactura();
+							$factura->setDiasReserva($dias);
+							$factura->setCostoTotal($precio_total);
+
+							$reserva->setEstadoReserva('Cancelada');
+							$reserva->setDiasReserva($dias);
+
+							$em->persist($factura);
+							$em->persist($reserva);
+							$em->flush();
+
+							$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva.');
+							return $this->redirect($this->generateUrl('user_reserva_show', array('id' => $reserva->getId())));
+						}
+					}else{
+						//la reserva no se ha concretado y se puede cancelar. Los costos de cancelacion estan sujetos a las compensaciones que establecen los administradores.
+						foreach ($reservas as $reserva) {
+							$reserva->setEstadoReserva('Cancelada');
+							$reserva->getHabitacion()->setEstado('Libre');
+							$reserva->setDiasReserva(1);
+						}
+						$em->persist($reserva);
+						$em->flush();
+						$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva. Revise los detalles para consultar si la cancelación ha acarreado costos.');
+					}
+				}
+			}else{
+				$session->getFlashBag()->add('reserva_malos', 'El código no existe o ha hecho un intento invalido de cancelación.');
+			}
 		}
-		return $this->showAction($reservas[0]->getId());
+		return $this->redirect($this->generateUrl('LIHotelBundle_homepage'));
 	}
 
 }
