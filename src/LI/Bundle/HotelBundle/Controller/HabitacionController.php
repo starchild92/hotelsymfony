@@ -195,7 +195,15 @@ class HabitacionController extends Controller
             /*'attr'   => array('class' => 'form-inline')*/
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Actualizar', 'attr' => array('class' => 'btn btn-info btn-block')));
+        $form->add('submit', 'submit', array('label' => 'Actualizar Habitación', 'attr' => array('class' => 'btn btn-info btn-block')));
+        $form->add('estado','choice', array(
+                   'choices'  => array(
+                    'Libre' => 'Libre',
+                    'Ocupada' => 'Ocupada',
+                    'Reservada' => 'Reservada',
+                    'Indispuesta' => 'Indispuesta'
+            ),
+                   'disabled' => 'disabled'));
 
         return $form;
     }
@@ -207,11 +215,10 @@ class HabitacionController extends Controller
     {
         $user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
         $em = $this->getDoctrine()->getManager();
-
+        $session = $this->get('session');
         $entity = $em->getRepository('LIHotelBundle:Habitacion')->find($id);
 
         if (!$entity) {
-            $session = $this->get('session');
             $session->getFlashBag()->add('administrador_malos', 'No existe esta habitación.');
             return $this->redirect($this->generateUrl('_admin'));
         }
@@ -235,7 +242,7 @@ class HabitacionController extends Controller
             }
 
             $em->flush();
-
+            $session->getFlashBag()->add('habitacion_buenos', 'Se ha modificado los datos de la habitacion con exito.');
             return $this->redirect($this->generateUrl('habitacion_edit', array('id' => $id)));
         }
 
@@ -309,6 +316,19 @@ class HabitacionController extends Controller
 
         return $this->render('LIHotelBundle:Habitacion:showuser.html.twig', array(
             'entity'      => $entity,
+            'user' => $user
+        ));
+    }
+
+    public function indexuserAction(){
+        $user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
+
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+        $entities = $em->getRepository('LIHotelBundle:Habitacion')->findAll();
+        return $this->render('LIHotelBundle:Habitacion:indexuser.html.twig', array(
+            'entities' => $entities,
             'user' => $user
         ));
     }

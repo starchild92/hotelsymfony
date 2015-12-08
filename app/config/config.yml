@@ -80,3 +80,18 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: LI\Bundle\HotelBundle\Entity\Usuario
+
+knp_snappy:
+    temporary_folder: %kernel.cache_dir%/snappy
+
+    pdf:
+        enabled:    true
+        #binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64
+        binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386
+        options:    []
+        
+    image:
+        enabled:    true
+        #binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64
+        binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386
+        options:    []

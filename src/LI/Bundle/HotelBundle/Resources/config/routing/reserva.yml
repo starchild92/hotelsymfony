@@ -57,3 +57,7 @@ reserva_concretar_auto:
 reserva_cancelar:
     path:     /{codigo}/cancelar
     defaults: { _controller: "LIHotelBundle:Reserva:cancelar" }
+
+user_reserva_factura:
+    path:     /{codigo}/factura
+    defaults: { _controller: "LIHotelBundle:Reserva:factura" }

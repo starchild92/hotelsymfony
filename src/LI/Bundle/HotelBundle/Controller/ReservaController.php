@@ -3,6 +3,7 @@
 namespace LI\Bundle\HotelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use LI\Bundle\HotelBundle\Entity\Reserva;
@@ -587,7 +588,7 @@ class ReservaController extends Controller
 		$user = $this->getUser();
 		$entity = new Reserva();
 		$form   = $this->createCreateForm($entity);
-
+		
 		return $this->render('LIHotelBundle:Reserva:newuser.html.twig', array(
 			'entity' => $entity,
 			'form'   => $form->createView(),
@@ -779,19 +780,19 @@ class ReservaController extends Controller
 			if($em->getRepository('LIHotelBundle:Reserva')->reservas_existe_codigo($codigo)){
 				$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($codigo);
 				$reserva = $reservas[0];
-				if($reservas[0]->getEstadoReserva() == 'Cancelada'){
+				if($reserva->getEstadoReserva() == 'Cancelada'){
 					$session->getFlashBag()->add('reserva_info', 'Esta reserva ya ha sido cancelada.');
 				}else{
-					if($reservas[0]->getEstadoReserva() == 'Concretada'){
-						$dias_reserva = $reservas[0]->getDiasReserva() - 1;
-						$fecha_reserva = $reservas[0]->getFechaDesde();
+					if($reserva->getEstadoReserva() == 'Concretada'){
+						$dias_reserva = $reserva->getDiasReserva() - 1;
+						$fecha_reserva = $reserva->getFechaDesde();
 						$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
 						$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
 						$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
 						$hoy = new \DateTime('today');
 
 						if ($hoy > $fecha_final_) {
-							$session->getFlashBag()->add('reserva_malos', 'No puede cancelar una reserva que ya ha cumplido su tiempo.');
+							$session->getFlashBag()->add('reserva_malos', 'No puede cancelar una reserva concretada que ya ha cumplido su tiempo.');
 							return $this->redirect($this->generateUrl('reserva_show', array('id' => $reserva->getId())));
 						}else{
 							$days = date_diff($fecha_inicio_, $hoy);
@@ -824,7 +825,8 @@ class ReservaController extends Controller
 						}
 						$em->persist($reserva);
 						$em->flush();
-						$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva. lamentamos que haya tenido que ser asi.');
+						$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva. Además el cobro de la reservar es inebitable ya que no se ha cancelado antes de la fecha para la cual se reservó.');
+						return $this->redirect($this->generateUrl('reserva_show', array('id' => $reserva->getId())));
 					}
 				}
 			}else{
@@ -889,6 +891,37 @@ class ReservaController extends Controller
 			}
 		}
 		return $this->redirect($this->generateUrl('LIHotelBundle_homepage'));
+	}
+
+	public function facturaAction(Request $request, $codigo)
+	{
+		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
+		$em = $this->getDoctrine()->getManager();
+		$session = $this->get('session');
+
+		$fecha = new \DateTime('now');
+		$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($codigo);
+		$reserva = $reservas[0];
+
+		$html = $this->renderView('LIHotelBundle:Reserva:factura.html.twig', array(
+			'user' => $user,
+			'reserva' => $reserva,
+			'fecha' => $fecha,
+            'base_dir' => $this->get('kernel')->getRootDir() . '/../web' . $request->getBasePath()
+		));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html, 
+                array(
+                    'images'            => true,
+                    'no-background'     => false,
+                    )),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="'.$reserva->getCodigoReserva().'.pdf"'
+            ));
+
 	}
 
 }

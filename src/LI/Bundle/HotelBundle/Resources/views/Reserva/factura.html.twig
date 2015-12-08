@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />    
+	<link rel="stylesheet" type="text/css" href="{{ base_dir }}{{ asset('bundles/lihotel/css/bootstrap.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ base_dir }}{{ asset('bundles/lihotel/css/bootstrap-theme.css') }}">
+	<style type="text/css">
+		* {
+			font-size: 12px;
+		}
+		table * {
+			text-align: left !important;
+		}
+		.costos tr td:last-child { text-align: right !important; }
+		.panel-footer{ text-align: right; }
+		@font-face{
+			font-family: "Raleway-Regular";
+			src: url('{{ base_dir }}{{ asset('bundles/lihotel/fonts/Raleway-Regular.ttf') }}') format('truetype');
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<table>
+				<tr>
+					<td width="500px"><div class="col-lg-9">
+				<div class="page-header">
+					<h3 class="brandname"><img width="40" height="40" style="margin-right: 10px;" alt="Brand" src="{{ base_dir }}{{ asset('bundles/lihotel/images/brandimage.png') }}">Hotel Symfony <small>Factura Reserva</small></h3>
+				</div>
+			</div></td>
+					<td style="text-align: right;"><div class="col-lg-3">
+				<p>Emitida el: <br>
+				<b>{{ fecha|date('D, d \\d\\e M \\d\\e\\l Y') }}</b><br>
+				a las <b>{{ fecha|date('h:i a') }}</b></p>
+			</div></td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h3 class="panel-title">Detalles Reserva</h3>
+					</div>
+					<table class="table table-condensed table-bordered">
+						<tr>
+							<th>Código</th>
+							<td>{{ reserva.codigoReserva }}</td>
+						</tr>
+						<tr>
+							<th>Realizada el</th>
+							<td>{{ reserva.fechareserva|localizeddate('long', 'medium', 'es') }}</td>
+						</tr>
+						<tr>
+							<th>Período</th>
+							<td>{{ reserva.diasReserva }} días, desde el {{ reserva.fechadesde|localizeddate('long', 'none', 'es') }}{% set diasR = reserva.diasReserva - 1 %}
+							hasta el {{ reserva.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
+						</tr>
+						<tr>
+							<th>Para</th>
+							<td>{{ reserva.cantidadPersonas }} adultos y {{ reserva.cantidadNinos }} niños ({{ reserva.cantidadPersonas + reserva.cantidadNinos }} personas)</td>
+						</tr>
+					</table>
+				</div>
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h3 class="panel-title">Detalles Habitación</h3>
+					</div>
+					<table class="table table-condensed table-bordered">
+						<tr>
+							<th>Categoría</th>
+							<th>Tipo</th>
+						</tr>
+						<tr>
+							<td>{{ reserva.habitacion.tipo.categoriaHabitacion }}</td>
+							<td>{{ reserva.habitacion.tipo.tipoHabitacion }}</td>
+						</tr>
+						<tr>
+							<th>Habitación</th>
+							<td>{{ reserva.habitacion.numero }} - {{ reserva.habitacion.nombre }}</td>
+						</tr>
+						<tr>
+							<th>Servicios</th>
+							<td>{% for servicio in reserva.habitacion.tipo.servicios %}{{ servicio.nombre }}, {% endfor %}{% if reserva.habitacion.tipo.servicios|length == 0 %}No se han añadido servicios a esta habitación.{% endif %}</td>
+						</tr>
+					</table>
+				</div>
+				<!-- div class="panel panel-warning">
+					<div class="panel-heading">
+						<h3 class="panel-title">Bebidas del Minibar</h3>
+					</div>
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								{% if reserva.habitacion.tipo.bebidasMinibar|length == 0 %}<th>No se han añadido bebidas al minibar de esta habitación.</th>{% endif %}
+							</tr>
+							{% for bebida in reserva.habitacion.tipo.bebidasMinibar %}
+							<tr>
+								<td>{{ bebida.marca }}</td>
+								<td>{{ bebida.cantidad }} unidades</td>
+								<td>{{ bebida.precio }} Bs c.u</td>
+								<td>{{ bebida.tipoBebida }}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div -->
+			</div>
+			<div class="col-lg-4">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">Detalles Usuario</h3>
+					</div>
+					<div class="panel-body">
+						Nombre: {{ user.nombre }}, ({{ user.username }})<br>
+						Datos Financieros: "Inexistentes".<br>
+						Correo: {{ user.email }}
+					</div>
+				</div>
+				{% if reserva.estadoReserva == 'Cancelada' %}
+					<p class="text-danger"><h5>Esta reserva fue cancelada, por lo tanto este documento no tiene ninguna validez. Por esta misma razón los detalles de los costos no han sido detallados, si desea consultarlos dirijase al administrado con el código de esta reserva.</h5></p>
+				{% else %}
+				<div class="panel panel-info">
+					<table class="table costos">
+						<tr>
+							<th colspan="2">Alojamiento</th>
+						</tr>
+						<tr>
+							<td>Precio tipo</td>
+							<td>{{ reserva.habitacion.tipo.tipoHabitacion.precio }} Bs</td>
+						</tr>
+						<tr>
+							<td>Precio categoria</td>
+							<td>por {{ reserva.habitacion.tipo.categoriaHabitacion.precio }} Bs </td>
+						</tr>
+						<tr>
+							<td>Días</td>
+							<td>por {{ reserva.diasReserva }}</td>
+						</tr>
+						<tr>
+							<td>Cama Niños</td>
+							<td>mas {{ reserva.cantidadNinos * 10 }} Bs</td>
+						</tr>
+						<tr>
+							<th>Telefono</th>
+							<td>mas 0 Bs</td>
+						</tr>
+						<tr>
+							<th>Minibar</th>
+							<td>mas 0 Bs</td>
+						</tr>
+					</table>
+					<div class="panel-footer">
+					Total: <h3>{{ reserva.factura.costototal|number_format }} Bs</h3></div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -63,11 +63,11 @@
 					<tr>
 						<th colspan="4">Bebidas del Minibar</th>
 					</tr>
+				</thead>
+				<tbody>
 					<tr>
 						{% if entity.tipo.bebidasMinibar|length == 0 %}<th>No se han añadido bebidas al minibar de esta habitación.</th>{% endif %}
 					</tr>
-				</thead>
-				<tbody>
 					{% for bebida in entity.tipo.bebidasMinibar %}
 					<tr>
 						<td>{{ bebida.marca }}</td>

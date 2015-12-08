@@ -67,7 +67,7 @@
                             {% if entity.estadoReserva == 'Por Concretar' %}
                             <tr class="porConcretar">
                                 <td>{{ entity.codigoReserva }}</td>
-                                <td>{{ entity.habitacion }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                                <td>{{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                                 <td>{{ entity.cliente }}<br><a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles">({{ entity.cliente.username }} <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>)</a></td>
                                 <td>{{ entity.cantidadPersonas + entity.cantidadNinos  }} personas</td>
                                 <td>{{ entity.diasReserva }} días</td>
@@ -104,7 +104,7 @@
                             {% if entity.estadoReserva == 'Concretada' %}
                             <tr class="concretada">
                                 <td>{{ entity.codigoReserva }}</td>
-                                <td>{{ entity.habitacion }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                                <td>{{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                                 <td>{{ entity.cliente }}<br><a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles">({{ entity.cliente.username }} <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>)</a></td>
                                 <td>{{ entity.cantidadPersonas + entity.cantidadNinos  }} personas</td>
                                 <td>{{ entity.diasReserva }} días</td>
@@ -141,7 +141,7 @@
                             {% if entity.estadoReserva == 'Cancelada' %}
                             <tr class="cancelada">
                                 <td>{{ entity.codigoReserva }}</td>
-                                <td>{{ entity.habitacion }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                                <td>{{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                                 <td>{{ entity.cliente }}<br><a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles">({{ entity.cliente.username }} <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>)</a></td>
                                 <td>{{ entity.cantidadPersonas + entity.cantidadNinos  }} personas</td>
                                 <td>{{ entity.diasReserva }} días</td>

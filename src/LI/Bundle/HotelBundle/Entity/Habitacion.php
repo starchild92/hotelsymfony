@@ -142,7 +142,10 @@ class Habitacion
     }
 
     public function __toString(){
-        return $this->nombre;
+        $tipo = $this->getTipo()->getTipoHabitacion()->getNombre();
+        $categoria = $this->getTipo()->getCategoriaHabitacion()->getNombre();
+        $nombre = $this->nombre;
+        return $nombre.' ('.$tipo.' y '.$categoria.')';
     }
 
     /**

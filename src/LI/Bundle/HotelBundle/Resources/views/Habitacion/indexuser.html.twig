@@ -1,0 +1,56 @@
+{% extends 'LIHotelBundle::userBase.html.twig' %}
+	
+{% block body -%}
+<div class="row">
+	<div class="col-lg-3">
+		<div class="page-header">
+			<h1>Habitaciones</h1>
+		</div>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	</div>
+	<div class="col-lg-9">
+		<!-- =================== Carousel =================== -->
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+					<img class="first-slide" src="{{ asset('bundles/lihotel/images/big_4.jpg') }}" alt="First slide">
+					<div class="container">
+						<div class="carousel-caption">
+							<h1>Nuestras Habitaciones</h1>
+							<p>Tenemos las mejores habitaciones de la región, porque somos en único hotel de la región e importamos todos nuestro muebles de un pueblo como magdaleno pero en Francia. Del mismo lugar donde provienen los muebles del palacio de Versallies.</p>
+						</div>
+					</div>
+				</div>
+				{% for entity in entities %}
+				<div class="item">
+					<img class="second-slide" src="{{ asset('bundles/lihotel/images/habitaciones.jpg') }}" alt="Second slide">
+					<div class="container">
+						<div class="carousel-caption">
+							<h1>{{ entity.nombre }}</h1>
+							<p>{{ entity.tipo.categoriaHabitacion }}. {{ entity.tipo.tipoHabitacion }}. {{ entity.tipo.espacioInterno }}</p>
+							<p>{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}, {% endfor %}{% if entity.tipo.servicios|length == 0 %}No se han añadido servicios a esta habitación.{% endif %}</p>
+							<p><a class="btn btn-warning" href="{{ path('user_habitacion_show', { 'id': entity.id }) }}" role="button">ver más detalles</a></p>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+		<!-- =================== Carousel =================== -->
+	</div>
+</div>
+		
+{% endblock %}
