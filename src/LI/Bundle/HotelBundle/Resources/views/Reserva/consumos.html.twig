@@ -1,114 +1,124 @@
 {% extends 'LIHotelBundle::userBase.html.twig' %}
 {% block body -%}
-    <div class="page-header">
-        <h1>Productos Disponibles para Consumo</h1>
-    </div>
+	<div class="page-header">
+		<h1>Productos Disponibles para Consumo<br><small>Puede realizar consumos de las siguiente habitaciones.</small></h1>
+	</div>
 
 <div class="row">
-    <!-- PANEL DEL CONTENIDO -->
-    <div class="col-lg-12 col-sm-12 col-xs-12">
-        {% for message in app.session.flashbag.get('reserva_info') %}
-            <div class = "alert alert-info alert-dismissable">
-                <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-                <b>Disculpe! </b>{{ message }}
-            </div>
-        {% endfor %}
+	<!-- PANEL DEL CONTENIDO -->
+	<div class="col-lg-12 col-sm-12 col-xs-12">
+		{% for message in app.session.flashbag.get('reserva_buenos') %}
+			<div class = "alert alert-success alert-dismissable">
+				<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+				<b>En horabuena! </b>{{ message }}
+			</div>
+		{% endfor %}
+		{% for message in app.session.flashbag.get('reserva_malos') %}
+			<div class = "alert alert-danger alert-dismissable">
+				<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+				<b>Holy Whack-A-Mole! </b>{{ message }}
+			</div>
+		{% endfor %}
 
-        <table class="table table-bordered record_properties">
-            <thead>
-                <tr>
-                    <th colspan="4">Reservas Sobre las que puede realizar consumos</th>
-                </tr>
-            </thead>
-            <tbody>
-                    <tr>
-                        <th>Código</th>
-                        <th>Habitación</th>
-                        <th>Fecha Inicio y Final</th>
-                        <th>Periodo</th>
-                    </tr>
-                {% for reserva in reservas %}
-                    <tr>
-                        <td>{{ reserva.codigoReserva }}</td>
-                        <td>{{ reserva.habitacion.numero }} - {{ reserva.habitacion }}</td>
-                        <td>{{ reserva.fechadesde|localizeddate('long', 'none', 'es') }} <b>al</b> 
-                        {% set diasR = reserva.diasReserva - 1 %}
-                        {{ reserva.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
-                        <td>{{ reserva.diasReserva }} días</td>
-                    </tr>
-                    <tr>
-                        <th colspan="4">Estos son los elementos que puede consumir para esta reserva</th>
-                    </tr>
-                    <tr>
-                            <tr>
-                                <th>Marca</th>
-                                <th>Cantidad Disp.</th>
-                                <th>Precio</th>
-                                <th>Opción</th>
-                            </tr>
-                        {% for elemento in reserva.habitacion.tipo.bebidasMinibar %}
-                            <tr>
-                                <td>{{ elemento.marca }} ({{ elemento.tipoBebida }})</td>
-                                <td>{{ elemento.cantidad }}</td>
-                                <td>{{ elemento.precio }} c/u</td>
-                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ elemento.marca }}">Comprar {{ elemento.marca }}</button>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-    </div>
+		<div>
+			 <ul class="nav nav-tabs" id="tabs" role="tablist">
+			 	{% for reserva in reservas %}
+				<li role="presentation" class="{% if loop.index == 1 %}active{% endif %}"><a href="#{{ reserva.id }}" aria-controls="{{ reserva.codigoReserva }}" role="tab" data-toggle="tab">{{ reserva.habitacion.nombre }}</a></li>
+				{% endfor %}
+			</ul>
+			<div class="tab-content" id="tabs2">
+				{% for reserva in reservas %}
+				<div role="tabpanel" class="tab-pane {% if loop.index == 1 %}active{% endif %}" id="{{ reserva.id }}">
+					<table class="table table-bordered record_properties">
+						<thead>
+							<tr>
+								<th colspan="4">Reservas Sobre las que puede realizar consumos</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>Código</th>
+								<th>Habitación</th>
+								<th>Fecha Inicio y Final</th>
+								<th>Periodo</th>
+							</tr>
+							<tr>
+								<td><a href="{{ path('user_reserva_show', { 'id': reserva.id }) }}">{{ reserva.codigoReserva }}</a></td>
+								<td>{{ reserva.habitacion.numero }} - {{ reserva.habitacion.nombre }}</td>
+								<td>{{ reserva.fechadesde|localizeddate('long', 'none', 'es') }} <b>al</b> 
+								{% set diasR = reserva.diasReserva - 1 %}
+								{{ reserva.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
+								<td>{{ reserva.diasReserva }} días</td>
+							</tr>
+							<tr>
+								<th colspan="4">Estos son los elementos que puede consumir para esta reserva</th>
+							</tr>
+							<tr>
+								<tr>
+									<th>Marca</th>
+									<th>Cantidad Disp.</th>
+									<th>Precio</th>
+									<th>Opción</th>
+								</tr>
+								{% for elemento in reserva.habitacion.tipo.bebidasMinibar %}
+									<tr>
+										<td>{{ elemento.marca }} ({{ elemento.tipoBebida }})</td>
+										<td>{{ elemento.cantidad }}</td>
+										<td>{{ elemento.precio }} Bolívares c/u</td>
+										<td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ elemento.marca }}" data-id="{{ elemento.id }}" data-reserva="{{ reserva.id }}">Comprar <span class="glyphicon glyphicon-glass" aria-hidden="true"></span></button>
+										</td>
+									</tr>
+								{% endfor %}
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- EL MODAL -->
-<div class="modal fade" id="ConsumirProducto" role="dialog">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title text-primary">¡Cuidado!</h4>
-            </div>
-            <div class="modal-body">
-                <p>Esta a punto de consumir una unidad de este producto, este paso no se puede des hacer, el cobro del mismo se realizará de manera inmediata. ¿Desea continuar?</p>
-            </div>
-            <div class="modal-footer">
-                <style type="text/css">.form-group{ margin-bottom: 0px !important; }</style>
-
-            </div>
-        </div>
-    </div>
-</div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-      </div>
-      <div class="modal-body">
-        <p>Lo que sea que agregaré aqui.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-success">Proceder con la compra</button>
-      </div>
-    </div>
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" id="exampleModalLabel">New</h4>
+	  </div>
+	  <div class="modal-body">
+		<p class="text-warning">
+			¿Desea completar la compra de un elemento?
+		</p>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+		<a type="button" href="{{ path('usuario_consumir', { 'idconsumo': '0000', 'idreserva': '1111' }) }}" id="hacerCompra" class="btn btn-success">Proceder con la compra</a>
+	  </div>
+	</div>
   </div>
 </div>
 <!-- AQUI FINALIZA EL MODAL -->
 
 <script type="text/javascript">
-    $('#exampleModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('.modal-title').text('Comprar ' + recipient)
-        //modal.find('.modal-body input').val(recipient)
-    })
+	var tabs = $('#tabs li:first-child');
+	tabs.addClass( "active" );
+
+
+	$('#exampleModal').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget) // Button that triggered the modal
+		var recipient = button.data('whatever') // Extract info from data-* attributes
+		var id = button.data('id')
+		var idreserva = button.data('reserva')
+		
+		var modal = $(this)
+		modal.find('.modal-title').text('Comprar ' + recipient)
+		var url = modal.find('#hacerCompra').attr('href')
+		url = url.replace(/(?:\d*\.)?\d+/g, id)
+		url = url.replace('/reserva/'+id, '/reserva/'+idreserva)
+		modal.find('#hacerCompra').attr('href', url)
+		//modal.find('.modal-body input').val(recipient)
+	})
 </script>
 {% endblock %}

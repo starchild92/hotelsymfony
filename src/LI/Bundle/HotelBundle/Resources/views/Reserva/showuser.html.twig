@@ -43,39 +43,41 @@
             <table class="table table-bordered table-condensed record_properties">
                 <thead>
                     <tr>
-                        <th colspan="2">Detalles de la Reserva</th>
+                        <th colspan="4">Detalles de la Reserva</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <th>Código de la Reserva</th>
-                        <td>{{ entity.codigoReserva }}</td>
+                        <td colspan="3">{{ entity.codigoReserva }}</td>
                     </tr>
                     <tr>
                         <th>Estado de su Reserva</th>
-                        <td>{{ entity.estadoReserva }}</td>
+                        <td colspan="3">{{ entity.estadoReserva }}</td>
                     </tr>
                     <tr>
                         <th>Habitación Reservada</th>
-                        <td>{{ entity.habitacion }} ({{ entity.habitacion.numero }})</td>
+                        <td>{{ entity.habitacion.nombre }} ({{ entity.habitacion.numero }})</td>
+                        <td>{{ entity.habitacion.tipo.tipoHabitacion.nombre }}</td>
+                        <td>{{ entity.habitacion.tipo.categoriaHabitacion.nombre }}</td>
                     </tr>
                     <tr>
                         <th>Reservada para la fecha</th>
-                        <td>{{ entity.fechareserva|localizeddate('long', 'medium', 'es') }}</td>
+                        <td colspan="3">{{ entity.fechareserva|localizeddate('long', 'medium', 'es') }}</td>
                     </tr>
                     <tr>
                         <th>Periodo de Estadia</th>
-                        <td>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }} <b>al</b> 
+                        <td colspan="3">{{ entity.fechadesde|localizeddate('long', 'none', 'es') }} <b>al</b> 
                         {% set diasR = entity.diasReserva - 1 %}
                         {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
                     </tr>
                     <tr>
                         <th>Reservada para</th>
-                        <td>{{ entity.cantidadPersonas + entity.cantidadNinos }} personas</td>
+                        <td colspan="3">{{ entity.cantidadPersonas + entity.cantidadNinos }} personas</td>
                     </tr>
                     <tr>
                         <th>Período en días de la reserva</th>
-                        <td>{{ entity.diasReserva }} días</td>
+                        <td colspan="3">{{ entity.diasReserva }} días</td>
                     </tr>
                 </tbody>
             </table>
@@ -85,7 +87,9 @@
             <thead><tr><th colspan="2">Factura Asociada a la Reserva</th></tr></thead>
             <tbody>
                 <tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }} días</td></tr>
-                <tr><td>Costo Acumulado</td><td>{{ entity.factura.costoTotal }} Bolívares</td></tr>
+                <tr><td>Costo Bebidas</td><td>{{ entity.factura.costoBebida }} Bolívares</td></tr>
+                <tr><td>Costo Llamadas</td><td>{{ entity.factura.costoLlamada }} Bolívares</td></tr>
+                <tr><td>Costo Total Acumulado</td><td>{{ entity.factura.costoTotal }} Bolívares <small>incluye bebidas y llamadas</small></td></tr>
                 <tr><td>Fecha</td><td>{{ entity.factura.fecha|localizeddate('long', 'none', 'es') }}</td></tr>
             </tbody>
             </table>

@@ -95,3 +95,7 @@ reporte_diario:
 user_consumos:
     path:  /consumos
     defaults: { _controller: LIHotelBundle:Reserva:consumos }
+
+usuario_consumir:
+    path:     /consumos/realizar-consumo/{idconsumo}/reserva/{idreserva}
+    defaults: { _controller: "LIHotelBundle:Reserva:realizarConsumo" }

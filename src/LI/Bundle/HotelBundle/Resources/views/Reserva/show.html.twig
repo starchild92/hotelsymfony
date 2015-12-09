@@ -25,23 +25,23 @@
 	<!-- PANEL DEL CONTENIDO -->
 	<div class="col-lg-9 col-sm-9 col-xs-12">
 		{% for message in app.session.flashbag.get('reserva_malos') %}
-				<div class = "alert alert-danger alert-dismissable">
-			        <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-			        <b>Holy Whack-A-Mole! </b>{{ message }}
-		    	</div>
-			{% endfor %}
-			{% for message in app.session.flashbag.get('reserva_buenos') %}
-				<div class = "alert alert-success alert-dismissable">
-        			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-        			<b>En horabuena! </b>{{ message }}
-        		</div>
-			{% endfor %}
-			{% for message in app.session.flashbag.get('reserva_info') %}
-				<div class = "alert alert-info alert-dismissable">
-	    			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-	    			<b>Disculpe! </b>{{ message }}
-	    		</div>
-			{% endfor %}
+			<div class = "alert alert-danger alert-dismissable">
+		        <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+		        <b>Holy Whack-A-Mole! </b>{{ message }}
+	    	</div>
+		{% endfor %}
+		{% for message in app.session.flashbag.get('reserva_buenos') %}
+			<div class = "alert alert-success alert-dismissable">
+    			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    			<b>En horabuena! </b>{{ message }}
+    		</div>
+		{% endfor %}
+		{% for message in app.session.flashbag.get('reserva_info') %}
+			<div class = "alert alert-info alert-dismissable">
+    			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    			<b>Disculpe! </b>{{ message }}
+    		</div>
+		{% endfor %}
 
 		{% if entity.estadoReserva == 'Cancelada' %}
 			<div class="alert alert-danger" role="alert">Esta reserva ha sido cancelada. Ciertas operaciones no están permitidas.</div>
@@ -50,43 +50,45 @@
 		<table class="table table-bordered record_properties">
 			<thead>
 				<tr>
-					<th colspan="2">Detalles de la Reserva</th>
+					<th colspan="4">Detalles de la Reserva</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<th>Código de la Reserva</th>
-					<td>{{ entity.codigoReserva }}</td>
+					<td colspan='3'>{{ entity.codigoReserva }}</td>
 				</tr>
 				<tr>
-					<th>Estado de su Reserva</th>
-					<td>{{ entity.estadoReserva }}</td>
+					<th>Estado de la Reserva</th>
+					<td colspan='3'>{{ entity.estadoReserva }}</td>
 				</tr>
 				<tr>
 					<th>Habitación Reservada</th>
-					<td>{{ entity.habitacion }} ({{ entity.habitacion.numero }}) <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+					<td>{{ entity.habitacion.numero }} - {{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                    <td>{{ entity.habitacion.tipo.tipoHabitacion.nombre }}</td>
+                    <td>{{ entity.habitacion.tipo.categoriaHabitacion.nombre }}</td>
 				</tr>
 				<tr>
 					<th>Cliente</th>
-					<td>{{ entity.cliente }} <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+					<td colspan='3'>{{ entity.cliente }} <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
 				</tr>
 				<tr>
 					<th>Reserva realizada el</th>
-					<td>{{ entity.fechareserva|localizeddate('long', 'medium', 'es') }}</td>
+					<td colspan='3'>{{ entity.fechareserva|localizeddate('long', 'medium', 'es') }}</td>
 				</tr>
 				<tr>
 					<th>Reservada para la fecha</th>
-					<td>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }}{% set diasR = entity.diasReserva - 1 %}
+					<td colspan='3'>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }}{% set diasR = entity.diasReserva - 1 %}
 					| {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
 				</tr>
 				<tr>
 					<th>Reservada para</th>
-					<td>{{ entity.cantidadPersonas + entity.cantidadNinos }} personas</td>
+					<td colspan='3'>{{ entity.cantidadPersonas + entity.cantidadNinos }} personas</td>
 				</tr>
 				{% if entity.estadoReserva != 'Cancelada' %}
 				<tr>
 					<th>Período en días de la reserva</th>
-					<td>{{ entity.diasReserva }} días</td>
+					<td colspan='3'>{{ entity.diasReserva }} días</td>
 				</tr>
 				{% endif %}
 			</tbody>
@@ -98,6 +100,8 @@
 		<tbody>
 			<tr><td>Fecha Factuación</td><td>{{ entity.factura.fecha|localizeddate('long', 'none', 'es') }}</td></tr>
 			<tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }} días</td></tr>
+			<tr><td>Costo Bebidas</td><td>{{ entity.factura.costoBebida }} Bolívares</td></tr>
+			<tr><td>Costo Llamadas</td><td>{{ entity.factura.costoLlamada }} Bolívares</td></tr>
 			<tr><td>Costo Acumulado</td><td>{{ entity.factura.costoTotal }} Bolívares</td></tr>
 		</tbody>
 		</table>

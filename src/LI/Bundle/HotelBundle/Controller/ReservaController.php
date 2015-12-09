@@ -961,9 +961,35 @@ class ReservaController extends Controller
 			'reservas'      => $reservas_posibles,
 			'user' => $user
 		));
+	}
 
+	public function realizarConsumoAction($idconsumo, $idreserva){
+		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
+
+		$session = $this->get('session');
+
+		$em = $this->getDoctrine()->getManager();
+		$reserva = $em->getRepository('LIHotelBundle:Reserva')->find($idreserva);
+		$consumo = $em->getRepository('LIHotelBundle:Bebida')->find($idconsumo);
+
+		if ($consumo->getCantidad() > 0) {
+			$consumo->setCantidad($consumo->getCantidad() - 1);
+			$factura = $reserva->getFactura();
+			$costoBebida = $factura->getCostoBebida();
+			$costoBebida = $costoBebida + $consumo->getPrecio();
+			$factura->setCostoBebida($costoBebida);
+
+			$em->persist($factura);
+			$em->persist($consumo);
+			$em->flush();
+
+			$session->getFlashBag()->add('reserva_buenos', 'El consumo de '.$consumo->getMarca().' fue realizado con exito para la reserva, '.$reserva->getCodigoReserva());
+
+		}else{
+			$session->getFlashBag()->add('reserva_malos', 'El consumo de '.$consumo->getMarca().' no se ha podido llevar acabo porque se ha agotado la cantidad disponible.');
+		}
 		
-
+		return $this->redirect($this->generateUrl('user_consumos'));
 	}
 
 }
