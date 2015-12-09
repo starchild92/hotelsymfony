@@ -38,6 +38,30 @@ class Factura
     /**
      * @var float
      *
+     * @ORM\Column(name="costo_bebida", type="float")
+     * @Assert\Type(
+     *     type="float",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\NotBlank()
+     */
+    private $costoBebida;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="costo_llamada", type="float")
+     * @Assert\Type(
+     *     type="float",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\NotBlank()
+     */
+    private $costoLlamada;
+
+    /**
+     * @var float
+     *
      * @ORM\Column(name="costo_total", type="float")
      * @Assert\Type(
      *     type="float",
@@ -50,14 +74,6 @@ class Factura
      * @Assert\NotBlank()
      */
     private $costoTotal;
-
-    /***
-     * @var string
-     *
-     * @ORM\Column(name="cliente", type="string", length=255)
-     * @Assert\NotBlank()
-     
-    private $cliente;*/
 
     /**
      * @ORM\OneToOne(targetEntity="Reserva", inversedBy="factura")
@@ -135,29 +151,6 @@ class Factura
         return $this->costoTotal;
     }
 
-    /***
-     * Set cliente
-     *
-     * @param string $cliente
-     * @return Factura
-     
-    public function setCliente($cliente)
-    {
-        $this->cliente = $cliente;
-
-        return $this;
-    }*/
-
-    /***
-     * Get cliente
-     *
-     * @return string 
-    
-    public function getCliente()
-    {
-        return $this->cliente;
-    } */
-
     /**
      * Set fecha
      *
@@ -202,5 +195,51 @@ class Factura
     public function getReserva()
     {
         return $this->reserva;
+    }
+
+    /**
+     * Set costoBebida
+     *
+     * @param float $costoBebida
+     * @return Factura
+     */
+    public function setCostoBebida($costoBebida)
+    {
+        $this->costoBebida = $costoBebida;
+
+        return $this;
+    }
+
+    /**
+     * Get costoBebida
+     *
+     * @return float 
+     */
+    public function getCostoBebida()
+    {
+        return $this->costoBebida;
+    }
+
+    /**
+     * Set costoLlamada
+     *
+     * @param float $costoLlamada
+     * @return Factura
+     */
+    public function setCostoLlamada($costoLlamada)
+    {
+        $this->costoLlamada = $costoLlamada;
+
+        return $this;
+    }
+
+    /**
+     * Get costoLlamada
+     *
+     * @return float 
+     */
+    public function getCostoLlamada()
+    {
+        return $this->costoLlamada;
     }
 }

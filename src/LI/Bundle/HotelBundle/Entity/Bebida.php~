@@ -77,6 +77,11 @@ class Bebida
     private $marca;
 
     /**
+     * @ORM\OneToOne(targetEntity="BebidaConsumida", mappedBy="bebida")
+     **/
+    private $bebidaConsumida;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -186,15 +191,5 @@ class Bebida
     public function settipoHabitacion($tipoid){
         $this->tipoHabitacion = $tipoid;
         return $this;
-    }
-
-    /**
-     * Get tipoHabitacion
-     *
-     * @return \LI\Bundle\HotelBundle\Entity\Tipo 
-     */
-    public function getTipoHabitacion()
-    {
-        return $this->tipoHabitacion;
     }
 }

@@ -91,3 +91,7 @@ _user:
 reporte_diario:
     path:  /reporte-diario
     defaults: { _controller: LIHotelBundle:Inicio:reporteDiario }
+
+user_consumos:
+    path:  /consumos
+    defaults: { _controller: LIHotelBundle:Reserva:consumos }

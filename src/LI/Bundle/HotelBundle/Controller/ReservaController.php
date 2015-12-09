@@ -417,9 +417,17 @@ class ReservaController extends Controller
 				$form->add('cliente');
 				$form->add('estadoReserva','choice', array(
 	                   'choices'  => array(
-	                    'Por Concretar' => 'Por Concretar'),
+	                    $entity->getEstadoReserva() => $entity->getEstadoReserva()),
 	                   'disabled' => 'disabled'
-	                   ));
+	                   ))
+				->add('fecha_desde', 'date', array(
+                'years' => range($entity->getFechaDesde()->format('Y'), $entity->getFechaDesde()->format('Y')),
+                'months' => range($entity->getFechaDesde()->format('m'), $entity->getFechaDesde()->format('m')),
+                'days' => range($entity->getFechaDesde()->format('d'), $entity->getFechaDesde()->format('d')),
+                'format' => 'dd MMMM yyyy',
+                'label' => 'Fecha de Inicio de la Reserva',
+                'disabled' => 'disabled'
+                ));
 			}
 		}
 
@@ -830,7 +838,7 @@ class ReservaController extends Controller
 					}
 				}
 			}else{
-				$session->getFlashBag()->add('reserva_malos', 'Tal vez estás en drogas! Ese código no existe.');
+				$session->getFlashBag()->add('reserva_malos', 'Ese código no existe.');
 			}
 		}else{
 			if($em->getRepository('LIHotelBundle:Reserva')->reservas_existe_codigo($codigo)){
@@ -921,6 +929,40 @@ class ReservaController extends Controller
                 'Content-Type'          => 'application/pdf',
                 'Content-Disposition'   => 'attachment; filename="'.$reserva->getCodigoReserva().'.pdf"'
             ));
+
+	}
+
+	public function consumosAction(){
+		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
+		$em = $this->getDoctrine()->getManager();
+		$session = $this->get('session');
+		$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_usuario($user->getId());
+
+		/*me quedo con las concretadas*/
+		$reservas_posibles = [];
+		foreach ($reservas as $reserva) {
+			if ($reserva->getEstadoReserva() == 'Concretada') {
+				$dias_reserva = $reserva->getDiasReserva() - 1;
+				$fecha_reserva = $reserva->getFechaDesde();
+				$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
+				$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
+				$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
+				$hoy = new \DateTime('today');
+
+				if ($hoy > $fecha_final_) {
+					//nothing happens, I just don't want to pertubate the logic ;)
+				}else{
+					/*me quedo con las que no han vencido su tiempo*/
+					$reservas_posibles[] = $reserva;
+				}
+			}
+		}
+		return $this->render('LIHotelBundle:Reserva:consumos.html.twig', array(
+			'reservas'      => $reservas_posibles,
+			'user' => $user
+		));
+
+		
 
 	}
 

@@ -38,6 +38,30 @@ class Factura
     /**
      * @var float
      *
+     * @ORM\Column(name="costo_bebida", type="float")
+     * @Assert\Type(
+     *     type="float",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\NotBlank()
+     */
+    private $costoBebida;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="costo_llamada", type="float")
+     * @Assert\Type(
+     *     type="float",
+     *     message="El valor {{ value }} no es válido."
+     * )
+     * @Assert\NotBlank()
+     */
+    private $costoLlamada;
+
+    /**
+     * @var float
+     *
      * @ORM\Column(name="costo_total", type="float")
      * @Assert\Type(
      *     type="float",
@@ -51,18 +75,10 @@ class Factura
      */
     private $costoTotal;
 
-    /***
-     * @var string
-     *
-     * @ORM\Column(name="cliente", type="string", length=255)
-     * @Assert\NotBlank()
-     
-    private $cliente;*/
-
     /**
-     * @ORM\OneToOne(targetEntity="Reserva", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Reserva", inversedBy="factura")
      * @ORM\JoinColumn(name="reserva_id", referencedColumnName="id")
-     **/
+     */
     private $reserva;
 
     /**
@@ -135,29 +151,6 @@ class Factura
         return $this->costoTotal;
     }
 
-    /***
-     * Set cliente
-     *
-     * @param string $cliente
-     * @return Factura
-     
-    public function setCliente($cliente)
-    {
-        $this->cliente = $cliente;
-
-        return $this;
-    }*/
-
-    /***
-     * Get cliente
-     *
-     * @return string 
-    
-    public function getCliente()
-    {
-        return $this->cliente;
-    } */
-
     /**
      * Set fecha
      *
@@ -179,5 +172,28 @@ class Factura
     public function getFecha()
     {
         return $this->fecha;
+    }
+
+    /**
+     * Set reserva
+     *
+     * @param \LI\Bundle\HotelBundle\Entity\Reserva $reserva
+     * @return Factura
+     */
+    public function setReserva(\LI\Bundle\HotelBundle\Entity\Reserva $reserva = null)
+    {
+        $this->reserva = $reserva;
+    
+        return $this;
+    }
+
+    /**
+     * Get reserva
+     *
+     * @return \LI\Bundle\HotelBundle\Entity\Reserva 
+     */
+    public function getReserva()
+    {
+        return $this->reserva;
     }
 }

@@ -31,6 +31,12 @@
                     <b>Muy bien! </b>{{ message }}
                 </div>
             {% endfor %}
+            {% for message in app.session.flashbag.get('reserva_malos') %}
+                <div class = "alert alert-danger alert-dismissable">
+                    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+                    <b>Holy Whack-A-Mole! </b>{{ message }}
+                </div>
+            {% endfor %}
 
             <p class="text-success">Ningun cobro séra realizado previamente a la concretación o cancelaracion de esta reserva.</p>
             <div class="table-responsive">
