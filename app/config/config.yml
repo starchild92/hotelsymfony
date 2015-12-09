@@ -88,16 +88,16 @@ knp_snappy:
         enabled:    true
         #binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64
         #La siguiente linea es para proyecto de Linux 32Bits como Elementary
-        #binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386
+        binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386
         #Para proyecto de Windows de 32 Bits
-        binary:     "\"C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe\""
+        #binary:     "\"C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe\""
         options:    []
         
     image:
         enabled:    true
         #binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64
         #La siguiente linea es para proyecto de Linux 32Bits como Elementary
-        #binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386
+        binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386
         #Para proyecto de Windows de 32 Bits
-        binary:     "\"C:/Program Files/wkhtmltopdf/bin/wkhtmltoimage.exe\""
+        #binary:     "\"C:/Program Files/wkhtmltopdf/bin/wkhtmltoimage.exe\""
         options:    []

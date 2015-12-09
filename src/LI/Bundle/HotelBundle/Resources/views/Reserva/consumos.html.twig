@@ -21,9 +21,20 @@
                 </tr>
             </thead>
             <tbody>
+                    <tr>
+                        <th>Código</th>
+                        <th>Habitación</th>
+                        <th>Fecha Inicio y Final</th>
+                        <th>Periodo</th>
+                    </tr>
                 {% for reserva in reservas %}
                     <tr>
-                        <td colspan="4">{{ reserva.codigoReserva }}</td>
+                        <td>{{ reserva.codigoReserva }}</td>
+                        <td>{{ reserva.habitacion.numero }} - {{ reserva.habitacion }}</td>
+                        <td>{{ reserva.fechadesde|localizeddate('long', 'none', 'es') }} <b>al</b> 
+                        {% set diasR = reserva.diasReserva - 1 %}
+                        {{ reserva.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
+                        <td>{{ reserva.diasReserva }} días</td>
                     </tr>
                     <tr>
                         <th colspan="4">Estos son los elementos que puede consumir para esta reserva</th>
@@ -78,20 +89,11 @@
         <h4 class="modal-title" id="exampleModalLabel">New message</h4>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="control-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="control-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
-          </div>
-        </form>
+        <p>Lo que sea que agregaré aqui.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-success">Proceder con la compra</button>
       </div>
     </div>
   </div>
@@ -105,8 +107,8 @@
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input').val(recipient)
+        modal.find('.modal-title').text('Comprar ' + recipient)
+        //modal.find('.modal-body input').val(recipient)
     })
 </script>
 {% endblock %}
