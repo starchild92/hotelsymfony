@@ -15,14 +15,15 @@ use LI\Bundle\HotelBundle\Form\UsuarioUserType;
 use LI\Bundle\HotelBundle\Form\UsuarioConPasswordType;
 use LI\Bundle\HotelBundle\Form\UsuarioType;
 use LI\Bundle\HotelBundle\Form\LoginType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 use Symfony\Component\Validator\Constraints\DateTime;
 
 class InicioController extends Controller
 {
-	public function indexAction()
-	{
+
+	public function indexAction(){
 		$user = $this->getUser();
 		if ($user != null) {
 			$roles = $user->getRoles();
@@ -42,8 +43,7 @@ class InicioController extends Controller
 		return $this->render('LIHotelBundle:Inicio:index.html.twig');
 	}
 
-	public function adminAction()
-	{
+	public function adminAction(){
 		$user = $this->getUser();
 		if ($user != null) {
 			$roles = $user->getRoles();
@@ -155,8 +155,117 @@ class InicioController extends Controller
 		return $this->redirect($this->generateUrl('fos_user_security_login'));
 	}
 
-	public function consultarAction(){
-		return $this->render('LIHotelBundle:Inicio:consultar.html.twig');
+	public function consultarAction(Request $request){
+
+		$form = $this->createFormBuilder()
+			->add('fechas', 'text', array(
+				'label' => 'Rango de Fechas',
+				'attr' => array(
+				  	'placeholder' =>	'Seleccione las fechas',
+					'describedby' => 'basic-addon1')
+				))
+			->add('categoria', 'entity', array(
+				'label' => 'Categoría de la Habitación',
+			    'class' => 'LIHotelBundle:CategoriaHabitacion',
+			    'choice_label' => 'nombre',
+			))
+			->add('tipo', 'entity', array(
+				'label' => 'Tipo de la Habitación',
+			    'class' => 'LIHotelBundle:TipoHabitacion',
+			    'choice_label' => 'nombre',
+			))
+			->add('cant_personas', 'integer', array(
+				'label' => 'Cantidad de Personas',
+				'data' => 1, // default value
+		        'precision' => 0, // disallow floats
+			))
+			->setMethod('POST')
+			->setAction($this->generateUrl('LIHotelBundle_consultar'))
+			->add('submit', 'submit', array(
+				'label'	=> 	'Realizar Consulta',
+				'attr'	=> array('class'	=> 	'btn btn-success btn-block')
+				))
+			->getForm();
+
+		$habitaciones_disponibles = [];
+
+		$form->handleRequest($request);
+		if ($form->isValid()) {
+			$data = $form->getData();
+
+			/* Obteniendo los datos del formulario */
+			$fechas = $data['fechas'];
+			$categoria = $data['categoria'];
+			$tipo = $data['tipo'];
+			$personas = $data['cant_personas'];
+
+			$fecha_a = substr($fechas, 0,10);
+			$fecha_b = substr($fechas, 14,24);
+
+			$fecha_inicio = new \DateTime($fecha_a);
+			$fecha_final = new \DateTime($fecha_b);
+
+			$em = $this->getDoctrine()->getManager();
+			$habitaciones_tipo = $em->getRepository('LIHotelBundle:Tipo')->habitaciones_tipo($tipo->getId(), $categoria->getId());
+
+			foreach ($habitaciones_tipo as $tipos) {
+
+				$habitacion = $em->getRepository('LIHotelBundle:Habitacion')->habitacion_por_tipo($tipos->getId());
+				foreach ($habitacion as $room) {
+
+					// Estas son las habitaciones del tipo y categoria especificadas por el usuario
+					//Ahora tengo que buscar todas sus reservas
+					$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($room->getId());
+
+					if (sizeof($reservas) == 0) {
+						$habitaciones_disponibles[] = $room;
+					}
+				
+					foreach ($reservas as $reserva) {
+
+						// si la reserva no está cancelada, solo queda ver si ya culmino, está en eso o por concretar
+						if ($reserva->getEstadoReserva() != 'Cancelada') {
+							
+							//Escogiendo las cantidades permitidas de personas en las habitaciones
+							$cantidad = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->obtener_ocupacion($tipo->getId(), $categoria->getId());
+
+							foreach ($cantidad as $key) {
+
+								// Segun la cantidad
+								if ($key->getCantidadPersonasHabitacion() >= $personas) {
+
+									$dias_reserva = $reserva->getDiasReserva() - 1;
+									$fecha_reserva = $reserva->getFechaDesde();
+									$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
+									$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
+									$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
+									
+									$puede = true;
+
+									if ($fecha_inicio > $fecha_inicio_ && $fecha_inicio < $fecha_final_) { $puede = false; }
+									if ($fecha_final > $fecha_inicio_ && $fecha_final < $fecha_final_) { $puede = false; }
+									if ($fecha_inicio_ > $fecha_inicio && $fecha_inicio_ < $fecha_final) { $puede = false; }
+									if ($fecha_inicio == $fecha_inicio_) { $puede = false; }
+									if ($fecha_inicio == $fecha_final_) { $puede = false; }
+									if ($fecha_final == $fecha_inicio_) { $puede = false; }
+									if ($fecha_final == $fecha_final_) { $puede = false; }
+
+									if ($puede) {
+
+										$habitaciones_disponibles[] = $room;
+									}
+								}
+							}
+						}
+					}
+				}	
+			}		
+		}
+		
+		return $this->render('LIHotelBundle:Inicio:consultar.html.twig', array(
+			'form' => $form->createView(),
+			'habitaciones_disponibles' => $habitaciones_disponibles,
+		));
 	}
 
 	/*Para el registro de nuevos usuarios desde la pagina web*/
@@ -215,8 +324,7 @@ class InicioController extends Controller
 		));
 	}
 
-	public function reporteDiarioAction()
-	{
+	public function reporteDiarioAction(){
 		return $this->render('LIHotelBundle:Inicio:reporteDiario.html.twig');
 	}
 

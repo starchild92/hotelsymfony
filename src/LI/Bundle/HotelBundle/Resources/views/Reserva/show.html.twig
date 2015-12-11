@@ -8,8 +8,10 @@
 	<!-- PANEL DE LOS BOTONES -->
 	<div class="col-lg-3 col-sm-3 col-xs-12">
 		<ul class="nav nav-stacked">
+			{% if entity.estadoReserva != 'Por Concretar' %}
 			<li role="presentation"><a class="btn btn-info btn-block" href="{{ path('user_reserva_factura', { 'codigo': entity.codigoReserva }) }}" role="button">Descargar Factura PDF</a></li>
-			{% if (entity.estadoReserva != 'Concretada' and entity.estadoReserva != 'Cancelada') %}
+			{% endif %}
+			{% if entity.estadoReserva == 'Por Concretar' %}
 			<li role="presentation"><a class="btn btn-primary btn-block" href="{{ path('reserva_concretar_auto', { 'codigo': entity.codigoReserva }) }}">Concretar Reserva</a></li>
 			{% endif %}
 			{% if (entity.estadoReserva != 'Cancelada') %}<li role="presentation"><a class="btn btn-primary btn-block" href="{{ path('reserva_cancelar', { 'codigo': entity.codigoReserva }) }}">Cancelar Reserva</a></li>
@@ -102,7 +104,7 @@
 			<tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }} días</td></tr>
 			<tr><td>Costo Bebidas</td><td>{{ entity.factura.costoBebida }} Bolívares</td></tr>
 			<tr><td>Costo Llamadas</td><td>{{ entity.factura.costoLlamada }} Bolívares</td></tr>
-			<tr><td>Costo Acumulado</td><td>{{ entity.factura.costoTotal }} Bolívares</td></tr>
+			<tr><td>Costo Acumulado</td><td>{{ ntity.factura.costoTotal + entity.factura.costoLlamada + entity.factura.costoBebida }} Bolívares</td></tr>
 		</tbody>
 		</table>
 	</div>

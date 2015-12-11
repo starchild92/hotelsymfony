@@ -87,26 +87,6 @@
 						</tr>
 					</table>
 				</div>
-				<!-- div class="panel panel-warning">
-					<div class="panel-heading">
-						<h3 class="panel-title">Bebidas del Minibar</h3>
-					</div>
-					<table class="table table-bordered">
-						<tbody>
-							<tr>
-								{% if reserva.habitacion.tipo.bebidasMinibar|length == 0 %}<th>No se han añadido bebidas al minibar de esta habitación.</th>{% endif %}
-							</tr>
-							{% for bebida in reserva.habitacion.tipo.bebidasMinibar %}
-							<tr>
-								<td>{{ bebida.marca }}</td>
-								<td>{{ bebida.cantidad }} unidades</td>
-								<td>{{ bebida.precio }} Bs c.u</td>
-								<td>{{ bebida.tipoBebida }}</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-				</div -->
 			</div>
 			<div class="col-lg-4">
 				<div class="panel panel-info">
@@ -153,7 +133,7 @@
 						</tr>
 					</table>
 					<div class="panel-footer">
-					Total: <h3>{{ reserva.factura.costototal|number_format }} Bs</h3></div>
+					Total: <h3>{{ reserva.factura.costototal + reserva.factura.costoLlamada + reserva.factura.costoBebida|number_format }} Bs</h3></div>
 				</div>
 				{% endif %}
 			</div>

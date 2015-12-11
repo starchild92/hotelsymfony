@@ -93,6 +93,8 @@ class Factura
     public function __construct()
     {
         $this->fecha = new \DateTime();
+        $this->costoBebida = 0;
+        $this->costoLlamada = 0;
     }
 
     /**

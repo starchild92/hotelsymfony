@@ -23,8 +23,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ReservaController extends Controller
 {
 	/* VERIFICA SI UN USUARIO ES DE ROLE ADMINISTRADOR */
-	public function es_admin()
-	{
+	public function es_admin(){
 		$user = $this->getUser();
 		if ($user != null) {
 			$roles = $user->getRoles();
@@ -36,8 +35,7 @@ class ReservaController extends Controller
 	/**
 	 * Lists all Reserva entities.
 	 */
-	public function indexAction()
-	{
+	public function indexAction(){
 		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 
 		$user = $this->getUser();
@@ -47,23 +45,19 @@ class ReservaController extends Controller
 		$entities = $em->getRepository('LIHotelBundle:Reserva')->findAll();
 
 		return $this->render('LIHotelBundle:Reserva:index.html.twig', array(
-		'entities' => $entities,
-		'user' => $user
+			'entities' => $entities,
+			'user' => $user
 		));
-		
 	}
 
 	/* RECIBE UN ID_RESERVA, FECHA_RESERVA, CANTIDAD DE DIAS DE LA RESERVA Y UNA LISTA DE RESERVAS */
-	public function comprobarFechas($id, $fecha, $dias, $reservas)
-	{
+	public function comprobarFechas($id, $fecha, $dias, $reservas){
 		$puede = true;
 		$dias = $dias - 1;
 		$fecha_inicio = new \DateTime($fecha->format('Y-m-d'));
 		$fecha_final = new \DateTime($fecha_inicio->format('Y-m-d'));
 		$fecha_final->add(new \DateInterval('P'.$dias.'D'));
 		
-		//$dias = $dias + 1;
-		//throw $this->createNotFoundException($dias.' dias '.$fecha_inicio->format('Y-M-d')." a ".$fecha_final->format('Y-M-d'));
 
 		foreach ($reservas as $reserva) {
 			if ($id != $reserva->getId()) {
@@ -112,8 +106,7 @@ class ReservaController extends Controller
 	}
 
 	/* COMPRUEBA QUE LA CANTIDAD DE PERSONAS QUE INCLUYE LA RESERVA NO SEA SUPERIOR A LA QUE ESTA ESTABLECIDA SEGUN EL TIPO Y CATEGORIA DE HABITACIÓN QUE SE ESTÁ RESERVANDO */
-	public function comprobarCantidad($tipo, $categoria, $personas_reserva)
-	{
+	public function comprobarCantidad($tipo, $categoria, $personas_reserva){
 		$em = $this->getDoctrine()->getManager();
 		$cantidad = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->obtener_ocupacion($tipo, $categoria);
 		foreach ($cantidad as $key) {
@@ -127,8 +120,7 @@ class ReservaController extends Controller
 	}
 
 	/* VERIFICA SI UNA HABITACIÓN ESTÁ DISPONIBLE PARA RESERVAR */
-	public function habitacion_disponible($habitacion)
-	{
+	public function habitacion_disponible($habitacion){
 		if ($habitacion->getEstado() == 'Indispuesta') { return false; }
 		return true;
 	}
@@ -136,8 +128,7 @@ class ReservaController extends Controller
 	/**
 	 * Creates a new Reserva entity.
 	 */
-	public function createAction(Request $request)
-	{
+	public function createAction(Request $request){
 		$entity = new Reserva();
 		$form = $this->createCreateForm($entity);
 		$form->handleRequest($request);
@@ -297,8 +288,7 @@ class ReservaController extends Controller
 	 * @param Reserva $entity The entity
 	 * @return \Symfony\Component\Form\Form The form
 	 */
-	private function createCreateForm(Reserva $entity)
-	{
+	private function createCreateForm(Reserva $entity){
 		$user = $this->getUser();
 		if ($user != null) {
 			$roles = $user->getRoles();
@@ -323,8 +313,7 @@ class ReservaController extends Controller
 	/**
 	 * Displays a form to create a new Reserva entity.
 	 */
-	public function newAction()
-	{
+	public function newAction(){
 		$entity = new Reserva();
 		$form = $this->createCreateForm($entity);
 
@@ -337,8 +326,7 @@ class ReservaController extends Controller
 	/**
 	 * Finds and displays a Reserva entity.
 	 */
-	public function showAction($id)
-	{
+	public function showAction($id){
 		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
 
@@ -363,8 +351,7 @@ class ReservaController extends Controller
 	/**
 	 * Displays a form to edit an existing Reserva entity.
 	 */
-	public function editAction($id)
-	{
+	public function editAction($id){
 		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
 		$session = $this->get('session');
@@ -399,8 +386,7 @@ class ReservaController extends Controller
 	* @param Reserva $entity The entity
 	* @return \Symfony\Component\Form\Form The form
 	*/
-	private function createEditForm(Reserva $entity)
-	{
+	private function createEditForm(Reserva $entity){
 		$user = $this->getUser();
 		if ($user != null) {
 			$roles = $user->getRoles();
@@ -438,8 +424,7 @@ class ReservaController extends Controller
 	/**
 	 * Edits an existing Reserva entity.
 	 */
-	public function updateAction(Request $request, $id)
-	{
+	public function updateAction(Request $request, $id){
 		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
 		$session = $this->get('session');
@@ -512,8 +497,7 @@ class ReservaController extends Controller
 	/**
 	 * Deletes a Reserva entity.
 	 */
-	public function deleteAction(Request $request, $id)
-	{
+	public function deleteAction(Request $request, $id){
 		$form = $this->createDeleteForm($id);
 		$form->handleRequest($request);
 
@@ -558,8 +542,7 @@ class ReservaController extends Controller
 	 * @param mixed $id The entity id
 	 * @return \Symfony\Component\Form\Form The form
 	 */
-	private function createDeleteForm($id)
-	{
+	private function createDeleteForm($id){
 		return $this->createFormBuilder()
 			->setAction($this->generateUrl('reserva_delete', array('id' => $id)))
 			->setMethod('DELETE')
@@ -568,11 +551,8 @@ class ReservaController extends Controller
 		;
 	}
 
-	/**
-	 * Lists all Reserva entities.
-	 */
-	public function indexuserAction()
-	{
+
+	public function indexuserAction(){
 		$securityContext = $this->container->get('security.context');
 		if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
 
@@ -591,8 +571,7 @@ class ReservaController extends Controller
 		}
 	}
 
-	public function newuserAction()
-	{
+	public function newuserAction(){
 		$user = $this->getUser();
 		$entity = new Reserva();
 		$form   = $this->createCreateForm($entity);
@@ -604,8 +583,7 @@ class ReservaController extends Controller
 		));
 	}
 
-	public function showuserAction($id)
-	{
+	public function showuserAction($id){
 		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$session = $this->get('session');
 		$em = $this->getDoctrine()->getManager();
@@ -629,8 +607,8 @@ class ReservaController extends Controller
 		));
 	}
 
-	public function edituserAction($id)
-	{
+	/* Modificar Reserva, con los elementos que solo puede modificar el usuario */
+	public function edituserAction($id){
 		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$session = $this->get('session');
 		$em = $this->getDoctrine()->getManager();
@@ -658,8 +636,8 @@ class ReservaController extends Controller
 		));
 	}
 
-	public function concretarAction(Request $request)
-	{
+	/* Genera la vista y solicita el codigo de la reserva para concretarla */
+	public function concretarAction(Request $request){
 		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$form = $this->createFormBuilder()
 			->add('codigo_reserva', 'text', array(
@@ -737,8 +715,8 @@ class ReservaController extends Controller
 		));
 	}
 
-	public function concretarAutoAction($codigo)
-	{
+	/* Concretar un reserva automaticamente, al hacer clic */
+	public function concretarAutoAction($codigo){
 		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
 		$session = $this->get('session');
@@ -778,8 +756,8 @@ class ReservaController extends Controller
 		return $this->showAction($reservas[0]->getId());
 	}
 
-	public function cancelarAction($codigo)
-	{
+	/* Cancelar una reserva */
+	public function cancelarAction($codigo){
 		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
 		$session = $this->get('session');
@@ -901,8 +879,8 @@ class ReservaController extends Controller
 		return $this->redirect($this->generateUrl('LIHotelBundle_homepage'));
 	}
 
-	public function facturaAction(Request $request, $codigo)
-	{
+	/* Genera el PDF de la factura */
+	public function facturaAction(Request $request, $codigo){
 		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
 		$session = $this->get('session');
@@ -928,10 +906,10 @@ class ReservaController extends Controller
             array(
                 'Content-Type'          => 'application/pdf',
                 'Content-Disposition'   => 'attachment; filename="'.$reserva->getCodigoReserva().'.pdf"'
-            ));
-
+        ));
 	}
 
+	/* Genera la vista para realizar el pedido de un consumo de una reserva */
 	public function consumosAction(){
 		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
@@ -963,6 +941,7 @@ class ReservaController extends Controller
 		));
 	}
 
+	/* Dado un consumo y la reserva, se decrementa la cantidad del consumo y se aumenta el precio en la reserva*/
 	public function realizarConsumoAction($idconsumo, $idreserva){
 		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 

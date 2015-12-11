@@ -3,64 +3,69 @@
 {% block title %}Hotel Symfony - Consultar Reservaciones{% endblock%}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/daterangepicker.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/daterangepicker.css') }}" />
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="page-header">
-            <h1>Consultar Reservaciones</h1>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-xs-12">
-                <div class="page-header">
-                    <h3 style="margin-top:0px;"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>  Datos Consulta</h3>
-                </div>
+<div class="container">
+	<div class="page-header">
+		<h1>Consultar Reservaciones</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-6 col-xs-12">
+			<div class="page-header">
+				<h3 style="margin-top:0px;"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>  Datos Consulta</h3>
+			</div>
 
-                    <div class="input-group input-group-lg">
-                      <input class="form-control" type="text" name="datefilter" value="" placeholder="Seleccione las fechas" describedby="basic-addon1" />
-                      <div class="input-group-btn">
-                        <button type="button" class="btn btn-default" aria-haspopup="true">Consultar</button>
-                      </div>
-                    </div>
- 
-                    <script type="text/javascript">
-                    $(function() {
+			{{ form_start(form) }}
+			{{ form_errors(form) }}
+			{{ form_end(form) }}
 
-                      $('input[name="datefilter"]').daterangepicker({
-                          autoUpdateInput: false,
-                          language: 'es',
-                          locale: {
-                              cancelLabel: 'Limpiar'
-                          }
-                      });
+			<script type="text/javascript">
+				$(function() {
+					$('input[name="form[fechas]"]').daterangepicker({
+						autoUpdateInput: false,
+						language: 'es',
+						locale: {
+							cancelLabel: 'Limpiar'
+						}
+					});
 
-                      $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-                          $(this).val(picker.startDate.format('DD, MM YYYY') + ' al ' + picker.endDate.format('DD, MM YYYY'));
-                      });
+					$('input[name="form[fechas]"]').on('apply.daterangepicker', function(ev, picker) {
+						$(this).val(picker.startDate.format('DD-MM-YYYY') + ' al ' + picker.endDate.format('DD-MM-YYYY'));
+					});
 
-                      $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
-                          $(this).val('');
-                      });
+					$('input[name="form[fechas]"]').on('cancel.daterangepicker', function(ev, picker) {
+						$(this).val('');
+					});
 
-                    });
-                    </script>
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <article>
-                <p>Donec imperdiet ante sed diam consequat et dictum erat faucibus. Aliquam sit
-                amet vehicula leo. Morbi urna dui, tempor ac posuere et, rutrum at dui.
-                Curabitur neque quam, ultricies ut imperdiet id, ornare varius arcu. Ut congue
-                urna sit amet tellus malesuada nec elementum risus molestie. Donec gravida
-                tellus sed tortor adipiscing fringilla. Donec nulla mauris, mollis egestas
-                condimentum laoreet, lacinia vel lorem. Morbi vitae justo sit amet felis
-                vehicula commodo a placerat lacus. Mauris at est elit, nec vehicula urna. Duis a
-                lacus nisl. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-                posuere cubilia Curae.</p>
-            </article>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript" src="{{ asset('bundles/lihotel/js/moment.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/lihotel/js/daterangepicker.js') }}"></script>
+				});
+			</script>
+		</div>
+		<div class="col-md-6 col-xs-12">
+			<div class="page-header" >
+				<h3 style="margin-top:0px;"><span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>  Resultados</h3>
+			</div>
+			<article>
+				{% if habitaciones_disponibles|length == 0 %}
+					<div class = "alert alert-info alert-dismissable">
+						<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+						No ha habitaciones disponibles en el periodo que indicó.
+					</div>
+				{% else %}
+					<p>Se encontró que puede reservar las siguiente habitaciones</p>
+					<table class="table table-bordered table-striped">
+						{% for habitacion in habitaciones_disponibles %}
+						<tr>
+							<td>{{ habitacion.nombre }}</td>
+						</tr>
+						{% endfor %}
+					</table>
+				{% endif %}
+			</article>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="{{ asset('bundles/lihotel/js/moment.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lihotel/js/daterangepicker.js') }}"></script>
 {% endblock %}

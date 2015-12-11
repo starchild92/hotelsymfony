@@ -12,4 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class TipoRepository extends EntityRepository
 {
+	/* Devuelve entidades Tipo */
+	public function habitaciones_tipo($tipo, $categoria){
+		$query = $this->getEntityManager()
+				->createQuery('SELECT u 
+				FROM LIHotelBundle:Tipo u 
+				WHERE u.tipoHabitacion = :tipo_id
+				AND u.categoriaHabitacion = :categoria_id');
+		$query->setParameter('tipo_id', $tipo);
+		$query->setParameter('categoria_id', $categoria);
+		$result = $query->getResult();
+        
+        return $result;
+	}
 }

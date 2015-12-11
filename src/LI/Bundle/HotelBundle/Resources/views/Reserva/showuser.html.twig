@@ -8,7 +8,8 @@
     <div class="row">
         <div class="col-lg-3 col-sm-3 col-xs-12">
             <ul class="nav nav-stacked">
-                <li role="presentation"><a class="btn btn-info btn-block" href="{{ path('user_reserva_factura', { 'codigo': entity.codigoReserva }) }}" role="button">Descargar Factura PDF</a></li>
+                {% if entity.estadoReserva != 'Por Concretar' %}
+                <li role="presentation"><a class="btn btn-info btn-block" href="{{ path('user_reserva_factura', { 'codigo': entity.codigoReserva }) }}" role="button">Descargar Factura PDF</a></li>{% endif %}
                 {% if entity.estadoReserva != 'Cancelada' %}
                 <li role="presentation"><a class="btn btn-primary btn-block" href="{{ path('reserva_cancelar', { 'codigo': entity.codigoReserva }) }}">Cancelar Reserva</a></li>{% endif %}
                 <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('user_reserva') }}" role="button">Ver todas las Reservas</a></li>
@@ -57,7 +58,7 @@
                     </tr>
                     <tr>
                         <th>Habitación Reservada</th>
-                        <td>{{ entity.habitacion.nombre }} ({{ entity.habitacion.numero }})</td>
+                        <td>{{ entity.habitacion.numero }} - {{ entity.habitacion.nombre }}</td>
                         <td>{{ entity.habitacion.tipo.tipoHabitacion.nombre }}</td>
                         <td>{{ entity.habitacion.tipo.categoriaHabitacion.nombre }}</td>
                     </tr>
@@ -89,10 +90,11 @@
                 <tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }} días</td></tr>
                 <tr><td>Costo Bebidas</td><td>{{ entity.factura.costoBebida }} Bolívares</td></tr>
                 <tr><td>Costo Llamadas</td><td>{{ entity.factura.costoLlamada }} Bolívares</td></tr>
-                <tr><td>Costo Total Acumulado</td><td>{{ entity.factura.costoTotal }} Bolívares <small>incluye bebidas y llamadas</small></td></tr>
+                <tr><td>Costo Total Acumulado</td><td>{{ entity.factura.costoTotal + entity.factura.costoLlamada + entity.factura.costoBebida }} Bolívares <small>incluye bebidas y llamadas</small></td></tr>
                 <tr><td>Fecha</td><td>{{ entity.factura.fecha|localizeddate('long', 'none', 'es') }}</td></tr>
             </tbody>
             </table>
+            <p class="text-danger"><b>Importante!</b> Podrá bajar la factura en PDF cuando el estatus de la reserva sea <i>Concretada</i> o <i>Cancelada</i>.</p>
         </div>
     </div>
 <!-- EL MODAL -->
