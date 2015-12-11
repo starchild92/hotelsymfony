@@ -90,7 +90,7 @@
                 <tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }} días</td></tr>
                 <tr><td>Costo Bebidas</td><td>{{ entity.factura.costoBebida }} Bolívares</td></tr>
                 <tr><td>Costo Llamadas</td><td>{{ entity.factura.costoLlamada }} Bolívares</td></tr>
-                <tr><td>Costo Total Acumulado</td><td>{{ entity.factura.costoTotal + entity.factura.costoLlamada + entity.factura.costoBebida }} Bolívares <small>incluye bebidas y llamadas</small></td></tr>
+                <tr><td>Costo Total Acumulado</td><td>{{ (entity.factura.costoTotal + entity.factura.costoLlamada + entity.factura.costoBebida)|number_format }} Bolívares <small>incluye bebidas y llamadas</small></td></tr>
                 <tr><td>Fecha</td><td>{{ entity.factura.fecha|localizeddate('long', 'none', 'es') }}</td></tr>
             </tbody>
             </table>

@@ -133,7 +133,7 @@
 						</tr>
 					</table>
 					<div class="panel-footer">
-					Total: <h3>{{ reserva.factura.costototal + reserva.factura.costoLlamada + reserva.factura.costoBebida|number_format }} Bs</h3></div>
+					Total: <h3>{{ (reserva.factura.costototal + reserva.factura.costoLlamada + reserva.factura.costoBebida)|number_format }} Bs</h3></div>
 				</div>
 				{% endif %}
 			</div>

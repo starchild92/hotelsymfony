@@ -8,7 +8,10 @@
     <div class="row">
         <div class="col-lg-3 col-sm-3 col-xs-12">
             <ul class="nav nav-stacked">
+                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('reserva_show', { 'id': entity.id }) }}" role="button">Ver Detalles</a></li>
+                
                 <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('reserva') }}" role="button">Ver todas las Reservas</a></li>
+
                 <li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarReserva">Eliminar Reserva</a></li>
             </ul>
         </div>
