@@ -71,7 +71,6 @@ class InicioController extends Controller
 				$session = $this->get('session');
 				$hoy = new \DateTime('today');
 				
-
 				foreach ($reservas as $reserva) {
 					$estado = $reserva->getEstadoReserva();
 					if ($estado == 'Por Concretar'){
@@ -101,7 +100,31 @@ class InicioController extends Controller
 						}
 
 					}
-					if ($estado == 'Concretada'){ $con = $con + 1; }
+					if ($estado == 'Concretada' && $reserva->getHabitacion()->getEstado() != 'Libre'){
+						$con = $con + 1;
+
+						//Liberando las habitaciones que terminaron su reserva hoy
+						$dias_reserva = $reserva->getDiasReserva() - 1;
+						$fecha_reserva = $reserva->getFechaDesde();
+						$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
+						$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
+						$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
+						$hoy = new \DateTime('today');
+						
+						if ($hoy > $fecha_final_) {
+							//throw $this->createNotFoundException($reserva->getId()." - ".$hoy->format('Y-m-d')." > ".$fecha_final_->format('Y-m-d'));
+
+							$session->getFlashBag()->add('libre', array(
+								'id' => $reserva->getId(),
+								'codigo' => $reserva->getHabitacion()->getNombre()
+							));
+
+							$habitacion = $reserva->getHabitacion();
+							$habitacion->setEstado('Libre');
+							$em->persist($habitacion);
+							$em->flush();
+						}
+					}
 					if ($estado == 'Cancelada'){ $can = $can + 1; }
 				}
 				$admins = 0; $users = 0;

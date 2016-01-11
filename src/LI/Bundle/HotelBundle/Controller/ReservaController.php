@@ -365,16 +365,29 @@ class ReservaController extends Controller
 
 		if ($entity->getEstadoReserva() != 'Cancelada') {
 
-			$editForm = $this->createEditForm($entity);
-			$deleteForm = $this->createDeleteForm($id);
-			$user = $this->getUser();
+			/*Verificar si no ha pasado la fecha de culminado, porque si no no se puede editar*/
+			$dias_reserva = $entity->getDiasReserva() - 1;
+			$fecha_reserva = $entity->getFechaDesde();
+			$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
+			$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
+			$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
+			$hoy = new \DateTime('today');
 
-			return $this->render('LIHotelBundle:Reserva:edit.html.twig', array(
-				'entity'      => $entity,
-				'edit_form'   => $editForm->createView(),
-				'delete_form' => $deleteForm->createView(),
-				'user' => $user,
-			));
+			if ($hoy > $fecha_final_) {
+				$session->getFlashBag()->add('reserva_malos', 'Esta reserva ya ha culminado y no se puede modificar.');
+				return $this->showAction($entity->getId());
+			}else{
+				$editForm = $this->createEditForm($entity);
+				$deleteForm = $this->createDeleteForm($id);
+				$user = $this->getUser();
+
+				return $this->render('LIHotelBundle:Reserva:edit.html.twig', array(
+					'entity'      => $entity,
+					'edit_form'   => $editForm->createView(),
+					'delete_form' => $deleteForm->createView(),
+					'user' => $user,
+				));
+			}
 		}else{
 			$session->getFlashBag()->set('reserva_info', 'Esta reserva, ha sido cancelada, por este motivo no puede ser modificada. Si lo desea puede generar otra reserva con las mismas caracteristicas.');
 			return $this->showAction($id);
@@ -624,16 +637,30 @@ class ReservaController extends Controller
 			return $this->redirect($this->generateUrl('_user'));
 		}
 
-		$editForm = $this->createEditForm($entity);
-		$deleteForm = $this->createDeleteForm($id);
-		$user = $this->getUser();
+		/*Verificar si no ha pasado la fecha de culminado, porque si no no se puede editar*/
+		$dias_reserva = $entity->getDiasReserva() - 1;
+		$fecha_reserva = $entity->getFechaDesde();
+		$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
+		$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
+		$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
+		$hoy = new \DateTime('today');
 
-		return $this->render('LIHotelBundle:Reserva:edituser.html.twig', array(
-			'entity'      => $entity,
-			'edit_form'   => $editForm->createView(),
-			'delete_form' => $deleteForm->createView(),
-			'user' => $user,
-		));
+		if ($hoy > $fecha_final_) {
+			$session->getFlashBag()->add('reserva_malos', 'Esta reserva ya ha culminado y no se puede modificar.');
+			return $this->showuserAction($entity->getId());
+		}else{
+
+			$editForm = $this->createEditForm($entity);
+			$deleteForm = $this->createDeleteForm($id);
+			$user = $this->getUser();
+
+			return $this->render('LIHotelBundle:Reserva:edituser.html.twig', array(
+				'entity'      => $entity,
+				'edit_form'   => $editForm->createView(),
+				'delete_form' => $deleteForm->createView(),
+				'user' => $user,
+			));
+		}
 	}
 
 	/* Genera la vista y solicita el codigo de la reserva para concretarla */

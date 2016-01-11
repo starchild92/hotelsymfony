@@ -211,7 +211,9 @@
 					<div class="over">
 						{% if not (app.session.flashbag.has('grave')) %}
 						{% if not (app.session.flashbag.has('informacion')) %}
+						{% if not (app.session.flashbag.has('libre')) %}
 							<span class='labelalert' style="color: #000;">No hay mensajes para mostrar.</span>
+						{% endif %}
 						{% endif %}
 						{% endif %}
 						{% for message in app.session.flashbag.get('grave') %}
@@ -219,6 +221,9 @@
 						{% endfor %}
 						{% for message in app.session.flashbag.get('informacion') %}
 							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-normal">Esta reserva {{ message.codigo }} debería ser concretada hoy.</span></a>
+						{% endfor %}
+						{% for message in app.session.flashbag.get('libre') %}
+							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-primary">La habitación "{{ message.codigo }}" se ha puesto como libre, debido a que la reserva ha finalizado.</span></a>
 						{% endfor %}
 						<!--<span class="labelalert labelalert-primary">labelalert-primary</span>
 						<span class="labelalert labelalert-atencion">labelalert-atencion</span>-->
