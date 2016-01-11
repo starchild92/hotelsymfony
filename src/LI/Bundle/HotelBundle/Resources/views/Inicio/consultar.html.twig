@@ -53,7 +53,7 @@
 						No ha habitaciones disponibles en el periodo que indicó.
 					</div>
 				{% else %}
-					<p>Se encontró que puede reservar las siguiente habitaciones</p>
+					<p class="text-success">Se encontró que puede reservar las siguiente(s) {{ habitaciones_disponibles|length }} habitacion(es)</p>
 					<table class="table table-bordered table-striped">
 						{% for habitacion in habitaciones_disponibles %}
 						<tr>
