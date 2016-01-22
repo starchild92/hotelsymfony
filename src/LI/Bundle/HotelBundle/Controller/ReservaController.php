@@ -718,7 +718,7 @@ class ReservaController extends Controller
 							$em->persist($reserva);
 							$em->flush();
 
-							$session->getFlashBag()->add('reserva_buenos', 'Se ha concretado tu reservación, haz hecho check in con nosotros! Yay... ya puede dirigirse a su habitación.');
+							$session->getFlashBag()->add('reserva_buenos', 'Se ha concretado la reserva de manera automatica, asegurate de enviar a los huspedes a la habitación!');
 						}else{
 							$session->getFlashBag()->add('reserva_malos', 'Las reservas deben ser concretadas el día para el cual fueron reservadas y no antes. Puede modificar la reservación para hoy o esperar al día. Tenga en cuenta que la modificación no garantiza que pueda concretarse hoy.');
 							return $this->render('LIHotelBundle:Reserva:concretar.html.twig', array(
