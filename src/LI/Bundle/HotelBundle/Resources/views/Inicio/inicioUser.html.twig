@@ -16,6 +16,12 @@
 	    		<b>Oh crap! </b>{{ message }}
 	    	</div>
 		{% endfor %}
+		{% for message in app.session.flashbag.get('reserva_buenos') %}
+			<div class = "alert alert-success alert-dismissable">
+	    		<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+	    		<b>Exito! </b>{{ message }}
+	    	</div>
+		{% endfor %}
 		<div class="panel panel-default">
 				<div class="panel-body">
 				<div class="row">

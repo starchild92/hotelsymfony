@@ -25,55 +25,59 @@
 				{{ flashMessage }}
 			</div>
 			{% endfor %}
-			<div class="panel panel-success">
-				<div class="panel-heading">
-					<h3 class="panel-title">Datos de la Habitación</h3>
+
+			<div class="row">
+				<div class="col-lg-6 col-sm-6 col-xs-12">
+					<div class="panel panel-success">
+						<div class="panel-heading">
+							<h3 class="panel-title">Datos de la Habitación</h3>
+						</div>
+						<table class="table table-bordered table-responsive">
+							<tbody>
+								<tr>
+									<td style="text-align: left;">la habitación <b>{{ entity.numero }} - {{ entity.nombre }}</b> se encuentra <b>{{ entity.estado }}</b>, tiene por cartegoría <b>{{ entity.tipo.categoriaHabitacion }}</b> y tipo <b>{{ entity.tipo.tipoHabitacion }}</b>. Su espacio interno está constituido por: "<b>{{ entity.tipo.espacioInterno }}</b>" y dispone de los siguientes servicios: <b>{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}, {% endfor %}</b>{% if entity.tipo.servicios|length == 0 %}<li>No se han añadido servicios a esta habitación.</li>{% endif %}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
-				<table class="table table-bordered table-responsive">
-					<tbody>
-						<tr>
-							<th>Estado</th>
-							<td>{{ entity.estado }}</td>
-						</tr>
-						<tr>
-							<th>Nombre</th>
-							<td>{{ entity.numero }} - {{ entity.nombre }}</td>
-						</tr>
-						<tr>
-							<th>Categoria</th>
-							<td>{{ entity.tipo.categoriaHabitacion }}</td>
-						</tr>
-						<tr>
-							<th>Tipo</th>
-							<td>{{ entity.tipo.tipoHabitacion }}</td>
-						</tr>
-						<tr>
-							<th>Espacio Interno</th>
-							<td>{{ entity.tipo.espacioInterno }}</td>
-						</tr>
-						<tr>
-							<th>Servicios</th>
-							<td>{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}, {% endfor %}{% if entity.tipo.servicios|length == 0 %}No se han añadido servicios a esta habitación.{% endif %}</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="col-lg-6 col-sm-6 col-xs-12">
+					<div class="panel panel-success">
+						<div class="panel-heading">
+							<h3 class="panel-title">Bebidas de la habitación</h3>
+						</div>
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									{% if entity.tipo.bebidasMinibar|length == 0 %}<th>No se han añadido bebidas al minibar de esta habitación.</th>{% endif %}
+								</tr>
+								{% for bebida in entity.tipo.bebidasMinibar %}
+								<tr>
+									<td>{{ bebida.marca }}</td>
+									<td>{{ bebida.cantidad }} unidades</td>
+									<td>{{ bebida.precio }} Bs c.u</td>
+									<td>{{ bebida.tipoBebida }}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
+			
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th colspan="4">Bebidas del Minibar</th>
+						<th colspan="4">Reservas Asociadas a esta habitación</th>
 					</tr>
 				</thead>
 				<tbody>
+					{% for reserva in reservas %}
 					<tr>
-						{% if entity.tipo.bebidasMinibar|length == 0 %}<th>No se han añadido bebidas al minibar de esta habitación.</th>{% endif %}
-					</tr>
-					{% for bebida in entity.tipo.bebidasMinibar %}
-					<tr>
-						<td>{{ bebida.marca }}</td>
-						<td>{{ bebida.cantidad }} unidades</td>
-						<td>{{ bebida.precio }} Bs c.u</td>
-						<td>{{ bebida.tipoBebida }}</td>
+						<td>{{ reserva.codigoReserva }} <a href="{{ path('reserva_show', { 'id': reserva.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+						<td>{{ reserva.estadoReserva }}</td>
+						<td>{{ reserva.fechareserva|date('d M Y') }}</td>
+						<td>{{ reserva.cliente }} <a href="{{ path('usuario_show', { 'id': reserva.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></a></td>
 					</tr>
 					{% endfor %}
 				</tbody>

@@ -141,9 +141,11 @@ class HabitacionController extends Controller
 
         $user = $this->getUser();
         $deleteForm = $this->createDeleteForm($id);
+        $reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_de_la_habitacion($id);
 
         return $this->render('LIHotelBundle:Habitacion:show.html.twig', array(
             'entity'      => $entity,
+            'reservas'    => $reservas,
             'delete_form' => $deleteForm->createView(),
             'user' => $user
         ));
