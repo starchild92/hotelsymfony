@@ -15,12 +15,12 @@ jQuery(document).ready(function() {
     $remover = $collectionHolder.find('.remove-tag');
     $cantHijos = $remover.length;
 
-    //Para quitar el primer label 0 ese ladilloso y el label 1 cuando hay dos almacenes agregados
     $collectionHolder.find('.control-label').first().remove();
-    if ($cantHijos > 1) {
+    //$collectionHolder.find('#li_bundle_hotelbundle_habitacion_tipo_bebidasMinibar').css({"margin-top: 10px;"});
+    /*if ($cantHijos > 1) {
         $hijos = $collectionHolder.find('.control-label');
         $hijos.get(2).remove();
-    };
+    };*/
 
     $remover.click(function(e) {
         e.preventDefault();

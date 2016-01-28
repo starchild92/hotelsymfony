@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class FacturaRepository extends EntityRepository
 {
+	//OBTENER LA FACTURA DADO EL ID DE LA RESERVA
+	public function factura_asociada($idReserva){
+		$query = $this->getEntityManager()
+			->createQuery('SELECT u FROM LIHotelBundle:Factura u WHERE u.id = :idReserva');
+		$query->setParameter('idReserva', $idReserva);
+		$result = $query->getResult();
+		return $result;
+	}
 }

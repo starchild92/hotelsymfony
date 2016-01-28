@@ -207,6 +207,16 @@ class UsuarioController extends Controller
                 throw $this->createNotFoundException('Unable to find Usuario entity.');
             }
 
+            //Buscar las reservas del usuario y eliminarlas
+            $sus_reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_usuario($id);
+            
+            foreach ($sus_reservas as $key) {
+                $factura = $em->getRepository('LIHotelBundle:Factura')->factura_asociada($key->getFactura()->getId());
+                $factura[0]->setReserva(null);
+                $em->remove($factura[0]);
+                $em->remove($key);
+            }
+            
             $em->remove($entity);
             $em->flush();
         }

@@ -4,6 +4,14 @@
 	<script src="{{ asset('bundles/lihotel/js/ServicioFormularioEdit.js') }}"></script>
 {% endblock %}
 
+{% block style %}
+	<style type="text/css">
+	form div.form-group{
+		margin-bottom: 10px !important;
+	}
+	</style>
+{% endblock %}
+
 {% block body %}
 	<div class="col-lg-12 col-sm-12 col-xs-12">
 		<div class="page-header">
@@ -47,7 +55,6 @@
 				<p>¿Está seguro de que desea realizar esta operación? Se eliminarán los datos asociados a la habitación. <p class="text-danger">Incluyendo las Reservas</p></p>
 			</div>
 			<div class="modal-footer">
-				<style type="text/css">form div.form-group{ margin-bottom: 0px !important; }</style>
 				{{ form(delete_form) }}
 			</div>
 		</div>

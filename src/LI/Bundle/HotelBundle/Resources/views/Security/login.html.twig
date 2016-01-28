@@ -16,26 +16,22 @@
 </div>
 <div class="row">
 	<div class="col-lg-5 col-sm-5" style="float: none; margin: 0 auto;">
-		<form action="{{ path("fos_user_security_check") }}" method="post">
+		<form action="{{ path("fos_user_security_check") }}" method="post" class="form-group">
 			<div class="input-group">
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-			<table class="tabla table-responsive">
-				<tr>
-					<td><label for="username">{{ 'security.login.username'|trans }}</label></td>
-					<td><input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" /></td>
-				</tr>
-				<tr>
-					<td><label for="password">{{ 'security.login.password'|trans }}</label></td>
-					<td><input class="form-control" type="password" id="password" name="_password" required="required" /></td>
-				</tr>
-				<tr>
-					<td><label for="remember_me">{{ 'security.login.remember_me'|trans }}</label></td>
-					<td><input type="checkbox" id="remember_me" name="_remember_me" value="on" /></td>
-				</tr>
-				<tr>
-					<td colspan="2"><input class="btn btn-primary btn-block" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" /></td>
-				</tr>
-			</table>
+
+			<div class="input-group input-block-level">
+			  <span class="input-group-addon" id="basic-addon3">Usuario</span>
+			  <input type="text" id="username" class="form-control" aria-describedby="basic-addon3" name="_username" value="{{ last_username }}" required="required">
+			</div>
+
+			<div class="input-group input-block-level">
+			  <span class="input-group-addon" id="basic-addon2">Contraseña</span>
+			  <input class="form-control" aria-describedby="basic-addon2" type="password" id="password" name="_password" required="required">
+			</div>
+
+			<input class="btn btn-primary btn-block" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+
 		    </div>
 		</form>
 		<small>¿Olvido su contraseña?</small>
@@ -43,6 +39,8 @@
 </div>
 
 <style type="text/css">
+	#username{ width: 100%; }
+	#password{ width: 100%; }
 	.tabla tr td{
 		padding: 5px 5px 5px 5px;
 	}
@@ -50,5 +48,6 @@
 		width: 300px;
 		border-radius: 4px;
 	}
+	.input-group{ margin-bottom: 10px; width: 100%; }
 </style>
 {% endblock bodyInterno %}
