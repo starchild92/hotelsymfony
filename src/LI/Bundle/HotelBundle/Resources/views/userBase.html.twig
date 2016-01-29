@@ -38,27 +38,27 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href="{{ path('LIHotelBundle_homepage') }}" class="negritas">Inicio</a>
+						<a href="{{ path('LIHotelBundle_homepage') }}" class="negritas"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Inicio</a>
 					</li>
 					<li>
-						<a href="{{ path('user_habitacion') }}" class="negritas">Habitaciones</a>
+						<a href="{{ path('user_habitacion') }}" class="negritas"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Habitaciones</a>
 					</li>
 					<li>
-						<a href="{{ path('user_consumos') }}" class="negritas">Consumos</a>
+						<a href="{{ path('user_consumos') }}" class="negritas"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Consumos</a>
 					</li>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle negritas" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservas <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle negritas" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span> Reservas <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="{{ path('user_reserva_new') }}">Nueva Reserva</a></li>
-							<li><a href="{{ path('user_reserva') }}">Mis Reservas Reservas</a></li>
+							<li><a href="{{ path('user_reserva_new') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nueva Reserva</a></li>
+							<li><a href="{{ path('user_reserva') }}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Mis Reservas Reservas</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle negritas" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.nombre }} <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle negritas" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ app.user.nombre }} <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Operaciones sobre su cuenta</li>
-							<li><a href="{{ path('fos_user_profile_show') }}">Datos de la Cuenta</a></li>
-							<li><a href="{{ path('fos_user_profile_edit') }}">Cambiar Clave</a></li>
+							<li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span> Datos de la Cuenta</a></li>
+							<li><a href="{{ path('fos_user_profile_edit') }}"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Cambiar Clave</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">

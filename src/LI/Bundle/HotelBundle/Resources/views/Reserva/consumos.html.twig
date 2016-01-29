@@ -27,6 +27,11 @@
 				{% endfor %}
 			</ul>
 			<div class="tab-content" id="tabs2">
+				{% if reservas|length == 0%}
+					<center><div class="col-lg-5" style="float: none; margin: 0 auto;">
+						<p style="font-size: 30px;"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span></p><h3 class="text-danger"> Estimado huésped, no dispone de consumos debido a que no tiene reservas concretadas y activas. :( </h3>
+					</div></center>
+				{% endif %}
 				{% for reserva in reservas %}
 				<div role="tabpanel" class="tab-pane {% if loop.index == 1 %}active{% endif %}" id="{{ reserva.id }}">
 					<table class="table table-bordered record_properties">

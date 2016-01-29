@@ -23,9 +23,6 @@
 {% block javascripts %}
     <script src="{{ asset('bundles/lihotel/js/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('bundles/lihotel/js/dataTables.bootstrap.js') }}"></script>
-{% endblock %}
-
-{% block body -%}
     <script type="text/javascript">
         $(document).ready(function() {
             $('#porConcretar').DataTable();
@@ -33,6 +30,9 @@
             $('#cancelada').DataTable();
         } );
     </script>
+{% endblock %}
+
+{% block body -%}
 <div class="container-fluid row">
     <div class="page-header">
         <h1>Lista de Reservas</h1>

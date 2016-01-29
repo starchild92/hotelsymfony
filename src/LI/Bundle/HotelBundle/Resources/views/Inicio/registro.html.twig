@@ -45,7 +45,10 @@
 					</div>
 					<div class="col-lg-5 col-md-5">
 						<center><img src="{{ asset('bundles/lihotel/images/signup-icon.png') }}" width="100px" height="100px"></center>
-						<p>No sea un gran tonto y regístrese, descubra todos los beneficios de formar parte de nuestra exclusiva y singular cadena.</p>
+						<p id="texto-iniciar-sesion">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat.</p>
 						<p style="text-align: center;">
 							<a class="btn btn-lg btn-warning" href="{{ path('fos_user_security_login') }}">Iniciar Sesión</a>
 						</p>
@@ -60,6 +63,11 @@
 	<style type="text/css">
 		.usuario > input{
 			margin-bottom: 10px;
+		}
+		#texto-iniciar-sesion{ 
+			margin-top: 10px;
+			margin-bottom: 20px;
+			text-align: center;
 		}
 	</style>
 {% endblock %}

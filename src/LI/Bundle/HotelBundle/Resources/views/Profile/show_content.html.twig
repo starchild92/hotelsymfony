@@ -6,18 +6,17 @@
 
     <div class="row">
         <div class="col-lg-2">
-            <h3>Fotografía</h3>
-            <p>Espacio para una imagen</p>
+            <img src="{{ asset('bundles/lihotel/images/image_placeholder.jpg') }}" style="width: 100%;">
         </div>
         <div class="col-lg-10">
             <h3>Detalles Personales</h3>
             <div class="fos_user_user_show">
-                <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-                <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
-                <p>Nombre: {{ user.nombre }}</p>
-                <p>Apellido: {{ user.apellido }}</p>
-                <p>Fecha de Nacimiento: {{ user.fechaNac|date("j \\d\\\e F") }}</p>
-                <p>Role|s: {% for role in user.roles %}{{ role }}. {% endfor %}</p>
+                <p><b>{{ 'profile.show.username'|trans }}</b>: {{ user.username }}</p>
+                <p><b>{{ 'profile.show.email'|trans }}</b>: {{ user.email }}</p>
+                <p><b>Nombre</b>: {{ user.nombre }}</p>
+                <p><b>Apellido</b>: {{ user.apellido }}</p>
+                <p><b>Fecha de Nacimiento</b>: {{ user.fechaNac|date("j \\d\\\e F") }}</p>
+                <p><b>Role|s</b>: {% for role in user.roles %}{{ role }}. {% endfor %}</p>
             </div>
             <small>Cambiar contraseña actual</small>
             <small>Modificar datos de su cuenta</small>

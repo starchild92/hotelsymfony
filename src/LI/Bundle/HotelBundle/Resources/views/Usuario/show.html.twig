@@ -1,15 +1,14 @@
 {% extends 'LIHotelBundle::adminBase.html.twig' %}
-
 {% block body -%}
     <div class="page-header">
-        <h1>Resumen Datos Usuario</h1>
+        <h1>Resumen Datos Huésped</h1>
     </div>
     <div class="row">
         <div class="col-lg-3 col-sm-3 col-xs-12">
             <ul class="nav nav-stacked">
                 <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('usuario') }}" role="button">Regresar</a></li>
                 <li role="presentation"><a class="btn btn-warning btn-block" href="{{ path('usuario_edit', { 'id': entity.id }) }}" role="button">Editar Datos de {{ entity.nombre }}</a></li>
-                <li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarUsuario">Eliminar Usuario</a></li>
+                <li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarUsuario">Eliminar Huésped</a></li>
             </ul>
         </div>
 
@@ -39,7 +38,7 @@
                 </div>
                 {% if reservas|length == 0 %}
                     <div class="panel-body">
-                        <b><center>El usuario no ha realizado ninguna reserva aún.</center></b>
+                        <b><center>El huésped no ha realizado ninguna reserva aún.</center></b>
                     </div>
                 {% else %}
                     <table class="table table-bordered">
@@ -66,7 +65,7 @@
             </div>
             <div class="modal-body">
                 <p>¿Está seguro de que desea realizar esta operación?</p>
-                <p class="text-danger">Al eliminar un usuario, se eliminará toda la información asociada a sus reservas pasadas y actuales. Puede obtar por inhabilitarlo.</p>
+                <p class="text-danger">Al eliminar un huésped, se eliminará toda la información asociada a sus reservas pasadas y actuales. Puede obtar por inhabilitarlo.</p>
             </div>
             <div class="modal-footer">
             <style type="text/css">.form-group{ margin-bottom: 0px !important; }</style>

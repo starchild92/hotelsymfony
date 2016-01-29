@@ -2,13 +2,13 @@
 
 {% block body -%}
 	<div class="page-header">
-		<h1>Modificar Datos del Usuario</h1>
+		<h1>Modificar Datos del Huésped</h1>
 	</div>
     <div class="row">
         <div class="col-lg-3 col-sm-3 col-xs-12">
             <ul class="nav nav-stacked">
-                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('usuario') }}" role="button">Ver todo los Usuarios</a></li>
-                <li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarUsuario">Eliminar Usuario</a></li>
+                <li role="presentation"><a class="btn btn-success btn-block" href="{{ path('usuario') }}" role="button">Ver todo los huéspedes</a></li>
+                <li role="presentation"><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalEliminarUsuario">Eliminar huésped</a></li>
             </ul>
         </div>
 
@@ -40,7 +40,7 @@
             </div>
             <div class="modal-body">
                 <p>¿Está seguro de que desea realizar esta operación?</p>
-                <p class="text-danger">Al eliminar un usuario, se eliminará toda la información asociada a sus reservas pasadas y actuales. Puede obtar por inhabilitarlo.</p>
+                <p class="text-danger">Al eliminar un huésped, se eliminará toda la información asociada a sus reservas pasadas y actuales. Puede obtar por inhabilitarlo.</p>
             </div>
             <div class="modal-footer">
                 {{ form(delete_form) }}

@@ -103,7 +103,7 @@ class UsuarioController extends Controller
 
         if (!$entity) {
             $session = $this->get('session');
-            $session->getFlashBag()->add('administrador_malos', 'No existe este usuario.');
+            $session->getFlashBag()->add('administrador_malos', 'No existe este huésped.');
             return $this->redirect($this->generateUrl('_admin'));
         }
 
@@ -128,7 +128,7 @@ class UsuarioController extends Controller
 
         if (!$entity) {
             $session = $this->get('session');
-            $session->getFlashBag()->add('administrador_malos', 'No existe este usuario.');
+            $session->getFlashBag()->add('administrador_malos', 'No existe este huésped.');
             return $this->redirect($this->generateUrl('_admin'));
         }
 
@@ -172,7 +172,7 @@ class UsuarioController extends Controller
 
         if (!$entity) {
             $session = $this->get('session');
-            $session->getFlashBag()->add('administrador_malos', 'No existe este usuario.');
+            $session->getFlashBag()->add('administrador_malos', 'No existe este huésped.');
             return $this->redirect($this->generateUrl('_admin'));
         }
 
@@ -238,7 +238,7 @@ class UsuarioController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('usuario_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Eliminar Usuario', 'attr' => array('class' => 'btn btn-block btn-danger')))
+            ->add('submit', 'submit', array('label' => 'Eliminar huésped', 'attr' => array('class' => 'btn btn-block btn-danger')))
             ->getForm()
         ;
     }
