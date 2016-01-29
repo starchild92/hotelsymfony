@@ -50,6 +50,35 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-3">
+								<span class="glyphicon glyphicon-bed" aria-hidden="true"></span>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class="huge">Habitaciones</div>
+								<div>Total: {{ cant_habitaciones }}</div>
+							</div>
+						</div>
+						<div class="panel-body row">
+							<table class="table table-condensed">
+								<tr><td>Reservadas</td><td>{{ habitaciones_reservadas }}</td></tr>
+								<tr><td>Libres</td><td>{{ habitaciones_libres }}</td></tr>
+								<tr><td>Ocupadas o Indispuestas</td><td>{{ habitaciones_ocupadas }}</td></tr>
+							</table>
+						</div>
+					</div>
+					<a href="{{ path('habitacion') }}">
+						<div class="panel-footer">
+							<span class="pull-left">Ver las habitaciones</span>
+							<span class="pull-right"><i class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i></span>
+							<div class="clearfix"></div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6 col-md-4 col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
 								<span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
 							</div>
 							<div class="col-xs-9 text-right">
@@ -103,35 +132,6 @@
 					</a>
 				</div>
 			</div>
-			<div class="col-lg-4 col-sm-6 col-md-4 col-xs-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<div class="row">
-							<div class="col-xs-3">
-								<span class="glyphicon glyphicon-bed" aria-hidden="true"></span>
-							</div>
-							<div class="col-xs-9 text-right">
-								<div class="huge">Habitaciones</div>
-								<div>Total: {{ cant_habitaciones }}</div>
-							</div>
-						</div>
-						<div class="panel-body row">
-							<table class="table table-condensed">
-								<tr><td>Reservadas</td><td>{{ habitaciones_reservadas }}</td></tr>
-								<tr><td>Libres</td><td>{{ habitaciones_libres }}</td></tr>
-								<tr><td>Ocupadas o Indispuestas</td><td>{{ habitaciones_ocupadas }}</td></tr>
-							</table>
-						</div>
-					</div>
-					<a href="{{ path('habitacion') }}">
-						<div class="panel-footer">
-							<span class="pull-left">Ver las habitaciones</span>
-							<span class="pull-right"><i class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i></span>
-							<div class="clearfix"></div>
-						</div>
-					</a>
-				</div>
-			</div>
 		</div>
 		<div class="row">
 			<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
@@ -147,7 +147,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="#">
+					<a href="#" data-toggle="tooltip" data-placement="right" title="No disponible momentaneamente.">
 						<div class="panel-footer">
 							<span class="pull-left">Ver más Detalles</span>
 							<span class="pull-right"><i class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i></span>
@@ -205,7 +205,7 @@
 
 	<div class="col-lg-3 col-sm-2 col-md-4 col-xs-12">
 		<div class="row">
-			<div class="page-header"><h3>Mensajes</h3></div>
+			<div class="page-header"><h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Mensajes</h3></div>
 			<div class="panel panel-default">
 				<div class="panel-body panel-body-p">
 					<div class="over">
@@ -217,13 +217,13 @@
 						{% endif %}
 						{% endif %}
 						{% for message in app.session.flashbag.get('grave') %}
-							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-grave">La reserva {{ message.codigo }} tiene {{ message.dias }} días vencida. </span></a>
+							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-grave"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> La reserva {{ message.codigo }} tiene {{ message.dias }} días vencida. </span></a>
 						{% endfor %}
 						{% for message in app.session.flashbag.get('informacion') %}
-							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-normal">Esta reserva {{ message.codigo }} debería ser concretada hoy.</span></a>
+							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-normal"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Esta reserva {{ message.codigo }} debería ser concretada hoy.</span></a>
 						{% endfor %}
 						{% for message in app.session.flashbag.get('libre') %}
-							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-primary">La habitación "{{ message.codigo }}" se ha puesto como libre, debido a que la reserva ha finalizado.</span></a>
+							<a href="{{ path('reserva_show', { 'id': message.id }) }}"><span class="labelalert labelalert-primary"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> La habitación "{{ message.codigo }}" se ha puesto como libre, debido a que la reserva ha finalizado.</span></a>
 						{% endfor %}
 						<!--<span class="labelalert labelalert-primary">labelalert-primary</span>
 						<span class="labelalert labelalert-atencion">labelalert-atencion</span>-->

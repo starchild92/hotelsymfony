@@ -72,6 +72,9 @@
 					</tr>
 				</thead>
 				<tbody>
+					{% if reservas|length == 0%}
+						<tr><td>Por los momentos no hay reservas asociadas a la habitación.</td></tr>
+					{% endif %}
 					{% for reserva in reservas %}
 					<tr>
 						<td>{{ reserva.codigoReserva }} <a href="{{ path('reserva_show', { 'id': reserva.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
@@ -82,6 +85,7 @@
 					{% endfor %}
 				</tbody>
 			</table>
+			<p><small>Esta tabla contiene las últimas 5 reservas asociadas a la habitación</small></p>
 		</div>
 	</div>
 </div>

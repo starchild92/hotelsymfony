@@ -99,6 +99,7 @@ class UsuarioController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('LIHotelBundle:Usuario')->find($id);
+        $reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_usuario($id);
 
         if (!$entity) {
             $session = $this->get('session');
@@ -110,6 +111,7 @@ class UsuarioController extends Controller
 
         return $this->render('LIHotelBundle:Usuario:show.html.twig', array(
             'entity'      => $entity,
+            'reservas'    => $reservas,
             'delete_form' => $deleteForm->createView(),
         ));
     }

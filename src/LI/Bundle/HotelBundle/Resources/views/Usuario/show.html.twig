@@ -14,23 +14,46 @@
         </div>
 
         <!-- PANEL DEL CONTENIDO -->
-        <div class="col-lg-9 col-sm-9 col-xs-12">
+        <div class="col-lg-5 col-sm-5 col-xs-12">
             <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Datos de {{ entity.nombre }}</h3>
+                <div class="panel-heading">
+                    <h3 class="panel-title">Datos de {{ entity.nombre }}</h3>
+                </div>
+                <div class="panel-body">
+                    <b>Nombre y Apellido: </b>{{ entity.nombre }} {{ entity.apellido }}<br>
+                    <b>Fecha de Nacimiento: </b>{% if entity.fechanac %}{{ entity.fechanac|localizeddate('long', 'none', 'es') }}{% endif %}<br>
+                    <b>Correo Electronico: </b>{{ entity.email }}<br>
+                    <b>Nombre de Usuario: </b>{{ entity.username }}<br>
+                    <b>Última Conexión al Sistema: </b>{{ entity.lastLogin|localizeddate('long', 'short', 'es') }}<br>
+                    <b>Su Estado en el Sistema es: </b>{% if entity.enabled %}Activo{% else %}Inactivo{% endif %}<br>
+                    <b>Su Role del Sistema: </b>{% for role in entity.roles %}
+                        {{ role }} 
+                    {% endfor %}
+                </div>
             </div>
-            <div class="panel-body">
-                <b>Nombre y Apellido: </b>{{ entity.nombre }} {{ entity.apellido }}<br>
-                <b>Fecha de Nacimiento: </b>{% if entity.fechanac %}{{ entity.fechanac|localizeddate('long', 'none', 'es') }}{% endif %}<br>
-                <b>Correo Electronico: </b>{{ entity.email }}<br>
-                <b>Nombre de Usuario: </b>{{ entity.username }}<br>
-                <b>Última Conexión al Sistema: </b>{{ entity.lastLogin|localizeddate('long', 'short', 'es') }}<br>
-                <b>Su Estado en el Sistema es: </b>{% if entity.enabled %}Activo{% else %}Inactivo{% endif %}<br>
-                <b>Su Role del Sistema: </b>{% for role in entity.roles %}
-                    {{ role }} 
-                {% endfor %}
+        </div>
+        <div class="col-lg-4 col-sm-4 col-xs-12">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Últimas Reservas de {{ entity.nombre }}</h3>
+                </div>
+                {% if reservas|length == 0 %}
+                    <div class="panel-body">
+                        <b><center>El usuario no ha realizado ninguna reserva aún.</center></b>
+                    </div>
+                {% else %}
+                    <table class="table table-bordered">
+                    {% for reserva in reservas %}
+                    <tr>
+                        <td>{{ reserva.codigoReserva }} <a href="{{ path('reserva_show', { 'id': reserva.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                        <td>{{ reserva.estadoReserva }}</td>
+                        <td>{{ reserva.fechareserva|date('d M Y') }}</td>
+                    </tr>
+                    {% endfor %}
+                    </table>
+                {% endif %}
             </div>
-            </div>
+            <p><small>Aquí se muestran las últimas 5 reservas, si las hay.</small></p>
         </div>
     </div>
 <!-- EL MODAL -->

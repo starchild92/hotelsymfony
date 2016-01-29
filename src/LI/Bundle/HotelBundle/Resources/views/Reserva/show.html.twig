@@ -48,65 +48,68 @@
 		{% if entity.estadoReserva == 'Cancelada' %}
 			<div class="alert alert-danger" role="alert">Esta reserva ha sido cancelada. Ciertas operaciones no están permitidas.</div>
 		{% endif %}
-
-		<table class="table table-bordered record_properties">
-			<thead>
-				<tr>
-					<th colspan="4">Detalles de la Reserva</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th>Código de la Reserva</th>
-					<td colspan='3'>{{ entity.codigoReserva }}</td>
-				</tr>
-				<tr>
-					<th>Estado de la Reserva</th>
-					<td colspan='3'>{{ entity.estadoReserva }}</td>
-				</tr>
-				<tr>
-					<th>Habitación Reservada</th>
-					<td>{{ entity.habitacion.numero }} - {{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
-                    <td>{{ entity.habitacion.tipo.tipoHabitacion.nombre }}</td>
-                    <td>{{ entity.habitacion.tipo.categoriaHabitacion.nombre }}</td>
-				</tr>
-				<tr>
-					<th>Cliente</th>
-					<td colspan='3'>{{ entity.cliente }} <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
-				</tr>
-				<tr>
-					<th>Reserva realizada el</th>
-					<td colspan='3'>{{ entity.fechareserva|localizeddate('long', 'medium', 'es') }}</td>
-				</tr>
-				<tr>
-					<th>Reservada para la fecha</th>
-					<td colspan='3'>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }}{% set diasR = entity.diasReserva - 1 %}
-					| {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
-				</tr>
-				<tr>
-					<th>Reservada para</th>
-					<td colspan='3'>{{ entity.cantidadPersonas + entity.cantidadNinos }} personas</td>
-				</tr>
-				{% if entity.estadoReserva != 'Cancelada' %}
-				<tr>
-					<th>Período en días de la reserva</th>
-					<td colspan='3'>{{ entity.diasReserva }} días</td>
-				</tr>
-				{% endif %}
-			</tbody>
-		</table>
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<h3 class="panel-title"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Detalles de la Reserva</h3>
+			</div>
+			<table class="table table-bordered record_properties">
+				<tbody>
+					<tr>
+						<th>Código de la Reserva</th>
+						<td colspan='3'>{{ entity.codigoReserva }}</td>
+					</tr>
+					<tr>
+						<th>Estado de la Reserva</th>
+						<td colspan='3'>{{ entity.estadoReserva }}</td>
+					</tr>
+					<tr>
+						<th>Habitación Reservada</th>
+						<td><center>{{ entity.habitacion.numero }} - {{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></center></td>
+	                    <td><center>{{ entity.habitacion.tipo.tipoHabitacion.nombre }}</center></td>
+	                    <td><center>{{ entity.habitacion.tipo.categoriaHabitacion.nombre }}</center></td>
+					</tr>
+					<tr>
+						<th>Cliente</th>
+						<td colspan='3'>{{ entity.cliente }} <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+					</tr>
+					<tr>
+						<th>Reserva realizada el</th>
+						<td colspan='3'>{{ entity.fechareserva|localizeddate('long', 'medium', 'es') }}</td>
+					</tr>
+					<tr>
+						<th>Reservada para la fecha</th>
+						<td colspan='3'>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }}{% set diasR = entity.diasReserva - 1 %}
+						| {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
+					</tr>
+					<tr>
+						<th>Reservada para</th>
+						<td colspan='3'>{{ entity.cantidadPersonas + entity.cantidadNinos }} personas</td>
+					</tr>
+					{% if entity.estadoReserva != 'Cancelada' %}
+					<tr>
+						<th>Período en días de la reserva</th>
+						<td colspan='3'>{{ entity.diasReserva }} días</td>
+					</tr>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
 
 		<p>Detalles de los consumos y costos asociados a la reserva y la habitación.</p>
-		<table class="table table-bordered">
-		<thead><tr><th colspan="2">Factura Asociada a la Reserva</th></tr></thead>
-		<tbody>
-			<tr><td>Fecha Factuación</td><td>{{ entity.factura.fecha|localizeddate('long', 'none', 'es') }}</td></tr>
-			<tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }} días</td></tr>
-			<tr><td>Costo Bebidas</td><td>{{ entity.factura.costoBebida }} Bolívares</td></tr>
-			<tr><td>Costo Llamadas</td><td>{{ entity.factura.costoLlamada }} Bolívares</td></tr>
-			<tr><td>Costo Acumulado</td><td>{{ (entity.factura.costoTotal + entity.factura.costoLlamada + entity.factura.costoBebida)|number_format }} Bolívares</td></tr>
-		</tbody>
-		</table>
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				<h3 class="panel-title"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Factura Asociada a la Reserva</h3>
+			</div>
+			<table class="table table-bordered">
+				<tbody>
+					<tr><td>Fecha Factuación</td><td>{{ entity.factura.fecha|localizeddate('long', 'none', 'es') }}</td></tr>
+					<tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }} días</td></tr>
+					<tr><td>Costo Bebidas</td><td>{{ entity.factura.costoBebida }} Bolívares</td></tr>
+					<tr><td>Costo Llamadas</td><td>{{ entity.factura.costoLlamada }} Bolívares</td></tr>
+					<tr><td>Costo Acumulado</td><td>{{ (entity.factura.costoTotal + entity.factura.costoLlamada + entity.factura.costoBebida)|number_format }} Bolívares</td></tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 

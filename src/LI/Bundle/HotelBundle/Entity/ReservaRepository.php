@@ -12,10 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class ReservaRepository extends EntityRepository
 {
-	// OBTIENE LAS RESERVAS DE UN USUARIO DADO
+	// OBTIENE LAS ULTIMAS 5 RESERVAS DE UN USUARIO DADO
+		//ORDENADAS DE LA MAS RECIENTE A LA MAS ANTIGUA
 	public function reservas_usuario($iduser){
 		$query = $this->getEntityManager()
-			->createQuery('SELECT u FROM LIHotelBundle:Reserva u WHERE u.cliente = :iduser');
+			->createQuery('SELECT u FROM LIHotelBundle:Reserva u WHERE u.cliente = :iduser ORDER BY u.fechareserva DESC');
+		$query->setMaxResults(5);
 		$query->setParameter('iduser', $iduser);
 		$result = $query->getResult();
 		return $result;

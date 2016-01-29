@@ -32,7 +32,7 @@
                         <th>Id</th>
                         <th>Nombre</th>
                         <th>Precio</th>
-                        <th>Actions</th>
+                        <th>Opc</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,8 +42,8 @@
                         <td>{{ entity.nombre }}</td>
                         <td>{{ entity.precio }} Bs.</td>
                         <td class="opciones">
-                            <a href="{{ path('tipohabitacion_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
-                            <a href="{{ path('tipohabitacion_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                            <a href="{{ path('tipohabitacion_show', { 'id': entity.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                            <a href="{{ path('tipohabitacion_edit', { 'id': entity.id }) }}" data-toggle="tooltip" data-placement="top" title="Modificar detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                 {% endfor %}

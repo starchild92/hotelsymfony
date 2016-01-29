@@ -35,38 +35,38 @@
 				</ul>
                 <ul class="nav navbar-nav navbar-right">
 					<!--<li><a href="{{ path('factura') }}">Facturas</a></li>-->
-					<li><a href="{{ path('_admin') }}">Inicio</a></li>
+					<li><a href="{{ path('_admin') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Inicio</a></li>
 
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Habitaciones <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-bed" aria-hidden="true"></span> Habitaciones <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Consulta</li>
-							<li><a href="{{ path('habitacion') }}">Listado Habitaciones</a></li>
+							<li><a href="{{ path('habitacion') }}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Listado Habitaciones</a></li>
 							<li class="dropdown-header">Gestión</li>
-							<li><a href="{{ path('habitacion_new') }}">Crear Habitación</a></li>
-							<li><a href="{{ path('tipohabitacion') }}">Tipos de Habitación</a></li>
-							<li><a href="{{ path('categoriahabitacion') }}">Categorías de Habitación</a></li>
-							<li><a href="{{ path('ocupacionhabitacion') }}">Ocupación Habitaciones</a></li>
+							<li><a href="{{ path('habitacion_new') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Habitación</a></li>
+							<li><a href="{{ path('tipohabitacion') }}"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> Tipos de Habitación</a></li>
+							<li><a href="{{ path('categoriahabitacion') }}"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span> Categorías de Habitación</a></li>
+							<li><a href="{{ path('ocupacionhabitacion') }}"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Ocupación Habitaciones</a></li>
 						</ul>
 					</li>
 
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservas <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span> Reservas <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Opciones sobre Reservas</li>
-							<li><a href="{{ path('reserva') }}">Lista de Reservas</a></li>
+							<li><a href="{{ path('reserva') }}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Lista de Reservas</a></li>
 							<li class="dropdown-header">Administración de las Reservas</li>
-							<li><a href="{{ path('reserva_new') }}">Nueva Reserva</a></li>
-							<li><a href="{{ path('reserva_concretar') }}">Concretar Reserva</a></li>
+							<li><a href="{{ path('reserva_new') }}"><span class="glyphicon glyphicon-bed" aria-hidden="true"></span> Nueva Reserva</a></li>
+							<li><a href="{{ path('reserva_concretar') }}"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Concretar Reserva</a></li>
 						</ul>
 					</li>
 					<!--<li><a href="{{ path('bebida') }}">Bebidas</a></li>-->
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuarios <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuarios <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Operaciones sobre Usuarios</li>
-							<li><a href="{{ path('usuario') }}">Listar Usuarios</a></li>
-							<li><a href="{{ path('LIHotelBundle_registro_admin') }}">Registrar Nuevo Usuario</a></li>
+							<li><a href="{{ path('usuario') }}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Listar Usuarios</a></li>
+							<li><a href="{{ path('LIHotelBundle_registro_admin') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Registrar Nuevo Usuario</a></li>
 						</ul>
 					</li>
 
@@ -74,8 +74,8 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.nombre }} <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Operaciones sobre su cuenta</li>
-							<li><a href="{{ path('fos_user_profile_show') }}">Datos de la Cuenta</a></li>
-							<li><a href="{{ path('fos_user_profile_edit') }}">Cambiar Usuario o Mail</a></li>
+							<li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Datos de la Cuenta</a></li>
+							<li><a href="{{ path('fos_user_profile_edit') }}"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Cambiar Usuario o Mail</a></li>
 							<li>
 								<form class="navbar-form" role="search">
 			                    	<a class="btn btn-primary btn-sm btn-block" href="{{ path('fos_user_security_logout') }}">Cerrar Sesión</a>
@@ -85,13 +85,13 @@
 					</li>
 					
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ajustes <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Ajustes <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Tareas Administrativas</li>
-							<li><a href="{{ path('reporte_diario') }}">Reporte Diario</a></li>
+							<li><a href="{{ path('reporte_diario') }}"> <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Reporte Diario</a></li>
 							<li class="dropdown-header">Gestión Administrativa</li>
-							<li><a href="{{ path('llamada') }}">LLamadas</a></li>
-							<li><a href="{{ path('compensacion') }}">Compensaciones</a></li>
+							<li><a href="{{ path('llamada') }}"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> LLamadas</a></li>
+							<li><a href="{{ path('compensacion') }}"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Compensaciones</a></li>
 						</ul>
 					</li>
 				</ul>

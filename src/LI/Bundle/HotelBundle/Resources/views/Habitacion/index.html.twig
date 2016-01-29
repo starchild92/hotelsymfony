@@ -42,7 +42,7 @@
                         <th>Estado</th>
                         <th>Nombre</th>
                         <th>Caracteristicas de la Habitación</th>
-                        <th>Opciones</th>
+                        <th>Opc</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,8 +55,8 @@
                             De categoría <b>{{ entity.tipo.categoriaHabitacion }}</b> y tipo <b>{{ entity.tipo.tipoHabitacion }}</b>, <i>{{ entity.tipo.espacioInterno }}</i> con los siguientes servicios: "{% set tam = entity.tipo.servicios|length  %}{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}{% set tam = tam-1 %}{% if tam != 0 %}, {% endif %}{% endfor %}" y {{ entity.tipo.bebidasMinibar|length }} tipo de bebidas en el minibar.
                         </td>
                         <td class="opciones">
-                            <a href="{{ path('habitacion_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
-                            <a href="{{ path('habitacion_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                            <a href="{{ path('habitacion_show', { 'id': entity.id }) }}" name="Ver Detalles" data-toggle="tooltip" data-placement="top" title="Ver información de la habitación"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                            <a href="{{ path('habitacion_edit', { 'id': entity.id }) }}" name="Modificar Detalles" data-toggle="tooltip" data-placement="top" title="Modificar {{ entity.nombre }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                 {% endfor %}

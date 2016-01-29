@@ -5,13 +5,16 @@
 {% block javascripts %}
     <script src="{{ asset('bundles/lihotel/js/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('bundles/lihotel/js/dataTables.bootstrap.js') }}"></script>
-{% endblock %}
-{% block body -%}
-	<script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function() {
             $('#tabla').DataTable();
         } );
+        $(function () {
+		  $('[data-toggle="tooltip"]').tooltip()
+		})
     </script>
+{% endblock %}
+{% block body -%}
 	<div class="page-header">
 		<h1>Usuarios de la Aplicación</h1>
 	</div>
@@ -33,7 +36,7 @@
 						<th>Correo y Usuario</th>
 						<th>Ultima Conexión</th>
 						<th>Roles</th>
-						<th>Actions</th>
+						<th>Opc</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -48,8 +51,8 @@
 							{{ role }} 
 						{% endfor %}</td>
 						<td class="opciones">
-							<a href="{{ path('usuario_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
-							<a href="{{ path('usuario_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+							<a href="{{ path('usuario_show', { 'id': entity.id }) }}" name="Modificar Detalles" data-toggle="tooltip" data-placement="top" title="Ver información de {{ entity.nombre }}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+							<a href="{{ path('usuario_edit', { 'id': entity.id }) }}" data-toggle="tooltip" data-placement="top" title="Modificar detalles de {{ entity.nombre }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
 						</td>
 					</tr>
 				{% endfor %}

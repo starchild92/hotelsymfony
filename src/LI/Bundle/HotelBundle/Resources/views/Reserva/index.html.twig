@@ -61,7 +61,7 @@
                                 <th>Personas</th>
                                 <th>Días Reserva</th>
                                 <!--th>Período</th-->
-                                <th>OP</th>
+                                <th>Opc</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,17 +69,17 @@
                             {% if entity.estadoReserva == 'Por Concretar' %}
                             <tr class="porConcretar">
                                 <td>{{ entity.codigoReserva }}</td>
-                                <td>{{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
-                                <td>{{ entity.cliente }}  <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></a></td>
+                                <td>{{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                                <td>{{ entity.cliente }}  <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></a></td>
                                 <td>{{ entity.cantidadPersonas + entity.cantidadNinos  }} personas</td>
                                 <td>{{ entity.diasReserva }} días</td>
                                 <!--td>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }} <br> 
                                 {% set diasR = entity.diasReserva-1 %}
                                 {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td-->
                                 <td class="opciones">
-                                    <a href="{{ path('reserva_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                                    <a href="{{ path('reserva_show', { 'id': entity.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
                                     {% if entity.estadoReserva != 'Cancelada' %}
-                                    <a href="{{ path('reserva_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                    <a href="{{ path('reserva_edit', { 'id': entity.id }) }}" data-toggle="tooltip" data-placement="top" title="Modificar detalles de {{ entity.codigoReserva }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -99,7 +99,7 @@
                                 <th>Personas</th>
                                 <th>Días Reserva</th>
                                 <!--th>Período</th-->
-                                <th>OP</th>
+                                <th>Opc</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -107,17 +107,17 @@
                             {% if entity.estadoReserva == 'Concretada' %}
                             <tr class="concretada">
                                 <td>{{ entity.codigoReserva }}</td>
-                                <td>{{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
-                                <td>{{ entity.cliente }}  <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                                <td>{{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                                <td>{{ entity.cliente }}  <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                                 <td>{{ entity.cantidadPersonas + entity.cantidadNinos  }} personas</td>
                                 <td>{{ entity.diasReserva }} días</td>
                                 <!--td>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }} <br> 
                                 {% set diasR = entity.diasReserva-1 %}
                                 {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td-->
                                 <td class="opciones">
-                                    <a href="{{ path('reserva_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                                    <a href="{{ path('reserva_show', { 'id': entity.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
                                     {% if entity.estadoReserva != 'Cancelada' %}
-                                    <a href="{{ path('reserva_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                    <a href="{{ path('reserva_edit', { 'id': entity.id }) }}" data-toggle="tooltip" data-placement="top" title="Modificar detalles de {{ entity.codigoReserva }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -137,7 +137,7 @@
                                 <th>Personas</th>
                                 <th>Días Reserva</th>
                                 <!--th>Período</th-->
-                                <th>OP</th>
+                                <th>Opc</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -145,17 +145,17 @@
                             {% if entity.estadoReserva == 'Cancelada' %}
                             <tr class="cancelada">
                                 <td>{{ entity.codigoReserva }}</td>
-                                <td>{{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
-                                <td>{{ entity.cliente }}  <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                                <td>{{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+                                <td>{{ entity.cliente }}  <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                                 <td>{{ entity.cantidadPersonas + entity.cantidadNinos  }} personas</td>
                                 <td>{{ entity.diasReserva }} días</td>
                                 <!--td>{{ entity.fechadesde|localizeddate('long', 'none', 'es') }} <br> 
                                 {% set diasR = entity.diasReserva-1 %}
                                 {{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td-->
                                 <td class="opciones">
-                                    <a href="{{ path('reserva_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                                    <a href="{{ path('reserva_show', { 'id': entity.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
                                     {% if entity.estadoReserva != 'Cancelada' %}
-                                    <a href="{{ path('reserva_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                    <a href="{{ path('reserva_edit', { 'id': entity.id }) }}" data-toggle="tooltip" data-placement="top" title="Modificar detalles de {{ entity.codigoReserva }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                                     {% endif %}
                                 </td>
                             </tr>

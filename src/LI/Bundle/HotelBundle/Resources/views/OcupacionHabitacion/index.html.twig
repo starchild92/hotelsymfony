@@ -30,7 +30,7 @@
                 <thead>
                     <tr>
                         <th colspan="6">Resumen</th>
-                        <th>Opciones</th>
+                        <th>Opc</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,7 +42,7 @@
                         <td><b>"{{ entity.categoriaHabitacion.nombre }}"</b></td>
                         <td> se permiten una cantidad máxima de </td>
                         <td><i>{{ entity.cantidadPersonasHabitacion }} personas</i>.</td>
-                        <td><a href="{{ path('ocupacionhabitacion_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+                        <td><a href="{{ path('ocupacionhabitacion_edit', { 'id': entity.id }) }}" data-toggle="tooltip" data-placement="top" title="Modificar detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
