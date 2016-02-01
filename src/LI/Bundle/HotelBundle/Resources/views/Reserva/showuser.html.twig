@@ -58,9 +58,9 @@
                     </tr>
                     <tr>
                         <th>Habitación Reservada</th>
-                        <td>{{ entity.habitacion.numero }} - {{ entity.habitacion.nombre }}</td>
-                        <td>{{ entity.habitacion.tipo.tipoHabitacion.nombre }}</td>
-                        <td>{{ entity.habitacion.tipo.categoriaHabitacion.nombre }}</td>
+                        <td class="text-center">{{ entity.habitacion.numero }} - {{ entity.habitacion.nombre }}</td>
+                        <td class="text-center">{{ entity.habitacion.tipo.tipoHabitacion.nombre }}</td>
+                        <td class="text-center">{{ entity.habitacion.tipo.categoriaHabitacion.nombre }}</td>
                     </tr>
                     <tr>
                         <th>Reservada para la fecha</th>
@@ -94,7 +94,7 @@
                 <tr><td>Fecha</td><td>{{ entity.factura.fecha|localizeddate('long', 'none', 'es') }}</td></tr>
             </tbody>
             </table>
-            <p class="text-danger"><b>Importante!</b> Podrá bajar la factura en PDF cuando el estatus de la reserva sea <i>Concretada</i> o <i>Cancelada</i>.</p>
+            <p class="text-danger text-center"><b>Importante!</b> Podrá bajar la factura en PDF cuando el estatus de la reserva sea <i>Concretada</i> o <i>Cancelada</i>.</p>
         </div>
     </div>
 <!-- EL MODAL -->

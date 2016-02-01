@@ -1,5 +1,7 @@
 {% extends 'LIHotelBundle::base.html.twig' %}
-
+{% block stylesheets %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/carousel.css') }}">
+{% endblock %}
 {% block body %}
 	<!-- =================== Carousel =================== -->
 	<div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -76,7 +78,4 @@
 		</div>
 		<!-- /END THE FEATURETTES -->
 	</div>
-{% endblock %}
-{% block stylesheets %}
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/carousel.css') }}">
 {% endblock %}

@@ -32,12 +32,12 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <form class="navbar-form navbar-right" role="search">
-                    <a class="btn btn-success" href="{{ path('fos_user_security_login') }}">Iniciar Sesión</a>
+                    <a class="btn btn-success" href="{{ path('fos_user_security_login') }}">Iniciar Sesión <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ path('LIHotelBundle_homepage') }}">Inicio</a></li>
-                    <li><a href="{{ path('LIHotelBundle_consultar') }}">Consultar Reservaciones</a></li>
-                    <li><a href="{{ path('LIHotelBundle_registro') }}">Registro</a></li>
+                    <li><a href="{{ path('LIHotelBundle_homepage') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Inicio</a></li>
+                    <li><a href="{{ path('LIHotelBundle_consultar') }}"><span class="glyphicon glyphicon-calendar   " aria-hidden="true"></span> Consultar Reservaciones</a></li>
+                    <li><a href="{{ path('LIHotelBundle_registro') }}"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span> Registro</a></li>
                     <li></li>
                 </ul>
 
@@ -47,7 +47,7 @@
 
     {% block body %}{% endblock %}
 
-    <div class="container" style="margin-bottom: 20px; margin-top: 20px;">
+    <div class="container-fluid" style="margin-bottom: 20px; margin-top: 20px;">
             <div id="london"></div>
             <div class="row">
                 <div class="col-md-4">
