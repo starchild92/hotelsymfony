@@ -52,6 +52,12 @@
 						<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
 						No ha habitaciones disponibles en el periodo que indicó.
 					</div>
+					{% for flashMessage in app.session.flashbag.get('consulta_info') %}
+		            <div class = "alert alert-danger alert-dismissable">
+		                <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+		                {{ flashMessage }}
+		            </div>
+		            {% endfor %}
 				{% else %}
 					<p class="text-success">Se encontró que puede reservar las siguiente(s) {{ habitaciones_disponibles|length }} habitacion(es)</p>
 					<table class="table table-bordered table-striped">

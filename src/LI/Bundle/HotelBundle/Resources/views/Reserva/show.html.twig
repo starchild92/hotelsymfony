@@ -64,13 +64,13 @@
 					</tr>
 					<tr>
 						<th>Habitación Reservada</th>
-						<td><center>{{ entity.habitacion.numero }} - {{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></center></td>
+						<td><center>{{ entity.habitacion.numero }} - {{ entity.habitacion.nombre }} <a href="{{ path('habitacion_show', { 'id': entity.habitacion.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información de la habitación"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></center></td>
 	                    <td><center>{{ entity.habitacion.tipo.tipoHabitacion.nombre }}</center></td>
 	                    <td><center>{{ entity.habitacion.tipo.categoriaHabitacion.nombre }}</center></td>
 					</tr>
 					<tr>
 						<th>Cliente</th>
-						<td colspan='3'>{{ entity.cliente }} <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+						<td colspan='3'>{{ entity.cliente }} <a href="{{ path('usuario_show', { 'id': entity.cliente.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información del cliente"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
 					</tr>
 					<tr>
 						<th>Reserva realizada el</th>

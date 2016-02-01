@@ -77,10 +77,10 @@
 					{% endif %}
 					{% for reserva in reservas %}
 					<tr>
-						<td>{{ reserva.codigoReserva }} <a href="{{ path('reserva_show', { 'id': reserva.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+						<td>{{ reserva.codigoReserva }} <a href="{{ path('reserva_show', { 'id': reserva.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información de la reserva"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
 						<td>{{ reserva.estadoReserva }}</td>
 						<td>{{ reserva.fechareserva|date('d M Y') }}</td>
-						<td>{{ reserva.cliente }} <a href="{{ path('usuario_show', { 'id': reserva.cliente.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></a></td>
+						<td>{{ reserva.cliente }} <a href="{{ path('usuario_show', { 'id': reserva.cliente.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información del cliente"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></a></td>
 					</tr>
 					{% endfor %}
 				</tbody>

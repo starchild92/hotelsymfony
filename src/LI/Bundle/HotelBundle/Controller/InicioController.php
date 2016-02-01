@@ -241,41 +241,47 @@ class InicioController extends Controller
 					$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($room->getId());
 
 					if (sizeof($reservas) == 0) {
-						$habitaciones_disponibles[] = $room;
-					}
-				
-					foreach ($reservas as $reserva) {
+						$cantidad = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->obtener_ocupacion($tipo->getId(), $categoria->getId());
+						foreach ($cantidad as $key) {
+							// Segun la cantidad
+							if ($key->getCantidadPersonasHabitacion() >= $personas) {
+								$habitaciones_disponibles[] = $room;
+							}else{
+								$this->get('session')->getFlashBag()->add('consulta_info', 'No se ha encontrado habitación debido a la cantidad de personas que indicó. Intente con una cantidad menor.');
+							}
+						}
+					}else{
+						if ($key->getCantidadPersonasHabitacion() >= $personas) {
+							foreach ($reservas as $reserva) {
+								// si la reserva no está cancelada, solo queda ver si ya culmino, está en eso o por concretar
+								if ($reserva->getEstadoReserva() != 'Cancelada') {
+									//Escogiendo las cantidades permitidas de personas en las habitaciones
+									$cantidad = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->obtener_ocupacion($tipo->getId(), $categoria->getId());
 
-						// si la reserva no está cancelada, solo queda ver si ya culmino, está en eso o por concretar
-						if ($reserva->getEstadoReserva() != 'Cancelada') {
-							
-							//Escogiendo las cantidades permitidas de personas en las habitaciones
-							$cantidad = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->obtener_ocupacion($tipo->getId(), $categoria->getId());
+									foreach ($cantidad as $key) {
+										// Segun la cantidad										
+										if ($key->getCantidadPersonasHabitacion() >= $personas) {
 
-							foreach ($cantidad as $key) {
+											$dias_reserva = $reserva->getDiasReserva() - 1;
+											$fecha_reserva = $reserva->getFechaDesde();
+											$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
+											$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
+											$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
+											
+											$puede = true;
 
-								// Segun la cantidad
-								if ($key->getCantidadPersonasHabitacion() >= $personas) {
+											if ($fecha_inicio > $fecha_inicio_ && $fecha_inicio < $fecha_final_) { $puede = false; $this->get('session')->getFlashBag()->add('consulta_info', 'No hay habitación diponible en la fecha indicada.'); }
+											if ($fecha_final > $fecha_inicio_ && $fecha_final < $fecha_final_) { $puede = false; $this->get('session')->getFlashBag()->add('consulta_info', 'No hay habitación diponible en la fecha indicada.'); }
+											if ($fecha_inicio_ > $fecha_inicio && $fecha_inicio_ < $fecha_final) { $puede = false; $this->get('session')->getFlashBag()->add('consulta_info', 'No hay habitación diponible en la fecha indicada.'); }
+											if ($fecha_inicio == $fecha_inicio_) { $puede = false; }
+											if ($fecha_inicio == $fecha_final_) { $puede = false; }
+											if ($fecha_final == $fecha_inicio_) { $puede = false; }
+											if ($fecha_final == $fecha_final_) { $puede = false; }
 
-									$dias_reserva = $reserva->getDiasReserva() - 1;
-									$fecha_reserva = $reserva->getFechaDesde();
-									$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
-									$fecha_final_ = new \DateTime($fecha_inicio_->format('Y-m-d'));
-									$fecha_final_->add(new \DateInterval('P'.$dias_reserva.'D'));
-									
-									$puede = true;
-
-									if ($fecha_inicio > $fecha_inicio_ && $fecha_inicio < $fecha_final_) { $puede = false; }
-									if ($fecha_final > $fecha_inicio_ && $fecha_final < $fecha_final_) { $puede = false; }
-									if ($fecha_inicio_ > $fecha_inicio && $fecha_inicio_ < $fecha_final) { $puede = false; }
-									if ($fecha_inicio == $fecha_inicio_) { $puede = false; }
-									if ($fecha_inicio == $fecha_final_) { $puede = false; }
-									if ($fecha_final == $fecha_inicio_) { $puede = false; }
-									if ($fecha_final == $fecha_final_) { $puede = false; }
-
-									if ($puede) {
-
-										$habitaciones_disponibles[] = $room;
+											if ($puede) {
+												$habitaciones_disponibles[] = $room;
+											}
+										}
 									}
 								}
 							}
