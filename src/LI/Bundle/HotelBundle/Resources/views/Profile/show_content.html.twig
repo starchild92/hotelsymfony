@@ -18,7 +18,7 @@
                 <p><b>Fecha de Nacimiento</b>: {{ user.fechaNac|date("j \\d\\\e F") }}</p>
                 <p><b>Role|s</b>: {% for role in user.roles %}{{ role }}. {% endfor %}</p>
             </div>
-            <small><a href="#" data-toggle="tooltip" data-placement="top" title="Opción no disponible actualmente.">Cambiar Clave de Acceso.</a></small><br>
-            <small><a href="{{ path('fos_user_profile_edit') }}">Modificar datos de su cuenta</a></small>
+            <small><a href="{{ path('fos_user_change_password') }}">Cambiar Clave de Acceso.</a></small> | 
+            <small><a href="{{ path('fos_user_profile_edit') }}">Modificar Username o Correo Electronico</a></small>
         </div>
     </div>
