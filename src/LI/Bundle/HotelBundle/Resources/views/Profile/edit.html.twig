@@ -1,4 +1,4 @@
-{% extends user.roles|first == 'ROLE_ADMIN' 
+{% extends app.user.roles|first == 'ROLE_ADMIN' 
     ? 'LIHotelBundle::adminBase.html.twig' 
     : 'LIHotelBundle::userBase.html.twig' %}
 

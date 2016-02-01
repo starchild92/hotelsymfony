@@ -3,9 +3,13 @@
 <div class="page-header">
     <h1>Modificar Usuario</h1>
 </div>
-<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
-    </div>
-</form>
+<div class="row">
+	<div class="col-lg-5 col-sm-5" style="float: none; margin: 0 auto;">
+		<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+		    {{ form_widget(form) }}
+		    <div>
+		        <input class="btn btn-lg btn-success btn-block" type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+		    </div>
+		</form>
+	</div>
+</div>
