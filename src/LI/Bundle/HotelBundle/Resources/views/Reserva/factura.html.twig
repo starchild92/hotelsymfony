@@ -64,7 +64,12 @@
 						</tr>
 					</table>
 				</div>
-				<div class="panel panel-success">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="panel panel-warning">
 					<div class="panel-heading">
 						<h3 class="panel-title">Detalles Habitación</h3>
 					</div>
@@ -88,15 +93,18 @@
 					</table>
 				</div>
 			</div>
+		</div>
+
+		<div class="row">
 			<div class="col-lg-4">
 				<div class="panel panel-info">
 					<div class="panel-heading">
 						<h3 class="panel-title">Detalles Usuario</h3>
 					</div>
 					<div class="panel-body">
-						Nombre: {{ user.nombre }}, ({{ user.username }})<br>
-						Datos Financieros: "Inexistentes".<br>
-						Correo: {{ user.email }}
+						<b>Nombre:</b> {{ user.nombre }} {{ user.apellido }}, ({{ user.username }})<br>
+						<b>Datos Financieros:</b> "Inexistentes".<br>
+						<b>Correo Electronico:</b> {{ user.email }}
 					</div>
 				</div>
 				{% if reserva.estadoReserva == 'Cancelada' %}
