@@ -60,7 +60,7 @@
                             {% set diasR = entity.diasReserva-1 %}
                             <td>{{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
                             <td class="opciones">
-                                <a href="{{ path('user_reserva_show', { 'id': entity.id }) }}" data-toggle="tooltip" data-placement="top" title="Ver información"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                                <a href="{{ path('user_reserva_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Ver los detalles de esta reserva"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
                                 {% if entity.estadoReserva != 'Concretada' %}
                                 <a href="{{ path('user_reserva_edit', { 'id': entity.id }) }}" data-toggle="tooltip" data-placement="top" title="Modificar detalles de esta reserva"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>{% endif %}
                             </td>
@@ -99,9 +99,9 @@
                             {% set diasR = entity.diasReserva-1 %}
                             <td>{{ entity.fechadesde|date_modify('+' ~ diasR ~ ' days')|localizeddate('long', 'none', 'es') }}</td>
                             <td class="opciones">
-                                <a href="{{ path('user_reserva_show', { 'id': entity.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                                <a href="{{ path('user_reserva_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Ver detalles de esta reserva"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
                                 {% if entity.estadoReserva != 'Cancelada' %}
-                                <a href="{{ path('user_reserva_edit', { 'id': entity.id }) }}" name="Modificar Detalles"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>{% endif %}
+                                <a href="{{ path('user_reserva_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="Modificar detalles de esta reserva"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>{% endif %}
                             </td>
                         </tr>
                         {% endif %}
