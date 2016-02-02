@@ -4,11 +4,6 @@
 
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/daterangepicker.css') }}" />
-<style type="text/css">
-	.borde-azul, table *{
-		border: solid 1px #5DC6F1 !important;
-	}
-</style>
 {% endblock %}
 
 {% block body %}
@@ -69,7 +64,7 @@
 							<h3 class="panel-title"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Resultados ... </h3>
 						</div>
 						<div class="panel-body">
-							<p class="text-infor">Se encontró que puede reservar las siguiente(s) {{ habitaciones_disponibles|length }} habitacion(es)</p>
+							<p class="text-infor">Se encontró que puede reservar las siguiente(s) {{ habitaciones_disponibles|length }} habitacion(es), por un período continuo de {{ estadia }} días.</p>
 						</div>
 						<table class="table table-bordered table-striped borde-azul">
 							<tr class="negritas text-center borde-azul">
@@ -79,7 +74,7 @@
 							{% for hab in habitaciones_disponibles %}
 							<tr class="text-center borde-azul">
 								<td class="borde-azul">{{ hab.0 }}</td>
-								<td class="borde-azul">{{ hab.1 }} Bs.</td>
+								<td class="borde-azul">{{ hab.1|number_format }} Bs.</td>
 							</tr>
 							{% endfor %}
 						</table>

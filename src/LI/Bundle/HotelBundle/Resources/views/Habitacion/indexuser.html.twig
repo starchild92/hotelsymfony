@@ -31,7 +31,7 @@
 					<img class="second-slide" src="{{ asset('bundles/lihotel/images/habitaciones.jpg') }}" alt="Second slide">
 					<div class="container">
 						<div class="carousel-caption">
-							<h1>{{ entity.nombre }}</h1>
+							<h1>{{ entity.numero}}<br>{{ entity.nombre }}</h1>
 							<p>{{ entity.tipo.categoriaHabitacion }}. {{ entity.tipo.tipoHabitacion }}. {{ entity.tipo.espacioInterno }}</p>
 							<p>{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}, {% endfor %}{% if entity.tipo.servicios|length == 0 %}No se han añadido servicios a esta habitación.{% endif %}</p>
 							<p><a class="btn btn-warning" href="{{ path('user_habitacion_show', { 'id': entity.id }) }}" role="button">ver más detalles</a></p>

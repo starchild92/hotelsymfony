@@ -323,7 +323,7 @@ class HabitacionController extends Controller
     }
 
     public function indexuserAction(){
-        $user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
+        $user = $this->getUser(); //if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();

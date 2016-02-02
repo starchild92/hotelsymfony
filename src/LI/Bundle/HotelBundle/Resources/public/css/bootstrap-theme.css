@@ -14,6 +14,14 @@
 		margin-top: 0; // remove the gap so it doesn't close
 	}
 
+	.borde-azul, .borde-azul *{
+		border: solid 1px #5DC6F1 !important;
+	}
+
+	.borde-verde, .borde-verde *{
+		border: solid 1px #85CD85 !important;
+	}
+
 	table tbody tr td:last-child {
 		text-align: center;
 	}

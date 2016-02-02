@@ -3,7 +3,7 @@ habitacion:
     defaults: { _controller: "LIHotelBundle:Habitacion:index" }
 
 user_habitacion:
-    path:     /user-index
+    path:     /todas
     defaults: { _controller: "LIHotelBundle:Habitacion:indexuser" }
 
 habitacion_show:

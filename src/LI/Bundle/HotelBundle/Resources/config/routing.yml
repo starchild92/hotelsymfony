@@ -52,6 +52,12 @@ LIHotelBundle_homepage:
     requirements:
         methods:  GET
 
+habitacione_publico:
+    path:  /todas-las-habitaciones
+    defaults: { _controller: LIHotelBundle:Inicio:habitaciones_showcase }
+    requirements:
+        methods:  GET
+
 LIHotelBundle_inicio:
     path:  /inicio
     defaults: { _controller: LIHotelBundle:Inicio:indexUser }

@@ -181,8 +181,7 @@ class InicioController extends Controller
 	/*DADOS DOS FECHAS DEVUELVE LA CANTIDAD DE DIAS ENTRE AMBAS*/
 	public function cantidad_dias($fecha_a, $fecha_b){
 		$days = date_diff($fecha_a, $fecha_b);
-		$dias = $days->format('%R%a') + 1;
-
+		$dias = $days->format('%R%a') + 1;		
 		return $dias;
 	}
 
@@ -220,6 +219,7 @@ class InicioController extends Controller
 
 		$habitaciones_disponibles = [];
 		$costo_disponibles = [];
+		$estadiaenDias = 0;
 
 		$form->handleRequest($request);
 		if ($form->isValid()) {
@@ -236,6 +236,8 @@ class InicioController extends Controller
 
 			$fecha_inicio = new \DateTime($fecha_a);
 			$fecha_final = new \DateTime($fecha_b);
+
+			$estadiaenDias = $this->cantidad_dias($fecha_inicio, $fecha_final);
 
 			$em = $this->getDoctrine()->getManager();
 			$habitaciones_tipo = $em->getRepository('LIHotelBundle:Tipo')->habitaciones_tipo($tipo->getId(), $categoria->getId());
@@ -255,7 +257,7 @@ class InicioController extends Controller
 							if ($key->getCantidadPersonasHabitacion() >= $personas) {
 								$tipo_aux = $room->getTipo()->getTipoHabitacion()->getPrecio();
 								$categoria_aux = $room->getTipo()->getCategoriaHabitacion()->getPrecio();
-								$habitaciones_disponibles[] = [$room->getNombre(), $this->cantidad_dias($fecha_inicio, $fecha_inicio) * $tipo_aux * $categoria_aux];
+								$habitaciones_disponibles[] = [$room->getNombre(), $this->cantidad_dias($fecha_inicio, $fecha_final) * $tipo_aux * $categoria_aux];
 							}else{
 								$this->get('session')->getFlashBag()->add('consulta_info', 'No se ha encontrado habitación debido a la cantidad de personas que indicó. Intente con una cantidad menor.');
 							}
@@ -302,7 +304,7 @@ class InicioController extends Controller
 														}
 													}
 													if ($insertar) {
-														$habitaciones_disponibles[] = [$room->getNombre(), $this->cantidad_dias($fecha_inicio, $fecha_inicio) * $tipo_aux * $categoria_aux];
+														$habitaciones_disponibles[] = [$room->getNombre(), $this->cantidad_dias($fecha_inicio, $fecha_final) * $tipo_aux * $categoria_aux];
 													}
 												}
 											}
@@ -319,6 +321,7 @@ class InicioController extends Controller
 		return $this->render('LIHotelBundle:Inicio:consultar.html.twig', array(
 			'form' => $form->createView(),
 			'habitaciones_disponibles' => $habitaciones_disponibles,
+			'estadia'				   => $estadiaenDias,
 		));
 	}
 
@@ -380,6 +383,14 @@ class InicioController extends Controller
 
 	public function reporteDiarioAction(){
 		return $this->render('LIHotelBundle:Inicio:reporteDiario.html.twig');
+	}
+
+	public function habitaciones_showcaseAction(){
+		$em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('LIHotelBundle:Habitacion')->findAll();
+		return $this->render('LIHotelBundle:Inicio:habitacionesShowcase.html.twig', array(
+            'entities' => $entities,
+        ));
 	}
 
 }
