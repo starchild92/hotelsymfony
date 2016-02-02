@@ -244,13 +244,13 @@ class InicioController extends Controller
 				$habitacion = $em->getRepository('LIHotelBundle:Habitacion')->habitacion_por_tipo($tipos->getId());
 
 				foreach ($habitacion as $room) {
-
 					// Estas son las habitaciones del tipo y categoria especificadas por el usuario
 					//Ahora tengo que buscar todas sus reservas
 					$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_habitacion($room->getId());
 
 					if (sizeof($reservas) == 0) {
 						$cantidad = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->obtener_ocupacion($tipo, $categoria->getId());
+
 						foreach ($cantidad as $key) {
 							if ($key->getCantidadPersonasHabitacion() >= $personas) {
 								$tipo_aux = $room->getTipo()->getTipoHabitacion()->getPrecio();
@@ -263,8 +263,10 @@ class InicioController extends Controller
 					}else{
 						$cantidad = $em->getRepository('LIHotelBundle:OcupacionHabitacion')->obtener_ocupacion($tipo, $categoria->getId());
 						foreach ($cantidad as $key) {
+							
 							if ($key->getCantidadPersonasHabitacion() >= $personas) {
 								foreach ($reservas as $reserva) {
+
 									// si la reserva no está cancelada, solo queda ver si ya culmino, está en eso o por concretar
 									if ($reserva->getEstadoReserva() != 'Cancelada') {
 										//Escogiendo las cantidades permitidas de personas en las habitaciones
@@ -291,10 +293,17 @@ class InicioController extends Controller
 												if ($fecha_final == $fecha_final_) { $puede = false; }
 												
 												if ($puede) {
-													//$habitaciones_disponibles[] = $room->getNombre();
+													$insertar = true;
 													$tipo_aux = $room->getTipo()->getTipoHabitacion()->getPrecio();
 													$categoria_aux = $room->getTipo()->getCategoriaHabitacion()->getPrecio();
-													$habitaciones_disponibles[] = [$room->getNombre(), $this->cantidad_dias($fecha_inicio, $fecha_inicio) * $tipo_aux * $categoria_aux];
+													for($i = 0; $i < sizeof($habitaciones_disponibles); $i++){
+														if ($habitaciones_disponibles[$i][0] == $room->getNombre()) {
+															$insertar = false;
+														}
+													}
+													if ($insertar) {
+														$habitaciones_disponibles[] = [$room->getNombre(), $this->cantidad_dias($fecha_inicio, $fecha_inicio) * $tipo_aux * $categoria_aux];
+													}
 												}
 											}
 										}

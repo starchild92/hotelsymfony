@@ -48,10 +48,10 @@
                 <tbody>
                 {% for entity in entities %}
                     <tr>
-                        <td>{{ entity.numero }}</td>
-                        <td>{{ entity.estado }}</td>
-                        <td>{{ entity.nombre }}</td>
-                        <td class="table-td-inception">
+                        <td class="text-center">{{ entity.numero }}</td>
+                        <td class="text-center">{{ entity.estado }}</td>
+                        <td class="text-center">{{ entity.nombre }}</td>
+                        <td class="table-td-inception text-left">
                             De categoría <b>{{ entity.tipo.categoriaHabitacion }}</b> y tipo <b>{{ entity.tipo.tipoHabitacion }}</b>, <i>{{ entity.tipo.espacioInterno }}</i> con los siguientes servicios: "{% set tam = entity.tipo.servicios|length  %}{% for servicio in entity.tipo.servicios %}{{ servicio.nombre }}{% set tam = tam-1 %}{% if tam != 0 %}, {% endif %}{% endfor %}" y {{ entity.tipo.bebidasMinibar|length }} tipo de bebidas en el minibar.
                         </td>
                         <td class="opciones">

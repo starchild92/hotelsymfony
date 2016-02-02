@@ -8,11 +8,28 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/bootstrap-theme.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/carousel.css') }}">
+        <style type="text/css">
+            h5{ text-align: center; }
+            #london{ border-top: 1px solid #eeeeee; margin-bottom: 15px; }
+            #lado{ border-left: 1px solid #eeeeee; }
+            @font-face {
+                font-family: "Raleway-Regular";
+                src: url('{{ asset('bundles/lihotel/fonts/instagram.woff') }}') format('woff');
+            }
+            body{
+                font-family: Raleway-Regular;
+            }
+        </style>
+        
         {% block stylesheets %}{% endblock %}
 
         <script src="{{ asset('bundles/lihotel/js/jquery.min.js') }}"></script>
         <script src="{{ asset('bundles/lihotel/js/bootstrap.min.js') }}"></script>
-        <!--<script src="{{ asset('bundles/lihotel/js/modalSesion.js') }}"></script>-->
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();   
+            });
+        </script>
     </head>
     <body>
 
@@ -85,21 +102,3 @@
         </div>
     </body>
 </html>
-
-    <style type="text/css">
-        h5{ text-align: center; }
-        #london{ border-top: 1px solid #eeeeee; margin-bottom: 15px; }
-        #lado{ border-left: 1px solid #eeeeee; }
-        @font-face{
-          font-family: "Raleway-Regular";
-          src: url('{{ asset('bundles/lihotel/fonts/Raleway-Medium.ttf') }}') format('truetype');
-        }
-        body{
-            font-family: Raleway-Regular;
-        }
-    </style>
-    <script>
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
-    });
-    </script>

@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class TipoHabitacionRepository extends EntityRepository
 {
+	public function precio_del_tipo($tipo){
+		$query = $this->getEntityManager()
+			->createQuery('SELECT u FROM LIHotelBundle:TipoHabitacion u WHERE u.nombre = :tipo');
+		$query->setParameter('tipo', $tipo);
+		$result = $query->getResult();
+		return $result;
+	}
 }

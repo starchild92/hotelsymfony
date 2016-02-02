@@ -1,7 +1,12 @@
-	@font-face{
+	/*@font-face{
 		font-family: "Raleway-Regular";
 		src: url('{{ asset('bundles/lihotel/fonts/Raleway-Medium.ttf') }}') format('truetype');
-		/*src: url('{{ asset('bundles/lihotel/fonts/HelveticaNeueLT.otf') }}') format('opentype');*/
+		src: url('{{ asset('bundles/lihotel/fonts/HelveticaNeueLT.otf') }}') format('opentype');
+	}*/
+
+	@font-face {
+	    font-family: "Raleway-Regular";
+	    src: url('{{ asset('bundles/lihotel/fonts/instagram.woff') }}') format('woff');
 	}
 
 	.dropdown:hover .dropdown-menu {
@@ -13,7 +18,7 @@
 		text-align: center;
 	}
 	
-	body { padding-top: 50px; font-family: "Raleway-regular"; }
+	body { padding-top: 50px; font-family: "Raleway-Regular"; }
 	ul { padding: 0; list-style-type: none; }
 	.page-header h1 { text-align: center; }
 

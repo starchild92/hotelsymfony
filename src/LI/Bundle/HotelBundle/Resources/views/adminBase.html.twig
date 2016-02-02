@@ -53,9 +53,9 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span> Reservas <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li class="dropdown-header">Opciones sobre Reservas</li>
+							<li class="dropdown-header">Consulta</li>
 							<li><a href="{{ path('reserva') }}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Lista de Reservas</a></li>
-							<li class="dropdown-header">Administración de las Reservas</li>
+							<li class="dropdown-header">Gestión</li>
 							<li><a href="{{ path('reserva_new') }}"><span class="glyphicon glyphicon-bed" aria-hidden="true"></span> Nueva Reserva</a></li>
 							<li><a href="{{ path('reserva_concretar') }}"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Concretar Reserva</a></li>
 						</ul>
@@ -71,7 +71,7 @@
 					</li>
 
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.nombre }} <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-lamp" aria-hidden="true"></span>  {{ app.user.nombre }} <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Operaciones sobre su cuenta</li>
 							<li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Datos de la Cuenta</a></li>
@@ -90,7 +90,6 @@
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Tareas Administrativas</li>
 							<li><a href="{{ path('reporte_diario') }}"> <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Reporte Diario</a></li>
-							<li class="dropdown-header">Gestión Administrativa</li>
 							<li><a href="{{ path('llamada') }}"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> LLamadas</a></li>
 							<li><a href="{{ path('compensacion') }}"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Compensaciones</a></li>
 						</ul>
@@ -156,9 +155,9 @@
 </body>
 </html>
 <style type="text/css">
-	@font-face{
-		font-family: "Raleway-Regular";
-		src: url('{{ asset('bundles/lihotel/fonts/Raleway-Regular.ttf') }}') format('truetype');
+	@font-face {
+	    font-family: "Raleway-Regular";
+	    src: url('{{ asset('bundles/lihotel/fonts/instagram.woff') }}') format('woff');
 	}
 	h5{ text-align: center; }
 	#london{ border-top: 1px solid #eeeeee; margin-bottom: 15px; margin-top: 15px; }

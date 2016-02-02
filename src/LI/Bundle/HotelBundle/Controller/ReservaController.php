@@ -162,12 +162,26 @@ class ReservaController extends Controller
 								CALCULAR USANDO LOS DÍAS, EL TIPO Y CATEGORIA COMO COSTO INICIAL
 								SIN LOS CONSUMIBLES
 							**/
-							$factura->setCostoTotal(
-								($entity->getDiasReserva() * 
-								$entity->getHabitacion()->getTipo()->getTipoHabitacion()->getPrecio() * 
-								$entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio()) +
-								(10 * $entity->getCantidadNinos())
-							);
+							/*SI HABITACION ES DOBLE Y CANT_PERSONAS ES 1 ENTONCES EL PRECIO ES DE INDIVIDUAL*/
+							if ($entity->getCantidadPersonas()+$entity->getCantidadNinos() == 1 &&
+								$entity->getHabitacion()->getTipo()->getTipoHabitacion()->getNombre() == 'Doble')
+							{
+								$session->getFlashBag()->add('reserva_buenos', 'Como la cantidad de personas es igual a uno y el tipo de habitación es doble, el costo será igual al de una habitación individual. Cortesia del modelo de negocio.');
+								$precio_tipo = $em->getRepository('LIHotelBundle:TipoHabitacion')->precio_del_tipo('individual');
+
+								$factura->setCostoTotal(
+									($entity->getDiasReserva() * $precio_tipo[0]->getPrecio() * 
+									$entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio()) +
+									(10 * $entity->getCantidadNinos())
+								);
+							}else{
+								$factura->setCostoTotal(
+									($entity->getDiasReserva() * 
+									$entity->getHabitacion()->getTipo()->getTipoHabitacion()->getPrecio() * 
+									$entity->getHabitacion()->getTipo()->getCategoriaHabitacion()->getPrecio()) +
+									(10 * $entity->getCantidadNinos())
+								);
+							}
 
 							$em->persist($factura);
 							$entity->setFactura($factura);
@@ -199,7 +213,6 @@ class ReservaController extends Controller
 								'entity' => $entity,
 								'form'   => $form->createView(),
 							));
-							//throw $this->createNotFoundException('No se puede hacer la reserva en la fecha que especifico');
 						}
 					}else{
 						$session->getFlashBag()->add('reserva_error', 'La habitación que ha seleccionado no está disponible por tiempo indefinido.');
@@ -522,16 +535,12 @@ class ReservaController extends Controller
 				throw $this->createNotFoundException('Unable to find Reserva entity.');
 			}
 
-			/**
-			ELIMIANNDO LA FACTURA DE LA RESERVA ANTES DE ELEIMINAR LA RESERVA
-			**/
+			/** ELIMIANNDO LA FACTURA DE LA RESERVA ANTES DE ELEIMINAR LA RESERVA **/
 			$factura = $entity->getFactura();
 			$factura->setReserva(NULL);
 			$entity->setFactura(NULL);
 
-			/**
-				LIBERANDO LA HABITACIÓN
-			**/
+			/** LIBERANDO LA HABITACIÓN **/
 			$entity->getHabitacion()->setEstado('Libre');
 
 			$em->remove($entity);
@@ -576,8 +585,8 @@ class ReservaController extends Controller
 			$entities = $em->getRepository('LIHotelBundle:Reserva')->reservas_usuario($user->getId());
 
 			return $this->render('LIHotelBundle:Reserva:indexuser.html.twig', array(
-			'entities' => $entities,
-			'user' => $user
+				'entities' => $entities,
+				'user' => $user
 			));
 		}else{
 			return $this->render('LIHotelBundle:Inicio:index.html.twig');
@@ -620,7 +629,7 @@ class ReservaController extends Controller
 		));
 	}
 
-	/* Modificar Reserva, con los elementos que solo puede modificar el usuario */
+	/* MODIFICAR RESERVA, CON LOS ELEMENTOS QUE SOLO PUEDE MODIFICAR EL USUARIO */
 	public function edituserAction($id){
 		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$session = $this->get('session');
@@ -637,7 +646,7 @@ class ReservaController extends Controller
 			return $this->redirect($this->generateUrl('_user'));
 		}
 
-		/*Verificar si no ha pasado la fecha de culminado, porque si no no se puede editar*/
+		/* VERIFICAR SI NO HA PASADO LA FECHA DE CULMINADO, PORQUE SI NO NO SE PUEDE EDITAR */
 		$dias_reserva = $entity->getDiasReserva() - 1;
 		$fecha_reserva = $entity->getFechaDesde();
 		$fecha_inicio_ = new \DateTime($fecha_reserva->format('Y-m-d'));
@@ -663,7 +672,7 @@ class ReservaController extends Controller
 		}
 	}
 
-	/* Genera la vista y solicita el codigo de la reserva para concretarla */
+	/* GENERA LA VISTA Y SOLICITA EL CODIGO DE LA RESERVA PARA CONCRETARLA */
 	public function concretarAction(Request $request){
 		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$form = $this->createFormBuilder()
@@ -742,7 +751,7 @@ class ReservaController extends Controller
 		));
 	}
 
-	/* Concretar un reserva automaticamente, al hacer clic */
+	/* CONCRETAR UN RESERVA AUTOMATICAMENTE, AL HACER CLIC */
 	public function concretarAutoAction($codigo){
 		$user = $this->getUser(); if ($user == '' || !$this->es_admin()) { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
@@ -783,7 +792,7 @@ class ReservaController extends Controller
 		return $this->showAction($reservas[0]->getId());
 	}
 
-	/* Cancelar una reserva */
+	/* CANCELAR UNA RESERVA */
 	public function cancelarAction($codigo){
 		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
@@ -836,7 +845,7 @@ class ReservaController extends Controller
 							return $this->redirect($this->generateUrl('reserva_show', array('id' => $reserva->getId())));
 						}
 					}else{
-						//la reserva no se ha concretado y se puede cancelar. Los costos de cancelacion estan sujetos a las compensaciones que establecen los administradores.
+						//LA RESERVA NO SE HA CONCRETADO Y SE PUEDE CANCELAR. LOS COSTOS DE CANCELACION ESTAN SUJETOS A LAS COMPENSACIONES QUE ESTABLECEN LOS ADMINISTRADORES.
 						foreach ($reservas as $reserva) {
 							$reserva->setEstadoReserva('Cancelada');
 							$reserva->getHabitacion()->setEstado('Libre');
@@ -852,7 +861,6 @@ class ReservaController extends Controller
 				$session->getFlashBag()->add('reserva_malos', 'Ese código no existe.');
 			}
 		}else{
-
 			if($em->getRepository('LIHotelBundle:Reserva')->reservas_existe_codigo($codigo)){
 				$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($codigo);
 				$reserva = $reservas[0];
@@ -895,7 +903,7 @@ class ReservaController extends Controller
 							return $this->redirect($this->generateUrl('user_reserva_show', array('id' => $reserva->getId())));
 						}
 					}else{
-						//la reserva no se ha concretado y se puede cancelar. Los costos de cancelacion estan sujetos a las compensaciones que establecen los administradores.
+						// LA RESERVA NO SE HA CONCRETADO Y SE PUEDE CANCELAR. LOS COSTOS DE CANCELACION ESTAN SUJETOS A LAS COMPENSACIONES QUE ESTABLECEN LOS ADMINISTRADORES.
 						foreach ($reservas as $reserva) {
 							$reserva->setEstadoReserva('Cancelada');
 							$reserva->getHabitacion()->setEstado('Libre');
@@ -913,7 +921,7 @@ class ReservaController extends Controller
 		return $this->redirect($this->generateUrl('LIHotelBundle_homepage'));
 	}
 
-	/* Genera el PDF de la factura */
+	/* GENERA EL PDF DE LA FACTURA */
 	public function facturaAction(Request $request, $codigo){
 		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
@@ -943,7 +951,7 @@ class ReservaController extends Controller
         ));
 	}
 
-	/* Genera la vista para realizar el pedido de un consumo de una reserva */
+	/* GENERA LA VISTA PARA REALIZAR EL PEDIDO DE UN CONSUMO DE UNA RESERVA */
 	public function consumosAction(){
 		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 		$em = $this->getDoctrine()->getManager();
@@ -975,7 +983,7 @@ class ReservaController extends Controller
 		));
 	}
 
-	/* Dado un consumo y la reserva, se decrementa la cantidad del consumo y se aumenta el precio en la reserva*/
+	/* DADO UN CONSUMO Y LA RESERVA, SE DECREMENTA LA CANTIDAD DEL CONSUMO Y SE AUMENTA EL PRECIO EN LA RESERVA*/
 	public function realizarConsumoAction($idconsumo, $idreserva){
 		$user = $this->getUser(); if ($user == '') { return $this->redirect($this->generateUrl('LIHotelBundle_homepage')); }
 
