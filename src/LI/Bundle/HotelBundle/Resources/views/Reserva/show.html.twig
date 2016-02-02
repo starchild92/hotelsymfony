@@ -102,11 +102,11 @@
 			</div>
 			<table class="table table-bordered">
 				<tbody>
-					<tr><td>Fecha Factuación</td><td>{{ entity.factura.fecha|localizeddate('long', 'none', 'es') }}</td></tr>
-					<tr><td>Cantidad de Días</td><td>{{ entity.factura.diasReserva }} días</td></tr>
-					<tr><td>Costo Bebidas</td><td>{{ entity.factura.costoBebida }} Bolívares</td></tr>
-					<tr><td>Costo Llamadas</td><td>{{ entity.factura.costoLlamada }} Bolívares</td></tr>
-					<tr><td>Costo Acumulado</td><td>{{ (entity.factura.costoTotal + entity.factura.costoLlamada + entity.factura.costoBebida)|number_format }} Bolívares</td></tr>
+					<tr><td class="negritas text-center">Fecha Factuación</td><td>{{ entity.factura.fecha|localizeddate('long', 'none', 'es') }}</td></tr>
+					<tr><td class="negritas text-center">Cantidad de Días</td><td>{{ entity.factura.diasReserva }} días</td></tr>
+					<tr><td class="negritas text-center">Costo Bebidas</td><td>{{ entity.factura.costoBebida }} Bolívares</td></tr>
+					<tr><td class="negritas text-center">Costo Llamadas</td><td>{{ entity.factura.costoLlamada }} Bolívares</td></tr>
+					<tr><td class="negritas text-center">Costo Acumulado</td><td>{{ (entity.factura.costoTotal + entity.factura.costoLlamada + entity.factura.costoBebida)|number_format }} Bolívares</td></tr>
 				</tbody>
 			</table>
 		</div>

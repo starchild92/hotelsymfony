@@ -42,8 +42,13 @@
                     </div>
                 {% else %}
                     <table class="table table-bordered">
+                    <tr class="negritas text-center">
+                        <td>Código</td>
+                        <td>Estatus</td>
+                        <td>Fecha rsva</td>
+                    </tr>
                     {% for reserva in reservas %}
-                    <tr>
+                    <tr class="text-center">
                         <td>{{ reserva.codigoReserva }} <a href="{{ path('reserva_show', { 'id': reserva.id }) }}" name="Ver Detalles"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                         <td>{{ reserva.estadoReserva }}</td>
                         <td>{{ reserva.fechareserva|date('d M Y') }}</td>

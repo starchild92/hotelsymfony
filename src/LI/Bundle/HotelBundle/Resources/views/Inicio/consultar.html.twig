@@ -4,6 +4,11 @@
 
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lihotel/css/daterangepicker.css') }}" />
+<style type="text/css">
+	.borde-azul, table *{
+		border: solid 1px #5DC6F1 !important;
+	}
+</style>
 {% endblock %}
 
 {% block body %}
@@ -59,14 +64,27 @@
 		            </div>
 		            {% endfor %}
 				{% else %}
-					<p class="text-success">Se encontró que puede reservar las siguiente(s) {{ habitaciones_disponibles|length }} habitacion(es)</p>
-					<table class="table table-bordered table-striped">
-						{% for habitacion in habitaciones_disponibles %}
-						<tr>
-							<td>{{ habitacion.nombre }}</td>
-						</tr>
-						{% endfor %}
-					</table>
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Resultados ... </h3>
+						</div>
+						<div class="panel-body">
+							<p class="text-infor">Se encontró que puede reservar las siguiente(s) {{ habitaciones_disponibles|length }} habitacion(es)</p>
+						</div>
+						<table class="table table-bordered table-striped borde-azul">
+							<tr class="negritas text-center borde-azul">
+								<td class="borde-azul">Nombre Habitación</td>
+								<td class="borde-azul">Costo Aprox.</td>
+							</tr>
+							{% for hab in habitaciones_disponibles %}
+							<tr class="text-center borde-azul">
+								<td class="borde-azul">{{ hab.0 }}</td>
+								<td class="borde-azul">{{ hab.1 }} Bs.</td>
+							</tr>
+							{% endfor %}
+						</table>
+						<div class="panel-footer"><small class="text-center text-info">Estos precios son una aproximación de los costos reales, cargos adicionales por consumo de servicios y productos pueden aplicar.</small></div>
+					</div>
 				{% endif %}
 			</article>
 		</div>

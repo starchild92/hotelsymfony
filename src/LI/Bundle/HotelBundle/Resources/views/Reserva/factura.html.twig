@@ -40,6 +40,12 @@
 
 		<div class="row">
 			<div class="col-lg-8">
+				{% if reserva.estadoReserva == 'Cancelada' %}
+					<div class = "alert alert-danger alert-dismissable">
+				        <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+				        <b>Holy Whack-A-Mole! </b><h5>Esta reserva fue cancelada, por lo tanto este documento no tiene ninguna válidez. Por esta misma razón los detalles de los costos no han sido expuestos, si desea consultarlos dirijase al administrador del sistema con el código de esta reserva.</h5>
+			    	</div>
+				{% endif %}
 				<div class="panel panel-success">
 					<div class="panel-heading">
 						<h3 class="panel-title">Detalles Reserva</h3>
@@ -107,9 +113,7 @@
 						<b>Correo Electronico:</b> {{ user.email }}
 					</div>
 				</div>
-				{% if reserva.estadoReserva == 'Cancelada' %}
-					<p class="text-danger"><h5>Esta reserva fue cancelada, por lo tanto este documento no tiene ninguna válidez. Por esta misma razón los detalles de los costos no han sido expuestos, si desea consultarlos dirijase al administrador del sistema con el código de esta reserva.</h5></p>
-				{% else %}
+				{% if reserva.estadoReserva != 'Cancelada' %}
 				<div class="panel panel-info">
 					<table class="table costos">
 						<tr>

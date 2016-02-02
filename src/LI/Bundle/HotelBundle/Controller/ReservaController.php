@@ -789,6 +789,7 @@ class ReservaController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$session = $this->get('session');
 		$roles = $user->getRoles();
+
 		if (in_array('ROLE_ADMIN', $roles)) {
 			if($em->getRepository('LIHotelBundle:Reserva')->reservas_existe_codigo($codigo)){
 				$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($codigo);
@@ -805,10 +806,14 @@ class ReservaController extends Controller
 						$hoy = new \DateTime('today');
 
 						if ($hoy > $fecha_final_) {
-							$session->getFlashBag()->add('reserva_malos', 'No puede cancelar una reserva concretada que ya ha cumplido su tiempo.');
+							$session->getFlashBag()->add('reserva_malos', 'No puede cancelar una reserva concretada que ya ha cumplido su tiempo de estadía.');
 							return $this->redirect($this->generateUrl('reserva_show', array('id' => $reserva->getId())));
 						}else{
 							$days = date_diff($fecha_inicio_, $hoy);
+
+							$days_off = $days->format('%d');
+							$days_off = $reserva->getDiasReserva()-$days_off;
+							
 							$dias = $days->format('%R%a days') + 1;
 							$tipo = $reserva->getHabitacion()->getTipo()->getTipoHabitacion()->getPrecio();
 							$tipo = $tipo + (10 * $reserva->getCantidadNinos());
@@ -820,13 +825,14 @@ class ReservaController extends Controller
 							$factura->setCostoTotal($precio_total);
 
 							$reserva->setEstadoReserva('Cancelada');
-							$reserva->setDiasReserva($dias);
+							/*No afecta la busqueda de una habitación*/
+							//$reserva->setDiasReserva($dias);
 
 							$em->persist($factura);
 							$em->persist($reserva);
 							$em->flush();
 
-							$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva.');
+							$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva. Has usado '.$days->format('%d').' de los '.$dias.', faltando '.$days_off.' para culminar la estadía.');
 							return $this->redirect($this->generateUrl('reserva_show', array('id' => $reserva->getId())));
 						}
 					}else{
@@ -846,6 +852,7 @@ class ReservaController extends Controller
 				$session->getFlashBag()->add('reserva_malos', 'Ese código no existe.');
 			}
 		}else{
+
 			if($em->getRepository('LIHotelBundle:Reserva')->reservas_existe_codigo($codigo)){
 				$reservas = $em->getRepository('LIHotelBundle:Reserva')->reservas_obtener_codigo($codigo);
 				$reserva = $reservas[0];
@@ -884,7 +891,7 @@ class ReservaController extends Controller
 							$em->persist($reserva);
 							$em->flush();
 
-							$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva.');
+							$session->getFlashBag()->add('reserva_buenos', 'Se ha cancelado la reserva. Has usado '.$days->format('%d').' de los '.$dias.', faltando '.$days_off.' para culminar la estadía.');
 							return $this->redirect($this->generateUrl('user_reserva_show', array('id' => $reserva->getId())));
 						}
 					}else{
