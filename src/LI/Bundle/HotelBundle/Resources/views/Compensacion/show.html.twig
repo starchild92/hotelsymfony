@@ -19,28 +19,25 @@
             <table class="table table-bordered table-striped record_properties">
                 <tbody>
                     <tr>
-                        <th>Id</th>
-                        <td>{{ entity.id }}</td>
+                        <th colspan="2"></th>
+                        <th colspan="2">Intervalo Días</th>
+                        <th colspan="2">Intervalo Horas</th>
                     </tr>
                     <tr>
+                        <th>ID</th>
                         <th>Porcentaje</th>
-                        <td>{{ entity.porcentaje }}</td>
+                        <th>De</th>
+                        <th>A</th>
+                        <th>De</th>
+                        <th>A</th>  
                     </tr>
-                    <tr>
-                        <th>Dedias</th>
-                        <td>{{ entity.deDias }}</td>
-                    </tr>
-                    <tr>
-                        <th>Adias</th>
-                        <td>{{ entity.aDias }}</td>
-                    </tr>
-                    <tr>
-                        <th>Dehoras</th>
-                        <td>{{ entity.deHoras }}</td>
-                    </tr>
-                    <tr>
-                        <th>Ahoras</th>
-                        <td>{{ entity.aHoras }}</td>
+                    <tr class="text-center">
+                        <td>{{ entity.id }}</td>
+                        <td>{{ entity.porcentaje }}%</td>
+                        <td>{{ entity.deDias }} días</td>
+                        <td>{{ entity.aDias }} días</td>
+                        <td>{{ entity.deHoras }} horas</td>
+                        <td>{{ entity.aHoras }} horas</td>
                     </tr>
                 </tbody>
             </table>
